@@ -1,31 +1,20 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-// import DeleteIcon from '@mui/icons-material/Delete'; // Import DeleteIcon
-// import SendIcon from '@mui/icons-material/Send'; // Import SendIcon
-
-// material-ui
-import { Box, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
+import SimpanButton from '../../../ui-component/button/SimpanButton';
+import BatalkanButton from '../../../ui-component/button/BatalkanButton';
 
 import PropTypes from 'prop-types';
-// import { gridSpacing } from 'store/constant';
-import GroupsIcon from '@mui/icons-material/Groups';
-import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import Header from '../../../ui-component/header/header';
-// import MainLayout from 'layout/MainLayout';
 import { Container } from '@mui/system';
-import MainCard from '../../../ui-component/cards/MainCard';
-import { DownloadDone, RotateRight } from '@mui/icons-material';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-// import SecondCard from 'ui-component/cards/SecondCard';
-// import SearchSection from 'layout/MainLayout/Header/SearchSection';
-import SearchSection2 from '../../../ui-component/searchsection';
-import HorizontalLinearStepper from '../../../ui-component/submenu/eventberjalan';
-import AddEventModal from '../../../ui-component/modal/TambahEvent';
+import MainCardParameterTalent from '../../../ui-component/cards/MainCardParameterTalent';
+import PassingGradeTable from '../../../ui-component/tables/PassingGradeTable';
+import KuotaTable from '../../../ui-component/tables/KuotaTable'
+import DaftarPertanyaanTable from '../../../ui-component/tables/DaftarPertanyaanTable'
+import { AssignmentTurnedInOutlined, PersonOutlineOutlined, QuizOutlined } from '@mui/icons-material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-
-// ==============================|| PARAMETER EVENT PAGE ||============================== //
+// ==============================|| PARAMETER TALENT PAGE ||============================== //
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,7 +49,7 @@ function a11yProps(index) {
   };
 }
 
-const DaftarEvent = () => {
+const ParameterTalent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
 
@@ -72,113 +61,102 @@ const DaftarEvent = () => {
     setLoading(false);
   }, []);
 
-  const cards = [
-    {
-      title: "Total Talent",
-      content: 512,
-      icon: GroupsIcon,
-      // navigateTo: '/dashboard/total-pegawai',
-    },
-    {
-      title: "Total IDP Aktif",
-      content: 1019,
-      icon: NotificationsActiveOutlinedIcon,
-      // navigateTo: '/dashboard/total-pegawai',
-    },
-  ];
-
-  const handleButtonClick = () => {
-    // Logic for button click
-    console.log('Button clicked!');
-  };
-
   const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <>
-      {/* <MainLayout /> */}
-      
-      <MainCard title="Parameter Event"  secondary={
-        <Stack direction="row" spacing={2}>
-          <SearchSection2 /> 
-
-          <Button variant="contained" 
-          sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} 
-          endIcon={<AddCircleOutlineIcon />}
-          onClick={handleOpen}>
-            Tambah Event
-          </Button>
-        </Stack>
-      }>
-        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <Typography variant="h5"></Typography>
-        </Box>
-
+      <MainCardParameterTalent>
+        {/* Bagian Tab */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab icon={<RotateRight />} iconPosition="start" label={<Typography>Passing Grade </Typography>} {...a11yProps(0)} />
-            <Tab icon={<DownloadDone />} iconPosition="start" label={<Typography>Kuota </Typography>} {...a11yProps(1)} />
-            <Tab icon={<DownloadDone />} iconPosition="start" label={<Typography>Question Event </Typography>} {...a11yProps(2)} />
+            <Tab icon={<AssignmentTurnedInOutlined />} iconPosition="start" label="Passing Grade" {...a11yProps(0)} />
+            <Tab icon={<PersonOutlineOutlined />} iconPosition="start" label="Kuota" {...a11yProps(1)} />
+            <Tab icon={<QuizOutlined />} iconPosition="start" label="Question Event" {...a11yProps(2)} />
           </Tabs>
         </Box>
 
+        {/* Passing Grade */}
         <CustomTabPanel value={value} index={0}>
-          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>
+            <Box display="flex" flexDirection="column" alignItems="center"> {/* Container with Flexbox layout */}
+                <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>
+                <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent I</Typography>
+                <PassingGradeTable></PassingGradeTable>
+                <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent II</Typography>
+                <PassingGradeTable></PassingGradeTable>
+                <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent III</Typography>
+                <PassingGradeTable></PassingGradeTable>
+                </Container>
             
-            <HorizontalLinearStepper />
-            
-            <img src={notFoundImage} alt="Deskripsi gambar" />
-            <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography>
-              {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
-            {/* <Button variant="contained" color="primary" onClick={handleButtonClick}>Klik Saya</Button> */}
-          </Container>
-
+                <Box display="flex" justifyContent="flex-end" marginTop={2} width="100%"> {/* Stack of buttons with Flexbox layout */}
+                  <SimpanButton></SimpanButton>
+                  <BatalkanButton></BatalkanButton>
+                </Box>
+            </Box>
         </CustomTabPanel>
 
-        <CustomTabPanel value={value} index={1}>
-        {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
+        {/* Kuota */}
+        <Box display="flex" marginTop={2} width="100%">
+          {/* Left Table */}
+          <Box flex={1} marginRight={2}>
+            <CustomTabPanel value={value} index={1}>
+              <Container style={{ textAlign: 'left', paddingLeft: 0, paddingRight: 0 }}>
+                <Typography fontSize={22} fontWeight={600} marginBottom={2}>Komite Unit</Typography>
+                <KuotaTable header="Kuota Talent Source- (Dalam Satuan Persen)" initialValue={50}></KuotaTable>
+              </Container>
+            </CustomTabPanel>
+          </Box>
+
+          {/* Right Table */}
+          <Box flex={1} marginLeft={2}>
+            <CustomTabPanel value={value} index={1}>
+              <Container style={{ textAlign: 'left', paddingLeft: 0, paddingRight: 0 }}>
+                <Typography fontSize={22} fontWeight={600} marginBottom={2}>Ketua Komite Talent</Typography>
+                <KuotaTable header="Kuota Diskresi- (Dalam Satuan Persen)" initialValue={10}></KuotaTable>
+              </Container>
+              {/* Buttons */}
+              <Box display="flex" justifyContent="flex-end" marginTop={2}>
+                <SimpanButton></SimpanButton>
+                <BatalkanButton></BatalkanButton>
+              </Box>
+            </CustomTabPanel>
+          </Box>
+        </Box>
+
+        {/* Question Event */}
+        <CustomTabPanel value={value} index={2}>
+          <Box display="flex" flexDirection="column" alignItems="center"> {/* Container with Flexbox layout */}
+            <Container style={{ width: '100%', align: 'center', paddingLeft: 0, paddingRight: 0}}>
+              {/* Flex container for the title and button */}
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                {/* Title */}
+                <Typography fontSize={22} fontWeight={600} marginBottom={2}>Daftar Pertanyaan</Typography>
+                
+                {/* "Tambah Data" button */}
+                <Button 
+                  variant="contained" 
+                  sx={{ backgroundColor: '#1a2b5a', borderRadius: '15px', marginBottom: '12px' }} 
+                  endIcon={<AddCircleOutlineIcon />} 
+                  
+                >
+                  Tambah Data
+                </Button>
+              </Box>
+              
+              {/* Table */}
+              <DaftarPertanyaanTable></DaftarPertanyaanTable>
+            </Container>
+
+            {/* Stack of buttons with Flexbox layout */}
+            <Box display="flex" justifyContent="flex-end" marginTop={2} width="100%">
+              <SimpanButton></SimpanButton>
+              <BatalkanButton></BatalkanButton>
+            </Box>
+          </Box>
         </CustomTabPanel>
-        <AddEventModal open={open} handleClose={handleClose} />
-      </MainCard>
+
+     </MainCardParameterTalent>
     </>
   );
 };
 
-export default DaftarEvent;
-
-
-
-// import { styled } from '@mui/material/styles';
-// import { Card } from '@mui/material';
-
-// // project imports
-// import MainCard from 'ui-component/cards/MainCard';
-// import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-
-// // styles
-// const IFrameWrapper = styled('iframe')(({ theme }) => ({
-//   height: 'calc(100vh - 210px)',
-//   border: '1px solid',
-//   borderColor: theme.palette.primary.light
-// }));
-
-// ============================|| MATERIAL ICONS ||============================ //
-
-// const MaterialIcons = () => (
-//   <MainCard title="Material Icons" secondary={<SecondaryAction link="https://next.material-ui.com/components/material-icons/" />}>
-//     <Card sx={{ overflow: 'hidden' }}>
-//       <IFrameWrapper title="Material Icon" width="100%" src="https://material-ui.com/components/material-icons/" />
-//     </Card>
-//   </MainCard>
-// );
-
-// export default DaftarEvent;
-
+export default ParameterTalent;
