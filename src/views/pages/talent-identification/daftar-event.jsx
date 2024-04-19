@@ -21,7 +21,8 @@ import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 // import SecondCard from 'ui-component/cards/SecondCard';
 // import SearchSection from 'layout/MainLayout/Header/SearchSection';
 import SearchSection2 from '../../../ui-component/searchsection';
-import HorizontalLinearStepper from '../../../ui-component/submenu/eventberjalan';
+import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
+import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetailevent';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
 
 
@@ -110,7 +111,7 @@ const DaftarEvent = () => {
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab icon={<RotateRight />} iconPosition="start" label={<Typography>Berjalan </Typography>} {...a11yProps(0)} />
+            <Tab icon={<RotateRight />} iconPosition="start" label="Berjalan" {...a11yProps(0)} />
             <Tab icon={<DownloadDone />} iconPosition="start" label="Selesai" {...a11yProps(1)} />
           </Tabs>
         </Box>
@@ -118,52 +119,28 @@ const DaftarEvent = () => {
         <CustomTabPanel value={value} index={0}>
           <Container style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
             
-            <HorizontalLinearStepper />
+            <EventBerjalan />
             
             <img src={notFoundImage} alt="Deskripsi gambar" />
             <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography>
-              {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
-            {/* <Button variant="contained" color="primary" onClick={handleButtonClick}>Klik Saya</Button> */}
           </Container>
 
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
-        {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
+          {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
+              tapi dipakai untuk Detail Event dulu ya */}
+          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
+            <TimelineDetailEvent />
+          </Container>
+          
         </CustomTabPanel>
         <AddEventModal open={open} handleClose={handleClose} />
+
+
       </MainCard>
     </>
   );
 };
 
 export default DaftarEvent;
-
-
-
-// import { styled } from '@mui/material/styles';
-// import { Card } from '@mui/material';
-
-// // project imports
-// import MainCard from 'ui-component/cards/MainCard';
-// import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-
-// // styles
-// const IFrameWrapper = styled('iframe')(({ theme }) => ({
-//   height: 'calc(100vh - 210px)',
-//   border: '1px solid',
-//   borderColor: theme.palette.primary.light
-// }));
-
-// ============================|| MATERIAL ICONS ||============================ //
-
-// const MaterialIcons = () => (
-//   <MainCard title="Material Icons" secondary={<SecondaryAction link="https://next.material-ui.com/components/material-icons/" />}>
-//     <Card sx={{ overflow: 'hidden' }}>
-//       <IFrameWrapper title="Material Icon" width="100%" src="https://material-ui.com/components/material-icons/" />
-//     </Card>
-//   </MainCard>
-// );
-
-// export default DaftarEvent;
-
