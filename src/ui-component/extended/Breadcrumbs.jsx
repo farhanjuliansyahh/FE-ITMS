@@ -48,7 +48,7 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
         if (collapse.type && collapse.type === 'collapse') {
           getCollapse(collapse);
         } else if (collapse.type && collapse.type === 'item') {
-          if (document.location.pathname === config.basename + collapse.url) {
+          if (document.location.pathname === (config.basename+collapse.url).replace(/^\/\//, '/')) {
             setMain(menu);
             setItem(collapse);
           }
@@ -116,8 +116,8 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
         <Card
           sx={{
             marginBottom: card === false ? 0 : theme.spacing(gridSpacing),
-            border: card === false ? 'none' : '1px solid',
-            borderColor: theme.palette.primary[200] + 75,
+            // border: card === false ? 'none' : '1px solid',
+            // borderColor: theme.palette.primary[200] + 75,
             background: card === false ? 'transparent' : theme.palette.background.default
           }}
           {...others}
