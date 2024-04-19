@@ -10,6 +10,8 @@ const DashboardDefault = Loadable(lazy(() => import('../views/pages/dashboard/da
 // talent identification routing
 const DaftarEvent = Loadable(lazy(() => import('../views/pages/talent-identification/daftar-event')));
 const ParamenterEvent = Loadable(lazy(() => import('../views/pages/talent-identification/parameter')));
+const DetailEvent = Loadable(lazy(() => import('../views/pages/talent-identification/detail-event')));
+
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -36,7 +38,11 @@ const MainRoutes = {
         {
           path: 'parameter',
           element: <ParamenterEvent />
-        }
+        },
+        {
+          path: 'detail-event',
+          element: <DetailEvent />
+        },
       ]
     }
   ]

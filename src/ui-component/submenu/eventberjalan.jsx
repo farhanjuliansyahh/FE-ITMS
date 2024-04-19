@@ -10,7 +10,7 @@ import EventIcon from '@mui/icons-material/Event';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
-
+import { Link } from 'react-router-dom';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -165,9 +165,25 @@ export default function HorizontalLinearStepper() {
           <EmojiEventsOutlinedIcon />
         </BoxAvatar>
 
-        <BoxContainer>
-          <FlexTitle style={{paddingBottom:'8px'}}>
+        <BoxContainer> 
+          {/* <FlexTitle style={{paddingBottom:'8px'}}>
             <Typography style={{fontSize:'16px', fontWeight:'bold'}}>TRIAL EVENT_ E1-D3_BISNIS</Typography>
+            <StatusLabel>Berlangsung</StatusLabel>
+          </FlexTitle> */}
+          <FlexTitle style={{ paddingBottom: '8px' }}>
+          {/* Wrap the Typography with Link */}
+          <Typography
+            style={{
+              fontSize: '16px',
+              fontWeight: 'bold',
+              textDecoration: 'none', // Remove underline
+              color: 'inherit', // Inherit color from parent
+            }}
+          >
+            <Link to="/talent/detail-event" style={{ color: 'inherit' }}>
+              TRIAL EVENT_ E1-D3_BISNIS
+            </Link>
+          </Typography>
             <StatusLabel>Berlangsung</StatusLabel>
           </FlexTitle>
 
