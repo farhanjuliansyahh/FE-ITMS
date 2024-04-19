@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, MenuItem } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Autocomplete from '@mui/material/Autocomplete';
+import Checkbox from '@mui/material/Checkbox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import PropTypes from 'prop-types';
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 // import LocalizationProvider from '@mui/lab/LocalizationProvider';
 // import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -12,11 +19,16 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 function AddEventModal({ open, handleClose }) {
     const [selectedCommittee, setSelectedCommittee] = useState('');
+    const [selectedJobLevel, setSelectedJobLevel] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
 
     const handleCommitteeChange = (event) => {
         setSelectedCommittee(event.target.value);
     };
+    const handleJobLevel = (event) => {
+        setSelectedJobLevel(event.target.value);
+    };
+    const JobLevelOption = ['A2','A1','B2','B1','C2','C1','D3','D2','D1','E3','E2','E1','F3','F2','F1']
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -56,8 +68,31 @@ function AddEventModal({ open, handleClose }) {
                             <MenuItem value="committee2">Committee 2</MenuItem>
                             <MenuItem value="committee3">Committee 3</MenuItem>
                         </TextField>
+                        <Autocomplete
+                            multiple
+                            id="checkboxes-tags-demo"
+                            options={JobLevelOption}
+                            disableCloseOnSelect
+                            getOptionLabel={(option) => option}
+                            renderOption={(props, option, { selected }) => (
+                                <li {...props}>
+                                <Checkbox
+                                    icon={icon}
+                                    checkedIcon={checkedIcon}
+                                    style={{ marginRight: 8 }}
+                                    checked={selected}
+                                />
+                                {option}
+                                </li>
+                            )}
+                            style={{ width: 500 }}
+                            renderInput={(params) => (
+                                <TextField {...params} label="Job Level" placeholder="Job Level" />
+                              
+                            )}
+                        />
 
-                        <TextField
+                        {/* <TextField
                             select
                             required
                             id="outlined-required"
@@ -68,7 +103,7 @@ function AddEventModal({ open, handleClose }) {
                             <MenuItem value="committee1">Committee 1</MenuItem>
                             <MenuItem value="committee2">Committee 2</MenuItem>
                             <MenuItem value="committee3">Committee 3</MenuItem>
-                        </TextField>
+                        </TextField> */}
 
                         <TextField
                             select

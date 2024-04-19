@@ -116,7 +116,7 @@ const DaftarEvent = () => {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>
+          <Container style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
             
             <HorizontalLinearStepper />
             
