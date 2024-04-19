@@ -1,16 +1,11 @@
 import * as React from 'react';
-// import Box from '@mui/material/Box';
-import { Avatar, Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Edit, Delete, CalendarMonthOutlined, ArrowForwardOutlined } from '@mui/icons-material';
+import { Avatar, Box, Button, Typography } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
-import EventIcon from '@mui/icons-material/Event';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
-import { Link } from 'react-router-dom';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -100,18 +95,27 @@ export default function EventBerjalan() {
     },
   }); 
 
-  const CalendarIcon = styled(EventIcon)({
+  const CalendarIcon = styled(CalendarMonthOutlined)({
     fontSize: '1rem',
     color: '#1C2D5A',
   });
 
-  const StatusLabel = styled('div')({
-    backgroundColor: '#EAF8FF', // Adjust the background color of the status label
+  const CurrentEventLabel = styled('div')({
+    backgroundColor: '#EAF8FF', 
     color: '#2196F3',
-    padding: '4px 8px',
+    padding: '8px 16px',
     borderRadius: '16px',
     fontWeight: 600,
-    fontSize:'12px'
+    fontSize:'16px'
+  });
+
+  const CountdownLabel = styled('div')({
+    backgroundColor: '#FFEDED', 
+    color: '#F44336',
+    padding: '8px 16px',
+    borderRadius: '16px',
+    fontWeight: 600,
+    fontSize:'16px'
   });
 
   const editButtonStyle = {
@@ -137,13 +141,29 @@ export default function EventBerjalan() {
   });
   
   const editButton = (
-    <Button sx={editButtonStyle} endIcon={<EditIcon />}>
+    <Button sx={editButtonStyle} endIcon={<Edit />}>
       Edit
     </Button>
   );
+
+  const mulaiTahapSelanjutnyaButtonStyle = {
+    border: '1px solid #D32F2F',
+    backgroundColor: '#1C2D5A',
+    color: '#FFFFFF',
+    borderRadius: '12px',
+    fontSize:'14px',
+    padding: '8px 16px',
+  }
+
+  const mulaiTahapSelanjutnyaButton = (
+    <Button sx={mulaiTahapSelanjutnyaButtonStyle} endIcon={<ArrowForwardOutlined />}>
+      Mulai Tahap Selanjutnya
+    </Button>
+  );
+
   
   const deleteButton = (
-    <Button sx={deleteButtonStyle} endIcon={<DeleteIcon />}>
+    <Button sx={deleteButtonStyle} endIcon={<Delete />}>
       Hapus
     </Button>
   );
@@ -161,42 +181,21 @@ export default function EventBerjalan() {
   return (
     <Box sx={boxStyle}>
       <FlexContainer>
-        <BoxAvatar variant="rounded">
-          <EmojiEventsOutlinedIcon />
-        </BoxAvatar>
-
-        <BoxContainer> 
-          {/* <FlexTitle style={{paddingBottom:'8px'}}>
-            <Typography style={{fontSize:'16px', fontWeight:'bold'}}>TRIAL EVENT_ E1-D3_BISNIS</Typography>
-            <StatusLabel>Berlangsung</StatusLabel>
-          </FlexTitle> */}
-          <FlexTitle style={{ paddingBottom: '8px' }}>
-          {/* Wrap the Typography with Link */}
-          <Typography
-            style={{
-              fontSize: '16px',
-              fontWeight: 'bold',
-              textDecoration: 'none', // Remove underline
-              color: 'inherit', // Inherit color from parent
-            }}
-          >
-            <Link to="/talent/detail-event" style={{ color: 'inherit' }}>
-              TRIAL EVENT_ E1-D3_BISNIS
-            </Link>
-          </Typography>
-            <StatusLabel>Berlangsung</StatusLabel>
+        <BoxContainer>
+          <FlexTitle style={{paddingBottom:'8px'}}>
+            <Typography style={{fontSize:'24px', fontWeight:'bold'}}>TRIAL EVENT_ E1-D3_BISNIS</Typography>
           </FlexTitle>
 
           <FlexTitle>
             <CalendarIcon style={{color:'#828282'}}/>
-            <Typography style={{color:'#828282'}}>22 Januari 2024 - 22 Maret 2024</Typography>
+            <Typography style={{fontSize:'14px', color:'#828282'}}>22 Januari 2024 - 22 Maret 2024</Typography>
           </FlexTitle>
         </BoxContainer>
 
         <div style={{ flex: '1' }}> </div>
         <ButtonsContainer>
-          {editButton}
-          {deleteButton}
+          <CountdownLabel>53 Hari Lagi</CountdownLabel>
+          {mulaiTahapSelanjutnyaButton}
         </ButtonsContainer>
       </FlexContainer>
 
@@ -204,32 +203,29 @@ export default function EventBerjalan() {
         <Divider orientation="horizontal" flexItem sx={dividerStyle} /> 
       </DividerContainer>
 
-      <Grid container spacing={2} style={{paddingBottom:'24px'}}>
+      {/* <Grid container spacing={2} style={{paddingBottom:'24px'}}>
         <Grid item xs={12} md={3}>
-          <Typography>Deskripsi</Typography>
+          <Typography>Talent Source</Typography>
           <Typography style={{fontWeight:'bold'}}>Trial</Typography>
+          
         </Grid>
+        <FlexTitle>
+            <CalendarMonthOutlined style={{size:'16px', color:'#828282'}}/>
+            <Typography style={{fontSize:'14px', color:'#828282'}}>22 Januari 2024 - 22 Maret 2024</Typography>
+        </FlexTitle>
+      </Grid> */}
 
-        <Grid item xs={12} md={3}>
-          <Typography>Tipe</Typography>
-          <Typography style={{fontWeight:'bold'}}>Committee Talent III</Typography>
-        </Grid>
+      
+      <BoxContainer>
+          <FlexTitle style={{paddingBottom:'8px', justifyContent: 'center'}}>
+            <CurrentEventLabel>Talent Source</CurrentEventLabel>
+          </FlexTitle>
 
-        <Grid item xs={12} md={2}>
-          <Typography>Job Family</Typography>
-          <Typography style={{fontWeight:'bold'}}>Bisnis</Typography>
-        </Grid>
-
-        <Grid item xs={12} md={2}>
-          <Typography>Batas Akhir Event</Typography>
-          <Typography style={{fontWeight:'bold'}}>22 Januari 2024</Typography>
-        </Grid>
-
-        <Grid item xs={12} md={2}>
-          <Typography>Hitung Mundur</Typography>
-          <Typography style={{fontWeight:'bold', color:'#F44336'}}>53 hari lagi</Typography>
-        </Grid>
-      </Grid>
+          <FlexTitle style={{paddingBottom:'24px', justifyContent: 'center'}}>
+            <CalendarIcon style={{color:'#828282'}}/>
+            <Typography style={{color:'#828282'}}>22 Januari 2024 - 22 Maret 2024</Typography>
+          </FlexTitle>
+      </BoxContainer>
 
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label, index) => {
