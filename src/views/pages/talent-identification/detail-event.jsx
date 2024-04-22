@@ -1,85 +1,29 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-// import DeleteIcon from '@mui/icons-material/Delete'; // Import DeleteIcon
-// import SendIcon from '@mui/icons-material/Send'; // Import SendIcon
-
-// material-ui
-import { Box, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
-
-import PropTypes from 'prop-types';
-// import { gridSpacing } from 'store/constant';
-import GroupsIcon from '@mui/icons-material/Groups';
-import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import Header from '../../../ui-component/header/header';
-// import MainLayout from 'layout/MainLayout';
-import { Container } from '@mui/system';
+// import Button from '@mui/material/Button';
+// import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Box, Typography, Container } from '@mui/material';
 import MainCard from '../../../ui-component/cards/MainCard';
-import { DownloadDone, RotateRight } from '@mui/icons-material';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-// import SecondCard from 'ui-component/cards/SecondCard';
-// import SearchSection from 'layout/MainLayout/Header/SearchSection';
-import SearchSection2 from '../../../ui-component/searchsection';
 import HorizontalLinearStepper from '../../../ui-component/submenu/eventberjalan';
-import AddEventModal from '../../../ui-component/modal/TambahEvent';
+import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
+import SearchResetButton from '../../../ui-component/button/SearchResetButton';
+import SearchIcon from '@mui/icons-material/Search';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import TalentSource from '../../../ui-component/tables/talentsource';
-import EventDetailSearchButton from '../../../ui-component/button/EventDetailButton';
-
-// ==============================|| DAFTAR EVENT PAGE ||============================== //
-
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ pt: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-CustomTabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+// import AddEventModal from '../../../ui-component/modal/TambahEvent';
 
 const DetailEvent = () => {
   const [isLoading, setLoading] = useState(true);
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [value, setValue] = useState(0);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setLoading(false);
   }, []);
 
-
-  // const handleButtonClick = () => {
-  //   // Logic for button click
-  //   console.log('Button clicked!');
-  // };
-
-  const [open, setOpen] = useState(false);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -91,85 +35,44 @@ const DetailEvent = () => {
 
   return (
     <>
-      {/* <MainLayout /> */}
-      
-      <MainCard title="Detail Event"  secondary={
-        <Stack direction="row" spacing={2}>
-          <SearchSection2 /> 
-
-          <Button variant="contained" 
-          sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} 
-          endIcon={<AddCircleOutlineIcon />}
-          onClick={handleOpen}>
-            Tambah Event
-          </Button>
-        </Stack>
-      }>
+      <MainCard>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <Typography variant="h5"></Typography>
         </Box>
 
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab icon={<RotateRight />} iconPosition="start" label={<Typography>Berjalan </Typography>} {...a11yProps(0)} />
-            <Tab icon={<DownloadDone />} iconPosition="start" label="Selesai" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-
-        <CustomTabPanel value={value} index={0}>
-          <Container style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
-            
-            <HorizontalLinearStepper />
-
-            <Box sx={{border: '1px solid #E0E0E0', padding: '20px', width: '100%', borderRadius:'12px'}}>
-              <h2>Example</h2>
-              <EventDetailSearchButton placeHolder={'Nama'}/>
-              <TalentSource/>
+        <Container style={{ padding : 0}}>
+          <HorizontalLinearStepper />
+          <Box sx={{ border: '1px solid #E0E0E0', padding: '20px',  borderRadius:'12px', mt: 2 }}>
+            <Typography variant="h2" style={{marginBottom: '15px'}} gutterBottom>Tabel Karyawan</Typography>
+            <Box>
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                 <div style={{ marginRight: '80px' }}>
+                     <EventDetailSearchSection PlaceHolder={'Nama'} />
+                 </div>
+                 <div style={{ marginRight: '80px' }}>
+                     <EventDetailSearchSection PlaceHolder={'NIPPOS'} />
+                 </div>
+                 <div style={{ marginRight: '80px' }}>
+                     <EventDetailSearchSection PlaceHolder={'Job Level'} />
+                 </div>
+                 <div style={{ marginRight: '100px' }}>
+                     <EventDetailSearchSection PlaceHolder={'Komite Unit'} />
+                 </div>
+                 <div style={{ marginRight: '15px' }}>
+                     <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
+                 </div>
+                 <div style={{ marginRight: '0px' }}>
+                     <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
+                 </div>
+               </div>
             </Box>
-            {/* <img src={notFoundImage} alt="Deskripsi gambar" />
-            <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography> */}
-              {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
-            {/* <Button variant="contained" color="primary" onClick={handleButtonClick}>Klik Saya</Button> */}
-          </Container>
-
-        </CustomTabPanel>
-
-        <CustomTabPanel value={value} index={1}>
-        {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
-        </CustomTabPanel>
-        <AddEventModal open={open} handleClose={handleClose} />
+            <TalentSource/>
+          </Box>
+        </Container>
       </MainCard>
     </>
   );
 };
 
 export default DetailEvent;
-
-
-
-// import { styled } from '@mui/material/styles';
-// import { Card } from '@mui/material';
-
-// // project imports
-// import MainCard from 'ui-component/cards/MainCard';
-// import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-
-// // styles
-// const IFrameWrapper = styled('iframe')(({ theme }) => ({
-//   height: 'calc(100vh - 210px)',
-//   border: '1px solid',
-//   borderColor: theme.palette.primary.light
-// }));
-
-// ============================|| MATERIAL ICONS ||============================ //
-
-// const MaterialIcons = () => (
-//   <MainCard title="Material Icons" secondary={<SecondaryAction link="https://next.material-ui.com/components/material-icons/" />}>
-//     <Card sx={{ overflow: 'hidden' }}>
-//       <IFrameWrapper title="Material Icon" width="100%" src="https://material-ui.com/components/material-icons/" />
-//     </Card>
-//   </MainCard>
-// );
-
-// export default DaftarEvent;
 
