@@ -9,7 +9,7 @@ function SimpanButton
       variant="contained" 
       sx={{
         backgroundColor:'#1a2b5a', 
-        borderRadius:'15px', 
+        borderRadius:'12px', 
         marginRight: '8px'
       }} 
       endIcon={<SaveOutlined />}

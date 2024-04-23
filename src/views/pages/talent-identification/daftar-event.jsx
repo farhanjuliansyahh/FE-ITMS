@@ -117,22 +117,22 @@ const DaftarEvent = () => {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-          <Container style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
+          <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingLeft:24, paddingRight:24, paddingBottom:24 }}>
             
             <EventBerjalan />
             
             <img src={notFoundImage} alt="Deskripsi gambar" />
             <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography>
-          </Container>
+          </Box>
 
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
           {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
               tapi dipakai untuk Detail Event dulu ya */}
-          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
+          <Box style={{width:'100%', align:'center', paddingLeft:24, paddingRight:24, paddingBottom:24}}>         
             <TimelineDetailEvent />
-          </Container>
+          </Box>
           
         </CustomTabPanel>
         <AddEventModal open={open} handleClose={handleClose} />
