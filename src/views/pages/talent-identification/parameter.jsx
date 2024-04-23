@@ -79,7 +79,7 @@ const ParameterTalent = () => {
 
         {/* Passing Grade */}
         <CustomTabPanel value={value} index={0}>
-            <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={4} paddingRight={4} paddingBottom={4}> 
+            <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={3} paddingRight={3} paddingBottom={3}> 
             {/* Container with Flexbox layout */}
                 <Grid>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent I</Typography>
@@ -98,7 +98,7 @@ const ParameterTalent = () => {
         </CustomTabPanel>
 
         {/* Kuota */}
-        <Box display="flex" marginTop={2} width="100%" paddingLeft={4} paddingRight={4} paddingBottom={4}>
+        <Box display="flex" marginTop={2} width="100%" paddingLeft={3} paddingRight={3} paddingBottom={3}>
           {/* Left Table */}
           <Box flex={1} marginRight={2}>
             <CustomTabPanel value={value} index={1}>
@@ -128,7 +128,7 @@ const ParameterTalent = () => {
 
         {/* Question Event */}
         <CustomTabPanel value={value} index={2}>
-          <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={4} paddingRight={4} paddingBottom={4}> 
+          <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={3} paddingRight={3} paddingBottom={3}> 
           {/* Container with Flexbox layout */}
             <Grid>
               {/* Flex container for the title and button */}

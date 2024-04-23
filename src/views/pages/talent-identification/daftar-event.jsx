@@ -131,9 +131,9 @@ const DaftarEvent = () => {
         <CustomTabPanel value={value} index={1}>
           {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
               tapi dipakai untuk Detail Event dulu ya */}
-          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
+          <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>         
             <TimelineDetailEvent />
-          </Container>
+          </Box>
           
         </CustomTabPanel>
         <AddEventModal open={open} handleClose={handleClose} />

@@ -29,7 +29,7 @@ const LevelJabatanChart = ({ series, options }) => {
 
   return (
       <MainCard maxWidth="lg">
-          <Grid container spacing={gridSpacing}>
+          <Grid container spacing={gridSpacing} paddingTop={3} paddingLeft={3} paddingRight={3}>
             <Grid item xs={12} md={12}>
               <Grid container alignItems="center" justifyContent="space-between">
                 <Grid item> 
