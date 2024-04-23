@@ -9,7 +9,7 @@ import Divider from '@mui/material/Divider';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function EventBerjalan() {
+export default function TimelineDetailEvent() {
 
   const boxStyle = {
     border: '1px solid #E0E0E0', // Border style definition
