@@ -1,4 +1,6 @@
 import * as React from 'react';
+
+import { useEffect, useState } from 'react';
 // import Box from '@mui/material/Box';
 import { Avatar, Box, Button, Container, Grid, Typography } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
@@ -11,6 +13,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import KonfirmasiEvent from '../modal/konfirmasi-event';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -100,6 +104,16 @@ export default function EventBerjalan() {
     },
   }); 
 
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const CalendarIcon = styled(EventIcon)({
     fontSize: '1rem',
     color: '#1C2D5A',
@@ -123,11 +137,23 @@ export default function EventBerjalan() {
   }
 
   const deleteButtonStyle = {
-    border: '1px solid #D32F2F',
-    color: '#D32F2F',
+    border: '1px solid #EF4123',
+    color: '#EF4123',
     borderRadius: '12px',
     paddingLeft: '12px',
     paddingRight: '12px'
+  }
+
+  const mulaiButtonStyle = {
+    backgroundColor: '#EF4123',
+    color: '#fff',
+    borderRadius: '12px',
+    paddingLeft: '12px',
+    paddingRight: '12px',
+    ':hover':{
+      backgroundColor: '#AB1D05',
+      color: '#fff',
+    }
   }
 
   const ButtonsContainer = styled('div')({
@@ -148,6 +174,15 @@ export default function EventBerjalan() {
     </Button>
   );
 
+  const mulaiButton = (
+    <Button 
+    variant="contained" 
+    sx={mulaiButtonStyle} 
+    endIcon={<ArrowForwardRoundedIcon />}
+    onClick={handleOpen}>
+      Mulai Event
+    </Button>
+  );
   const DividerContainer = styled('div')({
     width: '100%',
     textAlign: 'center',
@@ -195,6 +230,7 @@ export default function EventBerjalan() {
 
         <div style={{ flex: '1' }}> </div>
         <ButtonsContainer>
+          {mulaiButton}
           {editButton}
           {deleteButton}
         </ButtonsContainer>
@@ -286,6 +322,7 @@ export default function EventBerjalan() {
           </Box>
         </React.Fragment>
       )}
+      <KonfirmasiEvent open={open} handleClose={handleClose} />
     </Box>
   );
 }

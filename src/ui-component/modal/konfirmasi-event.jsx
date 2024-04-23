@@ -33,7 +33,7 @@ function KonfirmasiEvent({ open, handleClose }) {
     const handleJobLevel = (event) => {
         setSelectedJobLevel(event.target.value);
     };
-    const JobLevelOption = ['A2', 'A1', 'B2', 'B1', 'C2', 'C1', 'D3', 'D2', 'D1', 'E3', 'E2', 'E1', 'F3', 'F2', 'F1']
+    const JobLevelOption = ['A2','A1','B2','B1','C2','C1','D3','D2','D1','E3','E2','E1','F3','F2','F1']
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -41,7 +41,7 @@ function KonfirmasiEvent({ open, handleClose }) {
 
     const mulaiButtonStyle = {
         backgroundColor: '#1C2D5A',
-        color: '#fff',
+        color:'#fff',
         borderRadius: '12px',
         paddingLeft: '12px',
         paddingRight: '12px',
@@ -50,18 +50,18 @@ function KonfirmasiEvent({ open, handleClose }) {
 
     const batalkanButtonStyle = {
         backgroundColor: '#D32F2F',
-        color: '#fff',
+        color:'#fff',
         borderRadius: '12px',
         paddingLeft: '12px',
         paddingRight: '12px',
-        transition: 'background-color 0.3s',
+        transition: 'background-color 0.3s'
     }
-
+    
     const hoverMulaiStyle = {
         backgroundColor: '#2B468E' // Darker shade for hover
-
+      
     };
-
+    
     const hoverBatalkanStyle = {
         backgroundColor: '#B71C1C' // Darker shade for hover
     };
@@ -69,50 +69,41 @@ function KonfirmasiEvent({ open, handleClose }) {
     const ButtonsContainer = styled('div')({
         display: 'flex',
         alignItems: 'center',
-        gap: '16px',
-        justifyContent: 'left',
-        marginLeft: '50px'
+        width:'100%',
+        padding: '0px 8px',
+        gap:'16px',
+        justifyContent: 'space-between'
     });
-
-    const ButtonsContainer1 = styled('div')({
-        display: 'flex',
-        alignItems: 'center',
-        gap: '16px',
-        justifyContent: 'right',
-        marginRight: '50px'
-    });
-
-    
 
     const [isHoveredMulai, setIsHoveredMulai] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
-    const mulaiButton = (
-        <Button
-            endIcon={<ArrowForwardRoundedIcon />}
-            style={isHoveredMulai ? { ...mulaiButtonStyle, ...hoverMulaiStyle } : mulaiButtonStyle}
-            onMouseEnter={() => setIsHoveredMulai(true)}
-            onMouseLeave={() => setIsHoveredMulai(false)}
-        >
-            Mulai Event
-        </Button>
-    );
+  const mulaiButton = (
+    <Button
+      endIcon={<ArrowForwardRoundedIcon />}
+      style={isHoveredMulai ? { ...mulaiButtonStyle, ...hoverMulaiStyle } : mulaiButtonStyle}
+      onMouseEnter={() => setIsHoveredMulai(true)}
+      onMouseLeave={() => setIsHoveredMulai(false)}
+    >
+      Mulai Event
+    </Button>
+  );
 
-    const batalkanButton = (
-        <Button
-            endIcon={<CancelOutlinedIcon />}
-            style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
-            onMouseEnter={() => setIsHoveredBatalkan(true)}
-            onMouseLeave={() => setIsHoveredBatalkan(false)}
-        >
-            Batalkan
-        </Button>
-    );
+  const batalkanButton = (
+    <Button
+      endIcon={<CancelOutlinedIcon />}
+      style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
+      onMouseEnter={() => setIsHoveredBatalkan(true)}
+      onMouseLeave={() => setIsHoveredBatalkan(false)}
+    >
+      Batalkan
+    </Button>
+  );
 
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
-                <Typography style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
+                <Typography style={{ fontSize: '24px', fontWeight: 'bold', textAlign:'center' }}>
                     Konfirmasi Mulai Event
                 </Typography>
             </DialogTitle>
@@ -131,31 +122,29 @@ function KonfirmasiEvent({ open, handleClose }) {
                             id="outlined-required"
                             label="Nama Event"
                         />
-                        <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
-                            Apakah anda yakin memulai Event ini?
-                        </Typography>
-                        <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px' }}>
-                            Anda tidak dapat menghapus event setelah mulai
+                    <Typography style={{textAlign:'center', fontWeight:'bold', fontSize:'14px', marginTop:'16px'}}>
+                        Apakah anda yakin memulai Event ini?
+                    </Typography>
+                    <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px'}}>
+                        Anda tidak dapat menghapus event setelah mulai
 
-                        </Typography>
+                    </Typography>
                     </div>
                 </Box>
             </DialogContent>
+            <DialogActions sx={{padding:'0 24px 24px 24px '}}>
+                {/* <Button onClick={handleClose}>Batalkan</Button>
+                <Button onClick={handleClose} variant="contained" sx={{ backgroundColor: '#1a2b5a', color: 'white' }}>
+                    Add
+                </Button> */}
 
-            <ButtonsContainer>
+                 <ButtonsContainer>
                     {batalkanButton}
-                </ButtonsContainer>
-
-            <ButtonsContainer1>
                     {mulaiButton}
-                </ButtonsContainer1>
-                
-            <DialogActions>
-                <ButtonsContainer>
                 </ButtonsContainer>
             </DialogActions>
         </Dialog>
     );
 }
 
-export default KonfirmasiEvent;
+export default KonfirmasiEvent ;

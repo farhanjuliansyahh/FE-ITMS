@@ -24,8 +24,8 @@ import SearchSection2 from '../../../ui-component/searchsection';
 import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
 import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetailevent';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
-import Matrix from '../../../ui-component/submenu/matrix';
-import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
+
+
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -132,10 +132,7 @@ const DaftarEvent = () => {
           {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
               tapi dipakai untuk Detail Event dulu ya */}
           <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
-            {/* <TimelineDetailEvent /> */}
-            <MatrixNineBox />
-            <Matrix />
-            
+            <TimelineDetailEvent />
           </Container>
           
         </CustomTabPanel>
