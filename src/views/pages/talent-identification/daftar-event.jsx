@@ -118,13 +118,13 @@ const DaftarEvent = () => {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-          <Container style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
+          <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingLeft:24, paddingRight:24, paddingBottom:24 }}>
             
             <EventBerjalan />
             
             <img src={notFoundImage} alt="Deskripsi gambar" />
             <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography>
-          </Container>
+          </Box>
 
         </CustomTabPanel>
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import SimpanButton from '../../../ui-component/button/SimpanButton';
 import BatalkanButton from '../../../ui-component/button/BatalkanButton';
@@ -8,6 +8,7 @@ import BatalkanButton from '../../../ui-component/button/BatalkanButton';
 import PropTypes from 'prop-types';
 import { Container } from '@mui/system';
 import MainCardParameterTalent from '../../../ui-component/cards/MainCardParameterTalent';
+import MainCard from '../../../ui-component/cards/MainCard';
 import PassingGradeTable from '../../../ui-component/tables/PassingGradeTable';
 import KuotaTable from '../../../ui-component/tables/KuotaTable'
 import DaftarPertanyaanTable from '../../../ui-component/tables/DaftarPertanyaanTable'
@@ -28,7 +29,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ pt: 3 }}>
+        <Box>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -65,6 +66,7 @@ const ParameterTalent = () => {
 
   return (
     <>
+
       <MainCardParameterTalent>
         {/* Bagian Tab */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -77,17 +79,18 @@ const ParameterTalent = () => {
 
         {/* Passing Grade */}
         <CustomTabPanel value={value} index={0}>
-            <Box display="flex" flexDirection="column" alignItems="center"> {/* Container with Flexbox layout */}
-                <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>
+            <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={3} paddingRight={3} paddingBottom={3}> 
+            {/* Container with Flexbox layout */}
+                <Grid>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent I</Typography>
-                <PassingGradeTable></PassingGradeTable>
+                <PassingGradeTable ></PassingGradeTable>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent II</Typography>
                 <PassingGradeTable></PassingGradeTable>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent III</Typography>
                 <PassingGradeTable></PassingGradeTable>
-                </Container>
+                </Grid>
             
-                <Box display="flex" justifyContent="flex-end" marginTop={2} width="100%"> {/* Stack of buttons with Flexbox layout */}
+                <Box display="flex" justifyContent="flex-end" marginTop={4} width="100%"> {/* Stack of buttons with Flexbox layout */}
                   <SimpanButton></SimpanButton>
                   <BatalkanButton></BatalkanButton>
                 </Box>
@@ -95,14 +98,14 @@ const ParameterTalent = () => {
         </CustomTabPanel>
 
         {/* Kuota */}
-        <Box display="flex" marginTop={2} width="100%">
+        <Box display="flex" marginTop={2} width="100%" paddingLeft={3} paddingRight={3} paddingBottom={3}>
           {/* Left Table */}
           <Box flex={1} marginRight={2}>
             <CustomTabPanel value={value} index={1}>
-              <Container style={{ textAlign: 'left', paddingLeft: 0, paddingRight: 0 }}>
+              <Grid>
                 <Typography fontSize={22} fontWeight={600} marginBottom={2}>Komite Unit</Typography>
                 <KuotaTable header="Kuota Talent Source- (Dalam Satuan Persen)" initialValue={50}></KuotaTable>
-              </Container>
+              </Grid>
             </CustomTabPanel>
           </Box>
 
@@ -113,8 +116,9 @@ const ParameterTalent = () => {
                 <Typography fontSize={22} fontWeight={600} marginBottom={2}>Ketua Komite Talent</Typography>
                 <KuotaTable header="Kuota Diskresi- (Dalam Satuan Persen)" initialValue={10}></KuotaTable>
               </Container>
+
               {/* Buttons */}
-              <Box display="flex" justifyContent="flex-end" marginTop={2}>
+              <Box display="flex" justifyContent="flex-end" marginTop={4}>
                 <SimpanButton></SimpanButton>
                 <BatalkanButton></BatalkanButton>
               </Box>
@@ -124,17 +128,18 @@ const ParameterTalent = () => {
 
         {/* Question Event */}
         <CustomTabPanel value={value} index={2}>
-          <Box display="flex" flexDirection="column" alignItems="center"> {/* Container with Flexbox layout */}
-            <Container style={{ width: '100%', align: 'center', paddingLeft: 0, paddingRight: 0}}>
+          <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={3} paddingRight={3} paddingBottom={3}> 
+          {/* Container with Flexbox layout */}
+            <Grid>
               {/* Flex container for the title and button */}
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 {/* Title */}
-                <Typography fontSize={22} fontWeight={600} marginBottom={2}>Daftar Pertanyaan</Typography>
+                <Typography fontSize={22} fontWeight={600} marginBottom={4}>Daftar Pertanyaan</Typography>
                 
                 {/* "Tambah Data" button */}
                 <Button 
                   variant="contained" 
-                  sx={{ backgroundColor: '#1a2b5a', borderRadius: '15px', marginBottom: '12px' }} 
+                  sx={{ backgroundColor: '#1a2b5a', borderRadius: '12px', marginBottom: '12px' }} 
                   endIcon={<AddCircleOutlineIcon />} 
                   
                 >
@@ -144,10 +149,10 @@ const ParameterTalent = () => {
               
               {/* Table */}
               <DaftarPertanyaanTable></DaftarPertanyaanTable>
-            </Container>
+            </Grid>
 
             {/* Stack of buttons with Flexbox layout */}
-            <Box display="flex" justifyContent="flex-end" marginTop={2} width="100%">
+            <Box display="flex" justifyContent="flex-end" marginTop={4} width="100%">
               <SimpanButton></SimpanButton>
               <BatalkanButton></BatalkanButton>
             </Box>
