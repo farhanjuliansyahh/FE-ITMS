@@ -278,31 +278,6 @@ function AddEventModal({ open, handleClose }) {
                             </DemoItem>
                         </LocalizationProvider>
 
-
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoItem>
-                                <DatePicker
-                                    disableFuture
-                                    views={['year', 'month', 'day']}
-                                    InputLabelProps={{ shrink: true }}
-                                    label="Tanggal Mulai Event *"
-                                    required
-                                />
-                            </DemoItem>
-                        </LocalizationProvider>
-
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoItem>
-                                <DatePicker
-                                    disableFuture
-                                    views={['year', 'month', 'day']}
-                                    InputLabelProps={{ shrink: true }}
-                                    label="Tanggal Berakhir Event *"
-                                    required
-                                />
-                            </DemoItem>
-                        </LocalizationProvider>
-
                         <TextField
                             id="outlined-required"
                             label="Deskripsi"
