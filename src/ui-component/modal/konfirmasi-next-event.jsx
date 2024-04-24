@@ -12,7 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function KonfirmasiNextEvent({ open, handleClose }) {
-    const mulaiButtonStyle = {
+    const lanjutkanButtonStyle = {
         backgroundColor: '#1C2D5A',
         color:'#fff',
         borderRadius: '12px',
@@ -29,7 +29,7 @@ function KonfirmasiNextEvent({ open, handleClose }) {
         fontSize: '14px'
     };
     
-    const hovermulaiStyle = {
+    const hoverLanjutkanStyle = {
         backgroundColor: '#122350' // Darker shade for hover
     };
     
@@ -46,17 +46,17 @@ function KonfirmasiNextEvent({ open, handleClose }) {
         justifyContent: 'space-between'
     });
 
-    const [isHoveredmulai, setIsHoveredmulai] = useState(false);
+    const [isHoveredLanjutkan, setIsHoveredLanjutkan] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
-    const mulaiButton = (
+    const lanjutkanButton = (
         <Button
             endIcon={<ArrowForwardRoundedIcon />}
-            style={isHoveredmulai ? { ...mulaiButtonStyle, ...hovermulaiStyle } : mulaiButtonStyle}
-            onMouseEnter={() => setIsHoveredmulai(true)}
-            onMouseLeave={() => setIsHoveredmulai(false)}
+            style={isHoveredLanjutkan ? { ...lanjutkanButtonStyle, ...hoverLanjutkanStyle } : lanjutkanButtonStyle}
+            onMouseEnter={() => setIsHoveredLanjutkan(true)}
+            onMouseLeave={() => setIsHoveredLanjutkan(false)}
         >
-            Mulai Event
+            Lanjutkan
         </Button>
     );
 
@@ -81,7 +81,7 @@ function KonfirmasiNextEvent({ open, handleClose }) {
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
                 <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
-                    Konfirmasi Mulai Event
+                    Konfirmasi Talent Source
                 </Typography>
             </DialogTitle>
             <DividerContainer>
@@ -106,16 +106,13 @@ function KonfirmasiNextEvent({ open, handleClose }) {
                                 disableFuture
                                 views={['year', 'month', 'day']}
                                 InputLabelProps={{ shrink: true }}
-                                label="Tanggal Berakhir Talent Source *"
+                                label="Tanggal Berakhir Talent Profile *"
                                 required
                             />
                             </DemoItem>
                         </LocalizationProvider>
-                        <Typography style={{textAlign:'center', fontWeight:'bold', fontSize:'14px', marginTop:'16px'}}>
-                        Apakah anda yakin memulai Event ini?
-                        </Typography>
-                        <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px'}}>
-                        Anda tidak dapat menghapus event setelah dimulai.
+                        <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px', marginBottom: '24px'}}>
+                            Anda tidak dapat kembali ke tahap sebelumnya jika melanjutkan.
                         </Typography>
                     </div>
                 </Box>
@@ -123,7 +120,7 @@ function KonfirmasiNextEvent({ open, handleClose }) {
             <DialogActions sx={{padding:'0 24px 24px 24px '}}>
                 <ButtonsContainer>
                     {batalkanButton}
-                    {mulaiButton}
+                    {lanjutkanButton}
                 </ButtonsContainer>
             </DialogActions>
         </Dialog>

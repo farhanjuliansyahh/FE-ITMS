@@ -9,13 +9,12 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import PropTypes from 'prop-types';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import DatePicker from '@mui/lab/DatePicker';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+import { DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 function AddEventModal({ open, handleClose }) {
     const [selectedCommittee, setSelectedCommittee] = useState('');
@@ -161,29 +160,31 @@ function AddEventModal({ open, handleClose }) {
                             id="outlined-required"
                             label="Kuota Talent"
                         />
-                        {/* <TextField
-                            required
-                            id="outlined-required"
-                            label="Tanggal Mulai Event"
-                        /> */}
 
-                        {/* <DatePicker
-                            label="Tanggal Mulai Event"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            renderInput={(params) => <TextField {...params} />}
-                            inputFormat="dd/MM/yyyy"
-                        /> */}
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoItem>
+                            <DatePicker
+                                disableFuture
+                                views={['year', 'month', 'day']}
+                                InputLabelProps={{ shrink: true }}
+                                label="Tanggal Mulai Event *"
+                                required
+                            />
+                            </DemoItem>
+                        </LocalizationProvider>
 
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker />
-                        </LocalizationProvider> */}
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoItem>
+                            <DatePicker
+                                disableFuture
+                                views={['year', 'month', 'day']}
+                                InputLabelProps={{ shrink: true }}
+                                label="Tanggal Berakhir Event *"
+                                required
+                            />
+                            </DemoItem>
+                        </LocalizationProvider>
 
-                        <TextField
-                            required
-                            id="outlined-required"
-                            label="Tanggal Berakhir Event"
-                        />
                         <TextField
                             id="outlined-required"
                             label="Deskripsi"
