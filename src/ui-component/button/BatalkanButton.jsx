@@ -10,7 +10,7 @@ function BatalkanButton() {
         color: '#D32F2F', // Warna teks
         backgroundColor: '#FFFFFF', // Warna latar belakang
         border: '1px solid #D32F2F', // Warna dan lebar border
-        borderRadius: '15px', // Radius border
+        borderRadius: '12px', // Radius border
         '&:hover': {
           backgroundColor: '#D32F2F', // Warna latar belakang saat hover
           color: '#FFFFFF', // Warna teks saat hover

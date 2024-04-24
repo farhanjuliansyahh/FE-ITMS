@@ -18,7 +18,7 @@ const MainCardParameterTalent = forwardRef(
       border = true,
       boxShadow,
       children,
-      content = true,
+      content = false,
       contentClass = '',
       contentSX = {},
       secondary,

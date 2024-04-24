@@ -52,7 +52,8 @@ const Dashboard = () => {
                   isLoading={isLoading}
                   title={card.title}
                   content={card.content}
-                  icon={<card.icon />}  
+                  icon={<card.icon />}
+                    
                 />
               </Grid>
             ))}
