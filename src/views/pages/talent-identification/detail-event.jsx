@@ -15,6 +15,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import TalentSourceTable from '../../../ui-component/tables/talentsource';
 import KomiteUnitListButton from '../../../ui-component/button/KomiteUnitListButton';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import TalentQualification from '../../../ui-component/event-section/talentqualification';
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
 function CustomTabPanel(props) {
@@ -86,6 +87,7 @@ const DetailEvent = () => {
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom : 2 }}>
           <TimelineDetailEvent />
         </Box>
+        
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -151,8 +153,10 @@ const DetailEvent = () => {
         </CustomTabPanel>
         <AddEventModal open={open} handleClose={handleClose} />
 
+       
 
       </MainCard>
+      <TalentQualification />
     </>
   );
 };
