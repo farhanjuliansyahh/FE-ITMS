@@ -15,6 +15,8 @@ import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import KonfirmasiEvent from '../modal/konfirmasi-event';
+import HapusEvent from '../modal/hapusevent';
+
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -104,14 +106,21 @@ export default function EventBerjalan() {
     },
   }); 
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);  
+  const [openHapus, setOpenHapus] = useState(false);
+
 
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleOpenHapus = () => {
+    setOpenHapus(true);
+  };
+  const handleCloseHapus = () => {
+      setOpenHapus(false);
   };
 
   const CalendarIcon = styled(EventIcon)({
@@ -169,7 +178,10 @@ export default function EventBerjalan() {
   );
   
   const deleteButton = (
-    <Button sx={deleteButtonStyle} endIcon={<DeleteIcon />}>
+    <Button 
+    sx={deleteButtonStyle} 
+    endIcon={<DeleteIcon />}
+    onClick={handleOpenHapus}>
       Hapus
     </Button>
   );
@@ -323,6 +335,7 @@ export default function EventBerjalan() {
         </React.Fragment>
       )}
       <KonfirmasiEvent open={open} handleClose={handleClose} />
+      <HapusEvent open={openHapus} handleClose={handleCloseHapus} />
     </Box>
   );
 }
