@@ -17,6 +17,7 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import KonfirmasiEvent from '../modal/konfirmasi-event';
 import HapusEvent from '../modal/hapusevent';
 
+import KonfirmasiNextEvent from '../modal/konfirmasi-next-event';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -336,6 +337,7 @@ export default function EventBerjalan() {
       )}
       <KonfirmasiEvent open={open} handleClose={handleClose} />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} />
+      {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>
   );
 }

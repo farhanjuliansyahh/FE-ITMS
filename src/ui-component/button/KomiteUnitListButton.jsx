@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal';
 // import { height } from '@mui/system';
 import KomiteUnitListTable from '../../ui-component/tables/komiteunittable';
+import { Container } from '@mui/system';
+import CloseIcon from '@mui/icons-material/Close';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -13,12 +15,12 @@ const style = {
   width: 600, // Width of the modal
   height: 500, // Height of the modal
   bgcolor: 'white',
-  border: '2px solid #000',
+  border: '2px solid #fff',
   boxShadow: 24,
   p: 4,
 };
 
-export default function KomiteUnitListButton({ children }) {
+export default function KomiteUnitListButton() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -44,20 +46,19 @@ export default function KomiteUnitListButton({ children }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Title of the Modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-             {children}
-          </Typography>
-          <Box sx={{ mt: 2, position: 'relative',width: '100%', height: 'calc(100% - 50px)' }}>
-            <KomiteUnitListTable width={style.width-50} height={style.height - 50}/>
+          <Box sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center'}}>
+            <Typography variant="h3" sx={{ fontFamily: 'Roboto', fontWeight: 'bold' }}>
+              Daftar Komite Unit 
+            </Typography>
             <Button
-              onClick={handleClose}
-              style={{ position: 'absolute', top: '10px', right: '10px' }}
-            >
-              Close
+                onClick={handleClose}
+                sx={{ marginLeft: '300px' , color :'red'}}
+              >
+                <CloseIcon/>
             </Button>
+          </Box>
+          <Box sx={{ mt: 2, position: 'relative',width: '100%', height: 'calc(100% - 50px)' }}>
+            <KomiteUnitListTable width={style.width-80} height={style.height - 50}/>
           </Box>
         </Box>
       </Modal>
