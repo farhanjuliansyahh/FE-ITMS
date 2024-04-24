@@ -62,7 +62,7 @@ export default function TimelineDetailEvent() {
 
   const mulaiTahapSelanjutnyaButton = (
     <Button variant="contained" 
-    sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} 
+    sx={{backgroundColor:'#1C2D5A', borderRadius:'12px', padding: '14px 24px',}} 
     endIcon={<ArrowForwardOutlined />}>
       Mulai Tahap Selanjutnya
     </Button>
