@@ -62,31 +62,35 @@ const tableContainerStyle = {
   alignItems: 'flex-start', 
 };
 
-export default function Matrix() {
+export default function Matriks() {
   return (
-    <TableContainer component={Paper} sx={tableContainerStyle}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableBody>
-          {rows.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
-              {Object.values(row).map((cell, cellIndex) => (
-                <TableCell key={cellIndex} sx={cellStyle(cell)}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <Typography variant="h4" style={{ alignSelf: 'flex-start' }}>
-                      {cell}
-                    </Typography>
-                    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                      <Button variant="contained" color="primary" sx={buttonStyle}>
-                        {buttonNumbers[cell]}
-                      </Button>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Typography variant='h4' color='#ffffff' style={{ marginTop: '15px' }}>-</Typography>
+      <TableContainer component={Paper} sx={tableContainerStyle}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableBody>
+            {rows.map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {Object.values(row).map((cell, cellIndex) => (
+                  <TableCell key={cellIndex} sx={cellStyle(cell)}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                      <Typography variant="h4" style={{ alignSelf: 'flex-start', marginBottom: '5px' }}>
+                        {cell}
+                      </Typography>
+                      <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                        <Button variant="contained" color="primary" sx={buttonStyle}>
+                          {buttonNumbers[cell]}
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Typography variant='h4' style={{ marginTop: '15px' }} >Performance</Typography>
+    </div>
   );
 }

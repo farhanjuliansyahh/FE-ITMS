@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-// import Matrix from '../../../ui-component/submenu/matrix';
+import Matriks from '../../../src/ui-component/submenu/matriks';
 
 export default function MatrixNineBox() {
     const boxStyle = {
@@ -23,7 +23,6 @@ export default function MatrixNineBox() {
         display: 'flex',
         alignItems: 'center',
         gap: '16px', 
-        paddingBottom: '24px',
     });
 
     const EmployeeSum = styled('div')({
@@ -50,7 +49,7 @@ export default function MatrixNineBox() {
     return (
         <Box sx={boxStyle}>
             <FlexContainer>
-                <Typography variant='h3'>Matrix Nine Box</Typography>
+                <Typography variant='h2'>Matrix Nine Box</Typography>
                 <div style={{ flex: '1' }}> </div>
                 <IconContainer>
                     <EmployeeSum>40 Karyawan</EmployeeSum>
@@ -59,6 +58,11 @@ export default function MatrixNineBox() {
                         <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '20px' }}>Jumlah Karyawan</Typography>
                     </BoxContainer>
                 </IconContainer>
+            </FlexContainer>
+
+            <FlexContainer>
+                <Typography variant='h4' style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Capacity</Typography>
+                <Matriks />
             </FlexContainer>
         </Box>  
     )
