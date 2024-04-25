@@ -39,35 +39,9 @@ const RumpunJabatanChart = ({ series, options }) => {
             </Grid>
           </Grid>
         </Grid>
+
         <Grid item xs={12}>
           <div ref={chartRef} />
-          <Grid item xs={12} md={6}>
-            <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px' }}>Keterangan</Typography>
-            {/* Button Grid */}
-            <Grid container spacing={1} justifyContent="start">
-              <Grid item xs={6} style={{marginRight:'12px'}}>
-                <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis" style={{marginRight:'12px'}}/>
-              </Grid>
-              <Grid item xs={6}>
-                <ButtonChart buttonText="B" detail="Bisnis" />
-              </Grid>
-              <Grid item xs={6}>
-                <ButtonChart buttonText="OP" detail="Operasi" />
-              </Grid>
-              <Grid item xs={6} style={{marginRight:'12px'}}>
-                <ButtonChart buttonText="MR" detail="Manajemen Resiko dan Kepatuhan" />
-              </Grid>
-              <Grid item xs={6} style={{marginRight:'12px'}}>
-                <ButtonChart buttonText="PR" detail="Pengelolaan Regulasi" />
-              </Grid>
-              <Grid item xs={6} style={{marginRight:'12px'}}>
-                <ButtonChart buttonText="DI" detail="Keuangan" />
-              </Grid>
-              <Grid item xs={6}>
-                <ButtonChart buttonText="SD" detail="Sumber Daya Manusia" />
-              </Grid>
-            </Grid>
-          </Grid>
         </Grid>
       </Grid>
     </MainCard>
