@@ -17,7 +17,7 @@ import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetaileve
 import TalentProfile from '../../../ui-component/event-section/talent-profile';
 
 
-import TalentQualification from '../../../ui-component/event-section/talentqualification';
+import TalentQualification from '../../../ui-component/event-section/talent-qualification';
 import TalentSource from '../../../ui-component/event-section/talent-source';
 
 
