@@ -19,6 +19,7 @@ import TalentProfile from '../../../ui-component/event-section/talent-profile';
 
 import TalentQualification from '../../../ui-component/event-section/talent-qualification';
 import TalentSource from '../../../ui-component/event-section/talent-source';
+import TalentDays from '../../../ui-component/event-section/talent-days';
 
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
@@ -108,9 +109,15 @@ const DetailEvent = () => {
         </Box>
       </MainCard>
 
-      <MainCard >
+      <MainCard sx={{marginBottom : 3}}>
         <Box>
         <TalentQualification />
+        </Box>
+      </MainCard>
+
+      <MainCard >
+        <Box>
+        <TalentDays />
         </Box>
       </MainCard>
       
