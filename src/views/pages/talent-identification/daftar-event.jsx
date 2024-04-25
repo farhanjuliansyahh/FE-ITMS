@@ -29,6 +29,10 @@ import KonfirmasiEvent from '../../../ui-component/modal/konfirmasi-next-event';
 import KonfirmasiNextEvent from '../../../ui-component/modal/konfirmasi-next-event';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 
+// tambahan
+import TalentDays from '../../../ui-component/event-section/talent-days';
+import DetailEvent from './detail-event';
+
 
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
@@ -174,10 +178,11 @@ const DaftarEvent = () => {
         <CustomTabPanel value={value} index={1}>
           {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
               tapi dipakai untuk Detail Event dulu ya */}
-          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
-            <MatrixNineBox />
+          {/* <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>          */}
+                <DetailEvent />
+            
             {/* <KonfirmasiEvent /> */}
-          </Container>
+          {/* </Container> */}
           
         </CustomTabPanel>
         <AddEventModal open={open} handleClose={handleClose} />
