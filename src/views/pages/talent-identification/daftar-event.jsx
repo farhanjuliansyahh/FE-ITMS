@@ -27,6 +27,7 @@ import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
 import KonfirmasiEvent from '../../../ui-component/modal/konfirmasi-next-event';
 import KonfirmasiNextEvent from '../../../ui-component/modal/konfirmasi-next-event';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 
 
 
@@ -101,12 +102,8 @@ const DaftarEvent = () => {
         <Stack direction="row" spacing={2}>
           <SearchSection2 /> 
 
-          <Button variant="contained" 
-          sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} 
-          endIcon={<AddCircleOutlineIcon />}
-          onClick={handleOpen}>
-            Tambah Event
-          </Button>
+          <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Event'} onClick={handleOpen}/>
+        
         </Stack>
       }>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

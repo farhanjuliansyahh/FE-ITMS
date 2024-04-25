@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { CalendarMonthOutlined, ArrowForwardOutlined } from '@mui/icons-material';
+import { CalendarMonthOutlined, ArrowForwardOutlined, FileDownload } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Divider from '@mui/material/Divider';
+import ButtonPrimary from '../button/ButtonPrimary';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -60,14 +61,6 @@ export default function TimelineDetailEvent() {
     fontSize:'16px'
   });
 
-  const mulaiTahapSelanjutnyaButton = (
-    <Button variant="contained" 
-    sx={{backgroundColor:'#1C2D5A', borderRadius:'12px', padding: '14px 24px',}} 
-    endIcon={<ArrowForwardOutlined />}>
-      Mulai Tahap Selanjutnya
-    </Button>
-  );
-
   const DividerContainer = styled('div')({
     width: '100%',
     textAlign: 'center',
@@ -95,7 +88,7 @@ export default function TimelineDetailEvent() {
         <div style={{ flex: '1' }}> </div>
         
         <CountdownLabel>53 Hari Lagi</CountdownLabel>
-        {mulaiTahapSelanjutnyaButton}
+        <ButtonPrimary Color="#ffffff" icon={ArrowForwardOutlined} LabelName={'Mulai Tahap Selanjutnya'}/>
         
       </FlexContainer>
 

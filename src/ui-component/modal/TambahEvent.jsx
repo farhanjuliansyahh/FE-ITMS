@@ -14,6 +14,9 @@ import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 
 
 function AddEventModal({ open, handleClose }) {
@@ -194,9 +197,8 @@ function AddEventModal({ open, handleClose }) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose} variant="contained" sx={{ backgroundColor: '#1a2b5a', color: 'white' }}>
-                    Add
-                </Button>
+                <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Buat Event'} onClick={handleClose}/>
+
             </DialogActions>
         </Dialog>
     );

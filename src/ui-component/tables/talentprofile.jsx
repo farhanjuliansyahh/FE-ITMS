@@ -71,7 +71,7 @@ export default function TalentProfile({filter}) {
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
+        // checkboxSelection
         filterModel={filterModel}
         // onFilterModelChange={(model) => setFilterModel(model)}
       />
