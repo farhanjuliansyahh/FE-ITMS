@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, MenuItem } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -29,11 +29,27 @@ function AddEventModal({ open, handleClose }) {
     const [selectedcomitteemember, setSelectedCommitteemember] = useState([]);
     const [questionOption, setquestionOption] = useState([]);
     const [selectedquestion, setselectedquestion] = useState([]);
+    const [startdate, setstartdate] = useState('');
+    const [enddate, setenddate] = useState('');
+    const [eventName, setEventName] = useState('');
+    const [quota, setquota] = useState('');
+    const [deskripsi, setdeskripsi] = useState('');
+
+    const handleEventNameChange = (event) => {
+        setEventName(event.target.value); // Update state with input value
+    };
+
+    const handlequotachange = (event) => {
+        setquota(event.target.value); // Update state with input value
+    };
+
+    const handledeskripsichange = (event) => {
+        setdeskripsi(event.target.value); // Update state with input value
+    };
 
     const handleCommitteeChange = (event) => {
         setSelectedCommittee(event.target.value);
-        setSelectedCommitteemember([])
-        setSelectedJobLevel([])
+        setSelectedCommitteemember([]);
         fetchJobLevels(event.target.value);
         fetchketuakomite(event.target.value);
         fetchcommitteemember(event.target.value);
@@ -52,8 +68,8 @@ function AddEventModal({ open, handleClose }) {
         }
     };
 
-    const handleJobLevelChange = (event) => {
-        setSelectedJobLevel(event.target.value);
+    const handleJobLevelChange = (event, newJobLevels) => {
+        setSelectedJobLevel(newJobLevels);
     };
 
     useEffect(() => {
@@ -74,6 +90,24 @@ function AddEventModal({ open, handleClose }) {
         setSelectedJobFamily(event.target.value);
     };
 
+    useEffect(() => {
+        // Fetch job family data
+        const fetchquestion = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/getquestion');
+                const data = await response.json();
+                setquestionOption(data.quest);
+            } catch (error) {
+                console.error('Error fetching job family:', error);
+            }
+        };
+        fetchquestion();
+    }, []);
+
+    const handlequestionchange = (event) => {
+        setselectedquestion(event.target.value)
+        console.log(selectedquestion)
+    }
     const fetchketuakomite = async (selectedCommittee) => {
         try {
             setLoading(true);
@@ -108,26 +142,57 @@ function AddEventModal({ open, handleClose }) {
         setSelectedCommitteemember(event.target.value);
     }
 
-    useEffect(() => {
-        // Fetch job family data
-        const fetchquestion = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/getquestion');
-                const data = await response.json();
-                setquestionOption(data.quest);
-            } catch (error) {
-                console.error('Error fetching job family:', error);
+    const handleStartDateChange = (date) => {
+        console.log(date); // Check the date value
+        setstartdate(date); // Update the state with the selected date
+    };
+
+    const handleEndDateChange = (date) => {
+        console.log(date); // Check the date value
+        setenddate(date); // Update the state with the selected date
+    };
+
+    const postData = async () => {
+        try {
+            const arrayquestion = selectedquestion.map(selectedquestion => selectedquestion.id)
+            const arraymember = selectedcomitteemember.map(selectedcomitteemember => selectedcomitteemember.nippos)
+
+            console.log(startdate);
+            // Make the POST request to the API endpoint
+            const response = await fetch('http://localhost:4000/addevent', {
+                
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // Include any data you want to send in the request body
+                    nama_event: eventName,
+                    tipe_komite: selectedCommittee,
+                    nippos_ketua: selectedketuakomite.nippos,
+                    kode_rumpun_jabatan: selectedJobFamily,
+                    kuota: quota,
+                    deskripsi: deskripsi,
+                    tanggal_mulai: startdate,
+                    tanggal_selesai: enddate,
+                    level_jabatan: selectedJobLevel,
+                    id_pertanyaan: arrayquestion,
+                    nippos_komite: arraymember
+                })
+            });
+
+            // Check if the request was successful
+            if (!response.ok) {
+                throw new Error('Failed to post data');
             }
-        };
-        fetchquestion();
-    }, []);
 
-    const handlequestionchange = (event) => {
-        setselectedquestion(event.target.value)
-    }
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
+            // If successful, handle the response data (if needed)
+            const responseData = await response.json();
+            console.log('Response data:', responseData);
+        } catch (error) {
+            // Handle any errors that occur during the API call
+            console.error('Error posting data:', error.message);
+        }
     };
 
     return (
@@ -151,6 +216,8 @@ function AddEventModal({ open, handleClose }) {
                             required
                             id="outlined-required"
                             label="Nama Event"
+                            value={eventName} // Set value from state
+                            onChange={handleEventNameChange} // Handle input change
                         />
                         <TextField
                             select
@@ -189,6 +256,7 @@ function AddEventModal({ open, handleClose }) {
                             )}
                         />
 
+
                         <TextField
                             select
                             required
@@ -197,7 +265,7 @@ function AddEventModal({ open, handleClose }) {
                             onChange={handleJobFamilyChange}
                         >
                             {jobFamilyOptions.map((jobFamily) => (
-                                <MenuItem value={jobFamily.id}>
+                                <MenuItem value={jobFamily.kode_rumpun_jabatan}>
                                     {jobFamily.nama_rumpun_jabatan}
                                 </MenuItem>
                             ))}
@@ -243,24 +311,32 @@ function AddEventModal({ open, handleClose }) {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="Question"
+                                    label="Questions"
                                     variant="outlined"
                                 />
                             )}
                         />
 
                         <TextField
+                            required
                             id="outlined-required"
-                            label="Kuota Talent"
+                            label="Talent Pool Quota"
+                            value={quota} // Set value from state
+                            onChange={handlequotachange} // Handle input change
+                            inputProps={{
+                                inputMode: 'numeric',
+                                pattern: '[0-9]*'
+                            }}
                         />
 
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoItem>
                                 <DatePicker
-                                    disableFuture
                                     views={['year', 'month', 'day']}
                                     InputLabelProps={{ shrink: true }}
                                     label="Tanggal Mulai Event *"
+                                    onChange={handleStartDateChange}
+                                    format='YYYY-MM-DD'
                                     required
                                 />
                             </DemoItem>
@@ -269,10 +345,11 @@ function AddEventModal({ open, handleClose }) {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoItem>
                                 <DatePicker
-                                    disableFuture
                                     views={['year', 'month', 'day']}
                                     InputLabelProps={{ shrink: true }}
                                     label="Tanggal Berakhir Event *"
+                                    onChange={handleEndDateChange}
+                                    format='YYYY-MM-DD'
                                     required
                                 />
                             </DemoItem>
@@ -281,13 +358,18 @@ function AddEventModal({ open, handleClose }) {
                         <TextField
                             id="outlined-required"
                             label="Deskripsi"
+                            value={deskripsi} // Set value from state
+                            onChange={handledeskripsichange} // Handle input change
                         />
                     </div>
                 </Box>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose} variant="contained" sx={{ backgroundColor: '#1a2b5a', color: 'white' }}>
+                <Button onClick={() => {
+                    handleClose(); // Close the dialog
+                    postData();   // Execute the postData function
+                }} variant="contained" sx={{ backgroundColor: '#1a2b5a', color: 'white' }}>
                     Add
                 </Button>
             </DialogActions>

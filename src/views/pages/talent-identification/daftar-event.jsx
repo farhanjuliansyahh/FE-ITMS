@@ -65,10 +65,40 @@ function a11yProps(index) {
   };
 }
 
+const fetchDataFromDatabase = () => {
+  return fetch('http://localhost:4000/getallevent') // Replace with your actual endpoint
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      return data; // Return the parsed JSON data
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      throw error; // Rethrow the error to handle it elsewhere
+    });
+};
+
 const DaftarEvent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
-
+  const [eventData, setEventData] = useState([]);
+  
+  useEffect(() => {
+    fetchDataFromDatabase()
+      .then(data => {
+        setEventData(data.event);
+        setLoading(false); // Move this line to the end of the .then block
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -121,15 +151,28 @@ const DaftarEvent = () => {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-          <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingLeft:24, paddingRight:24, paddingBottom:24 }}>
-            
-            <EventBerjalan />
-            
+        {isLoading ? (
+          <Typography>Loading...</Typography>
+        ) : eventData.length > 0 ? (
+          eventData.map(event => (
+            <EventBerjalan 
+            key={event.id}
+            id={event.id}
+            nama_event={event.nama_event}
+            deskripsi={event.deskripsi}
+            tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+            nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+            tanggal_mulai={event.tanggal_mulai}
+            tanggal_selesai={event.tanggal_selesai}
+            status={event.evenstatus_id} />
+          ))
+        ) : (
+          <>
             <img src={notFoundImage} alt="Deskripsi gambar" />
             <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography>
-          </Box>
-
-        </CustomTabPanel>
+          </>
+        )}
+      </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
           {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
