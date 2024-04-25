@@ -1,15 +1,31 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { idID } from '@mui/material/locale';
 
 const columns = [
-  { field: 'id', headerName: 'No', width: 70 },
+  { field: 'id', headerName: 'ID', width: 70 },
   { field: 'nama', headerName: 'Nama', width: 130 },
-  { field: 'nippos', headerName: 'NIPPOS', width: 70 },
+  { field: 'nippos', headerName: 'Nippos', width: 130 },
   { field: 'posisi', headerName: 'Posisi', width: 130 },
   { field: 'jobfam', headerName: 'Job Family', width: 130 },
   { field: 'joblevel', headerName: 'Job Level', width: 130 },
+  { field: 'rumpunjabatan', headerName: 'Rumpun Jabatan', width: 130 },
   { field: 'kantor', headerName: 'Kantor', width: 130 },
-  { field: 'komiteunit', headerName: 'Komite Unit', width: 130 },
+  {
+    // field: 'age',
+    // headerName: 'Age',
+    // type: 'number',
+    // width: 90,
+  },
+  // Menghapus definisi kolom ini jika tidak ada data yang relevan atau memperbaikinya
+  // {
+  //   field: 'fullName',
+  //   headerName: 'Full name',
+  //   description: 'This column has a value getter and is not sortable.',
+  //   sortable: false,
+  //   width: 160,
+  //   valueGetter: (params) => `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+  // },
 ];
 
 const rows = [
