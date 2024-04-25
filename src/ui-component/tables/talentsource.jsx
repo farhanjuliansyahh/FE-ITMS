@@ -7,6 +7,7 @@ const columns = [
   { field: 'nama', headerName: 'Nama', width: 130 },
   { field: 'nippos', headerName: 'Nippos', width: 130 },
   { field: 'posisi', headerName: 'Posisi', width: 130 },
+  { field: 'jobfam', headerName: 'Job Family', width: 130 },
   { field: 'joblevel', headerName: 'Job Level', width: 130 },
   { field: 'rumpunjabatan', headerName: 'Rumpun Jabatan', width: 130 },
   { field: 'kantor', headerName: 'Kantor', width: 130 },
@@ -28,7 +29,24 @@ const columns = [
 ];
 
 const rows = [
-  { id: 1, nama: 'Sri Hartini', nippos: '998294379', posisi: 'Asisten Manajer Pengembangan', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung' },
+  { id: 1, nama : 'Sri Hartini', nippos:'998494379', posisi :'Asisten Manajer Pengembangan Join Operation', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABD HAFID'},
+  { id: 2, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
+  { id: 3, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
+  { id: 4, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
+  { id: 5, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
+  { id: 6, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
+  { id: 7, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
+  { id: 8, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
+  { id: 9, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+  jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
 ];
 
 export default function TalentSource() {
