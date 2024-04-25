@@ -12,7 +12,7 @@ const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talen
 export default function TimelineDetailEvent() {
 
   const boxStyle = {
-    border: '1px solid #E0E0E0', // Border style definition
+    // border: '1px solid #E0E0E0', // Border style definition
     padding: '20px', // Example padding
     width: '100%',
     borderRadius:'12px'
