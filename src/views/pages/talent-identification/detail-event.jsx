@@ -99,7 +99,7 @@ const DetailEvent = () => {
         <CustomTabPanel value={value} index={0}>
           <Container style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 0 }}>
           <Stack direction="row" spacing={2} alignItems="center"  style={{marginBottom: '15px'}}>
-            <Typography variant="h2" style={{display: 'inline',fontFamily: 'Roboto',fontWeight: '600' }} gutterBottom>
+            <Typography variant="h2" style={{display: 'inline',fontFamily: 'Roboto', fontSize:'24px',fontWeight: '500' }} gutterBottom>
               Tabel Karyawan
             </Typography>
             <KomiteUnitListButton />

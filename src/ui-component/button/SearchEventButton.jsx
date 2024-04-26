@@ -26,9 +26,9 @@ const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
   }
 }));
 
-const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
-  width: 170,
-  marginBottom :20,
+const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme, width }) => ({
+  width: width || 200, // Default width or passed width as a parameter
+  marginBottom: 20,
   marginRight: 10,
   paddingLeft: 16,
   paddingRight: 16,
@@ -61,7 +61,7 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
 
 // ==============================|| SEARCH INPUT ||============================== //
 
-const EventDetailSearchSection = ({PlaceHolder}) => {
+const SearchEventButton = ({ PlaceHolder, inputWidth }) => {
   const theme = useTheme();
   const [value, setValue] = useState('');
 
@@ -94,7 +94,8 @@ const EventDetailSearchSection = ({PlaceHolder}) => {
                         <Box sx={{ p: 2 }}>
                           <Grid container alignItems="center" justifyContent="space-between">
                             <Grid item xs>
-                              <MobileSearch value={value} setValue={setValue} popupState={popupState} />
+                              {/* MobileSearch component should be defined */}
+                              {/* <MobileSearch value={value} setValue={setValue} popupState={popupState} /> */}
                             </Grid>
                           </Grid>
                         </Box>
@@ -113,12 +114,12 @@ const EventDetailSearchSection = ({PlaceHolder}) => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={PlaceHolder}
+          width={inputWidth} // Pass the width as a parameter
           startAdornment={
             <InputAdornment position="start">
               <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
             </InputAdornment>
           }
-         
           aria-describedby="search-helper-text"
           inputProps={{ 'aria-label': 'weight' }}
         />
@@ -127,4 +128,9 @@ const EventDetailSearchSection = ({PlaceHolder}) => {
   );
 };
 
-export default EventDetailSearchSection;
+SearchEventButton.propTypes = {
+  PlaceHolder: PropTypes.string,
+  inputWidth: PropTypes.number // Define inputWidth prop type
+};
+
+export default SearchEventButton;

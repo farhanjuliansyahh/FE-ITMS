@@ -1,14 +1,14 @@
 import dashboard from './dashboard';
 import TalentIdentification from './talent-identification';
+import ManajemenPengguna from './manajemen-pengguna';
 
-// import pages from './pages';
 // import utilities from './utilities';
 // import other from './other';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, TalentIdentification]
+  items: [dashboard, TalentIdentification, ManajemenPengguna]
 };
 
 export default menuItems;
