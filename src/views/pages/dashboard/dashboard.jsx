@@ -11,6 +11,8 @@ import DashboardCard from '../../../ui-component/cards/DashboardCard';
 import RumpunJabatanChart from '../../../ui-component/charts/RumpunJabatanChart';
 import LevelJabatanChart from '../../../ui-component/charts/LevelJabatanChart';
 import ButtonChart from '../../../ui-component/button/ButtonChart';
+import MainCard from '../../../ui-component/cards/MainCard';
+import { padding } from '@mui/system';
 
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
@@ -73,11 +75,11 @@ const Dashboard = () => {
         </Grid>
 
         <Grid item xs={12}>
+        <MainCard style={{ padding: '24px 24px'}} >
           <Grid item xs={12} md={12}>
             <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '6px'}}>Keterangan</Typography>
           </Grid>
           <Grid item xs={12}>
-
             <Grid container spacing={2} justifyContent="start">
               <Grid item xs={4}>
                 <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis"/>
@@ -105,6 +107,7 @@ const Dashboard = () => {
               </Grid>
             </Grid>
           </Grid>
+          </MainCard>
         </Grid>
       </Grid>
     </>

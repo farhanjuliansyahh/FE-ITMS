@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
+// import DaftarPengguna from 'views/pages/manajemen-pengguna/daftar-pengguna';
 // import SecondLayout from '../layout/SecondLayout';
 
 // dashboard routing
@@ -14,6 +15,7 @@ const ParamenterEvent = Loadable(lazy(() => import('../views/pages/talent-identi
 const DetailEvent = Loadable(lazy(() => import('../views/pages/talent-identification/detail-event')));
 const EventKomiteTalent = Loadable(lazy(() => import('../views/pages/komite-talent/event-komitetalent')));
 
+const DaftarPengguna = Loadable(lazy(() => import('../views/pages/manajemen-pengguna/daftar-pengguna')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -46,16 +48,7 @@ const MainRoutes = {
           element: <DetailEvent />
         },
       ]
-    },
-    // {
-    //   path: '/',
-    //   element: <EventKomiteTalent />
-    // },
-    {
-      path: 'event-komitetalent',
-      element: <EventKomiteTalent />
-
-    },
+    }
   ]
 };
 

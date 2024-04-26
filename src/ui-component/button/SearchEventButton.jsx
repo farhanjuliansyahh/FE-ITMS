@@ -26,27 +26,23 @@ const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
   }
 }));
 
-const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
-  width: '100%',
-  marginTop :0,
-  marginBottom :0,
-  marginLeft: 0,
-  marginRight: 12,
-  paddingTop: 0,
-  paddingBottom: 0,
+const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme, width }) => ({
+  width: width || 200, // Default width or passed width as a parameter
+  marginBottom: 20,
+  marginRight: 10,
   paddingLeft: 16,
-  paddingRight: '16px !important',
+  paddingRight: 16,
   '& input': {
     background: 'transparent !important',
-    paddingLeft: '0px !important'
+    paddingLeft: '4px !important'
   },
   
   [theme.breakpoints.down('lg')]: {
-    width: '100%'
+    width: 250
   },
   [theme.breakpoints.down('md')]: {
     width: '100%',
-    marginLeft: 0,
+    marginLeft: 4,
     background: '#fff'
   }
 }));
@@ -65,7 +61,7 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
 
 // ==============================|| SEARCH INPUT ||============================== //
 
-const EventDetailSearchSection = ({filter, setFilter,PlaceHolder}) => {
+const SearchEventButton = ({ PlaceHolder, inputWidth }) => {
   const theme = useTheme();
   const [value, setValue] = useState('');
 
@@ -98,7 +94,8 @@ const EventDetailSearchSection = ({filter, setFilter,PlaceHolder}) => {
                         <Box sx={{ p: 2 }}>
                           <Grid container alignItems="center" justifyContent="space-between">
                             <Grid item xs>
-                              <MobileSearch value={filter} setValue={setFilter} popupState={popupState} />
+                              {/* MobileSearch component should be defined */}
+                              {/* <MobileSearch value={value} setValue={setValue} popupState={popupState} /> */}
                             </Grid>
                           </Grid>
                         </Box>
@@ -111,18 +108,18 @@ const EventDetailSearchSection = ({filter, setFilter,PlaceHolder}) => {
           )}
         </PopupState>
       </Box>
-      <Box style={{ display: { xs: 'none', md: 'block' }, width: '100%' }}>
+      <Box style={{ display: { xs: 'none', md: 'block' }, width: '100px' }}>
         <OutlineInputStyle
           id="input-search-header"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           placeholder={PlaceHolder}
+          width={inputWidth} // Pass the width as a parameter
           startAdornment={
             <InputAdornment position="start">
               <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
             </InputAdornment>
           }
-         
           aria-describedby="search-helper-text"
           inputProps={{ 'aria-label': 'weight' }}
         />
@@ -131,4 +128,9 @@ const EventDetailSearchSection = ({filter, setFilter,PlaceHolder}) => {
   );
 };
 
-export default EventDetailSearchSection;
+SearchEventButton.propTypes = {
+  PlaceHolder: PropTypes.string,
+  inputWidth: PropTypes.number // Define inputWidth prop type
+};
+
+export default SearchEventButton;

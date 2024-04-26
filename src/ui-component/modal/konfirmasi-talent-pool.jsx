@@ -2,24 +2,15 @@ import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
-import { DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
-
-function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentstep }) {
-    const [selectedDate, setSelectedDate] = useState(null);
-    
-    const handleLanjutkan = () => {
-        handleConfirmation(selectedDate);
+function KonfirmasiTalentPool({ open, handleClose, handleConfirmation }) {    
+    const handleSelesai = () => {
+        handleConfirmation();
     };
 
-    const lanjutkanButtonStyle = {
+    const SelesaiButtonStyle = {
         backgroundColor: '#1C2D5A',
         color:'#fff',
         borderRadius: '12px',
@@ -36,7 +27,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
         fontSize: '14px'
     };
     
-    const hoverLanjutkanStyle = {
+    const hoverSelesaiStyle = {
         backgroundColor: '#122350' // Darker shade for hover
     };
     
@@ -53,18 +44,18 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
         justifyContent: 'space-between'
     });
 
-    const [isHoveredLanjutkan, setIsHoveredLanjutkan] = useState(false);
+    const [isHoveredSelesai, setIsHoveredSelesai] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
-    const lanjutkanButton = (
+    const SelesaiButton = (
         <Button
-            endIcon={<ArrowForwardRoundedIcon />}
-            style={isHoveredLanjutkan ? { ...lanjutkanButtonStyle, ...hoverLanjutkanStyle } : lanjutkanButtonStyle}
-            onMouseEnter={() => setIsHoveredLanjutkan(true)}
-            onMouseLeave={() => setIsHoveredLanjutkan(false)}
-            onClick={handleLanjutkan}
+            endIcon={<CheckCircleOutlinedIcon />}
+            style={isHoveredSelesai ? { ...SelesaiButtonStyle, ...hoverSelesaiStyle } : SelesaiButtonStyle}
+            onMouseEnter={() => setIsHoveredSelesai(true)}
+            onMouseLeave={() => setIsHoveredSelesai(false)}
+            onClick={handleSelesai}
         >
-            Lanjutkan
+            Selesai
         </Button>
     );
 
@@ -90,34 +81,20 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
                 <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
-                    Konfirmasi {steps[currentstep]}
+                    Konfirmasi Talent Pool
                 </Typography>
             </DialogTitle>
             <DividerContainer>
                 <Divider orientation="horizontal" flexItem /> 
             </DividerContainer>
             <DialogContent>
-                <Box
-                    component="form"
-                    sx={{'& .MuiTextField-root': { m: 1, width: '500px' }}}
-                    noValidate
-                    autoComplete="off"
-                >
+                <Box>
                     <div>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoItem>
-                            <DatePicker
-                                disablePast
-                                views={['year', 'month', 'day']}
-                                InputLabelProps={{ shrink: true }}
-                                label={`Tanggal Berakhir ${steps[currentstep + 1]} *`}
-                                required
-                                format='YYYY-MM-DD'
-                            />
-                            </DemoItem>
-                        </LocalizationProvider>
+                        <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
+                            Apakah anda yakin seluruh event sudah selesai?
+                        </Typography>
                         <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px', marginBottom: '24px'}}>
-                            Anda tidak dapat kembali ke tahap sebelumnya jika melanjutkan.
+                            Anda tidak dapat kembali ke tahap sebelumnya jika klik selesai.
                         </Typography>
                     </div>
                 </Box>
@@ -125,11 +102,11 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
             <DialogActions sx={{padding:'0 24px 24px 24px '}}>
                 <ButtonsContainer>
                     {batalkanButton}
-                    {lanjutkanButton}
+                    {SelesaiButton}
                 </ButtonsContainer>
             </DialogActions>
         </Dialog>
     );
 }
 
-export default KonfirmasiNextEvent;
+export default KonfirmasiTalentPool;

@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal';
 // import { height } from '@mui/system';
 import KomiteUnitListTable from '../../ui-component/tables/komiteunittable';
-import { Container } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';
 const style = {
   position: 'absolute',
@@ -34,7 +33,8 @@ export default function KomiteUnitListButton() {
           color: '#2196F3',
           borderRadius: '15px',
           borderColor: '#EAF8FF',
-          backgroundColor: '#EAF8FF'
+          backgroundColor: '#EAF8FF',
+          boxShadow: 'none',
         }}
       >
         0/10 Komite Unit
