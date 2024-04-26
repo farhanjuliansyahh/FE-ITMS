@@ -45,10 +45,27 @@ const MainRoutes = {
         },
         {
           path: 'detail-event',
-          element: <DetailEvent />
+          element: <DetailEvent/>
         },
       ]
-    }
+    },
+    // {
+    //   path: '/',
+    //   element: <EventKomiteTalent />
+    // },
+    {
+      path: 'event-komitetalent',
+      element: <EventKomiteTalent />
+    },
+    {
+      path: 'manajemen-pengguna',
+      children: [
+        {
+          path: 'daftar-pengguna',
+          element: <DaftarPengguna />
+        },
+      ]
+    },
   ]
 };
 
