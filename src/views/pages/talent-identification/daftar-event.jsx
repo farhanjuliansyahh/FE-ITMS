@@ -176,13 +176,9 @@ const DaftarEvent = () => {
       </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
-          {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
-              tapi dipakai untuk Detail Event dulu ya */}
-          {/* <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>          */}
-                <DetailEvent />
-            
-            {/* <KonfirmasiEvent /> */}
-          {/* </Container> */}
+          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
+                
+          </Container>
           
         </CustomTabPanel>
         <AddEventModal open={open} handleClose={handleClose} />
