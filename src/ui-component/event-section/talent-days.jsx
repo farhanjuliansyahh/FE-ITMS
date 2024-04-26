@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Box, Button, Grid, Tab, Tabs, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import { Container } from '@mui/system';
 import MainCard from '../../ui-component/cards/MainCard';
 import EventDetailSearchSection from '../../ui-component/button/EventDetailSearchSection';
 import SearchResetButton from '../../ui-component/button/SearchResetButton';
@@ -15,8 +14,11 @@ import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import TalentDaysTable from '../../ui-component/tables/talentdays';
+import ButtonPrimary from '../button/ButtonPrimary';
+import { IconFileDownload } from '@tabler/icons-react';
 
+import TalentDaysBPJTable from '../tables/talentdaysbpj';
+import TalentDaysKaryawanTable from '../tables/talentdayskaryawan';
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -170,16 +172,61 @@ const TalentDays = () => {
                     </div>
                 </div>
          
-                {/* <TalentSourceTable filter={{nama:filterNama, nippos:filterNippos }}/> */}
-                <TalentDaysTable />
+                <TalentDaysBPJTable />
             </Box>
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
-          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
-            
-          </Container>
+          <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
+
+            <FlexContainer>
+              <Stack direction="row" spacing={2} alignItems="center" style={{marginTop: '16px'}}>
+                <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
+                    Tabel Karyawan
+                </Typography>
+                <Button
+                    variant="contained"
+                    style={{
+                    color: '#2196F3',
+                    borderRadius: '15px',
+                    borderColor: '#EAF8FF',
+                    backgroundColor: '#EAF8FF',
+                    boxShadow: 'none',
+                    }}
+                >
+                    13/15 Nilai Karyawan Sudah Diisi
+                </Button>
+              </Stack>
+
+              <div style={{ flex: '1' }}> </div>
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+
+            </FlexContainer>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
+              <div style={{ marginRight: '12px', width:'100%'  }}>
+                    <EventDetailSearchSection PlaceHolder={'Nama'} />
+              </div>
+              <div style={{ marginRight: '12px', width:'100%' }}>
+                  <EventDetailSearchSection PlaceHolder={'NIPPOS'} />
+              </div>
+              <div style={{ marginRight: '12px', width:'100%' }}>
+                  <EventDetailSearchSection PlaceHolder={'Job Level'} />
+              </div>
+              <div style={{ marginRight: '24px', width:'100%' }}>
+                  <EventDetailSearchSection PlaceHolder={'Komite Unit'} />
+              </div>
+              <div style={{ marginRight: '12px' }}>
+                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
+              </div>
+              <div style={{ marginRight: '0px' }}>
+                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
+              </div>
+            </div>
           
+            <TalentDaysKaryawanTable />
+
+          </Box>          
         </CustomTabPanel>
 
       </MainCard>
