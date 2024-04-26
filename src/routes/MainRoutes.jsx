@@ -13,6 +13,8 @@ const DashboardDefault = Loadable(lazy(() => import('../views/pages/dashboard/da
 const DaftarEvent = Loadable(lazy(() => import('../views/pages/talent-identification/daftar-event')));
 const ParamenterEvent = Loadable(lazy(() => import('../views/pages/talent-identification/parameter')));
 const DetailEvent = Loadable(lazy(() => import('../views/pages/talent-identification/detail-event')));
+const EventKomiteTalent = Loadable(lazy(() => import('../views/pages/komite-talent/event-komitetalent')));
+
 const DaftarPengguna = Loadable(lazy(() => import('../views/pages/manajemen-pengguna/daftar-pengguna')));
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -46,6 +48,14 @@ const MainRoutes = {
           element: <DetailEvent/>
         },
       ]
+    },
+    // {
+    //   path: '/',
+    //   element: <EventKomiteTalent />
+    // },
+    {
+      path: 'event-komitetalent',
+      element: <EventKomiteTalent />
     },
     {
       path: 'manajemen-pengguna',

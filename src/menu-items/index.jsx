@@ -1,5 +1,6 @@
 import dashboard from './dashboard';
 import TalentIdentification from './talent-identification';
+import EventKomiteTalent from './event-komitetalent';
 import ManajemenPengguna from './manajemen-pengguna';
 
 // import utilities from './utilities';
@@ -8,7 +9,7 @@ import ManajemenPengguna from './manajemen-pengguna';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, TalentIdentification, ManajemenPengguna]
+  items: [dashboard, TalentIdentification, EventKomiteTalent, ManajemenPengguna]
 };
 
 export default menuItems;
