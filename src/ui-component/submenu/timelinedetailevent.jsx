@@ -15,9 +15,9 @@ import TalentProfile from '../../ui-component/event-section/talent-profile';
 import TalentQualification from '../../ui-component/event-section/talent-qualification';
 import TalentDays from '../../ui-component/event-section/talent-days';
 import TalentPool from '../../ui-component/event-section/talent-pool';
-import MatrixNineBox from '../../ui-component/submenu/matrixninebox';
 import KonfirmasiNextEvent from '../../ui-component/modal/konfirmasi-next-event';
 import KonfirmasiTalentPool from '../../ui-component/modal/konfirmasi-talent-pool';
+import TalentCluster from '../../ui-component/event-section/talent-cluster';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -150,7 +150,7 @@ export default function TimelineDetailEvent() {
         return (
           <MainCard sx={{marginTop : 5}}>
             <Box>
-              <MatrixNineBox/>
+              <TalentCluster />
             </Box>
           </MainCard>
         );

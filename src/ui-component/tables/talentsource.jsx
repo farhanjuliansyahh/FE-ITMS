@@ -3,14 +3,14 @@ import { DataGrid } from '@mui/x-data-grid';
 import { idID } from '@mui/material/locale';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'id', headerName: 'No', width: 70 },
   { field: 'nama', headerName: 'Nama', width: 130 },
   { field: 'nippos', headerName: 'Nippos', width: 130 },
   { field: 'posisi', headerName: 'Posisi', width: 130 },
   { field: 'jobfam', headerName: 'Job Family', width: 130 },
   { field: 'joblevel', headerName: 'Job Level', width: 130 },
-  { field: 'rumpunjabatan', headerName: 'Rumpun Jabatan', width: 130 },
   { field: 'kantor', headerName: 'Kantor', width: 130 },
+  { field: 'komiteunit', headerName: 'Komite Unit', width: 130 },
   {
     // field: 'age',
     // headerName: 'Age',
@@ -49,7 +49,7 @@ const rows = [
   jobfam :'Bisnis', joblevel:'D3', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD'},
 ];
 
-export default function TalentSource() {
+export default function TalentSourceTable({ checkboxSelection }) {
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -61,7 +61,7 @@ export default function TalentSource() {
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
+        checkboxSelection={checkboxSelection} // Use the prop value here
       />
     </div>
   );

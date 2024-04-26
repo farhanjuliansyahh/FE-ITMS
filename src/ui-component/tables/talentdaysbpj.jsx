@@ -38,15 +38,15 @@ const columns = [
 ];
 
 const rows = [
-    {id: 1, no: 1, nama: 'Asih Kurniasari Komar', nippos: '451416105', posisi: 'Direktur Human Capital Management' },
-    {id: 2, no: 2, nama: 'Chandra Dewi', nippos: '971374200', posisi: 'Senior Vice President Human Capital Services and Business Partner' },
-    {id: 3, no: 3, nama: 'Daryana', nippos: '970340709', posisi: 'Vice President Digital Operation and Quality Assurance' },
-    {id: 4, no: 4, nama: 'Wasli', nippos: '969288451', posisi: 'Vice President Operation Cost Management and Partnership' },
-    {id: 5, no: 5, nama: 'Gusti Mas Akhirin', nippos: '973339111', posisi: 'Vice President Operasi Pelayanan' },
-    {id: 6, no: 6, nama: 'Kumalawati', nippos: '969355452', posisi: 'Vice President Bidding and Collection Management' },
+    {id: 1, nama: 'Asih Kurniasari Komar', nippos: '451416105', posisi: 'Direktur Human Capital Management' },
+    {id: 2, nama: 'Chandra Dewi', nippos: '971374200', posisi: 'Senior Vice President Human Capital Services and Business Partner' },
+    {id: 3, nama: 'Daryana', nippos: '970340709', posisi: 'Vice President Digital Operation and Quality Assurance' },
+    {id: 4, nama: 'Wasli', nippos: '969288451', posisi: 'Vice President Operation Cost Management and Partnership' },
+    {id: 5, nama: 'Gusti Mas Akhirin', nippos: '973339111', posisi: 'Vice President Operasi Pelayanan' },
+    {id: 6, nama: 'Kumalawati', nippos: '969355452', posisi: 'Vice President Bidding and Collection Management' },
 ];
 
-export default function TalentDaysTable() {
+export default function TalentDaysBPJTable() {
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid

@@ -1,54 +1,25 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-// import Button from '@mui/material/Button';
-// import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-// import DeleteIcon from '@mui/icons-material/Delete'; // Import DeleteIcon
-// import SendIcon from '@mui/icons-material/Send'; // Import SendIcon
-
-// material-ui
-import { Box, Button, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
-// import { gridSpacing } from 'store/constant';
-// import GroupsIcon from '@mui/icons-material/Groups';
-// import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-// import Header from '../../../ui-component/header/header';
-// import MainLayout from 'layout/MainLayout';
-import { Container } from '@mui/system';
 import MainCard from '../cards/MainCard';
-// import { DownloadDone, RotateRight } from '@mui/icons-material';
-// import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-// import SecondCard from 'ui-component/cards/SecondCard';
-// import SearchSection from 'layout/MainLayout/Header/SearchSection';
-// import SearchSection2 from '../../../ui-component/searchsection';
-// import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
-import TimelineDetailEvent from '../submenu/timelinedetailevent';
-import AddEventModal from '../modal/TambahEvent';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import EventDetailSearchSection from '../button/EventDetailSearchSection';
 import SearchResetButton from '../button/SearchResetButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import TalentProfileTable from '../tables/talentprofile';
 import KomiteUnitListButton from '../button/KomiteUnitListButton';
-// import { CloudDownload, Download, DownloadDoneRounded, FileDownload, FileDownloadDone, FontDownload } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
 import ButtonPrimary from '../button/ButtonPrimary';
 
-
-
-
-
-
-
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import TalentSourceTable from '../tables/talentsource';
+import AdminSearchSectionGroup from '../button/AdminSearchButtonGroup';
 
-
-
-// ==============================|| DAFTAR EVENT PAGE ||============================== //
+// ==============================|| DETAIL TALENT SOURCE PAGE ||============================== //
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,7 +54,7 @@ function a11yProps(index) {
   };
 }
 
-const DetailEvent = () => {
+const TalentSource = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
@@ -139,15 +110,15 @@ const DetailEvent = () => {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-        <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
+          <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
 
-          <FlexContainer>
-            <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
-                Tabel Karyawan
-            </Typography>
-            <KomiteUnitListButton />
+            <FlexContainer>
+              <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
+                  Tabel Karyawan
+              </Typography>
+              <KomiteUnitListButton />
 
-            <div style={{ flex: '1' }}> </div>
+              <div style={{ flex: '1' }}> </div>
 
 
             <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Talent'}/>
@@ -156,45 +127,57 @@ const DetailEvent = () => {
           
          
           <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-            <div style={{ marginRight: '12px', width:'100%'  }}>
-                  <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-            </div>
-            <div style={{ marginRight: '12px', width:'100%' }}>
-                <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-            </div>
-            <div style={{ marginRight: '12px', width:'100%' }}>
-                <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-            </div>
-            <div style={{ marginRight: '24px', width:'100%' }}>
-                <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
-            </div>
-            <div style={{ marginRight: '12px' }}>
-                <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-            </div>
-            <div style={{ marginRight: '0px' }}>
-                <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
-            </div>
+            <AdminSearchSectionGroup/>
           </div>
          
-          <TalentSourceTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}/>
+            <TalentSourceTable checkboxSelection={true} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}/>
           </Box>
 
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
-          {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
-              tapi dipakai untuk Detail Event dulu ya */}
-          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
-            <TimelineDetailEvent />
-          </Container>
+          <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
+
+            <FlexContainer>
+              <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
+                  Tabel Karyawan
+              </Typography>
+              <KomiteUnitListButton />
+
+              <div style={{ flex: '1' }}> </div>
+              
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+            </FlexContainer>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
+              <div style={{ marginRight: '12px', width:'100%'  }}>
+                    <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
+              </div>
+              <div style={{ marginRight: '12px', width:'100%' }}>
+                  <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
+              </div>
+              <div style={{ marginRight: '12px', width:'100%' }}>
+                  <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
+              </div>
+              <div style={{ marginRight: '24px', width:'100%' }}>
+                  <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
+              </div>
+              <div style={{ marginRight: '12px' }}>
+                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
+              </div>
+              <div style={{ marginRight: '0px' }}>
+                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
+              </div>
+            </div>
+
+            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}/>
+          </Box>
           
         </CustomTabPanel>
-        <AddEventModal open={open} handleClose={handleClose} />
-
 
       </MainCard>
     </>
   );
 };
 
-export default DetailEvent;
+export default TalentSource;
