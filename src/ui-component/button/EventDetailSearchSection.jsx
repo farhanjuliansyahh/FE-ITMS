@@ -27,22 +27,26 @@ const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
 }));
 
 const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
-  width: 170,
-  marginBottom :20,
-  marginRight: 10,
+  width: '100%',
+  marginTop :0,
+  marginBottom :0,
+  marginLeft: 0,
+  marginRight: 12,
+  paddingTop: 0,
+  paddingBottom: 0,
   paddingLeft: 16,
-  paddingRight: 16,
+  paddingRight: '16px !important',
   '& input': {
     background: 'transparent !important',
-    paddingLeft: '4px !important'
+    paddingLeft: '0px !important'
   },
   
   [theme.breakpoints.down('lg')]: {
-    width: 250
+    width: '100%'
   },
   [theme.breakpoints.down('md')]: {
     width: '100%',
-    marginLeft: 4,
+    marginLeft: 0,
     background: '#fff'
   }
 }));
@@ -61,7 +65,7 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
 
 // ==============================|| SEARCH INPUT ||============================== //
 
-const EventDetailSearchSection = ({PlaceHolder}) => {
+const EventDetailSearchSection = ({filter, setFilter,PlaceHolder}) => {
   const theme = useTheme();
   const [value, setValue] = useState('');
 
@@ -94,7 +98,7 @@ const EventDetailSearchSection = ({PlaceHolder}) => {
                         <Box sx={{ p: 2 }}>
                           <Grid container alignItems="center" justifyContent="space-between">
                             <Grid item xs>
-                              <MobileSearch value={value} setValue={setValue} popupState={popupState} />
+                              <MobileSearch value={filter} setValue={setFilter} popupState={popupState} />
                             </Grid>
                           </Grid>
                         </Box>
@@ -107,11 +111,11 @@ const EventDetailSearchSection = ({PlaceHolder}) => {
           )}
         </PopupState>
       </Box>
-      <Box style={{ display: { xs: 'none', md: 'block' }, width: '100px' }}>
+      <Box style={{ display: { xs: 'none', md: 'block' }, width: '100%' }}>
         <OutlineInputStyle
           id="input-search-header"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
           placeholder={PlaceHolder}
           startAdornment={
             <InputAdornment position="start">

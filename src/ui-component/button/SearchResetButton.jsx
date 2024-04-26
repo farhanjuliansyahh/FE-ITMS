@@ -8,6 +8,7 @@ export default function SearchResetButton({ outlineColor, icon, LabelName }) {
     <Button 
       variant="outlined"
       sx={{ 
+        width:'100%',
         borderColor: outlineColor, 
         borderRadius: '12px', 
         fontSize: '1rem', // Custom font size

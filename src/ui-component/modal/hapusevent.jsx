@@ -23,10 +23,42 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-function HapusEvent({ open, handleClose }) {
+function HapusEvent({ open, handleClose, eventid }) {
     const [selectedCommittee, setSelectedCommittee] = useState('');
     const [selectedJobLevel, setSelectedJobLevel] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
+
+    const hapusdata = async () => {
+        try {
+            // Make an HTTP DELETE request to your API endpoint
+            const response = await fetch(`http://localhost:4000/hapusevent`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any other headers if needed
+                },
+                body: JSON.stringify({
+                    // Include any data you want to send in the request body
+                    eventid: eventid
+                })
+                // You can pass any data in the request body if required
+                // body: JSON.stringify({}),
+            });
+    
+            // Check if the request was successful (status code 200-299)
+            if (response.ok) {
+                // If successful, handle the response or perform any necessary actions
+                console.log('Data deleted successfully');
+            } else {
+                // If not successful, throw an error or handle the error response
+                throw new Error('Failed to delete data');
+            }
+        } catch (error) {
+            // Handle any errors that occurred during the process
+            console.error('Error deleting data:', error.message);
+        }
+    };
+    
 
     const handleCommitteeChange = (event) => {
         setSelectedCommittee(event.target.value);
@@ -84,6 +116,10 @@ function HapusEvent({ open, handleClose }) {
       style={isHoveredMulai ? { ...mulaiButtonStyle, ...hoverMulaiStyle } : mulaiButtonStyle}
       onMouseEnter={() => setIsHoveredMulai(true)}
       onMouseLeave={() => setIsHoveredMulai(false)}
+      onClick={() => {
+        hapusdata() // Call the function to post deadline source
+            .then(() => handleClose()); // Close the popup after all operations are finished
+    }}
     >
       Ya, Hapus Data
     </Button>

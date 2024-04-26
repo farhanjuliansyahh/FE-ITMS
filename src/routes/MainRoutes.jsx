@@ -43,7 +43,7 @@ const MainRoutes = {
         },
         {
           path: 'detail-event',
-          element: <DetailEvent />
+          element: <DetailEvent/>
         },
       ]
     },

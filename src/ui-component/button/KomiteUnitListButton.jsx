@@ -33,7 +33,8 @@ export default function KomiteUnitListButton() {
           color: '#2196F3',
           borderRadius: '15px',
           borderColor: '#EAF8FF',
-          backgroundColor: '#EAF8FF'
+          backgroundColor: '#EAF8FF',
+          boxShadow: 'none',
         }}
       >
         0/10 Komite Unit
