@@ -6,16 +6,11 @@ import { Grid, Container, Stack,Typography, Box, Button} from '@mui/material';
 import { gridSpacing } from '../../../store/constant';
 import GroupsIcon from '@mui/icons-material/Groups';
 import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
-import SearchResetButton from '../../../ui-component/button/SearchResetButton';
-import SearchIcon from '@mui/icons-material/Search';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import TalentSourceTable from '../../../ui-component/tables/talentsource';
-import KomiteUnitListButton from '../../../ui-component/button/KomiteUnitListButton';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import DownloadIcon from '@mui/icons-material/Download';
-import SearchSectionManajemenPengguna from '../../../ui-component/button/SearchSectionGroup';
-
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import SearchSectionManajemenPengguna from '../../../ui-component/button/ManajemenSearchSectionGroup';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
+import DaftarPenggunaTabel from '../../../ui-component/tables/daftarpengguna';
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const DaftarPengguna = () => {
@@ -63,40 +58,11 @@ const DaftarPengguna = () => {
                 </Button>
                 <Box sx={{ flexGrow: 1 }} /> {/* This will push the following elements to the right */}
                 <Stack direction="row" spacing={1}>
-                  
-                  <Button variant="contained"  alignItems="center"
-                  sx={{ 
-                    backgroundColor: '#1a2b5a', 
-                    borderRadius: '15px' ,
-                    height: '48px', /* Adjust height as needed */
-                    minWidth: '171px', /* Adjust width as needed */
-                    paddingLeft: '24px',
-                    fontFamily: 'Roboto',
-                    fontSize: '14',
-                  }} endIcon={<DownloadIcon />}>
-                    Unduh Data
-                  </Button>
+                  <ButtonPrimary Color="#ffffff" icon={FileDownloadOutlinedIcon} LabelName={'Unduh Data'}/>
                 </Stack>
               </Stack>
               <SearchSectionManajemenPengguna />
-              {/* <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <div style={{ marginRight: '80px' }}>
-                    <EventDetailSearchSection PlaceHolder={'Nama'} />
-                </div>
-                <div style={{ marginRight: '80px' }}>
-                    <EventDetailSearchSection PlaceHolder={'NIPPOS'} />
-                </div>
-                <div style={{ marginRight: '80px' }}>
-                    <EventDetailSearchSection PlaceHolder={'Peran'} />
-                </div>
-                <div style={{ marginRight: '15px' }}>
-                    <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-                </div>
-                <div style={{ marginRight: '0px' }}>
-                    <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
-                </div>
-              </div> */}
-              <TalentSourceTable/>
+              <DaftarPenggunaTabel/>
             </Box>
             </Grid>
           </Grid>
