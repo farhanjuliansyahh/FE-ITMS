@@ -37,14 +37,14 @@ const MainRoutes = {
       children: [
         {
           path: 'event',
-          element: <DaftarEvent />
+          element: <DaftarEvent />,
         },
         {
           path: 'parameter',
           element: <ParamenterEvent />
         },
         {
-          path: 'detail-event',
+          path: 'detail-event/:id',
           element: <DetailEvent/>
         },
       ]

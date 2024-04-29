@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import KonfirmasiEvent from '../modal/konfirmasi-event';
 import HapusEvent from '../modal/hapusevent';
+//import DetailEvent from '../../views/pages/talent-identification/detail-event';
 
 import KonfirmasiNextEvent from '../modal/konfirmasi-next-event';
 import { bgcolor } from '@mui/system';
@@ -248,6 +249,8 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
+  console.log(nama_event);
+
 
 
   return (
@@ -274,8 +277,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
             >
               <Link
                 to={{
-                  pathname: '/talent/detail-event',
-                  state: { nama_event }
+                  pathname: `/talent/detail-event/${id}`,
                 }}
                 style={{ color: 'inherit' }}
               >
