@@ -5,7 +5,7 @@ import TuneRounded from '@mui/icons-material/TuneRounded';
 
 
 
-// ==============================|| DASHBOARD MENU TATENT IDENTIFICATION ||============================== //
+// ==============================|| DASHBOARD MENU TALENT IDENTIFICATION ||============================== //
 
 const TalentIdentification = {
 
