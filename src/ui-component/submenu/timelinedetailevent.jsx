@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { ArrowBackOutlined, ArrowForwardOutlined, CalendarMonthOutlined, CheckCircleOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -21,11 +21,19 @@ import TalentCluster from '../../ui-component/event-section/talent-cluster';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function TimelineDetailEvent() {
+export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, tipekomite, rumpun, tanggal_mulai, tanggal_selesai, eventstatus_id }) {
+  //console.log(nama_event);
   const [activeStep, setActiveStep] = React.useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [talentPoolDialogOpen, setTalentPoolDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [DaysLeft, setDaysLeft] = useState('');
+
+  useEffect(() => {
+    setActiveStep(eventstatus_id-2)
+  }, [eventstatus_id]);
+
+  console.log(activeStep);
 
   const boxStyle = {
     padding: '20px', 
@@ -165,24 +173,47 @@ export default function TimelineDetailEvent() {
     }
   };
 
+  useEffect(() => {
+    // Convert 'tanggal_selesai' from ISO 8601 format to a Date object
+    const endDate = new Date(tanggal_selesai);
+    // Get the current date
+    const currentDate = new Date();
+    // Calculate the difference in milliseconds between the current date and the 'tanggal_selesai'
+    const timeDifference = endDate.getTime() - currentDate.getTime();
+    // Convert the difference from milliseconds to days
+    const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    // Set the number of days left
+    setDaysLeft(daysDifference);
+  }, [tanggal_selesai]);
+
   return (
     <MainCard>
       <Box sx={boxStyle}>
         <FlexContainer>
           <BoxContainer>
             <FlexTitle style={{paddingBottom:'8px'}}>
-              <Typography style={{fontSize:'24px', fontWeight:'bold'}}>TRIAL EVENT_ E1-D3_BISNIS</Typography>
+              <Typography style={{fontSize:'24px', fontWeight:'bold'}}>{nama_event}</Typography>
             </FlexTitle>
 
             <FlexTitle>
               <CalendarIcon style={{color:'#828282'}}/>
-              <Typography style={{fontSize:'14px', color:'#828282'}}>22 Januari 2024 - 22 Maret 2024</Typography>
+              <Typography style={{fontSize:'14px', color:'#828282'}}>{tanggal_mulai &&
+            new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })} - {tanggal_selesai &&
+              new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}</Typography>
             </FlexTitle>
           </BoxContainer>
 
           <div style={{ flex: '1' }}> </div>
           
-          <CountdownLabel>53 Hari Lagi</CountdownLabel>
+          <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari` : ''}</CountdownLabel>
 
           <ButtonPrimary 
             Color="#ffffff" 
@@ -214,7 +245,17 @@ export default function TimelineDetailEvent() {
 
             <FlexTitle style={{paddingBottom:'24px', justifyContent: 'center'}}>
               <CalendarIcon style={{color:'#828282'}}/>
-              <Typography style={{color:'#828282'}}>22 Januari 2024 - 01 Februari 2024</Typography>
+              <Typography style={{color:'#828282'}}> {tanggal_mulai &&
+            new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })} - {tanggal_selesai &&
+            new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}</Typography>
             </FlexTitle>
         </BoxContainer>
 
@@ -238,6 +279,8 @@ export default function TimelineDetailEvent() {
           handleClose={() => setDialogOpen(false)}
           handleConfirmation={handleConfirmation}
           currentstep={activeStep}
+          status = {eventstatus_id}
+          eventid = {eventid}
         />
 
         <KonfirmasiTalentPool

@@ -135,19 +135,24 @@ function KonfirmasiNextEvent({ open, handleClose, eventid }) {
 
     const mulaiButton = (
         <Button
-            endIcon={<ArrowForwardRoundedIcon />}
-            style={isHoveredmulai ? { ...mulaiButtonStyle, ...hovermulaiStyle } : mulaiButtonStyle}
-            onMouseEnter={() => setIsHoveredmulai(true)}
-            onMouseLeave={() => setIsHoveredmulai(false)}
-            onClick={() => {
-                postdeadlinesource() // Call the function to post deadline source
-                    .then(() => posttalentsource()) // Chain posttalentsource() after postdeadlinesource()
-                    .then(() => mapkomiteunit()) // Chain mapkomiteunit() after posttalentsource()
-                    .then(() => handleClose()); // Close the popup after all operations are finished
-            }}
-        >
-            Mulai Event
-        </Button>
+        endIcon={<ArrowForwardRoundedIcon />}
+        style={isHoveredmulai ? { ...mulaiButtonStyle, ...hovermulaiStyle } : mulaiButtonStyle}
+        onMouseEnter={() => setIsHoveredmulai(true)}
+        onMouseLeave={() => setIsHoveredmulai(false)}
+        onClick={async () => {
+            try {
+                await postdeadlinesource(); // Call the function to post deadline source
+                await posttalentsource(); // Chain posttalentsource() after postdeadlinesource()
+                await mapkomiteunit(); // Chain mapkomiteunit() after posttalentsource()
+                handleClose(); // Close the popup after all operations are finished
+            } catch (error) {
+                console.error('Error:', error);
+                // Handle error if any of the promises reject
+            }
+        }}
+    >
+        Mulai Event
+    </Button>
     );
 
     const batalkanButton = (
