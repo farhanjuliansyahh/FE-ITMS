@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-
 // material-ui
 import { Grid, Container, Stack,Typography, Box, Button} from '@mui/material';
-
+import MainCard from '../../../ui-component/cards/MainCard';
 import { gridSpacing } from '../../../store/constant';
 import GroupsIcon from '@mui/icons-material/Groups';
 import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import TalentSourceTable from '../../../ui-component/tables/talentsource';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import SearchSectionManajemenPengguna from '../../../ui-component/button/ManajemenSearchSectionGroup';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
@@ -35,7 +33,8 @@ const DaftarPengguna = () => {
   return (
     <>
       {/* <MainLayout/> */}
-      <Grid container spacing={gridSpacing}>
+      <MainCard>
+      <Grid container spacing={gridSpacing} paddingTop={2} paddingRight={2}>
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
@@ -44,18 +43,19 @@ const DaftarPengguna = () => {
                 <Typography variant="h2" style={{display: 'inline',fontFamily: 'Roboto',fontSize:'20px',fontWeight: '500' }} gutterBottom>
                   Tabel Karyawan
                 </Typography>
-                <Button
-                  variant="contained"
+                <Typography variant="body2" 
                   style={{
-                    color: '#2196F3',
-                    borderRadius: '15px',
-                    borderColor: '#EAF8FF',
-                    backgroundColor: '#EAF8FF',
-                    fontSize: '16px'
-                  }}
-                >
-                 14.000 Talent Karyawan
-                </Button>
+                    color:'#2196F3',
+                    backgroundColor:'#EAF8FF', // Default background color
+                    padding: '8px 16px', // Adjust padding as needed
+                    borderRadius: '16px', // Adjust border radius for rounded corners
+                    display: 'inline-block', // Ensure inline display
+                    fontSize: '16px',
+                    fontFamily:'Roboto',
+                    fontWeight:500
+                  }}>
+                  14.000 Talent Karyawan
+                </Typography>
                 <Box sx={{ flexGrow: 1 }} /> {/* This will push the following elements to the right */}
                 <Stack direction="row" spacing={1}>
                   <ButtonPrimary Color="#ffffff" icon={FileDownloadOutlinedIcon} LabelName={'Unduh Data'}/>
@@ -72,6 +72,7 @@ const DaftarPengguna = () => {
         
        
       </Grid>
+      </MainCard>
     </>
   );
 };

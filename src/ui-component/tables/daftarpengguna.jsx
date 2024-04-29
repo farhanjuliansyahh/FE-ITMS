@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Checkbox, FormControlLabel } from '@mui/material';
-
-const peranOptions = ['Option 1', 'Option 2', 'Option 3'];
-
+import { Button, Dialog, Stack, DialogTitle, DialogContent, DialogActions, Checkbox, FormControlLabel } from '@mui/material';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+const peranOptions = ['Admin Talent', 'Coach', 'Karyawan','Ketua Komite Talent','Komite Unit','Talent'];
+import CloseIcon from '@mui/icons-material/Close';
+// import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 const ActionButton = ({ row, updateRowPeran }) => {
   const [open, setOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -42,8 +44,14 @@ const ActionButton = ({ row, updateRowPeran }) => {
         Ubah Akses
       </Button>
       <Dialog open={open} onClose={handleModalClose}>
-        <DialogTitle>Daftar Peran Pengguna</DialogTitle>
-        <DialogContent>
+        <Stack direction="row" alignItems="center" marginTop="10px">
+          <h2 style={{paddingLeft : '20px', color:'#1F1F1F'}} justifyContent="start">Daftar Peran Pengguna</h2>
+          <Button onClick={handleModalClose} color="primary" justifyContent="end" style={{color: '#D32F2F',marginLeft : '100px'}}>
+            <CloseIcon/>
+          </Button>
+        </Stack>
+        
+        <DialogContent style={{ width: '400px', maxHeight: '300px', overflowY: 'auto' }}>
           {peranOptions.map((option, index) => (
             <FormControlLabel
               key={index}
@@ -52,12 +60,37 @@ const ActionButton = ({ row, updateRowPeran }) => {
             />
           ))}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleModalClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSavePeran} color="primary">
+        <DialogActions style={{paddingBottom: '12px', paddingRight: '12px'}}>
+          <Button onClick={handleSavePeran}
+          variant="contained"
+          endIcon={<SaveOutlinedIcon/>}
+          sx={{ 
+            color:'#ffffff',  
+            backgroundColor: '#1C2D5A', 
+            borderRadius: '12px', 
+            fontSize: '14px', // Custom font size
+            padding: '8px 18px', // Custom padding using relative units
+            boxShadow: 'none',
+            width: '110px' || 'auto', // Set width (default: auto)
+            height: '40px' || 'auto', // Set height (default: auto)
+
+          }} >
             Save
+          </Button>
+          <Button onClick={handleModalClose}
+           endIcon={<HighlightOffOutlinedIcon/>}
+           sx={{ 
+            color:'#D32F2F',  
+            backgroundColor: '#ffffff', 
+            borderRadius: '12px', 
+            fontSize: '14px', // Custom font size
+            padding: '8px 18px', // Custom padding using relative units
+            boxShadow: 'none',
+            width: '110px' || 'auto', // Set width (default: auto)
+            height: '40px' || 'auto', // Set height (default: auto)
+            border: '1.5px solid #D32F2F'
+           }} >
+            Batalkan
           </Button>
         </DialogActions>
       </Dialog>
@@ -99,7 +132,7 @@ export default function DaftarPenggunaTabel() {
   ];
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
