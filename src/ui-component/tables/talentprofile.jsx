@@ -2,18 +2,67 @@ import { useState } from 'react';
 import * as React from 'react';
 import { DataGrid, GridLogicOperator } from '@mui/x-data-grid';
 
+const getStatusStyle = (status) => {
+  let color, backgroundColor;
+  switch (status) {
+    case 'Belum Submit':
+      color = '#F44336';
+      backgroundColor = '#FFEDED';
+      break;
+    case 'Sudah Submit':
+      color = '#66BB6A';
+      backgroundColor = '#F5FFF5';
+      break;
+    default:
+      color = '#000000';
+      backgroundColor = 'transparent';
+  }
+  return { color, backgroundColor };
+};
+
 const columns = [
+  { field: 'id', headerName: 'No', width: 70 },
   { field: 'nama', headerName: 'Nama', width: 180 },
   { field: 'nippos', headerName: 'NIPPOS', width: 180 },
-  { field: 'posisi', headerName: 'Posisi', width: 180 },
-  { field: 'joblevel', headerName: 'Job Level', width: 180,
-  // type: 'number'
+  { field: 'posisi', headerName: 'Posisi', width: 300 },
+  { field: 'joblevel', headerName: 'Job Level', width: 120 },
+  { field: 'rumpunjabatan', headerName: 'Rumpun Jabatan', width: 180 },
+  {
+    field: 'commitmentletter',
+    headerName: 'Commitment Letter',
+    width: 180,
+    renderCell: (params) => {
+      const { color, backgroundColor } = getStatusStyle(params.value);
+      return (
+        <div>
+          <span style={{
+            color,
+            backgroundColor,
+            padding: '4px 8px',
+            borderRadius: '24px'
+          }}>{params.value}</span>
+        </div>
+      );
+    },
   },
-  { field: 'rumpunjabatan', headerName: 'Rumpun Jabatan', width: 180,
-  // description: 'This column has a value getter and is not sortable.', sortable: false, valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+  {
+    field: 'paktaintegritas',
+    headerName: 'Pakta Integritas',
+    width: 180,
+    renderCell: (params) => {
+      const { color, backgroundColor } = getStatusStyle(params.value);
+      return (
+        <div>
+          <span style={{
+            color,
+            backgroundColor,
+            padding: '4px 8px',
+            borderRadius: '24px'
+          }}>{params.value}</span>
+        </div>
+      );
+    },
   },
-  { field: 'commitmentletter', headerName: 'Commitment Letter', width: 180 },
-  { field: 'paktaintegritas', headerName: 'Pakta Integritas', width: 180 },
   { field: 'komiteunit', headerName: 'Komite Unit', width: 180 },
 ];
 
@@ -26,7 +75,7 @@ const rows = [
   { id: 6, nama: 'Ayu Ning Sukarman', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ACEP RUDI SUPRIADI' },
 ];
 
-export default function TalentProfile({filter}) {
+export default function TalentProfileTable({ filter, commitmentLetterValue, paktaIntegritasValue }) {
   const [filterModel, setFilterModel] = React.useState({
     items: [{ field: 'nama', operator: 'contains', value: '' }],
   });
@@ -36,34 +85,38 @@ export default function TalentProfile({filter}) {
   const [filterJob, setFilterJob] = useState('');
   const [filterKomite, setFilterKomite] = useState('');
 
-  React.useEffect(()=>{
-    if(filter){
+  React.useEffect(() => {
+    if (filter) {
       console.log(filter);
       setFilterNama(filter.nama);
       setFilterNippos(filter.nippos);
       setFilterJob(filter.job);
       setFilterKomite(filter.komite);
     }
-  },[filter])
+  }, [filter])
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setFilterModel({
       items: [
-        { id:1, field: 'nama', operator: 'contains', value: filterNama },
-        { id:2, field: 'nippos', operator: 'contains', value: filterNippos },
-        { id:3, field: 'joblevel', operator: 'contains', value: filterJob },
-        { id:4, field: 'komiteunit', operator: 'contains', value: filterKomite }
+        { id: 1, field: 'nama', operator: 'contains', value: filterNama },
+        { id: 2, field: 'nippos', operator: 'contains', value: filterNippos },
+        { id: 3, field: 'joblevel', operator: 'contains', value: filterJob },
+        { id: 4, field: 'komiteunit', operator: 'contains', value: filterKomite }
       ],
       logicOperator: GridLogicOperator.And
     })
 
-  },[filterNama,filterNippos,filterJob,filterKomite])
+  }, [filterNama, filterNippos, filterJob, filterKomite])
 
 
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={rows.map(row => ({
+          ...row,
+          commitmentletter: commitmentLetterValue,
+          paktaintegritas: paktaIntegritasValue
+        }))}
         columns={columns}
         initialState={{
           pagination: {
@@ -71,7 +124,6 @@ export default function TalentProfile({filter}) {
           },
         }}
         pageSizeOptions={[5, 10]}
-        // checkboxSelection
         filterModel={filterModel}
         // onFilterModelChange={(model) => setFilterModel(model)}
       />

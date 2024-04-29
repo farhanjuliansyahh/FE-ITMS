@@ -54,19 +54,19 @@ const getStyledRenderCell = () => (params) => (
         headerName: 'Status',
         width: 130,
         renderCell: (params) => {
-          const { color, backgroundColor } = getStatusStyle(params.value);
-          return (
+            const { color, backgroundColor } = getStatusStyle(params.value);
+            return (
             <div>
-              <span style={{ 
+                <span style={{ 
                 color,
                 backgroundColor,
                 padding: '4px 8px',
                 borderRadius: '24px' 
-              }}>{params.value}</span>
+                }}>{params.value}</span>
             </div>
-          );
+            );
         },
-      },
+    },
 ];
 
 const rows = [

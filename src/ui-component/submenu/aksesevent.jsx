@@ -1,30 +1,34 @@
 import * as React from 'react';
 
 import { useEffect, useState } from 'react';
-// import Box from '@mui/material/Box';
 import { Avatar, Box, Button, Container, Grid, Typography } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import EventIcon from '@mui/icons-material/Event';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
-import KonfirmasiEvent from '../modal/konfirmasi-event';
-import HapusEvent from '../modal/hapusevent';
-import KonfirmasiNextEvent from '../modal/konfirmasi-next-event';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import DaftarEventKomiteTalent from '../../views/pages/komite-unit/daftar-eventkomiteunit';
 import { useNavigate } from 'react-router-dom';
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
+<<<<<<< HEAD
 export default function AksesEvent() {
   
 
  
+=======
+const EventLabel = styled('div')({
+  backgroundColor: '#FFF6E9', // Adjust the background color of the status label
+  color: '#FFA726',
+  padding: '4px 8px',
+  borderRadius: '16px',
+  fontWeight: 600,
+  fontSize:'12px'
+});
+
+export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
+>>>>>>> dee495ebc0fa71d92e6edf8e93b9d61f1110ed3a
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
@@ -140,14 +144,7 @@ export default function AksesEvent() {
     fontSize:'12px'
   });
 
-  const EventLabel = styled('div')({
-    backgroundColor: '#FFF6E9', // Adjust the background color of the status label
-    color: '#FFA726',
-    padding: '4px 8px',
-    borderRadius: '16px',
-    fontWeight: 600,
-    fontSize:'12px'
-  });
+  
 
   const akseseventButtonStyle = {
     backgroundColor: '#EF4123',
@@ -200,7 +197,22 @@ export default function AksesEvent() {
   //     Edit
   //   </Button>
   // );
+<<<<<<< HEAD
   
+=======
+
+  const akseseventButton = (
+    <Link to={pathDetailEvent} style={{ textDecoration: 'none' }}>
+      <Button 
+        sx={akseseventButtonStyle} 
+        endIcon={<ArrowForwardRoundedIcon />}
+      >
+        Akses Event
+      </Button>
+    </Link>
+  );
+
+>>>>>>> dee495ebc0fa71d92e6edf8e93b9d61f1110ed3a
   // const mulaiButton = (
   //   <Button 
   //   variant="contained" 
@@ -242,9 +254,7 @@ export default function AksesEvent() {
               color: 'inherit', // Inherit color from parent
             }}
           >
-            <Link to="/talent/detail-event" style={{ color: 'inherit' }}>
               TRIAL EVENT_ E1-D3_BISNIS
-            </Link>
           </Typography >
             <StatusLabel>Berjalan</StatusLabel>
             
@@ -257,7 +267,7 @@ export default function AksesEvent() {
             }}
           >
           </Typography >
-          <EventLabel >Talent Source </EventLabel>
+          <EventLabel >{namaEvent} </EventLabel>
           </FlexTitle>
 
           <FlexTitle>

@@ -151,7 +151,7 @@ const DaftarEvent = () => {
           </Tabs>
         </Box>
 
-        <CustomTabPanel value={value} index={0}>
+        <CustomTabPanel value={value} index={0} style={{paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px',}}>
         {isLoading ? (
           <Typography>Loading...</Typography>
         ) : eventData.length > 0 ? (
@@ -168,10 +168,10 @@ const DaftarEvent = () => {
             status={event.evenstatus_id} />
           ))
         ) : (
-          <>
+          <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
             <img src={notFoundImage} alt="Deskripsi gambar" />
-            <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography>
-          </>
+            <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
+          </Box>
         )}
       </CustomTabPanel>
 

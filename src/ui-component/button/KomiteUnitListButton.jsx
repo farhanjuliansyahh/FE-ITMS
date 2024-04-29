@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal';
 // import { height } from '@mui/system';
-import KomiteUnitListTable from '../../ui-component/tables/komiteunittable';
+import KomiteUnitListTable from '../tables/komiteunittable';
 import CloseIcon from '@mui/icons-material/Close';
 const style = {
   position: 'absolute',

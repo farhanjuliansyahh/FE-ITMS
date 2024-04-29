@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Container, Stack, Typography, Box, Button } from '@mui/material';
+import { Grid,  Stack,  Box, } from '@mui/material';
 import { gridSpacing } from '../../store/constant';
-// import GroupsIcon from '@mui/icons-material/Groups';
-// import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import EventDetailSearchSection from './EventDetailSearchSection';
 import SearchResetButton from './SearchResetButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SearchEventButton from './SearchEventButton';
-const SearchSectionGroup= () => {
+const AdminSearchSectionGroup= () => {
     return (
         <Box>
             <Grid container spacing={gridSpacing}>
@@ -16,16 +13,19 @@ const SearchSectionGroup= () => {
                 <Grid item xs={12}>
                     <Stack direction="row"  justifyContent="start" alignItems="center">
                     <div style={{ display: 'flex', justifyContent: 'flex-start', paddingLeft:'10' }}>
-                        <div style={{ marginRight: '120px' }}>
-                            <SearchEventButton PlaceHolder={'Nama'} inputWidth={'200px'} />
+                        <div style={{ marginRight: '75px' }}>
+                            <SearchEventButton PlaceHolder={'Nama'} inputWidth={'160px'} />
                         </div>
-                        <div style={{ marginRight: '120px' }}>
-                            <SearchEventButton PlaceHolder={'NIPPOS'} inputWidth={'200px'} />
+                        <div style={{ marginRight: '75px' }}>
+                            <SearchEventButton PlaceHolder={'NIPPOS'} inputWidth={'160px'} />
                         </div>
-                        <div style={{ marginRight: '180px' }}>
-                            <SearchEventButton PlaceHolder={'Job Level'} inputWidth={'200px'} />
+                        <div style={{ marginRight: '75px' }}>
+                            <SearchEventButton PlaceHolder={'Job Level'} inputWidth={'160px'} />
                         </div>
-                        <div style={{ marginRight: '15px' }}>
+                        <div style={{ marginRight: '100px' }}>
+                            <SearchEventButton PlaceHolder={'Komite Unit'} inputWidth={'160px'} />
+                        </div>
+                        <div style={{ marginRight: '18px' }}>
                             <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
                         </div>
                         <div style={{ marginRight: '0px' }}>
@@ -40,4 +40,4 @@ const SearchSectionGroup= () => {
     );
 };
 
-export default SearchSectionGroup;
+export default AdminSearchSectionGroup;
