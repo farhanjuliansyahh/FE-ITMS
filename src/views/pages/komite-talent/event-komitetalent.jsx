@@ -123,7 +123,7 @@ const EventKomiteTalent = () => {
         <CustomTabPanel value={value} index={0}>
           <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingLeft:24, paddingRight:24, paddingBottom:24 }}>
             
-            <AksesEvent />
+            <AksesEvent namaEvent={'Talent Source'} pathDetailEvent={'/talent/detail-event'}/>
           </Box>
 
           
