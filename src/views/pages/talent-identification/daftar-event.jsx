@@ -151,7 +151,7 @@ const DaftarEvent = () => {
           </Tabs>
         </Box>
 
-        <CustomTabPanel value={value} index={0}>
+        <CustomTabPanel value={value} index={0} style={{paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px',}}>
         {isLoading ? (
           <Typography>Loading...</Typography>
         ) : eventData.length > 0 ? (
