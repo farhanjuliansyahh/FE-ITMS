@@ -18,7 +18,8 @@ const DaftarPengguna = Loadable(lazy(() => import('../views/pages/manajemen-peng
 const EventKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/event-karyawan')));
 
 const ProfileKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/profile-karyawan')));
-const EventKomiteTalentDua = Loadable(lazy(() => import('../views/pages/event-komite-talent/eventkomitetalentdua')));
+const EventKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/event-ketuakomitetalent')));
+const ClusterKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/cluster-ketuakomitetalent')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -52,10 +53,6 @@ const MainRoutes = {
         },
       ]
     },
-    // {
-    //   path: '/',
-    //   element: <EventKomiteTalent />
-    // },
     {
       path: 'event-komitetalent',
       element: <EventKomiteTalent />
@@ -78,8 +75,12 @@ const MainRoutes = {
       element: <ProfileKaryawan/>
     },
     {
-      path: 'event-komite-talent-dua',
-      element: <EventKomiteTalentDua />
+      path: 'event-ketua-komite-talent',
+      element: <EventKetuaKomiteTalent />
+    },
+    {
+      path: 'event-ketua-komite-talent/talent-cluster',
+      element: <ClusterKetuaKomiteTalent />
     },
   ]
 };
