@@ -11,7 +11,7 @@ const menuItems = {
   items: [
     dashboard, 
     TalentIdentification, 
-    EventKomiteTalent, 
+    EventKomiteUnit, 
     ManajemenPengguna, 
     EventKaryawan, 
     EventKetuaKomiteTalent]
