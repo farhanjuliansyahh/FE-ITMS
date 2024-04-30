@@ -16,7 +16,9 @@ import { Link } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import KonfirmasiEvent from '../modal/konfirmasi-event';
 import HapusEvent from '../modal/hapusevent';
-//import DetailEvent from '../../views/pages/talent-identification/detail-event';
+import DaftarKomiteUnit from '../../views/pages/komite-unit/daftar-eventkomiteunit';
+import { useNavigate } from 'react-router-dom';
+
 
 import KonfirmasiNextEvent from '../modal/konfirmasi-next-event';
 import { bgcolor } from '@mui/system';
@@ -24,13 +26,13 @@ import { color } from 'framer-motion';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_talent,kode_rumpun, nama_rumpun_jabatan, tanggal_selesai, tanggal_mulai, status }) {
+export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_talent, nama_rumpun_jabatan, tanggal_selesai, tanggal_mulai, status }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [daysLeft, setDaysLeft] = React.useState(null);
 
   let statusberjalan;
-  console.log(status);
+  // console.log(status);
   if (status === 1) {
     statusberjalan = "Belum Mulai";
   } else if (status >= 2 && status <= 7) {
@@ -42,10 +44,6 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     statusberjalan = "Unknown Status";
   }
 
-  useEffect(() => {
-    setActiveStep(status-2)
-  }, []);
-  
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -61,9 +59,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
       newSkipped.delete(activeStep);
     }
 
-    //setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    
-    setActiveStep(status);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
 
@@ -86,8 +82,8 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     });
   };
 
- const handleReset = () => {
-   setActiveStep(0);
+  const handleReset = () => {
+    setActiveStep(0);
   };
 
   const boxStyle = {
@@ -242,6 +238,39 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     margin: '0 auto',
   };
 
+
+  const navigate = useNavigate();
+  const [openAkses, setOpenAkses] = useState(); 
+  const handleOpenAkses = () => {
+    // Perform other actions
+   
+    setOpenAkses(true); // If you still need to open a modal or something similar
+    
+    // Navigate
+    navigate('daftar-eventkomiteunit');
+  };
+
+  const akseseventButtonStyle = {
+    backgroundColor: '#EF4123',
+    color: '#fff',
+    borderRadius: '12px',
+    paddingLeft: '12px',
+    paddingRight: '12px',
+    ':hover':{
+      backgroundColor: '#AB1D05',
+      color: '#fff',
+    }
+  }
+  
+  const akseseventButton = (
+    <Button 
+    sx={akseseventButtonStyle} 
+    endIcon={<ArrowForwardRoundedIcon />}
+    onClick={handleOpenAkses}>
+      Akses Event
+    </Button>
+  );
+
   useEffect(() => {
     // Convert 'tanggal_selesai' from ISO 8601 format to a Date object
     const endDate = new Date(tanggal_selesai);
@@ -254,8 +283,6 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     // Set the number of days left
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
-
-  console.log("active step",activeStep);
 
 
 
@@ -283,7 +310,8 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
             >
               <Link
                 to={{
-                  pathname: `/talent/detail-event/${id}`,
+                  pathname: '/event-komiteunit/daftar-eventkomiteunit',
+                  
                 }}
                 style={{ color: 'inherit' }}
               >
@@ -317,6 +345,11 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
             {deleteButton}
           </ButtonsContainer>
         )}
+        <ButtonsContainer>
+          {akseseventButton}
+          {/* {editButton}
+          {deleteButton} */}
+        </ButtonsContainer>
       </FlexContainer>
 
       <DividerContainer>
@@ -355,7 +388,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
         </Grid>
       </Grid>
 
-      <Stepper activeStep={activeStep} alternativeLabel>
+      {/* <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -373,9 +406,9 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
             </Step>
           );
         })}
-      </Stepper>
+      </Stepper> */}
 
-      {activeStep === steps.length ? (
+      {/* {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 5, mb: 1 }}>
             All steps completed - you&apos;re finished
@@ -387,30 +420,30 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
+          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
-            {/* <Button
+            <Button
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
             >
-              Back */}
-            {/* </Button>
+              Back
+            </Button>
             <Box sx={{ flex: '1 1 auto' }} />
             {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
-            )} */}
-{/* 
+            )}
+
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button> */}
+            </Button>
           </Box>
         </React.Fragment>
-      )}
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} />
+      )} */}
+      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>

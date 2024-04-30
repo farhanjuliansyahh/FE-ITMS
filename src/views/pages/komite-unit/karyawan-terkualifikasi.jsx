@@ -4,20 +4,21 @@ import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
-import MainCard from '../cards/MainCard';
+import MainCard from '../../../ui-component/cards/MainCard';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
-import EventDetailSearchSection from '../button/EventDetailSearchSection';
-import SearchResetButton from '../button/SearchResetButton';
+import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
+import SearchResetButton from '../../../ui-component/button/SearchResetButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import KomiteUnitListButton from '../button/KomiteUnitListButton';
+import KomiteUnitListButton from '../../../ui-component/button/KomiteUnitListButton';
 import { IconFileDownload } from '@tabler/icons-react';
-import ButtonPrimary from '../button/ButtonPrimary';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import TalentSourceTable from '../tables/talentsource';
-import AdminSearchSectionGroup from '../button/AdminSearchButtonGroup';
+import TalentSourceTable from '../../../ui-component/tables/talentsource';
+import AdminSearchSectionGroup from '../../../ui-component/button/AdminSearchButtonGroup';
+import KomiteUnitTable from '../../../ui-component/tables/komiteunittable';
 
 // ==============================|| DETAIL TALENT SOURCE PAGE ||============================== //
 
@@ -54,44 +55,13 @@ function a11yProps(index) {
   };
 }
 
-const TalentSource = ({eventid}) => {
+const KaryawanTerkualifikasi = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
   const [filterNippos, setFilterNippos] = useState('');
   const [filterJob, setFilterJob] = useState('');
   const [filterKomite, setFilterKomite] = useState('');
-  const [rowstrue, setRowstrue] = useState([]);
-  const [rowsfalse, setRowsfalse] = useState([])
-
-  console.log("uji",eventid);
-  const id = eventid
-
-  useEffect(() => {
-    // Fetch data from API
-    fetch(`http://localhost:4000/getkandidatfalse?eventtalentid=${eventid}`)
-      .then(response => response.json())
-      .then(datafalse => {
-        // Update state with API data
-        setRowsfalse(datafalse.map((row, index) => ({ ...row, id: index + 1 })));
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []); // Empty dependency array to run effect only once
-
-  useEffect(() => {
-    // Fetch data from API
-    fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${eventid}`)
-      .then(response => response.json())
-      .then(datatrue => {
-        // Update state with API data
-        setRowstrue(datatrue.map((row, index) => ({ ...row, id: index + 1 })));
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []); // Empty dependency array to run effect only once
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -133,54 +103,30 @@ const TalentSource = ({eventid}) => {
       
       <MainCard>
         
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab icon={<PersonOffOutlinedIcon />} iconPosition="start" label="Belum Terdaftar" {...a11yProps(0)} />
             <Tab icon={<GppGoodOutlinedIcon />} iconPosition="start" label="Terdaftar" {...a11yProps(1)} />
           </Tabs>
-        </Box>
+        </Box> */}
 
-        <CustomTabPanel value={value} index={0}>
           <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
 
             <FlexContainer>
               <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
                   Tabel Karyawan
               </Typography>
-              <KomiteUnitListButton eventid={id} />
+              <KomiteUnitListButton />
 
               <div style={{ flex: '1' }}> </div>
 
 
-            <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Talent'}/>
+            {/* <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Karyawan'}/> */}
             <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
           </FlexContainer>
           
          
           <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-            <AdminSearchSectionGroup/>
-          </div>
-         
-            <TalentSourceTable checkboxSelection={true} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} rows={rowsfalse}/>
-          </Box>
-
-        </CustomTabPanel>
-
-        <CustomTabPanel value={value} index={1}>
-          <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
-
-            <FlexContainer>
-              <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
-                  Tabel Karyawan
-              </Typography>
-              <KomiteUnitListButton eventid={id} />
-
-              <div style={{ flex: '1' }}> </div>
-              
-              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
-            </FlexContainer>
-
-            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
               <div style={{ marginRight: '12px', width:'100%'  }}>
                     <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
               </div>
@@ -190,9 +136,7 @@ const TalentSource = ({eventid}) => {
               <div style={{ marginRight: '12px', width:'100%' }}>
                   <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
               </div>
-              <div style={{ marginRight: '24px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
-              </div>
+    
               <div style={{ marginRight: '12px' }}>
                   <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
               </div>
@@ -200,15 +144,13 @@ const TalentSource = ({eventid}) => {
                   <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
               </div>
             </div>
-
-            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} rows ={rowstrue}/>
-          </Box>
-          
-        </CustomTabPanel>
+         
+            <KomiteUnitTable checkboxSelection={true}/>
+            </Box>
 
       </MainCard>
     </>
   );
 };
 
-export default TalentSource;
+export default KaryawanTerkualifikasi;

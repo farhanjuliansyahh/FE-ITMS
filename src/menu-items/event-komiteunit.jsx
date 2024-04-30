@@ -3,8 +3,8 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
-const eventkomitetalent = {
-  id: 'event-komitetalent',
+const eventkomiteunit = {
+  id: 'event-komiteunit',
   // title: 'Dashboard',
   type: 'group',
   children: [
@@ -12,11 +12,11 @@ const eventkomitetalent = {
       id: 'default',
       title: 'Event',
       type: 'item',
-      url: '/event-komitetalent',
+      url: '/event-komiteunit',
       icon: EventNoteIcon,
       breadcrumbs: false
     }
   ]
 };
 
-export default eventkomitetalent;
+export default eventkomiteunit;

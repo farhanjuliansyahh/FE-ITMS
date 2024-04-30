@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs, Typography, Stack } from '@mui/material';
 import PropTypes from 'prop-types';
 import MainCard from '../../../ui-component/cards/MainCard';
-import { DownloadDone, RotateRight } from '@mui/icons-material';
+import { DownloadDone, RotateRight, AddCircleOutline } from '@mui/icons-material';
 import SearchSection2 from '../../../ui-component/searchsection';  
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import BasicPagination from '../../../ui-component/button/pagination';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 
 // ==============================|| EVENT KARYAWAN PAGE ||============================== //
 
@@ -45,7 +45,7 @@ function a11yProps(index) {
   };
 }
 
-const EventKaryawan = () => {
+const EventKetuaKomiteTalent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
 
@@ -72,7 +72,10 @@ const EventKaryawan = () => {
       {/* <MainLayout /> */}
       
       <MainCard title="Daftar Event"  secondary={
-        <SearchSection2 />
+          <Stack direction="row" spacing={2}>
+            <SearchSection2 /> 
+            <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
+          </Stack>
         }>
 
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -88,13 +91,13 @@ const EventKaryawan = () => {
 
         <CustomTabPanel value={value} index={0}>
           <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingLeft:24, paddingRight:24, paddingBottom:24 }}>            
-            <AksesEvent ButtonName={'Akses Event'} namaEvent={'Talent Profile'} pathDetailEvent={'./talent-profile'}/>
+            <AksesEvent ButtonName={'Detail Event'} namaEvent={'Talent Source'} pathDetailEvent={'./talent-cluster'}/>
           </Box>
           <BasicPagination />
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
-          <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
+            <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
             <img src={notFoundImage} alt="Deskripsi gambar" />
             <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
           </Box>          
@@ -105,4 +108,4 @@ const EventKaryawan = () => {
   );
 };
 
-export default EventKaryawan;
+export default EventKetuaKomiteTalent;

@@ -4,15 +4,14 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const EventKomiteTalentDua = {
-  id: 'event-komite-talent-dua',
-  // title: 'Dashboard',
+  id: 'event-ketua-komite-talent',
   type: 'group',
   children: [
     {
       id: 'default',
-      title: 'Event - Komite Talent',
+      title: 'Ketua Komite Talent',
       type: 'item',
-      url: '/event-komite-talent-dua',
+      url: '/event-ketua-komite-talent',
       icon: EventNoteIcon,
       breadcrumbs: false
     }

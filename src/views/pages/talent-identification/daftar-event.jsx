@@ -115,7 +115,7 @@ const DaftarEvent = () => {
 
   // const handleButtonClick = () => {
   //   // Logic for button click
-  //   console.log('Button clicked!');
+  //console.log(event.rumpun);
   // };
 
   const [open, setOpen] = useState(false);
@@ -127,7 +127,7 @@ const DaftarEvent = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+console.log("asdasd", eventData);
   return (
     <>
       {/* <MainLayout /> */}
@@ -151,7 +151,7 @@ const DaftarEvent = () => {
           </Tabs>
         </Box>
 
-        <CustomTabPanel value={value} index={0}>
+        <CustomTabPanel value={value} index={0} style={{paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px',}}>
         {isLoading ? (
           <Typography>Loading...</Typography>
         ) : eventData.length > 0 ? (
@@ -162,6 +162,7 @@ const DaftarEvent = () => {
             nama_event={event.nama_event}
             deskripsi={event.deskripsi}
             tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+            kode_rumpun = {event.kode_rumpun_jabatan}
             nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
             tanggal_mulai={event.tanggal_mulai}
             tanggal_selesai={event.tanggal_selesai}

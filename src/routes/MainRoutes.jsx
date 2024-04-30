@@ -13,12 +13,14 @@ const DashboardDefault = Loadable(lazy(() => import('../views/pages/dashboard/da
 const DaftarEvent = Loadable(lazy(() => import('../views/pages/talent-identification/daftar-event')));
 const ParamenterEvent = Loadable(lazy(() => import('../views/pages/talent-identification/parameter')));
 const DetailEvent = Loadable(lazy(() => import('../views/pages/talent-identification/detail-event')));
-const EventKomiteTalent = Loadable(lazy(() => import('../views/pages/komite-talent/event-komitetalent')));
+const EventKomiteUnit = Loadable(lazy(() => import('../views/pages/komite-unit/event-komiteunit')));
+const DaftarEventKomiteUnit = Loadable(lazy(() => import('../views/pages/komite-unit/daftar-eventkomiteunit')));
 const DaftarPengguna = Loadable(lazy(() => import('../views/pages/manajemen-pengguna/daftar-pengguna')));
 const EventKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/event-karyawan')));
 
 const ProfileKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/profile-karyawan')));
-const EventKomiteTalentDua = Loadable(lazy(() => import('../views/pages/event-komite-talent/eventkomitetalentdua')));
+const EventKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/event-ketuakomitetalent')));
+const ClusterKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/cluster-ketuakomitetalent')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -52,13 +54,13 @@ const MainRoutes = {
         },
       ]
     },
-    // {
-    //   path: '/',
-    //   element: <EventKomiteTalent />
-    // },
     {
-      path: 'event-komitetalent',
-      element: <EventKomiteTalent />
+      path: 'event-komiteunit',
+      element: <EventKomiteUnit />
+    },
+    {
+      path: 'event-komiteunit/daftar-eventkomiteunit',
+      element: <DaftarEventKomiteUnit />
     },
     {
       path: 'manajemen-pengguna',
@@ -78,8 +80,12 @@ const MainRoutes = {
       element: <ProfileKaryawan/>
     },
     {
-      path: 'event-komite-talent-dua',
-      element: <EventKomiteTalentDua />
+      path: 'event-ketua-komite-talent',
+      element: <EventKetuaKomiteTalent />
+    },
+    {
+      path: 'event-ketua-komite-talent/talent-cluster',
+      element: <ClusterKetuaKomiteTalent />
     },
   ]
 };
