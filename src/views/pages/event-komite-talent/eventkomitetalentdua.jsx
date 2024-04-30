@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Box, Grid, Tab, Tabs, Typography, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import SimpanButton from '../../../ui-component/button/SimpanButton';
-import BatalkanButton from '../../../ui-component/button/BatalkanButton';
+import BatalkanButton from '../../../ui-component/button/ButtonErrorOutlined';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import PropTypes from 'prop-types';
 import { Container } from '@mui/system';

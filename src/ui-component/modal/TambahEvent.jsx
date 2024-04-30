@@ -12,8 +12,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CancelOutlined from '@mui/icons-material/CancelOutlined';
 
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
+import ButtonError from '../../ui-component/button/ButtonError';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -37,6 +39,7 @@ function AddEventModal({ open, handleClose }) {
     const [eventName, setEventName] = useState('');
     const [quota, setquota] = useState('');
     const [deskripsi, setdeskripsi] = useState('');
+    const [isDeskripsiTouched, setIsDeskripsiTouched] = useState(false);
 
     const handleEventNameChange = (event) => {
         setEventName(event.target.value); // Update state with input value
@@ -48,6 +51,7 @@ function AddEventModal({ open, handleClose }) {
 
     const handledeskripsichange = (event) => {
         setdeskripsi(event.target.value); // Update state with input value
+        setIsDeskripsiTouched(true);
     };
 
     const handleCommitteeChange = (event) => {
@@ -155,6 +159,8 @@ function AddEventModal({ open, handleClose }) {
         setenddate(date); // Update the state with the selected date
     };
 
+
+
     const postData = async () => {
         try {
             const arrayquestion = selectedquestion.map(selectedquestion => selectedquestion.id)
@@ -200,7 +206,7 @@ function AddEventModal({ open, handleClose }) {
 
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>
+            <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', textAlign: 'center' }}>
                 <Typography style={{ fontSize: '24px', fontWeight: 'bold' }}>
                     Tambah Event
                 </Typography>
@@ -210,6 +216,11 @@ function AddEventModal({ open, handleClose }) {
                     component="form"
                     sx={{
                         '& .MuiTextField-root': { m: 1, width: '500px' },
+                        paddingTop: '32px',
+                        paddingLeft: '12px',
+                        paddingBottom: '12px',
+                        
+                       
                     }}
                     noValidate
                     autoComplete="off"
@@ -361,14 +372,21 @@ function AddEventModal({ open, handleClose }) {
                         <TextField
                             id="outlined-required"
                             label="Deskripsi"
+                            multiline
+                            rows={4}
                             value={deskripsi} // Set value from state
                             onChange={handledeskripsichange} // Handle input change
+                            required // Tandai bahwa field ini harus diisi
+                            error={isDeskripsiTouched && !deskripsi} // Set error jika deskripsi kosong
+                            helperText={isDeskripsiTouched && !deskripsi && "Deskripsi tidak boleh kosong"} // Tampilkan pesan error jika deskripsi kosong
+                            
+                            
                         />
                     </div>
                 </Box>
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
+            <DialogActions sx={{padding: '24px', justifyContent: 'space-between'}}>
+                <ButtonError Color="#ffffff" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleClose}/>
                 <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Buat Event'} onClick={() => {
                     handleClose(); // Close the dialog
                     postData();   // Execute the postData function

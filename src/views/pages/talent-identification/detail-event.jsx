@@ -57,8 +57,8 @@ export default function DetailEvent() {
     <>
       {/* <MainLayout /> */}
       
-      <MainCard sx={{marginBottom : 3}}>
-        <Box>
+      {/* <MainCard sx={{marginBottom : 3}}> */}
+        {/* <Box> */}
           <TimelineDetailEvent  
           eventid={eventid}
           nama_event={nama_event}
@@ -68,8 +68,9 @@ export default function DetailEvent() {
           tanggal_mulai ={tanggal_mulai}
           tanggal_selesai =  {tanggal_selesai}
           eventstatus_id= {evenstatus_id}/>
-        </Box>
-      </MainCard>
+        {/* </Box> */}
+      {/* </MainCard> */}
+      
 {/* 
       <MainCard sx={{marginBottom : 3}}>
         <Box>

@@ -36,7 +36,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
   console.log(activeStep);
 
   const boxStyle = {
-    padding: '20px', 
+    padding: '0px', 
     width: '100%',
     borderRadius:'12px'
   };
@@ -124,7 +124,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
     switch (stepIndex) {
       case 0:
         return (
-          <MainCard sx={{marginTop : 5}}>
+          <MainCard sx={{marginTop : '24px'}}>
             <Box>
               <TalentSource/>
             </Box>
@@ -132,7 +132,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         );
       case 1:
         return (
-          <MainCard sx={{marginTop : 5}}>
+          <MainCard sx={{marginTop : '24px'}}>
             <Box>
               <TalentProfile/>
             </Box>
@@ -140,7 +140,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         );
       case 2:
         return (
-          <MainCard sx={{marginTop : 5}}>
+          <MainCard sx={{marginTop : '24px'}}>
             <Box>
               <TalentQualification/>
             </Box>
@@ -148,7 +148,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         );
       case 3:
         return (
-          <MainCard sx={{marginTop : 5}}>
+          <MainCard sx={{marginTop : '24px'}}>
             <Box>
               <TalentDays/>
             </Box>
@@ -156,7 +156,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         );
       case 4:
         return (
-          <MainCard sx={{marginTop : 5}}>
+          <MainCard sx={{marginTop : '24px'}}>
             <Box>
               <TalentCluster />
             </Box>
@@ -164,7 +164,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         );
       default:
         return (
-          <MainCard sx={{marginTop : 5}}>
+          <MainCard sx={{marginTop : '24px'}}>
             <Box>
               <TalentPool/>
             </Box>
@@ -187,8 +187,9 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
   }, [tanggal_selesai]);
 
   return (
-    <MainCard>
+ 
       <Box sx={boxStyle}>
+        <Box sx={{ backgroundColor: '#FFFFFF', padding: '24px', borderRadius: '12px'}}>
         <FlexContainer>
           <BoxContainer>
             <FlexTitle style={{paddingBottom:'8px'}}>
@@ -271,6 +272,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
             );
           })}
         </Stepper>
+        </Box>
         
         {renderStepContent(activeStep)}
 
@@ -290,7 +292,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         />
 
       </Box>
-    </MainCard>
+ 
 
     
   );
