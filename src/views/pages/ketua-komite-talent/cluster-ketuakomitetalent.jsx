@@ -9,7 +9,7 @@ import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import SearchResetButton from '../../../ui-component/button/SearchResetButton';
 import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
-import TalentClusterTable from '../../../ui-component/tables/talentcluster';
+import TalentClusterKetuaKomiteTalentTable from '../../../ui-component/tables/talentclusterketuakomitetalent';
 
 export default function ClusterKetuaKomiteTalent() {
     const nama_event = 'TRIAL EVENT_ E1-D3_BISNIS';
@@ -128,7 +128,7 @@ export default function ClusterKetuaKomiteTalent() {
                     </div>
                 </div>
          
-                <TalentClusterTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}/>
+                <TalentClusterKetuaKomiteTalentTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}/>
             </Box>
 
         </MainCard>
