@@ -21,18 +21,13 @@ import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 // import SecondCard from 'ui-component/cards/SecondCard';
 // import SearchSection from 'layout/MainLayout/Header/SearchSection';
 import SearchSection2 from '../../../ui-component/searchsection';
-import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
+// import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
 import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetailevent';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
 import KonfirmasiEvent from '../../../ui-component/modal/konfirmasi-next-event';
-import KonfirmasiNextEvent from '../../../ui-component/modal/konfirmasi-next-event';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-
-// tambahan
-import TalentDays from '../../../ui-component/event-section/talent-days';
-import DetailEvent from './detail-event';
-
+import AksesEvent from '../../../ui-component/submenu/aksesevent';
+import BasicPagination from '../../../ui-component/button/pagination';
 
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
@@ -70,40 +65,10 @@ function a11yProps(index) {
   };
 }
 
-const fetchDataFromDatabase = () => {
-  return fetch('http://localhost:4000/getallevent') // Replace with your actual endpoint
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      return data; // Return the parsed JSON data
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-      throw error; // Rethrow the error to handle it elsewhere
-    });
-};
-
-const DaftarEvent = () => {
+const EventKomiteTalent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
-  const [eventData, setEventData] = useState([]);
-  
-  useEffect(() => {
-    fetchDataFromDatabase()
-      .then(data => {
-        setEventData(data.event);
-        setLoading(false); // Move this line to the end of the .then block
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
-  }, []);
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -115,7 +80,7 @@ const DaftarEvent = () => {
 
   // const handleButtonClick = () => {
   //   // Logic for button click
-  //console.log(event.rumpun);
+  //   console.log('Button clicked!');
   // };
 
   const [open, setOpen] = useState(false);
@@ -127,7 +92,7 @@ const DaftarEvent = () => {
   const handleClose = () => {
     setOpen(false);
   };
-console.log("asdasd", eventData);
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -136,8 +101,12 @@ console.log("asdasd", eventData);
         <Stack direction="row" spacing={2}>
           <SearchSection2 /> 
 
-          <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Event'} onClick={handleOpen}/>
-        
+          {/* <Button variant="contained" 
+          sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} 
+          endIcon={<AddCircleOutlineIcon />}
+          onClick={handleOpen}>
+            Tambah Event
+          </Button> */}
         </Stack>
       }>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -151,34 +120,26 @@ console.log("asdasd", eventData);
           </Tabs>
         </Box>
 
-        <CustomTabPanel value={value} index={0} style={{paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px',}}>
-        {isLoading ? (
-          <Typography>Loading...</Typography>
-        ) : eventData.length > 0 ? (
-          eventData.map(event => (
-            <EventBerjalan 
-            key={event.id}
-            id={event.id}
-            nama_event={event.nama_event}
-            deskripsi={event.deskripsi}
-            tipe_komite_talent={event.tipekomite.tipe_komite_talent}
-            kode_rumpun = {event.kode_rumpun_jabatan}
-            nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
-            tanggal_mulai={event.tanggal_mulai}
-            tanggal_selesai={event.tanggal_selesai}
-            status={event.evenstatus_id} />
-          ))
-        ) : (
-          <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
-            <img src={notFoundImage} alt="Deskripsi gambar" />
-            <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
+        <CustomTabPanel value={value} index={0}>
+          <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingLeft:24, paddingRight:24, paddingBottom:24 }}>
+            
+            <AksesEvent ButtonName={'Akses Event'} namaEvent={'Talent Source'} pathDetailEvent={'/talent/detail-event'}/>
           </Box>
-        )}
-      </CustomTabPanel>
+
+          
+          <BasicPagination />
+{/*             
+            <img src={notFoundImage} alt="Deskripsi gambar" />
+            <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography> */}
+
+        </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
+          {/* Ini harusnya tempat untuk menyimpan histori event yang selesai,
+              tapi dipakai untuk Detail Event dulu ya */}
           <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
-                
+            <MatrixNineBox />
+            {/* <AksesEvent /> */}
           </Container>
           
         </CustomTabPanel>
@@ -190,4 +151,4 @@ console.log("asdasd", eventData);
   );
 };
 
-export default DaftarEvent;
+export default EventKomiteTalent;

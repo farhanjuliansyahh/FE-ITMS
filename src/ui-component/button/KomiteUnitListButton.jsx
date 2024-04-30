@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal';
+import { useState,useEffect } from 'react';
 // import { height } from '@mui/system';
 import KomiteUnitListTable from '../tables/komiteunittable';
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,10 +20,39 @@ const style = {
   p: 4,
 };
 
-export default function KomiteUnitListButton() {
+export default function KomiteUnitListButton({eventid}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [komiteunit, setkomiteunit] = useState([''])
+  console.log(eventid);
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getkomiteunitlist?eventtalentid=${eventid}`)
+      .then(response => response.json())
+      .then(data => {
+        // Update state with API data
+        setkomiteunit(data.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // Empty dependency array to run effect only once
+
+console.log(eventid);
+
+let sudahMemilihCount = 0;
+let belumMemilihCount = 0;
+const totalkomite = komiteunit.length
+
+// Iterate over the array and count the occurrences of each status
+komiteunit.forEach(item => {
+    if (item["Status Memilih"] === "Sudah Memilih") {
+        sudahMemilihCount++;
+    } else if (item["Status Memilih"] === "Belum Memilih") {
+        belumMemilihCount++;
+    }
+});
 
   return (
     <>
@@ -37,7 +67,7 @@ export default function KomiteUnitListButton() {
           boxShadow: 'none',
         }}
       >
-        0/10 Komite Unit
+        {sudahMemilihCount} /  {totalkomite} Komite Unit
       </Button>
       <Modal
         open={open}
@@ -58,7 +88,7 @@ export default function KomiteUnitListButton() {
             </Button>
           </Box>
           <Box sx={{ mt: 2, position: 'relative',width: '100%', height: 'calc(100% - 50px)' }}>
-            <KomiteUnitListTable width={style.width-80} height={style.height - 50}/>
+            <KomiteUnitListTable width={style.width-80} height={style.height - 50} data={komiteunit}/>
           </Box>
         </Box>
       </Modal>

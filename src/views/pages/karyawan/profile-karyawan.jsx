@@ -1,12 +1,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { ArrowForwardOutlined, CalendarMonthOutlined, PersonPinOutlined, TaskOutlined } from '@mui/icons-material'
+import { CalendarMonthOutlined, EmojiEvents, Person, PersonPinOutlined, School, TaskOutlined } from '@mui/icons-material'
 
 import MainCard from '../../../ui-component/cards/MainCard';
 import CheckDataAlert from '../../../ui-component/cards/CheckDataAlert';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
+import AccordionKaryawan from '../../../ui-component/cards/AccordionKaryawan';
+import RiwayatPendidikanKaryawan from '../../../ui-component/submenu/karyawan-riwayatpendidikan';
+import KompetensiKaryawan from '../../../ui-component/submenu/karyawan-kompetensi';
+import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -122,8 +126,22 @@ export default function ProfileKaryawan() {
             {/* Data Diri */}
             <CustomTabPanel value={value} index={0}>
                 <Box sx={boxStyle}>
-                    <CheckDataAlert />
-                    
+                    <CheckDataAlert/>
+                    <AccordionKaryawan 
+                        summary={'Data Diri'} 
+                        icon={Person} 
+                        content={<DataDiriKaryawan/>}
+                    />
+                    <AccordionKaryawan 
+                        summary={'Riwayat Pendidikan'} 
+                        icon={School} 
+                        content={<RiwayatPendidikanKaryawan/>}
+                    />
+                    <AccordionKaryawan 
+                        summary={'Kompetensi'} 
+                        icon={EmojiEvents} 
+                        content={<KompetensiKaryawan/>}
+                    />
                 </Box> 
             </CustomTabPanel>
 

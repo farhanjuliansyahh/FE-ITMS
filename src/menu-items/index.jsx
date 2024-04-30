@@ -3,15 +3,18 @@ import TalentIdentification from './talent-identification';
 import EventKomiteUnit from './event-komiteunit';
 import ManajemenPengguna from './manajemen-pengguna';
 import EventKaryawan from './event-karyawan';
-import EventKomiteTalentDua from './event-komite-talent-dua';
-
-// import utilities from './utilities';
-// import other from './other';
+import EventKetuaKomiteTalent from './event-ketuakomitetalent';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, TalentIdentification, EventKomiteUnit, ManajemenPengguna, EventKaryawan, EventKomiteTalentDua]
+  items: [
+    dashboard, 
+    TalentIdentification, 
+    EventKomiteTalent, 
+    ManajemenPengguna, 
+    EventKaryawan, 
+    EventKetuaKomiteTalent]
 };
 
 export default menuItems;
