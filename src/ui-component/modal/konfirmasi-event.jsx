@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Divider } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -11,8 +11,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-function KonfirmasiNextEvent({ open, handleClose, eventid }) {
+function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan }) {
     const [deadlinesource, setdeadlinesource] = useState('');
+    const [activejoblevel, setactivejoblevel] = useState(['']);
+    const [activejobfam, setactivejobfam]     = useState('');
+
 
     const handleDateChange = (date) => {
         console.log(date); // Check the date value
@@ -52,8 +55,44 @@ function KonfirmasiNextEvent({ open, handleClose, eventid }) {
           });
       };
 
-      const posttalentsource = () => {
-        return fetch('http://localhost:4000/getfilterkaryawan?kode_rumpun_jabatan=9&job_level=C1,B1,C2', {
+      const getactivejoblevel = () => {
+        return fetch(`http://localhost:4000/getactivejoblevel?eventtalentid=${eventid}`, {
+            method: 'GET', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+              'Content-Type': 'application/json', // Specify the content type
+            },status:2
+            }) // Convert the bodyData object to a JSON string 
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            return data; // Return the parsed JSON data
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            throw error; // Rethrow the error to handle it elsewhere
+          });
+      };
+    useEffect(() => {
+        getactivejoblevel()
+          .then(data => {
+            setactivejoblevel(data);
+            setLoading(false); // Move this line to the end of the .then block
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+          });
+      }, []);
+    
+    const joblevelclean = activejoblevel.join(',');
+
+
+    const posttalentsource = () => {
+      return fetch(`http://localhost:4000/getfilterkaryawan?kode_rumpun_jabatan=${rumpun_jabatan}&job_level=${joblevelclean}`, {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
               'Content-Type': 'application/json', // Specify the content type

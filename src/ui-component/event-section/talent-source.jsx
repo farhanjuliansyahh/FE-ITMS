@@ -54,13 +54,44 @@ function a11yProps(index) {
   };
 }
 
-const TalentSource = () => {
+const TalentSource = ({eventid}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
   const [filterNippos, setFilterNippos] = useState('');
   const [filterJob, setFilterJob] = useState('');
   const [filterKomite, setFilterKomite] = useState('');
+  const [rowstrue, setRowstrue] = useState([]);
+  const [rowsfalse, setRowsfalse] = useState([])
+
+  console.log("uji",eventid);
+  const id = eventid
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getkandidatfalse?eventtalentid=${eventid}`)
+      .then(response => response.json())
+      .then(datafalse => {
+        // Update state with API data
+        setRowsfalse(datafalse.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // Empty dependency array to run effect only once
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${eventid}`)
+      .then(response => response.json())
+      .then(datatrue => {
+        // Update state with API data
+        setRowstrue(datatrue.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // Empty dependency array to run effect only once
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -116,7 +147,7 @@ const TalentSource = () => {
               <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
                   Tabel Karyawan
               </Typography>
-              <KomiteUnitListButton />
+              <KomiteUnitListButton eventid={id} />
 
               <div style={{ flex: '1' }}> </div>
 
@@ -130,7 +161,7 @@ const TalentSource = () => {
             <AdminSearchSectionGroup/>
           </div>
          
-            <TalentSourceTable checkboxSelection={true} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}/>
+            <TalentSourceTable checkboxSelection={true} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} rows={rowsfalse}/>
           </Box>
 
         </CustomTabPanel>
@@ -142,7 +173,7 @@ const TalentSource = () => {
               <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
                   Tabel Karyawan
               </Typography>
-              <KomiteUnitListButton />
+              <KomiteUnitListButton eventid={id} />
 
               <div style={{ flex: '1' }}> </div>
               
@@ -170,7 +201,7 @@ const TalentSource = () => {
               </div>
             </div>
 
-            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}/>
+            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} rows ={rowstrue}/>
           </Box>
           
         </CustomTabPanel>

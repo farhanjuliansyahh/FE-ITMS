@@ -11,12 +11,13 @@ import Pagination from '@mui/material/Pagination';
 import Grid from '@mui/material/Grid';
 
 const columns = [
-  { id: 'no', label:'No', minWidth:50, align: 'left', format: (value) =>parseInt(value)},
-  { id: 'komiteunit', label: 'Komite Unit', align:'left', minWidth: 120 },
-  { id: 'nippos', label: 'NIPPOS', align:'left', minWidth: 120 },
-  { id: 'jabatan', label: 'Jabatan', align:'left', minWidth: 120 },
-  { id: 'personallevel', label: 'Personal Level', align:'left', minWidth: 120 },
-  { id: 'status', label: 'Status', align:'left', minWidth: 120 },
+  { id: 'id', label:'No', minWidth:50, align: 'left', format: (value) =>parseInt(value)},
+  { id: 'Komite Unit', label: 'Komite Unit', align:'left', minWidth: 120 },
+  { id: 'Nippos', label: 'NIPPOS', align:'left', minWidth: 120 },
+  { id: 'Posisi', label: 'Jabatan', align:'left', minWidth: 120 },
+  { id: 'Job Family', label: 'Personal Level', align:'left', minWidth: 120 },
+  { id: 'Nama Kantor', label: 'Nama Kantor', align:'left', minWidth: 120 },
+  { id: 'Status Memilih', label: 'Status', align:'left', minWidth: 120 },
 ];
 
 
@@ -25,25 +26,13 @@ function createData(no, komiteunit, nippos, jabatan, personallevel, status) {
 }
 
 
-const rows = [
-  createData(1,'ABD HAFID','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(2,'ABDU SOMAD','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(3,'ABDUL JAMIL','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(4,'ABDUL WAHHAB','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(5,'ACEP RUDI SUPRIADI','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(6,'IMAN HAKIM','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(7,'JAMALUDIN','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(8,'KEMAL ASSEGAF','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(9,'LORENZO','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(10,'MAMAT SUPARMAT','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(11,'OSMAN','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(12,'PANDU WIJAYA','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),
-  createData(13,'RADEN AZIZ','900000001', 'VP Fronting Business', 'B2', 'Belum Memilih'),]
 
-export default function KomiteUnitListTable() {
+export default function KomiteUnitListTable({data}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const rows = data
+  console.log(rows);
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage-1);
   };

@@ -24,7 +24,7 @@ import { color } from 'framer-motion';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_talent, nama_rumpun_jabatan, tanggal_selesai, tanggal_mulai, status }) {
+export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_talent,kode_rumpun, nama_rumpun_jabatan, tanggal_selesai, tanggal_mulai, status }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [daysLeft, setDaysLeft] = React.useState(null);
@@ -42,6 +42,10 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     statusberjalan = "Unknown Status";
   }
 
+  useEffect(() => {
+    setActiveStep(status-2)
+  }, []);
+  
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -57,7 +61,9 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
       newSkipped.delete(activeStep);
     }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    //setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    
+    setActiveStep(status);
     setSkipped(newSkipped);
   };
 
@@ -80,8 +86,8 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     });
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
+ const handleReset = () => {
+   setActiveStep(0);
   };
 
   const boxStyle = {
@@ -249,7 +255,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
-  console.log(nama_event);
+  console.log("active step",activeStep);
 
 
 
@@ -381,30 +387,30 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
-            <Button
+            {/* <Button
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
             >
-              Back
-            </Button>
+              Back */}
+            {/* </Button>
             <Box sx={{ flex: '1 1 auto' }} />
             {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
-            )}
-
+            )} */}
+{/* 
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
+            </Button> */}
           </Box>
         </React.Fragment>
       )}
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} />
+      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>
