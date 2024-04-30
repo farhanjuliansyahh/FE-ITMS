@@ -59,13 +59,11 @@ const MainRoutes = {
     // },
     {
       path: 'event-komiteunit',
-      element: <EventKomiteUnit />,
-      children: [
-        {
-          path: 'daftar-eventkomiteunit',
-          element: <DaftarEventKomiteUnit />
-        },
-      ]
+      element: <EventKomiteUnit />
+    },
+    {
+      path: 'event-komiteunit/daftar-eventkomiteunit',
+      element: <DaftarEventKomiteUnit />
     },
     {
       path: 'manajemen-pengguna',

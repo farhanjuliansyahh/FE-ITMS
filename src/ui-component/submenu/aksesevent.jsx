@@ -8,16 +8,9 @@ import EventIcon from '@mui/icons-material/Event';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
-import DaftarEventKomiteTalent from '../../views/pages/komite-unit/daftar-eventkomiteunit';
-import { useNavigate } from 'react-router-dom';
+
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-<<<<<<< HEAD
-export default function AksesEvent() {
-  
-
- 
-=======
 const EventLabel = styled('div')({
   backgroundColor: '#FFF6E9', // Adjust the background color of the status label
   color: '#FFA726',
@@ -28,7 +21,6 @@ const EventLabel = styled('div')({
 });
 
 export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
->>>>>>> dee495ebc0fa71d92e6edf8e93b9d61f1110ed3a
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
@@ -113,22 +105,23 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
       fontSize: '2rem',
     },
   }); 
-  const navigate = useNavigate();
-  const [openAkses, setOpenAkses] = useState(); 
-  const handleOpenAkses = () => {
-    // Perform other actions
-    setOpenAkses(true); // If you still need to open a modal or something similar
-    
-    // Navigate
-    navigate('/event-komitetalent/daftar-eventkomitetalent');
-  }; 
 
-  // const handleOpenAkses = () => {
-  //   setOpenAkses(true);
-  // };
-  // const handleCloseAkses = () => {
-  //   setOpenAkses(false);
-  // };
+  const [open, setOpen] = useState(false);  
+  const [openHapus, setOpenHapus] = useState(false);
+
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+  setOpen(false);
+  };
+  const handleOpenHapus = () => {
+    setOpenHapus(true);
+  };
+  const handleCloseHapus = () => {
+  setOpenHapus(false);
+  };
 
   const CalendarIcon = styled(EventIcon)({
     fontSize: '1rem',
@@ -146,6 +139,14 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
 
   
 
+  // const editButtonStyle = {
+  //   border: '1px solid #000',
+  //   color: '#1C2D5A',
+  //   borderRadius: '12px',
+  //   paddingLeft: '12px',
+  //   paddingRight: '12px'
+  // }
+
   const akseseventButtonStyle = {
     backgroundColor: '#EF4123',
     color: '#fff',
@@ -157,28 +158,6 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
       color: '#fff',
     }
   }
-  const ButtonsContainer = styled('div')({
-    display: 'flex',
-    alignItems: 'center',
-    gap:'16px'
-  });
-  
-  const akseseventButton = (
-    <Button 
-    sx={akseseventButtonStyle} 
-    endIcon={<ArrowForwardRoundedIcon />}
-    onClick={handleOpenAkses}>
-      Akses Event
-    </Button>
-  );
-
-  // const editButtonStyle = {
-  //   border: '1px solid #000',
-  //   color: '#1C2D5A',
-  //   borderRadius: '12px',
-  //   paddingLeft: '12px',
-  //   paddingRight: '12px'
-  // }
 
   // // const mulaiButtonStyle = {
   // //   backgroundColor: '#EF4123',
@@ -190,16 +169,19 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
   // //     backgroundColor: '#AB1D05',
   // //     color: '#fff',
   // //   }
-
   // }
+
+  const ButtonsContainer = styled('div')({
+    display: 'flex',
+    alignItems: 'center',
+    gap:'16px'
+  });
+  
   // const editButton = (
   //   <Button sx={editButtonStyle} endIcon={<EditIcon />}>
   //     Edit
   //   </Button>
   // );
-<<<<<<< HEAD
-  
-=======
 
   const akseseventButton = (
     <Link to={pathDetailEvent} style={{ textDecoration: 'none' }}>
@@ -212,7 +194,6 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
     </Link>
   );
 
->>>>>>> dee495ebc0fa71d92e6edf8e93b9d61f1110ed3a
   // const mulaiButton = (
   //   <Button 
   //   variant="contained" 
@@ -314,7 +295,7 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
           <Typography style={{fontWeight:'bold', color:'#F44336'}}>53 hari lagi</Typography>
         </Grid>
       </Grid>
-      
+
       {/* <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -370,7 +351,7 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
           </Box>
         </React.Fragment>
       )} */}
-      <DaftarEventKomiteTalent open={openAkses}/>
+      {/* <AksesEvent open={open} handleClose={handleClose} /> */}
       {/* <HapusEvent open={openHapus} handleClose={handleCloseHapus} /> */}
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>
