@@ -17,7 +17,7 @@ import { TextsmsTwoTone } from '@mui/icons-material';
 // ==============================|| DETAIL EVENT PAGE ||============================== //
 
 export default function DetailEvent() {
-  let {id} = useParams();
+  const {id} = useParams();
   const [isLoading, setLoading] = useState(true);
   const [eventaktif, seteventaktif] = useState([]);
   console.log(id);
@@ -49,10 +49,10 @@ export default function DetailEvent() {
         setLoading(false);
       });
   }, []);
-//console.log(eventaktif);
-  const { eventid, nama_event, deskripsi, tipekomite, rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
+  console.log("noticeme",eventaktif);
+  const { eventid, nama_event, deskripsi, tipekomite, kode_rumpun,nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
 
-  console.log(evenstatus_id);
+  console.log("namaid",id);
     return (
     <>
       {/* <MainLayout /> */}
@@ -60,11 +60,11 @@ export default function DetailEvent() {
       {/* <MainCard sx={{marginBottom : 3}}> */}
         {/* <Box> */}
           <TimelineDetailEvent  
-          eventid={eventid}
+          eventid={id}
           nama_event={nama_event}
           deskripsi= {deskripsi} 
           tipekomite= {tipekomite} 
-          rumpun ={rumpun} 
+          rumpun ={nama_rumpun} 
           tanggal_mulai ={tanggal_mulai}
           tanggal_selesai =  {tanggal_selesai}
           eventstatus_id= {evenstatus_id}/>

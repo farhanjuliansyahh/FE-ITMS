@@ -12,7 +12,7 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
 const EventLabel = styled('div')({
-  backgroundColor: '#FFF6E9', // Adjust the background color of the status label
+  backgroundColor: '#FFF6E9', 
   color: '#FFA726',
   padding: '4px 8px',
   borderRadius: '16px',
@@ -20,7 +20,7 @@ const EventLabel = styled('div')({
   fontSize:'12px'
 });
 
-export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
+export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
@@ -49,8 +49,6 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
       throw new Error("You can't skip a step that isn't optional.");
     }
 
@@ -67,8 +65,8 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
   };
 
   const boxStyle = {
-    border: '1px solid #E0E0E0', // Border style definition
-    padding: '20px', // Example padding
+    border: '1px solid #E0E0E0', 
+    padding: '20px', 
     width: '100%',
     borderRadius:'12px'
   };
@@ -78,7 +76,7 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
   const FlexContainer = styled('div')({
     display: 'flex',
     alignItems: 'center',
-    gap: '16px', // Adjust the gap between elements as needed
+    gap: '16px', 
     paddingBottom: '24px',
   });
 
@@ -129,23 +127,13 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
   });
 
   const StatusLabel = styled('div')({
-    backgroundColor: '#EAF8FF', // Adjust the background color of the status label
+    backgroundColor: '#EAF8FF', 
     color: '#2196F3',
     padding: '4px 8px',
     borderRadius: '16px',
     fontWeight: 600,
     fontSize:'12px'
   });
-
-  
-
-  // const editButtonStyle = {
-  //   border: '1px solid #000',
-  //   color: '#1C2D5A',
-  //   borderRadius: '12px',
-  //   paddingLeft: '12px',
-  //   paddingRight: '12px'
-  // }
 
   const akseseventButtonStyle = {
     backgroundColor: '#EF4123',
@@ -159,29 +147,11 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
     }
   }
 
-  // // const mulaiButtonStyle = {
-  // //   backgroundColor: '#EF4123',
-  // //   color: '#fff',
-  // //   borderRadius: '12px',
-  // //   paddingLeft: '12px',
-  // //   paddingRight: '12px',
-  // //   ':hover':{
-  // //     backgroundColor: '#AB1D05',
-  // //     color: '#fff',
-  // //   }
-  // }
-
   const ButtonsContainer = styled('div')({
     display: 'flex',
     alignItems: 'center',
     gap:'16px'
   });
-  
-  // const editButton = (
-  //   <Button sx={editButtonStyle} endIcon={<EditIcon />}>
-  //     Edit
-  //   </Button>
-  // );
 
   const akseseventButton = (
     <Link to={pathDetailEvent} style={{ textDecoration: 'none' }}>
@@ -189,20 +159,11 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
         sx={akseseventButtonStyle} 
         endIcon={<ArrowForwardRoundedIcon />}
       >
-        Akses Event
+        {ButtonName}
       </Button>
     </Link>
   );
 
-  // const mulaiButton = (
-  //   <Button 
-  //   variant="contained" 
-  //   sx={mulaiButtonStyle} 
-  //   endIcon={<ArrowForwardRoundedIcon />}
-  //   onClick={handleOpen}>
-  //     Mulai Event
-  //   </Button>
-  // );
   const DividerContainer = styled('div')({
     width: '100%',
     textAlign: 'center',
@@ -221,18 +182,13 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
         </BoxAvatar>
 
         <BoxContainer> 
-          {/* <FlexTitle style={{paddingBottom:'8px'}}>
-            <Typography style={{fontSize:'16px', fontWeight:'bold'}}>TRIAL EVENT_ E1-D3_BISNIS</Typography>
-            <StatusLabel>Berlangsung</StatusLabel>
-          </FlexTitle> */}
           <FlexTitle style={{ paddingBottom: '8px' }}>
-          {/* Wrap the Typography with Link */}
           <Typography
             style={{
               fontSize: '16px',
               fontWeight: 'bold',
-              textDecoration: 'none', // Remove underline
-              color: 'inherit', // Inherit color from parent
+              textDecoration: 'none', 
+              color: 'inherit', 
             }}
           >
               TRIAL EVENT_ E1-D3_BISNIS
@@ -243,8 +199,8 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
             style={{
               fontSize: '16px',
               fontWeight: 'bold',
-              textDecoration: 'none', // Remove underline
-              color: 'inherit', // Inherit color from parent
+              textDecoration: 'none', 
+              color: 'inherit', 
             }}
           >
           </Typography >
@@ -260,8 +216,6 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
         <div style={{ flex: '1' }}> </div>
         <ButtonsContainer>
           {akseseventButton}
-          {/* {editButton}
-          {deleteButton} */}
         </ButtonsContainer>
       </FlexContainer>
 
@@ -295,65 +249,6 @@ export default function AksesEvent( {namaEvent, pathDetailEvent } ) {
           <Typography style={{fontWeight:'bold', color:'#F44336'}}>53 hari lagi</Typography>
         </Grid>
       </Grid>
-
-      {/* <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          // if (isStepOptional(index)) {
-          //   labelProps.optional = (
-          //     <Typography variant="caption">Optional</Typography>
-          //   );
-          // }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper> */}
-
-      {/* {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 5, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-            {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )}
-
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
-          </Box>
-        </React.Fragment>
-      )} */}
-      {/* <AksesEvent open={open} handleClose={handleClose} /> */}
-      {/* <HapusEvent open={openHapus} handleClose={handleCloseHapus} /> */}
-      {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>
   );
 }

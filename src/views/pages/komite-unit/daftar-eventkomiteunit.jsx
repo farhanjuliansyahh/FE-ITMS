@@ -1,17 +1,14 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { CalendarMonthOutlined, EmojiEvents, Person, PersonPinOutlined, School, TaskOutlined } from '@mui/icons-material'
+import { ArrowForwardOutlined, CalendarMonthOutlined, PersonPinOutlined, TaskOutlined } from '@mui/icons-material'
 
 import MainCard from '../../../ui-component/cards/MainCard';
-import CheckDataAlert from '../../../ui-component/cards/CheckDataAlert';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-import AccordionKaryawan from '../../../ui-component/cards/AccordionKaryawan';
-import RiwayatPendidikanKaryawan from '../../../ui-component/submenu/karyawan-riwayatpendidikan';
-import KompetensiKaryawan from '../../../ui-component/submenu/karyawan-kompetensi';
-import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri';
-import ProfileAccordion from '../../../ui-component/modal/profile-accordion';
+import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert';
+import TalentKomiteUnit from '../../../ui-component/event-section/talent-komiteunit';
+import KaryawanTerkualifikasi from './karyawan-terkualifikasi';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -46,7 +43,7 @@ function CustomTabPanel(props) {
     };
   }
 
-export default function ProfileKaryawan() {
+export default function DaftarEventKomiteUnit() {
     const nama_event = 'TRIAL EVENT_ E1-D3_BISNIS';
     const countdown = '53 Hari Lagi';
     const tgl_mulai_selesai = '22 Januari 2024 - 22 Maret 2024';
@@ -119,50 +116,32 @@ export default function ProfileKaryawan() {
 
             <Box sx={{ borderBottom: 1, borderTop: 1, borderColor: 'divider', marginTop: -3 }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab icon={<PersonPinOutlined />} iconPosition="start" label="Data Diri" {...a11yProps(0)} />
-                    <Tab icon={<TaskOutlined />} iconPosition="start" label="Persetujuan Talent" {...a11yProps(1)} />
+                    <Tab icon={<PersonPinOutlined />} iconPosition="start" label="Daftar Karyawan" {...a11yProps(0)} />
+                    <Tab icon={<TaskOutlined />} iconPosition="start" label="Karyawan Terkualifikasi" {...a11yProps(1)} />
                 </Tabs>
             </Box>
 
-            {/* Data Diri */}
+            {/* Daftar Karyawan */}
             <CustomTabPanel value={value} index={0}>
                 <Box sx={boxStyle}>
-                    <CheckDataAlert/>
-                    <AccordionKaryawan 
-                        summary={'Data Diri'} 
-                        icon={Person} 
-                        content={<DataDiriKaryawan/>}
-                    />
-                    <AccordionKaryawan 
-                        summary={'Riwayat Pendidikan'} 
-                        icon={School} 
-                        content={<RiwayatPendidikanKaryawan/>}
-                    />
-                    <AccordionKaryawan 
-                        summary={'Kompetensi'} 
-                        icon={EmojiEvents} 
-                        content={<KompetensiKaryawan/>}
-                    />
+                    <KuotaKomiteUnitAlert />
+                    <TalentKomiteUnit />
                 </Box> 
             </CustomTabPanel>
+            
 
-            {/* Persetujuan Talent*/}
+            {/* Karyawan Terkualifikasi*/}
+            
             <CustomTabPanel value={value} index={1}>
-                <div style={{ paddingLeft: '40px'}}>
-                    <Typography style={{color:'#66BB6A',fontFamily:'Roboto',fontSize:'16px', fontWeight:500 , marginBottom: '5px'}}>
-                        Selamat !!
-                    </Typography>
-                    <Typography style={{color:'#1F1F1F',fontFamily:'Roboto',fontSize:'14px', fontWeight:500,marginBottom: '15px'}}>
-                        Anda dinyatakan sebagai Talent POSIND tahun 2024
-                    </Typography>
-                    <Typography style={{color:'#828282',fontFamily:'Roboto',fontSize:'12px', fontWeight:300}}>
-                        Jika berminat silahkan konfirmasi dengan menyetujui Pakta Integritas dan Commitment Letter dibawah ini.
-                    </Typography>
-                    {/* Jika berminat silahkan konfirmasi dengan menyetujui Pakta Integritas dan Commitment Letter dibawah ini. */}
-                </div> 
-                <div style={{ padding: '20px', marginBottom: '24px',}}>
-                    <ProfileAccordion/>
-                </div> 
+                <Box sx={boxStyle}>
+                    <KuotaKomiteUnitAlert />
+                    <KaryawanTerkualifikasi/>
+                </Box> 
+                
+                <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
+                    <img src={notFoundImage} alt="Deskripsi gambar" />
+                    <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
+                </Box> 
             </CustomTabPanel>
         </MainCard>
     );
