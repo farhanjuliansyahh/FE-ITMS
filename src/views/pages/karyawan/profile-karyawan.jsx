@@ -7,6 +7,7 @@ import { ArrowForwardOutlined, CalendarMonthOutlined, PersonPinOutlined, TaskOut
 import MainCard from '../../../ui-component/cards/MainCard';
 import CheckDataAlert from '../../../ui-component/cards/CheckDataAlert';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
+import ProfileAccordion from '../../../ui-component/modal/profile-accordion';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -129,10 +130,21 @@ export default function ProfileKaryawan() {
 
             {/* Persetujuan Talent*/}
             <CustomTabPanel value={value} index={1}>
-                <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
-                    <img src={notFoundImage} alt="Deskripsi gambar" />
-                    <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
-                </Box> 
+                <div style={{ paddingLeft: '40px'}}>
+                    <Typography style={{color:'#66BB6A',fontFamily:'Roboto',fontSize:'16px', fontWeight:500 , marginBottom: '5px'}}>
+                        Selamat !!
+                    </Typography>
+                    <Typography style={{color:'#1F1F1F',fontFamily:'Roboto',fontSize:'14px', fontWeight:500,marginBottom: '15px'}}>
+                        Anda dinyatakan sebagai Talent POSIND tahun 2024
+                    </Typography>
+                    <Typography style={{color:'#828282',fontFamily:'Roboto',fontSize:'12px', fontWeight:300}}>
+                        Jika berminat silahkan konfirmasi dengan menyetujui Pakta Integritas dan Commitment Letter dibawah ini.
+                    </Typography>
+                    {/* Jika berminat silahkan konfirmasi dengan menyetujui Pakta Integritas dan Commitment Letter dibawah ini. */}
+                </div> 
+                <div style={{ padding: '20px', marginBottom: '24px',}}>
+                    <ProfileAccordion/>
+                </div> 
             </CustomTabPanel>
         </MainCard>
     );
