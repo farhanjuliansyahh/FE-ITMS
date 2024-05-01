@@ -9,7 +9,7 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-export default function TalentCheckbox({ onStatusUpdate }) {
+export default function TalentCheckbox({ onStatusUpdate, Title, Body , subBody, Footer}) {
     const [checked, setChecked] = useState(false);
     const [openModal, setOpenModal] = useState(false); // State to manage modal open/close
     const [processCompleted, setProcessCompleted] = useState(false); // State to track if process is completed
@@ -78,7 +78,7 @@ export default function TalentCheckbox({ onStatusUpdate }) {
             onMouseLeave={() => setIsHoveredSelesai(false)}
             onClick={handleSelesai}
         >
-            Selesai
+            Submit
         </Button>
     );
 
@@ -106,7 +106,7 @@ export default function TalentCheckbox({ onStatusUpdate }) {
                 <FormControlLabel
                     required
                     control={<Checkbox checked={checked} onChange={handleChange} disabled={processCompleted} />}
-                    label="Saya telah membaca dan menyetujui Pakta Integritas ini"
+                    label={Footer}
                 />
             </div>
             <div>
@@ -132,7 +132,7 @@ export default function TalentCheckbox({ onStatusUpdate }) {
             <Dialog open={openModal} onClose={handleCloseModal}>
                 <DialogTitle>
                     <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                        Konfirmasi Talent Pool
+                        {Title}
                     </Typography>
                 </DialogTitle>
                 <DividerContainer>
@@ -142,10 +142,10 @@ export default function TalentCheckbox({ onStatusUpdate }) {
                     <Box>
                         <div>
                             <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
-                                Apakah anda yakin seluruh event sudah selesai?
+                                {Body}
                             </Typography>
                             <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px', marginBottom: '24px' }}>
-                                Anda tidak dapat kembali ke tahap sebelumnya jika klik selesai.
+                                {subBody}
                             </Typography>
                         </div>
                     </Box>
