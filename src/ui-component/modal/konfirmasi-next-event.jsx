@@ -35,7 +35,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
                     posttalentqual().then(() => handleConfirmation(selectedDate))
                     break;
                 case 4:
-                    function3();
+                    posttalentdays().then(() => handleConfirmation(selectedDate));
                     break;
                 case 5:
                     function4();
@@ -134,6 +134,33 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
                 throw error; // Rethrow the error to handle it elsewhere
             });
     };
+
+    const posttalentdays = () => {
+        return fetch('http://localhost:4000/createtdays', {
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventtalentid: eventid
+            }) // Convert the bodyData object to a JSON string
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+    };
+
 
 
     const lanjutkanButtonStyle = {
