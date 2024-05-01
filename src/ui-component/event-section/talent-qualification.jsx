@@ -50,13 +50,16 @@ function a11yProps(index) {
   };
 }
 
-const TalentQualification = () => {
+const TalentQualification = ({eventid}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
   const [filterNippos, setFilterNippos] = useState('');
   const [filterJob, setFilterJob] = useState('');
   const [filterKomite, setFilterKomite] = useState('');
+  const [qualRow, setqualRow] = useState([])
+
+  const eventidactive = eventid
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -70,6 +73,80 @@ const TalentQualification = () => {
     console.log(filterNama);
   },[filterNama])
 
+  const fetchupdateskor = (eventid) => {
+    return fetch('http://localhost:4000/updateskor', {
+        method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+        headers: {
+            'Content-Type': 'application/json', // Specify the content type
+        },    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })// Return the parsed JSON data
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            throw error; // Rethrow the error to handle it elsewhere
+        });
+};
+
+const comparenilai = (eventid) => {
+   return fetch('http://localhost:4000/comparenilai', {
+      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+      headers: {
+          'Content-Type': 'application/json', // Specify the content type
+      },    })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })// Return the parsed JSON data
+      .catch(error => {
+          console.error('Error fetching data:', error);
+          throw error; // Rethrow the error to handle it elsewhere
+      });
+};
+
+useEffect(() => {
+  // Fetch data from API
+  fetch(`http://localhost:4000/getqualification?eventtalentid=${eventidactive}`)
+    .then(response => response.json())
+    .then(dataqual => {
+      // Update state with API data
+      setqualRow(dataqual.map((row, index) => ({ ...row, id: index + 1 })));
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+}, []);
+
+console.log("qualrow:", qualRow);
+
+  useEffect(() => {
+    fetchupdateskor()
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    comparenilai()
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    comparenilai()
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
   // const handleButtonClick = () => {
   //   // Logic for button click
   //   console.log('Button clicked!');
@@ -138,14 +215,14 @@ const TalentQualification = () => {
             </div>
 
             <TalentQualificationTable 
-              competencyValue={3.5}
-              pmsValue={88}
-              akhlakValue={4.5}
-              learningagilityValue={4.6}
+              rows = {qualRow}
             />
 
           </Box>
         </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={1}>
+
           <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
 
             <FlexContainer>
@@ -178,14 +255,10 @@ const TalentQualification = () => {
             </div>
 
             <TalentQualificationTable 
-              competencyValue={1.5}
-              pmsValue={88}
-              akhlakValue={2.1}
-              learningagilityValue={4.6}
+              rows = {qualRow}
             />
 
             </Box>
-        <CustomTabPanel value={value} index={1}>
           
         </CustomTabPanel>
 

@@ -16,7 +16,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
     const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
-        console.log(eventid);
+        console.log("ini apaan jer",eventid);
         console.log(status);
       }), [];
 
@@ -26,13 +26,13 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
         setSelectedDate(date); // Update the state with the selected date
     };
     const handleLanjutkan = (date) => {
-        updatedeadline().then(() => {
+        updatedeadline(eventactive).then(() => {
             switch (currenteventstatus) {
                 case 2:
                     posttalentprofile().then(() => handleConfirmation(selectedDate))
                     break;
                 case 3:
-                    function2();
+                    posttalentqual().then(() => handleConfirmation(selectedDate))
                     break;
                 case 4:
                     function3();
@@ -52,8 +52,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
             }
         });
         };
+    const eventactive = parseInt(eventid)
 
-    const updatedeadline = () => {
+    const updatedeadline = (eventid) => {
+        console.log("event active", eventactive);
         return fetch('http://localhost:4000/updatedeadline', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
@@ -61,7 +63,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
             },
             body: JSON.stringify({
                 // Include any data you want to send in the request body
-                event_id: eventid,
+                eventid: eventid,
                 status: currenteventstatus,
                 date: selectedDate
             }) // Convert the bodyData object to a JSON string
@@ -106,6 +108,33 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
                 throw error; // Rethrow the error to handle it elsewhere
             });
     };
+
+    const posttalentqual = () => {
+        return fetch('http://localhost:4000/createqualificationquery', {
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventtalentid: eventid
+            }) // Convert the bodyData object to a JSON string
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+    };
+
 
     const lanjutkanButtonStyle = {
         backgroundColor: '#1C2D5A',

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'; // Removed unnecessary import
 import { idID } from '@mui/material/locale';
 import { Message } from '@mui/icons-material';
 
@@ -13,41 +13,31 @@ const columns = [
   { field: 'Job Level', headerName: 'Job Level', width: 130 },
   { field: 'Nama Kantor', headerName: 'Kantor', width: 130 },
   { field: 'Komite Unit', headerName: 'Komite Unit', width: 130 },
-  {
-    // field: 'age',
-    // headerName: 'Age',
-    // type: 'number',
-    // width: 90,
-  },
-  // Menghapus definisi kolom ini jika tidak ada data yang relevan atau memperbaikinya
-  // {
-  //   field: 'fullName',
-  //   headerName: 'Full name',
-  //   description: 'This column has a value getter and is not sortable.',
-  //   sortable: false,
-  //   width: 160,
-  //   valueGetter: (params) => `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  // },
-]
+];
 
+// TalentSourceTable component
+const TalentSourceTable = ({ checkboxSelection, rows }) => {
+  const [selectedRows, setSelectedRows] = useState([]);
 
+  const handleSelectionChange = (newSelection) => {
+    console.log('Selected rows:', newSelection.selectionModel);
+  
+  };
 
-export default function TalentSourceTable({ checkboxSelection, rows }) {
-
+  useEffect(() => {
+    console.log("jer",selectedRows);
+  }, [selectedRows]);
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        getRowId={(row) => row.Nippos} 
-        pageSizeOptions={[5, 10]}
-        checkboxSelection={checkboxSelection} // Use the prop value here
+        checkboxSelection={checkboxSelection}
+        selectionModel={selectedRows}
+        onSelectionModelChange={handleSelectionChange}
       />
     </div>
   );
-}
+};
+
+export default TalentSourceTable;
