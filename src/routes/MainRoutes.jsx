@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
+import AuthGuard from './AuthGuard';
 // import DaftarPengguna from 'views/pages/manajemen-pengguna/daftar-pengguna';
 // import SecondLayout from '../layout/SecondLayout';
 
@@ -32,7 +33,7 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <DashboardDefault />
+      element: <AuthGuard element={<DashboardDefault />} />
     },
     {
       path: 'dashboard',

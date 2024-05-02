@@ -1,52 +1,56 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { idID } from '@mui/material/locale';
-
-const columns = [
-  { id: 'id', label:'No', minWidth:50, align: 'left', format: (value) =>parseInt(value)},
-  { id: 'Komite Unit', label: 'Komite Unit', align:'left', minWidth: 120 },
-  { id: 'Nippos', label: 'NIPPOS', align:'left', minWidth: 120 },
-  { id: 'Posisi', label: 'Jabatan', align:'left', minWidth: 120 },
-  { id: 'Job Family', label: 'Personal Level', align:'left', minWidth: 120 },
-  { id: 'Nama Kantor', label: 'Nama Kantor', align:'left', minWidth: 120 },
-  { id: 'Status Memilih', label: 'Status', align:'left', minWidth: 120 },
-];
 
 
-function createData(no, komiteunit, nippos, jabatan, personallevel, status) {
-  return {no, komiteunit, nippos, jabatan, personallevel, status };
-}
+const KomiteUnitTable = () => {
+    
 
+    const columns = [
+        { field: 'id', headerName: 'No', width: 70 },
+        { field: 'nama', headerName: 'Nama', width: 170 },
+        { field: 'nippos', headerName: 'NIPPOS', width: 130 },
+        { field: 'posisi', headerName: 'Posisi', width: 250 },
+        { field: 'joblevel', headerName: 'Job Level', width: 130 },
+        { field: 'jobfam', headerName: 'Rumpun Jabatan', width: 130 },
+    ];
 
+    const rows = [
+        { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
+        joblevel: 'D3', jobfam: 'Bisnis'},
+        { id: 2, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+        joblevel:'D3', jobfam :'Bisnis' },
+        { id: 3, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+        joblevel:'D3', jobfam :'Bisnis' },
+        { id: 4, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+        joblevel:'D3', jobfam :'Bisnis'},
+        { id: 5, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+        joblevel:'D3', jobfam :'Bisnis' },
+        { id: 6, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+        joblevel:'D3', jobfam :'Bisnis'},
+        { id: 7, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+        joblevel:'D3', jobfam :'Bisnis'},
+        { id: 8, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+        joblevel:'D3', jobfam :'Bisnis' },
+        { id: 9, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
+        joblevel:'D3', jobfam :'Bisnis' },
+    ];
 
-export default function KomiteUnitListTable({data}) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const rows = data
-  console.log(rows);
-  
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage-1);
-  };
+    return (
+        <div style={{ height: 400, width: '100%' }}>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                    pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                    },
+                }}
+                pageSizeOptions={[5, 10]}
+                checkboxSelection
+            />
+            
+        </div>
+    );
+};
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  return (
-    <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection={checkboxSelection} // Use the prop value here
-      />
-    </div>
-  );
-}
+export default KomiteUnitTable;

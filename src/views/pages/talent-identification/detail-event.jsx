@@ -50,7 +50,7 @@ export default function DetailEvent() {
       });
   }, []);
   console.log("noticeme",eventaktif);
-  const { eventid, nama_event, deskripsi, tipekomite, kode_rumpun,nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
+  const { eventid, nama_event, deskripsi,tipe_komite_talent, tipekomite, kode_rumpun,nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
 
   console.log("namaid",id);
     return (
@@ -62,7 +62,8 @@ export default function DetailEvent() {
           <TimelineDetailEvent  
           eventid={id}
           nama_event={nama_event}
-          deskripsi= {deskripsi} 
+          deskripsi= {deskripsi}
+          kodekomite= {tipe_komite_talent} 
           tipekomite= {tipekomite} 
           rumpun ={nama_rumpun} 
           tanggal_mulai ={tanggal_mulai}

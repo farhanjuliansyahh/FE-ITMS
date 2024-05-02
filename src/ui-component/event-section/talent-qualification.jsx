@@ -50,7 +50,7 @@ function a11yProps(index) {
   };
 }
 
-const TalentQualification = ({eventid}) => {
+const TalentQualification = ({eventid, kodekomite}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
@@ -58,8 +58,11 @@ const TalentQualification = ({eventid}) => {
   const [filterJob, setFilterJob] = useState('');
   const [filterKomite, setFilterKomite] = useState('');
   const [qualRow, setqualRow] = useState([])
+  const [quallolosRow, setquallolosRow] = useState([])
+  const [kkm , setkkm] = useState([])
 
   const eventidactive = eventid
+  const tipekomite = kodekomite
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -96,7 +99,10 @@ const comparenilai = (eventid) => {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
           'Content-Type': 'application/json', // Specify the content type
-      },    })
+      },
+      body: JSON.stringify({
+        komite_talent : tipekomite
+      }),    })
       .then(response => {
           if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -108,6 +114,26 @@ const comparenilai = (eventid) => {
           throw error; // Rethrow the error to handle it elsewhere
       });
 };
+
+const fetchnilaiminimal = (eventid) => {
+  return fetch('http://localhost:4000/getkkm', {
+     method: 'GET', // Specify the HTTP method (POST, GET, etc.)
+     headers: {
+         'Content-Type': 'application/json', // Specify the content type
+     }
+    })
+     .then(response => {
+         if (!response.ok) {
+             throw new Error('Network response was not ok');
+         }
+         return response.json();
+     })// Return the parsed JSON data
+     .catch(error => {
+         console.error('Error fetching data:', error);
+         throw error; // Rethrow the error to handle it elsewhere
+     });
+};
+
 
 useEffect(() => {
   // Fetch data from API
@@ -122,53 +148,98 @@ useEffect(() => {
     });
 }, []);
 
-console.log("qualrow:", qualRow);
+useEffect(() => {
+  // Fetch data from API
+  fetch(`http://localhost:4000/getquallolos?eventtalentid=${eventidactive}`)
+    .then(response => response.json())
+    .then(dataqual => {
+      // Update state with API data
+      setquallolosRow(dataqual.map((row, index) => ({ ...row, id: index + 1 })));
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+}, []);
 
-  useEffect(() => {
-    fetchupdateskor()
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
+
+useEffect(() => {
+  fetchupdateskor()
+  .catch(error => {
+    console.error('Error fetching data:', error);
+    setLoading(false);
+  });
+}, []);
+
+useEffect(() => {
+  comparenilai()
+  .catch(error => {
+    console.error('Error fetching data:', error);
+    setLoading(false);
+  });
+}, []);
+
+useEffect(() => {
+  comparenilai()
+  .catch(error => {
+    console.error('Error fetching data:', error);
+    setLoading(false);
       });
-  }, []);
-
-  useEffect(() => {
-    comparenilai()
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
-    comparenilai()
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
-  }, []);
-  // const handleButtonClick = () => {
-  //   // Logic for button click
-  //   console.log('Button clicked!');
-  // };
-
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const FlexContainer = styled('div')({
-    display: 'flex',
+    }, []);
+    
+    useEffect(() => {
+      // Fetch data when component mounts
+      fetchnilaiminimal()
+        .then(data => {
+          setkkm(data); // Set the fetched data to the kkm state variable
+        })
+        .catch(error => {
+          // Handle error
+            console.error('Error fetching data:', error);
+          });
+        }, []);
+        // const handleButtonClick = () => {
+          //   // Logic for button click
+          //   console.log('Button clicked!');
+          // };
+          
+          const [open, setOpen] = useState(false);
+          
+          const handleOpen = () => {
+            setOpen(true);
+          };
+          
+          const handleClose = () => {
+            setOpen(false);
+          };
+          
+          const FlexContainer = styled('div')({
+            display: 'flex',
     alignItems: 'center',
     gap: '16px', // Adjust the gap between elements as needed
     paddingBottom: '24px',
   });
+  
+  const komiteToPenilaianMap = {
+    1: { comp: 1, pms: 5, akhlak: 6, laminimal: 7 },
+    2: { comp: 2, pms: 5, akhlak: 6, laminimal: 7 },
+    3: { comp: 4, pms: 5, akhlak: 6, laminimal: 7 }
+};
 
+const getMinimalScore = (kodekomite, id_kriteria_penilaian) => {
+  const filteredData = kkm.filter(item => item.id_komite_talent === kodekomite && item.id_kriteria_penilaian === id_kriteria_penilaian);
+  if (filteredData.length > 0) {
+      return filteredData[0].skor_minimal;
+  }
+  return null; // Return null if no match found
+};
+
+    const minimalScores = komiteToPenilaianMap[kodekomite];
+    const compminimal = minimalScores && getMinimalScore(kodekomite, minimalScores.comp);
+    const pmsminimal = minimalScores && getMinimalScore(kodekomite, minimalScores.pms);
+    const akhlakminimal = minimalScores && getMinimalScore(kodekomite, minimalScores.akhlak);
+    const laminimal = minimalScores && getMinimalScore(kodekomite, minimalScores.laminimal);
+  console.log("qualrow:", compminimal, pmsminimal, akhlakminimal, laminimal);
+  
   return (
     <>
       {/* <MainLayout /> */}
@@ -214,8 +285,12 @@ console.log("qualrow:", qualRow);
               </div>
             </div>
 
-            <TalentQualificationTable 
-              rows = {qualRow}
+            <TalentQualificationTable
+            minimumCompeten5cyQualified = {compminimal}
+            minimumPmsQualified = {pmsminimal}
+            minimumAkhlakQualified = {akhlakminimal}
+            minimumLearningAgilityQualified = {laminimal} 
+              rows = {quallolosRow}
             />
 
           </Box>
@@ -254,7 +329,11 @@ console.log("qualrow:", qualRow);
               </div>
             </div>
 
-            <TalentQualificationTable 
+            <TalentQualificationTable
+            minimumCompeten5cyQualified = {compminimal}
+            minimumPmsQualified = {pmsminimal}
+            minimumAkhlakQualified = {akhlakminimal}
+            minimumLearningAgilityQualified = {laminimal}
               rows = {qualRow}
             />
 

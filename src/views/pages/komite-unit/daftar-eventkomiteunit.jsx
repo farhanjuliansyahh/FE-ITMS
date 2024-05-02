@@ -1,18 +1,21 @@
-import * as React from 'react';
+import * as React  from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ArrowForwardOutlined, CalendarMonthOutlined, PersonPinOutlined, TaskOutlined } from '@mui/icons-material'
-
 import MainCard from '../../../ui-component/cards/MainCard';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert';
-import TalentKomiteUnit from '../../../ui-component/event-section/talent-komiteunit';
-import KaryawanTerkualifikasi from './karyawan-terkualifikasi';
+import SearchSectionManajemenPengguna from '../../../ui-component/button/ManajemenSearchSectionGroup';
+import DetailKaryawandiKomiteUnit from './detail-karyawandikomiteunit';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-  
+    
     return (
       <div
         role="tabpanel"
@@ -47,8 +50,8 @@ export default function DaftarEventKomiteUnit() {
     const nama_event = 'TRIAL EVENT_ E1-D3_BISNIS';
     const countdown = '53 Hari Lagi';
     const tgl_mulai_selesai = '22 Januari 2024 - 22 Maret 2024';
-
     const [value, setValue] = React.useState(0);
+    
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -92,6 +95,7 @@ export default function DaftarEventKomiteUnit() {
         fontWeight: 600,
         fontSize:'16px'
     });
+    
 
     return (
         <MainCard>
@@ -125,7 +129,11 @@ export default function DaftarEventKomiteUnit() {
             <CustomTabPanel value={value} index={0}>
                 <Box sx={boxStyle}>
                     <KuotaKomiteUnitAlert />
-                    <TalentKomiteUnit />
+                    <DetailKaryawandiKomiteUnit 
+                    Title={'Tabel Karyawan'} 
+                    Icon={AddCircleOutlineRoundedIcon} 
+                    Label={'Tambah Data'}
+                    ActionForButton={true}/>
                 </Box> 
             </CustomTabPanel>
             
@@ -135,7 +143,11 @@ export default function DaftarEventKomiteUnit() {
             <CustomTabPanel value={value} index={1}>
                 <Box sx={boxStyle}>
                     <KuotaKomiteUnitAlert />
-                    <KaryawanTerkualifikasi/>
+                    <DetailKaryawandiKomiteUnit Title={'Tabel Karyawan Terkualifikasi'} 
+                    Icon={FileDownloadOutlinedIcon} 
+                    Label={'Unduh Data'}
+                    />
+
                 </Box> 
                 
                 <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>

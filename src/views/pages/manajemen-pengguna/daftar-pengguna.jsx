@@ -34,7 +34,7 @@ const DaftarPengguna = () => {
     <>
       {/* <MainLayout/> */}
       <MainCard>
-      <Grid container spacing={gridSpacing} paddingTop={2} paddingRight={2}>
+      <Grid container spacing={gridSpacing} paddingTop={3} paddingRight={4} >
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>

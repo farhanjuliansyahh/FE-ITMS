@@ -21,7 +21,7 @@ import TalentCluster from '../../ui-component/event-section/talent-cluster';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, tipekomite, rumpun, tanggal_mulai, tanggal_selesai, eventstatus_id }) {
+export default function TimelineDetailEvent({ eventid, nama_event, deskripsi,kodekomite, tipekomite, rumpun, tanggal_mulai, tanggal_selesai, eventstatus_id }) {
   console.log("uji",eventid);
   const [activeStep, setActiveStep] = React.useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -142,7 +142,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         return (
           <MainCard sx={{marginTop : '24px'}}>
             <Box>
-              <TalentQualification eventid={eventid}/>
+              <TalentQualification eventid={eventid} kodekomite={kodekomite}/>
             </Box>
           </MainCard>
         );
@@ -150,7 +150,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         return (
           <MainCard sx={{marginTop : '24px'}}>
             <Box>
-              <TalentDays/>
+              <TalentDays eventid={eventid}/>
             </Box>
           </MainCard>
         );
