@@ -21,15 +21,15 @@ const getColorStyle = (value, minimumValueQualified) => {
   
 const columns = [
     { field: 'id', headerName: 'No', width: 70 },
-    { field: 'nama', headerName: 'Nama', width: 130 },
-    { field: 'nippos', headerName: 'NIPPOS', width: 130 },
-    { field: 'posisi', headerName: 'Posisi', width: 130 },
-    { field: 'joblevel', headerName: 'Job Level', width: 130 },
-    { field: 'jobfam', headerName: 'Rumpun Jabatan', width: 130 },
-    { field: 'kantor', headerName: 'Kantor', width: 130 },
-    { field: 'komiteunit', headerName: 'Komite Unit', width: 130 },
+    { field: 'Nama', headerName: 'Nama', width: 130 },
+    { field: 'Nippos', headerName: 'NIPPOS', width: 130 },
+    { field: 'Posisi', headerName: 'Posisi', width: 130 },
+    { field: 'Job Level', headerName: 'Job Level', width: 130 },
+    { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 130 },
+    { field: 'Nama Kantor', headerName: 'Kantor', width: 130 },
+    { field: 'Komite Unit', headerName: 'Komite Unit', width: 130 },
     {
-        field: 'competency',
+        field: 'Competency/Psychotest',
         headerName: 'Competency/Psychotest',
         width: 180,
         renderCell: (params) => {
@@ -47,7 +47,7 @@ const columns = [
         },
     },
     {
-        field: 'pms',
+        field: 'PMS',
         headerName: 'PMS',
         width: 180,
         renderCell: (params) => {
@@ -65,7 +65,7 @@ const columns = [
         },
     },
     {
-        field: 'akhlak',
+        field: 'AKHLAK',
         headerName: 'AKHLAK',
         width: 180,
         renderCell: (params) => {
@@ -83,7 +83,7 @@ const columns = [
         },
     },
     {
-        field: 'learningagility',
+        field: 'Learning Agility',
         headerName: 'Learning Agility',
         width: 180,
         renderCell: (params) => {
@@ -100,49 +100,14 @@ const columns = [
           );
         },
     },
-];
-
-const rows = [
-    { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-    joblevel: 'D3', jobfam: 'Bisnis', kantor: 'Kantor Pusat Bandung', komiteunit: 'ABD HAFID',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-    { id: 2, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-    { id: 3, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-    { id: 4, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-    { id: 5, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-    { id: 6, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-    { id: 7, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-    { id: 8, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-    { id: 9, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9 },
-];
-
-export default function TalentQualificationTable({ competencyValue, pmsValue, akhlakValue, learningagilityValue }) {
+  ];
+  
+  export default function TalentQualificationTable({rows}) {
+  console.log(rows);
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows.map(row => ({
-          ...row,
-          competency: competencyValue,
-          pms: pmsValue,
-          akhlak: akhlakValue,
-          learningagility: learningagilityValue
-        }))}
+        rows={rows}
         columns={columns}
         initialState={{
           pagination: {

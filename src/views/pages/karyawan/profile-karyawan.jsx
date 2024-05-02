@@ -11,6 +11,8 @@ import AccordionKaryawan from '../../../ui-component/cards/AccordionKaryawan';
 import RiwayatPendidikanKaryawan from '../../../ui-component/submenu/karyawan-riwayatpendidikan';
 import KompetensiKaryawan from '../../../ui-component/submenu/karyawan-kompetensi';
 import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri';
+import ProfileAccordion from '../../../ui-component/modal/profile-accordion';
+import ConfirmationMessage from '../../../ui-component/cards/Alert-PI-CL';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -147,10 +149,12 @@ export default function ProfileKaryawan() {
 
             {/* Persetujuan Talent*/}
             <CustomTabPanel value={value} index={1}>
-                <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
-                    <img src={notFoundImage} alt="Deskripsi gambar" />
-                    <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
-                </Box> 
+            <Box sx={boxStyle}>
+                <ConfirmationMessage/> 
+                <div style={{ marginTop: '24px',}}>
+                    <ProfileAccordion/>
+                </div> 
+            </Box>
             </CustomTabPanel>
         </MainCard>
     );

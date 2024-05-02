@@ -260,7 +260,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
 
 
   return (
-    <Box sx={boxStyle}>
+    <Box sx={boxStyle} style={{marginBottom: '24px'}}>
       <FlexContainer>
         <BoxAvatar variant="rounded">
           <EmojiEventsOutlinedIcon />

@@ -63,9 +63,9 @@ const TalentSource = ({eventid}) => {
   const [filterKomite, setFilterKomite] = useState('');
   const [rowstrue, setRowstrue] = useState([]);
   const [rowsfalse, setRowsfalse] = useState([])
+  const [selectedNippos, setSelectedNippos] = useState([]);
 
-  console.log("uji",eventid);
-  const id = eventid
+  const eventidactive = eventid
 
   useEffect(() => {
     // Fetch data from API
@@ -97,6 +97,36 @@ const TalentSource = ({eventid}) => {
     setValue(newValue);
   };
 
+  const handleDownloadCSV = () => {
+    // Create a CSV header with column names
+    const headers = Object.keys(rowsfalse[0]);
+    const idIndex = headers.indexOf('id');
+    if (idIndex !== -1) {
+      headers.splice(idIndex, 1); // Remove 'id' from headers
+      headers.unshift('id'); // Insert 'id' at the beginning
+    }
+    const headerRow = headers.join(',');
+  
+    // Convert data to CSV format
+    const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+      rowsfalse.map(row => headers.map(header => row[header]).join(',')).join('\n');
+  
+    // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "talent_data.csv");
+    document.body.appendChild(link);
+  
+    // Trigger the download
+    link.click();
+  
+    // Clean up
+    document.body.removeChild(link);
+  };
+
+  
+
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -127,6 +157,36 @@ const TalentSource = ({eventid}) => {
     paddingBottom: '24px',
   });
 
+  const handleCheckboxChange = (selected) => {
+    console.log("Selected Nippos:", selected);
+        setSelectedNippos(selected);
+
+    // You can now handle the selected Nippos data in the parent component
+  };
+
+  const handleTambahTalent = () => {
+    // Send update API request to change something in the database
+    fetch(`http://localhost:4000/updatestatussource?eventtalentid=${eventid}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add any additional headers if required
+      },
+      body: JSON.stringify({
+        nippos : selectedNippos
+      }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to add talent');
+      }
+      // Handle success response if needed
+    })
+    .catch(error => {
+      console.error('Error adding talent:', error);
+    });
+  };
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -147,13 +207,13 @@ const TalentSource = ({eventid}) => {
               <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
                   Tabel Karyawan
               </Typography>
-              <KomiteUnitListButton eventid={id} />
+              <KomiteUnitListButton eventid={eventidactive} />
 
               <div style={{ flex: '1' }}> </div>
 
 
-            <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Talent'}/>
-            <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+            <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Talent'} onClick={handleTambahTalent}/>
+            <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
           </FlexContainer>
           
          
@@ -161,7 +221,10 @@ const TalentSource = ({eventid}) => {
             <AdminSearchSectionGroup/>
           </div>
          
-            <TalentSourceTable checkboxSelection={true} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} rows={rowsfalse}/>
+            <TalentSourceTable checkboxSelection={true} 
+            filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
+            rows={rowsfalse} />
+            {/* // onCheckboxChange={handleCheckboxChange}/> */}
           </Box>
 
         </CustomTabPanel>
@@ -173,7 +236,7 @@ const TalentSource = ({eventid}) => {
               <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
                   Tabel Karyawan
               </Typography>
-              <KomiteUnitListButton eventid={id} />
+              <KomiteUnitListButton eventid={eventidactive} />
 
               <div style={{ flex: '1' }}> </div>
               
@@ -201,7 +264,7 @@ const TalentSource = ({eventid}) => {
               </div>
             </div>
 
-            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} rows ={rowstrue}/>
+            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} selectedNippos={selectedNippos} rows ={rowstrue}/>
           </Box>
           
         </CustomTabPanel>

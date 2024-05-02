@@ -151,9 +151,9 @@ console.log("asdasd", eventData);
           </Tabs>
         </Box>
 
-        <CustomTabPanel value={value} index={0} style={{paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px',}}>
+        <CustomTabPanel value={value} index={0} style={{ paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px',}}>
         {isLoading ? (
-          <Typography>Loading...</Typography>
+          <Typography >Loading...</Typography>
         ) : eventData.length > 0 ? (
           eventData.map(event => (
             <EventBerjalan 
@@ -166,7 +166,7 @@ console.log("asdasd", eventData);
             nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
             tanggal_mulai={event.tanggal_mulai}
             tanggal_selesai={event.tanggal_selesai}
-            status={event.evenstatus_id} />
+            status={event.evenstatus_id}/>
           ))
         ) : (
           <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>

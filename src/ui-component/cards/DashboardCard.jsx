@@ -108,7 +108,7 @@ const DashboardCard = ({ isLoading, icon, title, content }) => {
                 </Grid>
               </Grid>
               <Grid item justifyContent={"center"} alignItems={"center"}>
-                <Button variant="contained" sx={{borderRadius:"14px", backgroundColor:'#1C2D5A'}} endIcon={<InfoOutlinedIcon />}>
+                <Button variant="contained" sx={{borderRadius:"12px", backgroundColor:'#1C2D5A', boxShadow:"none"}} endIcon={<InfoOutlinedIcon />}>
                   Detail
                 </Button>
               </Grid>
