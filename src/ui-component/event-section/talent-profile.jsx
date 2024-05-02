@@ -51,13 +51,41 @@ function a11yProps(index) {
   };
 }
 
-const TalentProfile = () => {
+const TalentProfile = ({eventid}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
   const [filterNippos, setFilterNippos] = useState('');
   const [filterJob, setFilterJob] = useState('');
+  const [rowslengkap, setrowslengkap] = useState([]);
+  const [rowsbelum, setrowsbelum] = useState([]);
   const [filterKomite, setFilterKomite] = useState('');
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getbelumlengkap?eventtalentid=${eventid}`)
+      .then(response => response.json())
+      .then(databelum => {
+        // Update state with API data
+        setrowsbelum(databelum.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // Empty dependency array to run effect only once
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getlengkap?eventtalentid=${eventid}`)
+      .then(response => response.json())
+      .then(datalengkap => {
+        // Update state with API data
+        setrowslengkap(datalengkap.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // Empty dependency array to run effect only once
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -125,6 +153,7 @@ const TalentProfile = () => {
               commitmentLetterValue={'Belum Submit'} 
               paktaIntegritasValue={'Belum Submit'}
               filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}
+              rows={rowsbelum}
             />
           </Box>
         </CustomTabPanel>
@@ -165,6 +194,7 @@ const TalentProfile = () => {
               commitmentLetterValue={'Sudah Submit'} 
               paktaIntegritasValue={'Sudah Submit'}
               filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}
+              rows={rowslengkap}
             />
           </Box>          
         </CustomTabPanel>

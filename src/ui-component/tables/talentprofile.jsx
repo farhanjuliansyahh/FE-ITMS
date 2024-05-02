@@ -22,13 +22,13 @@ const getStatusStyle = (status) => {
 
 const columns = [
   { field: 'id', headerName: 'No', width: 70 },
-  { field: 'nama', headerName: 'Nama', width: 180 },
-  { field: 'nippos', headerName: 'NIPPOS', width: 180 },
-  { field: 'posisi', headerName: 'Posisi', width: 300 },
-  { field: 'joblevel', headerName: 'Job Level', width: 120 },
-  { field: 'rumpunjabatan', headerName: 'Rumpun Jabatan', width: 180 },
+  { field: 'Nama', headerName: 'Nama', width: 180 },
+  { field: 'Nippos', headerName: 'NIPPOS', width: 180 },
+  { field: 'Posisi', headerName: 'Posisi', width: 300 },
+  { field: 'Job Level', headerName: 'Job Level', width: 120 },
+  { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 180 },
   {
-    field: 'commitmentletter',
+    field: 'Commitment Letter',
     headerName: 'Commitment Letter',
     width: 180,
     renderCell: (params) => {
@@ -46,7 +46,7 @@ const columns = [
     },
   },
   {
-    field: 'paktaintegritas',
+    field: 'Pakta Integritas',
     headerName: 'Pakta Integritas',
     width: 180,
     renderCell: (params) => {
@@ -63,19 +63,19 @@ const columns = [
       );
     },
   },
-  { field: 'komiteunit', headerName: 'Komite Unit', width: 180 },
+  { field: 'Komite Unit', headerName: 'Komite Unit', width: 180 },
 ];
 
-const rows = [
-  { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABD HAFID' },
-  { id: 2, nama: 'Muhamad Arsyi', nippos: '998494379', posisi: 'Asisten Manajer Acquisition Biller', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDU SOMAD' },
-  { id: 3, nama: 'Adinda', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Remittance LN', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDUL JAMIL' },
-  { id: 4, nama: 'Niken Wijaya', nippos: '998494379', posisi: 'Asisten Manajer Penjualan dan Kemitraan Pospay', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDUL WAHAB' },
-  { id: 5, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ACEP RUDI SUPRIADI' },
-  { id: 6, nama: 'Ayu Ning Sukarman', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ACEP RUDI SUPRIADI' },
-];
+// const rows = [
+//   { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABD HAFID' },
+//   { id: 2, nama: 'Muhamad Arsyi', nippos: '998494379', posisi: 'Asisten Manajer Acquisition Biller', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDU SOMAD' },
+//   { id: 3, nama: 'Adinda', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Remittance LN', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDUL JAMIL' },
+//   { id: 4, nama: 'Niken Wijaya', nippos: '998494379', posisi: 'Asisten Manajer Penjualan dan Kemitraan Pospay', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDUL WAHAB' },
+//   { id: 5, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ACEP RUDI SUPRIADI' },
+//   { id: 6, nama: 'Ayu Ning Sukarman', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ACEP RUDI SUPRIADI' },
+// ];
 
-export default function TalentProfileTable({ filter, commitmentLetterValue, paktaIntegritasValue }) {
+export default function TalentProfileTable({ filter, commitmentLetterValue, paktaIntegritasValue, rows }) {
   const [filterModel, setFilterModel] = React.useState({
     items: [{ field: 'nama', operator: 'contains', value: '' }],
   });

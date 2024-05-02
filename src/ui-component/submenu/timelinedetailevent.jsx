@@ -134,7 +134,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         return (
           <MainCard sx={{marginTop : '24px'}}>
             <Box>
-              <TalentProfile/>
+              <TalentProfile eventid={eventid}/>
             </Box>
           </MainCard>
         );
@@ -142,7 +142,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ti
         return (
           <MainCard sx={{marginTop : '24px'}}>
             <Box>
-              <TalentQualification/>
+              <TalentQualification eventid={eventid}/>
             </Box>
           </MainCard>
         );
