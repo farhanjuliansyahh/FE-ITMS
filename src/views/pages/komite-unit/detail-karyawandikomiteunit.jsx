@@ -8,7 +8,7 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import SearchResetButton from '../../../ui-component/button/SearchResetButton';
 import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
-import KomiteUnitTable from '../../../ui-component/tables/komiteunittable';
+import KaryawanKomiteUnit from '../../../ui-component/tables/karyawankomiteunit';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import KonfirmasiTalentSource from '../../../ui-component/modal/konfirmasi-talentsource';
 
@@ -101,7 +101,7 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
                         <SearchResetButton outlineColor="#D32F2F" icon={RestartAlt} LabelName={'Reset'} />
                     </div>
                 </div>
-                <KomiteUnitTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob}}/>
+                <KaryawanKomiteUnit filter={{nama:filterNama, nippos:filterNippos, job:filterJob}}/>
                 {ActionForButton && <KonfirmasiTalentSource open={showModal} handleClose={() => setShowModal(false)} />}
             </Box>
 

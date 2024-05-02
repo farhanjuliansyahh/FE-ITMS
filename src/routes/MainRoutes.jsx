@@ -22,6 +22,8 @@ const EventKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/event-
 const ProfileKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/profile-karyawan')));
 const EventKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/event-ketuakomitetalent')));
 const ClusterKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/cluster-ketuakomitetalent')));
+const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Login3')));
+const AuthRegister3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
