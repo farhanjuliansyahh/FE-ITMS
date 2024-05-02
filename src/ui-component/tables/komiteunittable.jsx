@@ -1,39 +1,22 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { minWidth } from '@mui/system';
 
 
-const KomiteUnitTable = () => {
+const KomiteUnitTable = ({ rows }) => {
     
 
     const columns = [
-        { field: 'id', headerName: 'No', width: 70 },
-        { field: 'nama', headerName: 'Nama', width: 170 },
-        { field: 'nippos', headerName: 'NIPPOS', width: 130 },
-        { field: 'posisi', headerName: 'Posisi', width: 250 },
-        { field: 'joblevel', headerName: 'Job Level', width: 130 },
-        { field: 'jobfam', headerName: 'Rumpun Jabatan', width: 130 },
+        { field: 'id', headerName: 'No', align: 'left', minWidth: 70 },
+        { field: 'Komite Unit', headerName: 'Nama', align: 'left', minWidth: 120 },
+        { field: 'Nippos', headerName: 'NIPPOS', align: 'left', minWidth: 120 },
+        { field: 'Posisi', headerName: 'Posisi', align: 'left', minWidth: 120 },
+        { field: 'Job Family', headerName: 'Rumpun Jabatan', align: 'left', minWidth: 120 },
+        { field: 'Nama Kantor', headerName: 'Kantor', align: 'left', minWidth: 120 },
+        { field: 'Status Memilih', headerName: 'Status', align: 'left', minWidth: 120 },
     ];
 
-    const rows = [
-        { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-        joblevel: 'D3', jobfam: 'Bisnis'},
-        { id: 2, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-        joblevel:'D3', jobfam :'Bisnis' },
-        { id: 3, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-        joblevel:'D3', jobfam :'Bisnis' },
-        { id: 4, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-        joblevel:'D3', jobfam :'Bisnis'},
-        { id: 5, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-        joblevel:'D3', jobfam :'Bisnis' },
-        { id: 6, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-        joblevel:'D3', jobfam :'Bisnis'},
-        { id: 7, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-        joblevel:'D3', jobfam :'Bisnis'},
-        { id: 8, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-        joblevel:'D3', jobfam :'Bisnis' },
-        { id: 9, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-        joblevel:'D3', jobfam :'Bisnis' },
-    ];
+    
 
     return (
         <div style={{ height: 400, width: '100%' }}>
@@ -46,7 +29,7 @@ const KomiteUnitTable = () => {
                     },
                 }}
                 pageSizeOptions={[5, 10]}
-                checkboxSelection
+                
             />
             
         </div>
@@ -54,3 +37,4 @@ const KomiteUnitTable = () => {
 };
 
 export default KomiteUnitTable;
+  

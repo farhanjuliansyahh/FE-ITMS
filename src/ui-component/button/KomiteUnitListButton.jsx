@@ -88,7 +88,7 @@ komiteunit.forEach(item => {
             </Button>
           </Box>
           <Box sx={{ mt: 2, position: 'relative',width: '100%', height: 'calc(100% - 50px)' }}>
-            <KomiteUnitListTable width={style.width-80} height={style.height - 50} data={komiteunit}/>
+            <KomiteUnitListTable width={style.width-80} height={style.height - 50} rows={komiteunit}/>
           </Box>
         </Box>
       </Modal>
