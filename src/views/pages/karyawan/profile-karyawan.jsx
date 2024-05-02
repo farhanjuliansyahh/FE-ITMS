@@ -12,6 +12,7 @@ import RiwayatPendidikanKaryawan from '../../../ui-component/submenu/karyawan-ri
 import KompetensiKaryawan from '../../../ui-component/submenu/karyawan-kompetensi';
 import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri';
 import ProfileAccordion from '../../../ui-component/modal/profile-accordion';
+import ConfirmationMessage from '../../../ui-component/cards/Alert-PI-CL';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -148,21 +149,12 @@ export default function ProfileKaryawan() {
 
             {/* Persetujuan Talent*/}
             <CustomTabPanel value={value} index={1}>
-                <div style={{ paddingLeft: '40px'}}>
-                    <Typography style={{color:'#66BB6A',fontFamily:'Roboto',fontSize:'16px', fontWeight:500 , marginBottom: '5px'}}>
-                        Selamat !!
-                    </Typography>
-                    <Typography style={{color:'#1F1F1F',fontFamily:'Roboto',fontSize:'14px', fontWeight:500,marginBottom: '15px'}}>
-                        Anda dinyatakan sebagai Talent POSIND tahun 2024
-                    </Typography>
-                    <Typography style={{color:'#828282',fontFamily:'Roboto',fontSize:'12px', fontWeight:300}}>
-                        Jika berminat silahkan konfirmasi dengan menyetujui Pakta Integritas dan Commitment Letter dibawah ini.
-                    </Typography>
-                    {/* Jika berminat silahkan konfirmasi dengan menyetujui Pakta Integritas dan Commitment Letter dibawah ini. */}
-                </div> 
-                <div style={{ padding: '20px', marginBottom: '24px',}}>
+            <Box sx={boxStyle}>
+                <ConfirmationMessage/> 
+                <div style={{ marginTop: '24px',}}>
                     <ProfileAccordion/>
                 </div> 
+            </Box>
             </CustomTabPanel>
         </MainCard>
     );

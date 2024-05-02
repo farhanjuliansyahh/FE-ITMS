@@ -45,7 +45,7 @@ export default function KomiteUnitListTable({data}) {
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection={checkboxSelection} // Use the prop value here
+        // checkboxSelection={checkboxSelection} // Use the prop value here
       />
     </div>
   );

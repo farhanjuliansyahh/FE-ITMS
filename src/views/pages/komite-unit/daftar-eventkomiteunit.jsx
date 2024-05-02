@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import { Box, Button, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ArrowForwardOutlined, CalendarMonthOutlined, PersonPinOutlined, TaskOutlined } from '@mui/icons-material'
-
 import MainCard from '../../../ui-component/cards/MainCard';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert';
-import TalentKomiteUnit from '../../../ui-component/event-section/talent-komiteunit';
-import KaryawanTerkualifikasi from './karyawan-terkualifikasi';
-
+import SearchSectionManajemenPengguna from '../../../ui-component/button/ManajemenSearchSectionGroup';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -125,7 +122,7 @@ export default function DaftarEventKomiteUnit() {
             <CustomTabPanel value={value} index={0}>
                 <Box sx={boxStyle}>
                     <KuotaKomiteUnitAlert />
-                    <TalentKomiteUnit />
+                    {/* <TalentKomiteUnit /> */}
                 </Box> 
             </CustomTabPanel>
             
@@ -135,7 +132,8 @@ export default function DaftarEventKomiteUnit() {
             <CustomTabPanel value={value} index={1}>
                 <Box sx={boxStyle}>
                     <KuotaKomiteUnitAlert />
-                    <KaryawanTerkualifikasi/>
+                    <SearchSectionManajemenPengguna />
+
                 </Box> 
                 
                 <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>

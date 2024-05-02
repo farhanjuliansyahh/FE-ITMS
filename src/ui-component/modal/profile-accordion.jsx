@@ -9,9 +9,15 @@ import PaktaIntegritas from '../../ui-component/tables/pakta-integritas';
 import TalentCheckbox from '../../ui-component/checkbox/talent-checkbox';
 import PosLogo from '../../assets/images/ilustration/PosIND_MainColor.png';
 import ITMSLogo from '../../assets/images/logo.svg';
+import PICLcontent from '../../ui-component/cards/PICL-content';
 const styles = {
+  accord: {
+    height: 70,
+    alignItems: 'center',
+    margin: 'auto',
+  },
   div1: {
-    marginBottom: '10px',
+    marginBottom: '24px',
     display: 'block',
     borderRadius: '12px',
     padding: '12px',
@@ -79,58 +85,50 @@ const styles = {
     lineHeight: '1.5',
     textAlign: 'justify'
   },
+  typog6: {
+    paddingLeft: '40px',
+    paddingRight: '50px',
+    lineHeight: '1.5',
+    marginTop: '15px',
+    marginBottom: '15px',
+    textAlign: 'justify',
+  }
 }
 const statusStyles = {
-  belumSelesai: {
-      color: '#F44336',
-      backgroundColor: '#FFEDED', // Default background color
-      padding: '4px 8px', // Adjust padding as needed
-      borderRadius: '14px', // Adjust border radius for rounded corners
-      display: 'inline-block', // Ensure inline display
-      fontSize: '12px',
-      fontFamily: 'Roboto',
-      fontWeight: 300
-  },
-  selesai: {
-      color: '#66BB6A',// Change to green color for "Selesai"
-      backgroundColor: '#FFFFFF', // Default background color
-      padding: '4px 8px', // Adjust padding as needed
-      borderRadius: '12px', // Adjust border radius for rounded corners
-      display: 'inline-block', // Ensure inline display
-      fontSize: '14px',
-      fontFamily: 'Roboto',
-      fontWeight: 300
-      // Other styles as needed
+  submit: {
+    color: '#66BB6A',// Change to green color for "Selesai"
+    backgroundColor: '#FFFFFF', // Default background color
+    padding: '4px 8px', // Adjust padding as needed
+    borderRadius: '12px', // Adjust border radius for rounded corners
+    display: 'inline-block', // Ensure inline display
+    fontSize: '14px',
+    fontFamily: 'Roboto',
+    fontWeight: 300
   }
 };
 
 export default function ProfileAccordion() {
-  const [statusPakta, setStatusPakta] = React.useState("Belum Selesai");
-  const [statusCL, setStatusCL] = React.useState("Belum Selesai");
-  const handleStatusUpdate = () => {
-    setStatusPakta("Selesai");
-    
-};
-const handleStatusUpdateCL= () => {
-  setStatusCL("Selesai");
-  
-};
+  const [statusPakta, setStatusPakta] = React.useState("Belum Submit");
+  const [statusCL, setStatusCL] = React.useState("Belum Submit");
+  const handleStatusUpdatePakta = () => {
+    setStatusPakta("Submit");
+  };
+  const handleStatusUpdateCL = () => {
+    setStatusCL("Submit");
+
+  };
   return (
     <div >
       <div style={styles.div1}>
-        <Accordion>
-          <AccordionSummary
+        <Accordion >
+          <AccordionSummary style={styles.accord}
             expandIcon={<ExpandMoreIcon />}>
             <div style={styles.container}>
               <EmailIcon style={styles.icon} />
               <Typography style={styles.typog}>Pakta Integritas</Typography>
-              {/* <Typography style={styles.typog2}>Belum Selesai</Typography>  */}
-              <Typography style={statusPakta === 'Belum Selesai' ? styles.typog2 : statusStyles.selesai}>
+              <Typography style={statusPakta === 'Belum Submit' ? styles.typog2 : statusStyles.submit}>
                 {statusPakta}
-                </Typography>
-              {/* <Typography style={status === 'Belum Selesai' ? statusStyles.belumSelesai : statusStyles.selesai}>{status}</Typography> */}
-
-              
+              </Typography>
             </div>
           </AccordionSummary>
           <AccordionDetails>
@@ -138,56 +136,34 @@ const handleStatusUpdateCL= () => {
               <img src={ITMSLogo} alt="Deskripsi gambar" style={styles.img} />
               <img src={PosLogo} alt="Deskripsi gambar" style={styles.img2} />
             </div>
-            <Typography style={styles.typog3}>
-              Saya yang menyetujui,
-            </Typography>
-            <Typography style={{ paddingLeft: '34px', marginBottom: '10px' }}>
-              <PaktaIntegritas />
-            </Typography>
-            <Typography style={styles.typog4}>
-              Dengan ini menyatakan bahwa telah membaca dan memahami
-              prinsip prinsip Pakta Integritas terkait manajemen talenta dan karir
-              yang berlaku di PT. Pos Indonesia sebagai berikut :
-            </Typography>
-            <div>
-              <Typography style={styles.typog5}>
-                A. Seluruh data yang Saya berikan dalam sistem ITMS Nova adalah benar dan dapat dipertanggungjawabkan.
-              </Typography>
-              <Typography style={styles.typog5}>
-                B. Bila dikemudian hari terbukti bahwa data yang Saya berikan tidak benar,
-                maka saya bersedia untuk didiskualifikasi dari proses manajemen talenta yang sedang berlangsung.
-              </Typography>
-              <Typography style={styles.typog5}>
-                C. Bila dikemudian hari terbukti bahwa data yang Saya berikan tidak benar dan tidak dapat dipertanggungjawabkan,
-                maka  Saya bersedia untuk menerima seluruh konsekuensi yang diberikan perusahaan terhadap karir Saya.
-              </Typography>
-              <Typography style={styles.typog5}>
-                D. Apabila saya melakukan pelanggaran terhadap Pakta Integritas,
-                maka saya siap menerima sanksi hukuman sesuai peraturan yang berlaku di Perusahaan.
-              </Typography>
-            </div>
-            <Typography style={{ paddingLeft: '40px', paddingRight: '50px', lineHeight: '1.5', marginTop: '15px', marginBottom: '15px', textAlign: 'justify' }}>
-              Demikian Pakta Integritas ini saya setujui untuk digunakan sebagaimana mestinya.
-            </Typography>
+            <PICLcontent 
+              Body1='Dengan ini menyatakan bahwa telah membaca dan memahami 
+              prinsip prinsip Pakta Integritas terkait manajemen talenta dan karir 
+              yang berlaku di PT. Pos Indonesia sebagai berikut :' 
+              Body2='D. Apabila saya melakukan pelanggaran terhadap Pakta Integritas, 
+              maka saya siap menerima sanksi hukuman sesuai peraturan yang berlaku di Perusahaan.' 
+              Body3='Demikian Pakta Integritas ini saya setujui untuk digunakan sebagaimana mestinya. '/>
             <div style={{ paddingLeft: '40px', paddingRight: '50px' }}>
-              <TalentCheckbox onStatusUpdate={handleStatusUpdate} />
+              <TalentCheckbox
+                onStatusUpdate={handleStatusUpdatePakta}
+                Title='Konfirmasi Talent Profile'
+                Body='Apakah anda yakin akan submit Pakta Integritas?'
+                subBody='Anda tidak dapat membatalkan jika sudah memilih submit.'
+                Footer='Saya telah membaca dan menyetujui Pakta Integritas ini' />
             </div>
-
           </AccordionDetails>
         </Accordion>
       </div>
       <div style={styles.div1}>
         <Accordion>
-          <AccordionSummary
+          <AccordionSummary style={styles.accord}
             expandIcon={<ExpandMoreIcon />}>
             <div style={styles.container}>
               <EmailIcon style={styles.icon} />
               <Typography style={styles.typog}>Commitment Letter</Typography>
-              {/* <Typography style={styles.typog2}>Belum Selesai</Typography>  */}
-              <Typography style={statusCL === 'Belum Selesai' ? styles.typog2 : statusStyles.selesai}>
+              <Typography style={statusCL === 'Belum Submit' ? styles.typog2 : statusStyles.submit}>
                 {statusCL}
-                </Typography>
-              {/* <Typography style={status === 'Belum Selesai' ? statusStyles.belumSelesai : statusStyles.selesai}>{status}</Typography> */}
+              </Typography>
             </div>
           </AccordionSummary>
           <AccordionDetails>
@@ -195,45 +171,26 @@ const handleStatusUpdateCL= () => {
               <img src={ITMSLogo} alt="Deskripsi gambar" style={styles.img} />
               <img src={PosLogo} alt="Deskripsi gambar" style={styles.img2} />
             </div>
-            <Typography style={styles.typog3}>
-              Saya yang menyetujui,
-            </Typography>
-            <Typography style={{ paddingLeft: '34px', marginBottom: '10px' }}>
-              <PaktaIntegritas />
-            </Typography>
-            <Typography style={styles.typog4}>
-              Dengan ini menyatakan bahwa telah membaca dan memahami
-              prinsip prinsip Pakta Integritas terkait manajemen talenta dan karir
-              yang berlaku di PT. Pos Indonesia sebagai berikut :
-            </Typography>
-            <div>
-              <Typography style={styles.typog5}>
-                A. Seluruh data yang Saya berikan dalam sistem ITMS Nova adalah benar dan dapat dipertanggungjawabkan.
-              </Typography>
-              <Typography style={styles.typog5}>
-                B. Bila dikemudian hari terbukti bahwa data yang Saya berikan tidak benar,
-                maka saya bersedia untuk didiskualifikasi dari proses manajemen talenta yang sedang berlangsung.
-              </Typography>
-              <Typography style={styles.typog5}>
-                C. Bila dikemudian hari terbukti bahwa data yang Saya berikan tidak benar dan tidak dapat dipertanggungjawabkan,
-                maka  Saya bersedia untuk menerima seluruh konsekuensi yang diberikan perusahaan terhadap karir Saya.
-              </Typography>
-              <Typography style={styles.typog5}>
-                D. Apabila saya melakukan pelanggaran terhadap Pakta Integritas,
-                maka saya siap menerima sanksi hukuman sesuai peraturan yang berlaku di Perusahaan.
-              </Typography>
-            </div>
-            <Typography style={{ paddingLeft: '40px', paddingRight: '50px', lineHeight: '1.5', marginTop: '15px', marginBottom: '15px', textAlign: 'justify' }}>
-              Demikian Pakta Integritas ini saya setujui untuk digunakan sebagaimana mestinya.
-            </Typography>
+            <PICLcontent 
+              Body1='Dengan ini menyatakan bahwa telah membaca dan memahami 
+              prinsip prinsip Commitment Letter terkait manajemen talenta dan karir 
+              yang berlaku di PT. Pos Indonesia sebagai berikut :' 
+              Body2='D. Apabila saya melakukan pelanggaran terhadap Commitment Letter, 
+              maka saya siap menerima sanksi hukuman sesuai peraturan yang berlaku di Perusahaan.' 
+              Body3='Demikian Commitment Letter ini saya setujui untuk digunakan sebagaimana mestinya. '/>
             <div style={{ paddingLeft: '40px', paddingRight: '50px' }}>
-              <TalentCheckbox onStatusUpdate={handleStatusUpdateCL} />
+              <TalentCheckbox
+                onStatusUpdate={handleStatusUpdateCL}
+                Title='Konfirmasi Talent Profile'
+                Body='Apakah anda yakin akan submit Commitment Letter?'
+                subBody='Anda tidak dapat membatalkan jika sudah memilih submit.'
+                Footer='Saya telah membaca dan menyetujui Commitment Letter ini' />
             </div>
 
           </AccordionDetails>
         </Accordion>
       </div>
-      
+
     </div>
   );
 }
