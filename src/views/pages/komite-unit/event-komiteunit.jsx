@@ -57,7 +57,7 @@ const EventKomiteTalent = () => {
   return (
     <>
       <MainCard title="Daftar Event" secondary={
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={0}>
           <SearchSection2 />
         </Stack>
       }>
@@ -69,8 +69,12 @@ const EventKomiteTalent = () => {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-          <AksesEvent ButtonName={'Akses Event'} namaEvent={'Event Komite Unit'} pathDetailEvent={'./daftar-eventkomiteunit'} />
+          <Box sx={{paddingRight: '24px', paddingLeft: '24px', paddingBottom: '24px'}}>
+            <Box sx={{paddingBottom: '24px'}}>
+              <AksesEvent ButtonName={'Akses Event'} namaEvent={'Event Komite Unit'} pathDetailEvent={'./daftar-eventkomiteunit'} />
+            </Box>
           <BasicPagination />
+          </Box>
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>

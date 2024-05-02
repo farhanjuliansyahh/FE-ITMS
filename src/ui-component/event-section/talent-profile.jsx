@@ -145,9 +145,30 @@ const TalentProfile = ({eventid}) => {
             <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
           </FlexContainer>
                
-          <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
+          {/* <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
             <AdminSearchSectionGroup/>
-          </div>
+          </div> */}
+
+            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
+              <div style={{ marginRight: '12px', width:'100%'  }}>
+                    <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
+              </div>
+              <div style={{ marginRight: '12px', width:'100%' }}>
+                  <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
+              </div>
+              <div style={{ marginRight: '12px', width:'100%' }}>
+                  <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
+              </div>
+              <div style={{ marginRight: '24px', width:'100%' }}>
+                  <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
+              </div>
+              <div style={{ marginRight: '12px' }}>
+                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
+              </div>
+              <div style={{ marginRight: '0px' }}>
+                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
+              </div>
+            </div>
          
             <TalentProfileTable 
               commitmentLetterValue={'Belum Submit'} 

@@ -223,7 +223,7 @@ export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) 
         <Divider orientation="horizontal" flexItem sx={dividerStyle} /> 
       </DividerContainer>
 
-      <Grid container spacing={2} style={{paddingBottom:'24px'}}>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography>Deskripsi</Typography>
           <Typography style={{fontWeight:'bold'}}>Trial</Typography>
