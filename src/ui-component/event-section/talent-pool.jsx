@@ -84,17 +84,32 @@ function a11yProps(index) {
   };
 }
 
-const DetailEvent = () => {
+const TalentPool = (eventid) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
   const [filterNippos, setFilterNippos] = useState('');
   const [filterJob, setFilterJob] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
+  const [poolrow, setpool] = useState([])
 
+  const eventidactive = eventid
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/gettablebpjdays?eventtalentid=${eventidactive}`)
+      .then(response => response.json())
+      .then(datapool => {
+        // Update state with API data
+        setpool(datapool.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   useEffect(() => {
     setLoading(false);
@@ -171,7 +186,7 @@ const DetailEvent = () => {
             </div>
           </div>
          
-          <TalentPoolTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, status:filterStatus}}/>
+          <TalentPoolTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, status:filterStatus}} rows={poolrow}/>
           </Box>
 
     
@@ -183,4 +198,4 @@ const DetailEvent = () => {
   );
 };
 
-export default DetailEvent;
+export default TalentPool;
