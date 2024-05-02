@@ -55,13 +55,16 @@ function a11yProps(index) {
   };
 }
 
-const TalentDays = () => {
+const TalentDays = ({eventid}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterLokasi, setFilterLokasi] = useState('');
   const [filterNama, setFilterNama] = useState('');
   const [filterNippos, setFilterNippos] = useState('');
+  const [daysRow, setdaysRow] = useState([]);
+  const [daysBpj, setdaysBpj] = useState([]);
 
+  const eventidactive = eventid
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -91,6 +94,33 @@ const TalentDays = () => {
     paddingBottom: '24px',
   });
 
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/gettablekaryawandays?eventtalentid=${eventidactive}`)
+      .then(response => response.json())
+      .then(datadays => {
+        // Update state with API data
+        setdaysRow(datadays.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/gettablebpjdays?eventtalentid=${eventidactive}`)
+      .then(response => response.json())
+      .then(datadays => {
+        // Update state with API data
+        setdaysBpj(datadays.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  console.log("days", daysRow);
   return (
     <>
       {/* <MainLayout /> */}
@@ -152,7 +182,7 @@ const TalentDays = () => {
                     <Button variant="contained" 
                         sx={{backgroundColor:'#1C2D5A', borderRadius:'12px', padding: '14px 24px'}} 
                         endIcon={<AddCircleOutlineOutlined />}
-                        onClick={handleOpen}>
+                        onClick={handleOpen}>w
                             Tambah BPJ
                     </Button>
                 </Stack>
@@ -172,7 +202,7 @@ const TalentDays = () => {
                     </div>
                 </div>
          
-                <TalentDaysBPJTable />
+                <TalentDaysBPJTable rows={daysBpj} />
             </Box>
         </CustomTabPanel>
 
@@ -224,7 +254,7 @@ const TalentDays = () => {
               </div>
             </div>
           
-            <TalentDaysKaryawanTable />
+            <TalentDaysKaryawanTable rows={daysRow} />
 
           </Box>          
         </CustomTabPanel>
