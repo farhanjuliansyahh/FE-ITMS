@@ -69,7 +69,7 @@ const EventKomiteTalent = () => {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-          <AksesEvent namaEvent={'Event Komite Unit'} pathDetailEvent={'./daftar-eventkomiteunit'} />
+          <AksesEvent ButtonName={'Akses Event'} namaEvent={'Event Komite Unit'} pathDetailEvent={'./daftar-eventkomiteunit'} />
           <BasicPagination />
         </CustomTabPanel>
 
