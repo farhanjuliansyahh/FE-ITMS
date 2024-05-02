@@ -34,6 +34,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from '../../../../assets/images/icons/social-google.svg';
+import { useAuth } from '../../../../routes/useAuth';
+import { redirect, useNavigate } from 'react-router';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -43,6 +45,8 @@ const FirebaseLogin = ({ ...others }) => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
+  const {login} = useAuth();
+  const navigate = useNavigate()
 
   const googleHandler = async () => {
     console.error('Login');
@@ -60,7 +64,7 @@ const FirebaseLogin = ({ ...others }) => {
   return (
     <>
       <Grid container direction="column" justifyContent="center" spacing={2}>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <AnimateButton>
             <Button
               disableElevation
@@ -80,7 +84,7 @@ const FirebaseLogin = ({ ...others }) => {
               Sign in with Google
             </Button>
           </AnimateButton>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Box
             sx={{
@@ -215,7 +219,10 @@ const FirebaseLogin = ({ ...others }) => {
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button disableElevation disabled={isSubmitting} onClick={()=>{
+                  login(values.email, values.password);
+                  navigate("/")
+                }} fullWidth size="large" type="submit" variant="contained" color="secondary">
                   Sign in
                 </Button>
               </AnimateButton>
