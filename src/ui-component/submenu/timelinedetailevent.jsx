@@ -150,7 +150,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi,kod
         return (
           <MainCard sx={{marginTop : '24px'}}>
             <Box>
-              <TalentDays/>
+              <TalentDays eventid={eventid}/>
             </Box>
           </MainCard>
         );

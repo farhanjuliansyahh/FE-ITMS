@@ -15,43 +15,49 @@ const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talen
 function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentstep, eventid, status }) {
     const [selectedDate, setSelectedDate] = useState(null);
 
-    useEffect(() => {
-        console.log("ini apaan jer",eventid);
-        console.log(status);
-      }), [];
-
     const currenteventstatus = status
     const handleDateChange = (date) => {
-        console.log(date); // Check the date value
         setSelectedDate(date); // Update the state with the selected date
     };
+
     const handleLanjutkan = (date) => {
-        updatedeadline(eventactive).then(() => {
-            switch (currenteventstatus) {
-                case 2:
-                    posttalentprofile().then(() => handleConfirmation(selectedDate))
-                    break;
-                case 3:
-                    posttalentqual().then(() => handleConfirmation(selectedDate))
-                    break;
-                case 4:
-                    posttalentdays().then(() => handleConfirmation(selectedDate));
-                    break;
-                case 5:
-                    function4();
-                    break;
-                case 6:
-                    function5();
-                    break;
-                case 7:
-                    function6();
-                    break;
-                default:
-                    // Handle default case
-                    break;
-            }
-        });
-        };
+        switch (currenteventstatus) {
+            case 2:
+                posttalentprofile()
+                    .then(() => updatedeadline(eventactive))
+                    .then(() => handleConfirmation(selectedDate));
+                break;
+            case 3:
+                posttalentqual()
+                    .then(() => updatedeadline(eventactive))
+                    .then(() => handleConfirmation(selectedDate));
+                break;
+            case 4:
+                posttalentdays()
+                    .then(() => updatedeadline(eventactive))
+                    .then(() => handleConfirmation(selectedDate));
+                break;
+            case 5:
+                posttalentdays()
+                    .then(() => updatedeadline(eventactive))
+                    .then(() => handleConfirmation(selectedDate));
+                break;
+            case 6:
+                posttalentcluster()
+                    .then(() => updatedeadline(eventactive))
+                    .then(() => handleConfirmation(selectedDate));
+                break;
+            case 7:
+                function6()
+                    .then(() => updatedeadline(eventactive))
+                    .then(() => handleConfirmation(selectedDate));
+                break;
+            default:
+                // Handle default case
+                break;
+        }
+    };
+
     const eventactive = parseInt(eventid)
 
     const updatedeadline = (eventid) => {
@@ -161,7 +167,31 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
             });
     };
 
-
+    const posttalentcluster = () => {
+        return fetch('http://localhost:4000/createcluster', {
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventtalentid: eventid
+            }) // Convert the bodyData object to a JSON string
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+    };
 
     const lanjutkanButtonStyle = {
         backgroundColor: '#1C2D5A',
