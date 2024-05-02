@@ -4,7 +4,7 @@ export default function ConfirmationMessage() {
     return (
         <div style={{ display: 'block', backgroundColor: '#F5FFF5', borderRadius: '12px', padding: '24px', gap: '12px'}}>
             <Typography fontWeight={600} fontSize={16} color='#66BB6A'>
-                Selamat !!
+                Selamat !!!
             </Typography>
             <Typography fontWeight={600} fontSize={14} color='#1F1F1F'>
                 Anda dinyatakan sebagai Talent POSIND tahun 2024
