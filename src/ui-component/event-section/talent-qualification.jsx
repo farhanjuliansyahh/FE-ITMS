@@ -135,30 +135,18 @@ const fetchnilaiminimal = (eventid) => {
 };
 
 
-useEffect(() => {
-  // Fetch data from API
-  fetch(`http://localhost:4000/getqualification?eventtalentid=${eventidactive}`)
-    .then(response => response.json())
-    .then(dataqual => {
-      // Update state with API data
-      setqualRow(dataqual.map((row, index) => ({ ...row, id: index + 1 })));
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-}, []);
 
 useEffect(() => {
   // Fetch data from API
   fetch(`http://localhost:4000/getquallolos?eventtalentid=${eventidactive}`)
-    .then(response => response.json())
-    .then(dataqual => {
-      // Update state with API data
-      setquallolosRow(dataqual.map((row, index) => ({ ...row, id: index + 1 })));
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
+  .then(response => response.json())
+  .then(dataqual => {
+    // Update state with API data
+    setquallolosRow(dataqual.map((row, index) => ({ ...row, id: index + 1 })));
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
 }, []);
 
 
@@ -171,11 +159,16 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-  comparenilai()
-  .catch(error => {
-    console.error('Error fetching data:', error);
-    setLoading(false);
-  });
+  // Fetch data from API
+  fetch(`http://localhost:4000/getqualificationtidak?eventtalentid=${eventidactive}`)
+    .then(response => response.json())
+    .then(dataqual => {
+      // Update state with API data
+      setqualRow(dataqual.map((row, index) => ({ ...row, id: index + 1 })));
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
 }, []);
 
 useEffect(() => {
@@ -183,8 +176,9 @@ useEffect(() => {
   .catch(error => {
     console.error('Error fetching data:', error);
     setLoading(false);
-      });
-    }, []);
+  });
+}, []);
+
     
     useEffect(() => {
       // Fetch data when component mounts
@@ -238,7 +232,47 @@ const getMinimalScore = (kodekomite, id_kriteria_penilaian) => {
     const pmsminimal = minimalScores && getMinimalScore(kodekomite, minimalScores.pms);
     const akhlakminimal = minimalScores && getMinimalScore(kodekomite, minimalScores.akhlak);
     const laminimal = minimalScores && getMinimalScore(kodekomite, minimalScores.laminimal);
-  console.log("qualrow:", compminimal, pmsminimal, akhlakminimal, laminimal);
+
+  const handleDownloadCSV = () => {
+    let dataToDownload = [];
+    let filename = '';
+    
+    console.log("tab", value);
+    // Determine which dataset to use based on the active tab
+    if (value === 0) {
+      dataToDownload = quallolosRow;
+      filename = `Talent_Qualification_Lulus_${eventid}.csv`;
+    } else if (value === 1) {
+      dataToDownload = qualRow;
+      filename = `Talent_Qualification_TidakLulus_${eventid}.csv`;
+    }
+  
+    // Create a CSV header with column names
+    const headers = Object.keys(dataToDownload[0]);
+    const idIndex = headers.indexOf('id');
+    if (idIndex !== -1) {
+      headers.splice(idIndex, 1); // Remove 'id' from headers
+      headers.unshift('id'); // Insert 'id' at the beginning
+    }
+    const headerRow = headers.join(',');
+  
+    // Convert data to CSV format
+    const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+      dataToDownload.map(row => headers.map(header => row[header]).join(',')).join('\n');
+  
+    // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+  
+    // Trigger the download
+    link.click();
+  
+    // Clean up
+    document.body.removeChild(link);
+  };
   
   return (
     <>
@@ -261,7 +295,7 @@ const getMinimalScore = (kodekomite, id_kriteria_penilaian) => {
                   Tabel Karyawan
               </Typography>
               <div style={{ flex: '1' }}> </div>
-              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
             </FlexContainer>
           
             <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
@@ -305,7 +339,7 @@ const getMinimalScore = (kodekomite, id_kriteria_penilaian) => {
                   Tabel Karyawan
               </Typography>
               <div style={{ flex: '1' }}> </div>
-              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
             </FlexContainer>
 
             <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>

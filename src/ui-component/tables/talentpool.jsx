@@ -7,18 +7,19 @@ import CreateRoundedIcon from '@mui/icons-material/CreateRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const columns = [
-  { field: 'nama', headerName: 'Nama', width: 180 },
-  { field: 'nippos', headerName: 'NIPPOS', width: 180 },
-  { field: 'posisi', headerName: 'Posisi', width: 180 },
-  { field: 'joblevel', headerName: 'Job Level', width: 180,
+  { field: 'id', headerName: 'No', width: 70 },
+  { field: 'Nama', headerName: 'Nama', width: 180 },
+  { field: 'Nippos', headerName: 'NIPPOS', width: 180 },
+  { field: 'Posisi', headerName: 'Posisi', width: 180 },
+  { field: 'Job Level', headerName: 'Job Level', width: 180,
   // type: 'number'
   },
-  { field: 'rumpunjabatan', headerName: 'Rumpun Jabatan', width: 180,
+  { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 180,
   // description: 'This column has a value getter and is not sortable.', sortable: false, valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
   },
-  { field: 'kantor', headerName: 'Kantor', width: 180 },
-  { field: 'kategorimatrix', headerName: 'Kategori Matrix Akhir', width: 180 },
-  { field: 'status', headerName: 'Status', width: 180 },
+  { field: 'Nama Kantor', headerName: 'Kantor', width: 180 },
+  { field: 'Kategori Matrix Akhir', headerName: 'Kategori Matrix Akhir', width: 180 },
+  { field: 'Status', headerName: 'Status', width: 180 },
   { field: 'aksi', headerName: 'Aksi', width: 320, 
   renderCell: (params) => {
     return (
@@ -47,16 +48,17 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'High Potential', status: 'Talent' },
-  { id: 2, nama: 'Muhamad Arsyi', nippos: '998494379', posisi: 'Asisten Manajer Acquisition Biller', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-4', status: 'Talent' },
-  { id: 3, nama: 'Adinda', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Remittance LN', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-4', status: 'Talent' },
-  { id: 4, nama: 'Niken Wijaya', nippos: '998494379', posisi: 'Asisten Manajer Penjualan dan Kemitraan Pospay', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-3', status: 'Talent' },
-  { id: 5, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'High Potential', status: 'Talent' },
-  { id: 6, nama: 'Ayu Ning Sukarman', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-3', status: 'Talent' },
-];
+// const rows = [
+//   { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'High Potential', status: 'Talent' },
+//   { id: 2, nama: 'Muhamad Arsyi', nippos: '998494379', posisi: 'Asisten Manajer Acquisition Biller', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-4', status: 'Talent' },
+//   { id: 3, nama: 'Adinda', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Remittance LN', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-4', status: 'Talent' },
+//   { id: 4, nama: 'Niken Wijaya', nippos: '998494379', posisi: 'Asisten Manajer Penjualan dan Kemitraan Pospay', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-3', status: 'Talent' },
+//   { id: 5, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'High Potential', status: 'Talent' },
+//   { id: 6, nama: 'Ayu Ning Sukarman', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-3', status: 'Talent' },
+// ];
 
-export default function TalentPool({filter}) {
+export default function TalentPool({filter, rows}) {
+  console.log("daftar pool", rows);
   const [filterModel, setFilterModel] = React.useState({
     items: [{ field: 'nama', operator: 'contains', value: '' }],
   });

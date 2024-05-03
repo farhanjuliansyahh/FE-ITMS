@@ -19,6 +19,7 @@ import { IconFileDownload } from '@tabler/icons-react';
 
 import TalentDaysBPJTable from '../tables/talentdaysbpj';
 import TalentDaysKaryawanTable from '../tables/talentdayskaryawan';
+import TambahBPJ from '../../ui-component/modal/tambah-bpj';
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -56,6 +57,8 @@ function a11yProps(index) {
 }
 
 const TalentDays = ({eventid}) => {
+  const [tambahBPJOpen, settambahBPJOpen] = useState(false);
+
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterLokasi, setFilterLokasi] = useState('');
@@ -80,12 +83,16 @@ const TalentDays = ({eventid}) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    setOpen(true);
+    // setOpen(true);
+    settambahBPJOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    // setOpen(false);
+    settambahBPJOpen(false);
   };
+
+  
 
   const FlexContainer = styled('div')({
     display: 'flex',
@@ -120,7 +127,15 @@ const TalentDays = ({eventid}) => {
       });
   }, []);
 
-  console.log("days", daysRow);
+let sudahdipilihcount = 0;
+let totalkaryawan = daysRow.length;
+const totalbpj = daysBpj.length;
+daysRow.forEach(item => {
+  if (item["Status"] === "Sudah Diisi") {
+      sudahdipilihcount++;
+  } 
+});
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -176,13 +191,13 @@ const TalentDays = ({eventid}) => {
                         boxShadow: 'none',
                         }}
                     >
-                        6 Anggota BPJ
+                        {totalbpj} Anggota BPJ
                     </Button>
                     <div style={{ flex: '1' }}> </div>
                     <Button variant="contained" 
                         sx={{backgroundColor:'#1C2D5A', borderRadius:'12px', padding: '14px 24px'}} 
                         endIcon={<AddCircleOutlineOutlined />}
-                        onClick={handleOpen}>w
+                        onClick={handleOpen}>
                             Tambah BPJ
                     </Button>
                 </Stack>
@@ -224,7 +239,7 @@ const TalentDays = ({eventid}) => {
                     boxShadow: 'none',
                     }}
                 >
-                    13/15 Nilai Karyawan Sudah Diisi
+                    {sudahdipilihcount}/{totalkaryawan} Nilai Karyawan Sudah Diisi
                 </Button>
               </Stack>
 
@@ -258,6 +273,11 @@ const TalentDays = ({eventid}) => {
 
           </Box>          
         </CustomTabPanel>
+
+        <TambahBPJ 
+          open={tambahBPJOpen}
+          handleClose={() => settambahBPJOpen(false)}
+        />
 
       </MainCard>
     </>

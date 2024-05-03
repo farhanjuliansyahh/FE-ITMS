@@ -63,7 +63,12 @@ const TalentSource = ({eventid}) => {
   const [filterKomite, setFilterKomite] = useState('');
   const [rowstrue, setRowstrue] = useState([]);
   const [rowsfalse, setRowsfalse] = useState([])
-  const [selectedNippos, setSelectedNippos] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const handleSelectedRowsChange = (newSelectedRows) => {
+    setSelectedRows(newSelectedRows);
+  };
+  console.log("selected row", selectedRows);
 
   const eventidactive = eventid
 
@@ -98,8 +103,21 @@ const TalentSource = ({eventid}) => {
   };
 
   const handleDownloadCSV = () => {
+    let dataToDownload = [];
+    let filename = '';
+    
+    console.log("tab", value);
+    // Determine which dataset to use based on the active tab
+    if (value === 0) {
+      dataToDownload = rowsfalse;
+      filename = `Talent_Source_TidakTerdaftar_${eventid}.csv`;
+    } else if (value === 1) {
+      dataToDownload = rowstrue;
+      filename = `Talent_Source_Terdaftar_${eventid}.csv`;
+    }
+  
     // Create a CSV header with column names
-    const headers = Object.keys(rowsfalse[0]);
+    const headers = Object.keys(dataToDownload[0]);
     const idIndex = headers.indexOf('id');
     if (idIndex !== -1) {
       headers.splice(idIndex, 1); // Remove 'id' from headers
@@ -109,13 +127,13 @@ const TalentSource = ({eventid}) => {
   
     // Convert data to CSV format
     const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
-      rowsfalse.map(row => headers.map(header => row[header]).join(',')).join('\n');
+      dataToDownload.map(row => headers.map(header => row[header]).join(',')).join('\n');
   
     // Create a temporary anchor element
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "talent_data.csv");
+    link.setAttribute("download", filename);
     document.body.appendChild(link);
   
     // Trigger the download
@@ -124,6 +142,7 @@ const TalentSource = ({eventid}) => {
     // Clean up
     document.body.removeChild(link);
   };
+  
 
   
 
@@ -157,35 +176,50 @@ const TalentSource = ({eventid}) => {
     paddingBottom: '24px',
   });
 
-  const handleCheckboxChange = (selected) => {
-    console.log("Selected Nippos:", selected);
-        setSelectedNippos(selected);
-
-    // You can now handle the selected Nippos data in the parent component
-  };
 
   const handleTambahTalent = () => {
+    // Find the rows corresponding to the selected IDs
+    const selectedNippos = selectedRows.map(id => {
+      const selectedRow = rowsfalse.find(row => row.id === id);
+      return selectedRow ? selectedRow.Nippos : null; // Return Nippos if row found, null otherwise
+    });
+  
+    // Remove null values (in case some IDs didn't match any rows)
+    const validNippos = selectedNippos.filter(nippos => nippos !== null);
+    console.log("validnippos",validNippos);
+  
     // Send update API request to change something in the database
     fetch(`http://localhost:4000/updatestatussource?eventtalentid=${eventid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Add any additional headers if required
       },
       body: JSON.stringify({
-        nippos : selectedNippos
+        nippos: validNippos
       }),
     })
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to add talent');
       }
-      // Handle success response if needed
+      // Reset selectedRows state to clear selected checkboxes
+      setSelectedRows([]);
+      // Refetch data after successful addition
+      return Promise.all([
+        fetch(`http://localhost:4000/getkandidatfalse?eventtalentid=${eventid}`),
+        fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${eventid}`)
+      ]);
+    })
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(([datafalse, datatrue]) => {
+      setRowsfalse(datafalse.map((row, index) => ({ ...row, id: index + 1 })));
+      setRowstrue(datatrue.map((row, index) => ({ ...row, id: index + 1 })));
     })
     .catch(error => {
       console.error('Error adding talent:', error);
     });
   };
+
 
   return (
     <>
@@ -244,7 +278,8 @@ const TalentSource = ({eventid}) => {
          
             <TalentSourceTable checkboxSelection={true} 
             filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
-            rows={rowsfalse} />
+            rows={rowsfalse}
+            selectedRows={selectedRows} onSelectedRowsChange={handleSelectedRowsChange} />
             {/* // onCheckboxChange={handleCheckboxChange}/> */}
           </Box>
 
@@ -261,7 +296,7 @@ const TalentSource = ({eventid}) => {
 
               <div style={{ flex: '1' }}> </div>
               
-              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
             </FlexContainer>
 
             <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
@@ -285,7 +320,7 @@ const TalentSource = ({eventid}) => {
               </div>
             </div>
 
-            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} selectedNippos={selectedNippos} rows ={rowstrue}/>
+            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} rows ={rowstrue}/>
           </Box>
           
         </CustomTabPanel>

@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useState, useEffect } from 'react';
 
 function createData(colname1, colname2, colname3) {
   return { colname1, colname2, colname3 };
@@ -30,18 +31,6 @@ const colorMapping = {
   'Solid Contributor-2': '#FFB74D',
 };
 
-const buttonNumbers = {
-  'Sleeping Tiger-2': 9,
-  'Promotable-4': 4,
-  'High Potential': 3,
-  'Sleeping Tiger-1': 1,
-  'Promotable-2': 5,
-  'Promotable-3': 6,
-  'Unfit': 7,
-  'Solid Contributor-1': 11,
-  'Solid Contributor-2': 13,
-};
-
 const cellStyle = (cell) => ({
   border: 0,
   backgroundColor: colorMapping[cell],
@@ -62,7 +51,63 @@ const tableContainerStyle = {
   alignItems: 'flex-start', 
 };
 
-export default function Matriks() {
+export default function Matriks({eventid}) {
+  const [categoryCounts, setCategoryCounts] = useState({
+    "High Potential": 0,
+    "Promotable 4": 0,
+    "Promotable 3": 0,
+    "Promotable 2": 0,
+    "Solid Contributor 1": 0,
+    "Solid Contributor 2": 0,
+    "Sleeping Tiger 1": 0,
+    "Sleeping Tiger 2": 0,
+    "Unfit": 0
+  });
+
+  const eventidactive = eventid;
+   useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getclustertable?eventtalentid=${eventidactive}`)
+      .then(response => response.json())
+      .then(datacluster => {
+        // Initialize category counts
+        let counts = {
+          "High Potential": 0,
+          "Promotable 4": 0,
+          "Promotable 3": 0,
+          "Promotable 2": 0,
+          "Solid Contributor 1": 0,
+          "Solid Contributor 2": 0,
+          "Sleeping Tiger 1": 0,
+          "Sleeping Tiger 2": 0,
+          "Unfit": 0
+        };
+
+        // Count categories
+        datacluster.forEach(row => {
+          const category = row["Matriks Kategori Akhir"];
+          counts[category] += 1;
+        });
+
+        // Store category counts
+        setCategoryCounts(counts);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+ 
+  const buttonNumbers = {
+    'Sleeping Tiger-2': categoryCounts["Sleeping Tiger 2"],
+    'Promotable-4': categoryCounts["Promotable 4"],
+    'High Potential': categoryCounts["High Potential"],
+    'Sleeping Tiger-1': categoryCounts["Sleeping Tiger 1"],
+    'Promotable-2': categoryCounts["Promotable 2"],
+    'Promotable-3': categoryCounts["Promotable 3"],
+    'Unfit': categoryCounts["Unfit"],
+    'Solid Contributor-1': categoryCounts["Solid Contributor 1"],
+    'Solid Contributor-2': categoryCounts["Solid Contributor 2"],
+  };
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant='h4' color='#ffffff' style={{ marginTop: '15px' }}>-</Typography>

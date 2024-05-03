@@ -3,7 +3,9 @@ import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Matriks from '../../../src/ui-component/submenu/matriks';
 
-export default function MatrixNineBox() {
+export default function MatrixNineBox({eventid, totalrows}) {
+    console.log("asd",totalrows);
+    const activeStep = eventid
     const boxStyle = {
         // border: '1px solid #E0E0E0', 
         padding: '20px', 
@@ -52,7 +54,7 @@ export default function MatrixNineBox() {
                 <Typography variant='h2'>Matrix Nine Box</Typography>
                 <div style={{ flex: '1' }}> </div>
                 <IconContainer>
-                    <EmployeeSum>40 Karyawan</EmployeeSum>
+                    <EmployeeSum>{totalrows} Karyawan</EmployeeSum>
                     <BoxContainer>
                         <ButtonIcon>9</ButtonIcon>
                         <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '20px' }}>Jumlah Karyawan</Typography>
@@ -62,7 +64,7 @@ export default function MatrixNineBox() {
 
             <FlexContainer>
                 <Typography variant='h4' style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Capacity</Typography>
-                <Matriks />
+                <Matriks eventid={activeStep}/>
             </FlexContainer>
         </Box>  
     )

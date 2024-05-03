@@ -48,14 +48,18 @@ function a11yProps(index) {
   };
 }
 
-const TalentCluster = () => {
+const TalentCluster = ({eventid}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
   const [filterNippos, setFilterNippos] = useState('');
   const [filterJob, setFilterJob] = useState('');
   const [filterKategoriMatrix, setFilterKategoriMatrix] = useState('');
+  const [clusterRow, setclusterRow] = useState([])
+  const [categoryCounts, setCategoryCounts] = useState({});
 
+
+  const eventidactive = eventid
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -68,6 +72,31 @@ const TalentCluster = () => {
     console.log(filterNama);
   },[filterNama])
 
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getclustertable?eventtalentid=${eventidactive}`)
+      .then(response => response.json())
+      .then(datacluster => {
+        // Update state with API data
+        setclusterRow(datacluster.map((row, index) => ({ ...row, id: index + 1 })));
+
+        // Count categories
+        const counts = datacluster.reduce((acc, row) => {
+          const category = row["Matriks Kategori Akhir"];
+          acc[category] = (acc[category] || 0) + 1;
+          return acc;
+        }, {});
+
+        setCategoryCounts(counts);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  const totalRows = Object.values(categoryCounts).reduce((total, count) => total + count, 0);
+
+  const hitung = categoryCounts
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -91,7 +120,7 @@ const TalentCluster = () => {
       
       <MainCard>
 
-        <MatrixNineBox/>
+        <MatrixNineBox eventid={eventidactive} totalrows={totalRows}/>
 
         <Box paddingLeft={3} paddingRight={3} paddingBottom={3} marginTop={3}>
 
@@ -125,7 +154,7 @@ const TalentCluster = () => {
             </div>
           </div>
          
-          <TalentClusterTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}/>
+          <TalentClusterTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}} rows={clusterRow} counts={categoryCounts}/>
           </Box>
 
       </MainCard>
