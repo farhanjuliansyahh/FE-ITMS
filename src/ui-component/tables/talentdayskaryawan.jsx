@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import InputNilaiTalentDays from '../../ui-component/modal/input-nilai-talent-days';
 
 const getStatusStyle = (status) => {
     let color, backgroundColor;
@@ -21,55 +23,7 @@ const getStatusStyle = (status) => {
     return { color, backgroundColor };
   };
 
-const columns = [
-  { field: 'id', headerName: 'No', width: 50 },
-  { field: 'Nama', headerName: 'Nama', width: 200 },
-  { field: 'Nippos', headerName: 'Nippos', width: 130 },
-  { field: 'Posisi', headerName: 'Posisi', width: 400 },
-  { field: 'Job Level', headerName: 'Job Level', width: 130 },
-  { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 130 },
-  { field: 'Nama Kantor', headerName: 'Kantor', width: 130 },
-  { field: 'Komite Unit', headerName: 'Komite Unit', width: 130 },
-  {
-    field: 'Status',
-    headerName: 'Status',
-    width: 130,
-    renderCell: (params) => {
-        const { color, backgroundColor } = getStatusStyle(params.value);
-        return (
-        <div>
-            <span style={{ 
-            color,
-            backgroundColor,
-            padding: '4px 8px',
-            borderRadius: '24px' 
-            }}>{params.value}</span>
-        </div>
-        );
-    },
-  },
-  {
-    field: 'aksi',
-    headerName: 'Aksi',
-    width: 150,
-    renderCell: (params) => {
-      return (
-        <Button 
-          variant="contained" 
-          sx={{
-            backgroundColor:'#1C2D5A', 
-            color: '#FFFFFF',
-            borderRadius:'12px', 
-            padding: '6px 16px'
-          }} 
-          endIcon={<AssignmentOutlinedIcon />}
-        >
-          Nilai
-        </Button>
-      );
-    },
-  },
-];
+
 
 // const rows = [
 //     { id: 1, nama : 'Sri Hartini', nippos:'998494379', posisi :'Asisten Manajer Pengembangan Join Operation', 
@@ -93,6 +47,67 @@ const columns = [
 //   ];
 
 export default function TalentDaysBPJTable({rows}) {
+  const [nilaiOpen, setNilaiOpen] = useState(false);
+
+  const handleOpen = () => {
+    setNilaiOpen(true);
+  };
+
+  const handleClose = () => {
+    setNilaiOpen(false);
+  };
+
+  const columns = [
+    { field: 'id', headerName: 'No', width: 50 },
+    { field: 'Nama', headerName: 'Nama', width: 200 },
+    { field: 'Nippos', headerName: 'Nippos', width: 130 },
+    { field: 'Posisi', headerName: 'Posisi', width: 400 },
+    { field: 'Job Level', headerName: 'Job Level', width: 130 },
+    { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 130 },
+    { field: 'Nama Kantor', headerName: 'Kantor', width: 130 },
+    { field: 'Komite Unit', headerName: 'Komite Unit', width: 130 },
+    {
+      field: 'Status',
+      headerName: 'Status',
+      width: 130,
+      renderCell: (params) => {
+          const { color, backgroundColor } = getStatusStyle(params.value);
+          return (
+          <div>
+              <span style={{ 
+              color,
+              backgroundColor,
+              padding: '4px 8px',
+              borderRadius: '24px' 
+              }}>{params.value}</span>
+          </div>
+          );
+      },
+    },
+    {
+      field: 'aksi',
+      headerName: 'Aksi',
+      width: 150,
+      renderCell: (params) => {
+        return (
+          <Button 
+            variant="contained" 
+            sx={{
+              backgroundColor:'#1C2D5A', 
+              color: '#FFFFFF',
+              borderRadius:'12px', 
+              padding: '6px 16px'
+            }} 
+            endIcon={<AssignmentOutlinedIcon />}
+            onClick={handleOpen}
+          >
+            Nilai
+          </Button>
+        );
+      },
+    },
+  ];
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -105,6 +120,12 @@ export default function TalentDaysBPJTable({rows}) {
         }}
         pageSizeOptions={[5, 10]}
       />
+
+      <InputNilaiTalentDays
+        open={nilaiOpen}
+        handleClose={() => setNilaiOpen(false)}
+      />
+      
     </div>
   );
 }
