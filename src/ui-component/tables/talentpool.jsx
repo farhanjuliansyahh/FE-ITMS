@@ -18,7 +18,7 @@ const columns = [
   // description: 'This column has a value getter and is not sortable.', sortable: false, valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
   },
   { field: 'Nama Kantor', headerName: 'Kantor', width: 180 },
-  { field: 'Kateogri Matrix Akhir', headerName: 'Kategori Matrix Akhir', width: 180 },
+  { field: 'Kategori Matrix Akhir', headerName: 'Kategori Matrix Akhir', width: 180 },
   { field: 'Status', headerName: 'Status', width: 180 },
   { field: 'aksi', headerName: 'Aksi', width: 320, 
   renderCell: (params) => {
@@ -58,6 +58,7 @@ const columns = [
 // ];
 
 export default function TalentPool({filter, rows}) {
+  console.log("daftar pool", rows);
   const [filterModel, setFilterModel] = React.useState({
     items: [{ field: 'nama', operator: 'contains', value: '' }],
   });

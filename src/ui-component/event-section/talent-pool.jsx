@@ -84,7 +84,7 @@ function a11yProps(index) {
   };
 }
 
-const TalentPool = (eventid) => {
+const TalentPool = ({eventid}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
@@ -97,10 +97,9 @@ const TalentPool = (eventid) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/gettablebpjdays?eventtalentid=${eventidactive}`)
+    fetch(`http://localhost:4000/gettalentpool?eventtalentid=${eventidactive}`)
       .then(response => response.json())
       .then(datapool => {
         // Update state with API data
@@ -110,6 +109,7 @@ const TalentPool = (eventid) => {
         console.error('Error fetching data:', error);
       });
   }, []);
+
 
   useEffect(() => {
     setLoading(false);
@@ -140,7 +140,6 @@ const TalentPool = (eventid) => {
     gap: '16px', // Adjust the gap between elements as needed
     paddingBottom: '24px',
   });
-
 
 
   return (

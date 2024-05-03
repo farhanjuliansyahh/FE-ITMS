@@ -16,25 +16,19 @@ const columns = [
 ];
 
 // TalentSourceTable component
-const TalentSourceTable = ({ checkboxSelection, rows }) => {
-  const [selectedRows, setSelectedRows] = useState([]);
-
+const TalentSourceTable = ({rows,checkboxSelection,selectedRows, onSelectedRowsChange}) => {
   const handleSelectionChange = (newSelection) => {
-    console.log('Selected rows:', newSelection.selectionModel);
-  
+    onSelectedRowsChange(newSelection); // Pass the selectionModel directly
   };
 
-  useEffect(() => {
-    console.log("jer",selectedRows);
-  }, [selectedRows]);
   return (
-    <div style={{ height: 400, width: '100%' }}>
+      <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
         checkboxSelection={checkboxSelection}
-        selectionModel={selectedRows}
-        onSelectionModelChange={handleSelectionChange}
+        onRowSelectionModelChange={handleSelectionChange} // Handle checkbox selection
+        rowSelectionModel={selectedRows}
       />
     </div>
   );
