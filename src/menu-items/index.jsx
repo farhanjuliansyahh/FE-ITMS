@@ -11,10 +11,10 @@ const menuItems = {
   items: [
     dashboard, 
     TalentIdentification, 
-    EventKomiteUnit, 
-    ManajemenPengguna, 
+    EventKetuaKomiteTalent,
+    EventKomiteUnit,  
     EventKaryawan, 
-    EventKetuaKomiteTalent]
+    ManajemenPengguna]
 };
 
 export default menuItems;

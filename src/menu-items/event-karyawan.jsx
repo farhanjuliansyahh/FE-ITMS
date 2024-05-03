@@ -1,18 +1,19 @@
 // assets
-import EventNoteIcon from '@mui/icons-material/EventNote';
+import EventSeatRoundedIcon from '@mui/icons-material/EventSeatRounded';
 
 // ==============================|| EVENT KARYAWAN MENU ITEMS ||============================== //
 
 const eventkomitetalent = {
   id: 'event-karyawan',
+  // title: 'Karyawan',
   type: 'group',
   children: [
     {
-      id: 'default',
+      id: 'karyawan',
       title: 'Karyawan',
       type: 'item',
       url: '/event-karyawan',
-      icon: EventNoteIcon,
+      icon: EventSeatRoundedIcon,
       breadcrumbs: false
     }
   ]

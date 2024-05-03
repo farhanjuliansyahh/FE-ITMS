@@ -9,7 +9,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 const ManajemenPengguna = {
 
   id: 'manajemen-pengguna',
-  // title: 'Talent Management',
+  // title: 'Manajemen Pengguna',
   // caption: 'Pages Caption',
   type: 'group',
   children: [

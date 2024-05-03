@@ -8,6 +8,7 @@ import SearchSection2 from '../../../ui-component/searchsection';
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import BasicPagination from '../../../ui-component/button/pagination';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
+import { padding } from '@mui/system';
 
 
 // ==============================|| EVENT KARYAWAN PAGE ||============================== //
@@ -86,11 +87,11 @@ const EventKaryawan = () => {
           </Tabs>
         </Box>
 
-        <CustomTabPanel value={value} index={0}>
-          <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingLeft:24, paddingRight:24, paddingBottom:24 }}>            
-            <AksesEvent ButtonName={'Akses Event'} namaEvent={'Talent Profile'} pathDetailEvent={'./talent-profile'}/>
+        <CustomTabPanel value={value} index={0} style={{paddingLeft: '24px', paddingRight:'24px', paddingBottom: '24px'}}>       
+          <AksesEvent ButtonName={'Akses Event'} namaEvent={'Talent Profile'} pathDetailEvent={'./talent-profile'}/>
+          <Box style={{paddingTop: '24px'}}> 
+            <BasicPagination style={{ paddingTop: '24px' }}/>
           </Box>
-          <BasicPagination />
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>

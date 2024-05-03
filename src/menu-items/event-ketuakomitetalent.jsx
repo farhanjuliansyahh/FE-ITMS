@@ -1,18 +1,19 @@
 // assets
-import EventNoteIcon from '@mui/icons-material/EventNote';
+import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const EventKomiteTalentDua = {
   id: 'event-ketua-komite-talent',
+  // title: 'Ketua Komite Talent',
   type: 'group',
   children: [
     {
-      id: 'default',
+      id: 'ketuakomitalent',
       title: 'Ketua Komite Talent',
       type: 'item',
       url: '/event-ketua-komite-talent',
-      icon: EventNoteIcon,
+      icon: GroupsRoundedIcon,
       breadcrumbs: false
     }
   ]

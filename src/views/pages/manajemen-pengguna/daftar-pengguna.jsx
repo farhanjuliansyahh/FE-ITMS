@@ -34,12 +34,12 @@ const DaftarPengguna = () => {
     <>
       {/* <MainLayout/> */}
       <MainCard>
-      <Grid container spacing={gridSpacing} paddingTop={3} paddingRight={4} >
+      <Grid container spacing={gridSpacing} padding={'24px'} >
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
-            <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: 18 }}>
-              <Stack direction="row" spacing={2} alignItems="center"  style={{marginBottom: '15px'}}>
+            <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Stack direction="row" spacing={2} alignItems="center"  style={{marginBottom: '16px'}}>
                 <Typography variant="h2" style={{display: 'inline',fontFamily: 'Roboto',fontSize:'20px',fontWeight: '500' }} gutterBottom>
                   Tabel Karyawan
                 </Typography>

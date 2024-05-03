@@ -89,15 +89,15 @@ const EventKetuaKomiteTalent = () => {
           </Tabs>
         </Box>
 
-        <CustomTabPanel value={value} index={0}>
-          <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingLeft:24, paddingRight:24, paddingBottom:24 }}>            
+        <CustomTabPanel value={value} index={0} style={{paddingLeft:24, paddingRight:24, paddingBottom:24}}>     
             <AksesEvent ButtonName={'Detail Event'} namaEvent={'Talent Source'} pathDetailEvent={'./talent-cluster'}/>
+          <Box style={{paddingTop:'24px'}}> 
+            <BasicPagination />
           </Box>
-          <BasicPagination />
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
-            <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
+          <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
             <img src={notFoundImage} alt="Deskripsi gambar" />
             <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
           </Box>          

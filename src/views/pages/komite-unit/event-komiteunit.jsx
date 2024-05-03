@@ -10,6 +10,7 @@ import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import BasicPagination from '../../../ui-component/button/pagination';
 import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
+import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -78,6 +79,10 @@ const EventKomiteTalent = () => {
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
+          <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
+            <img src={notFoundImage} alt="Deskripsi gambar" />
+            <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
+          </Box>
         </CustomTabPanel>
 
         <AddEventModal open={open} handleClose={handleClose} />

@@ -1,19 +1,19 @@
 // assets
-import EventNoteIcon from '@mui/icons-material/EventNote';
+import AccountTreeRoundedIcon from '@mui/icons-material/AccountTreeRounded';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const eventkomiteunit = {
   id: 'event-komiteunit',
-  // title: 'Dashboard',
+  // title: 'Komite Unit',
   type: 'group',
   children: [
     {
-      id: 'default',
-      title: 'Event',
+      id: 'komiteunit',
+      title: 'Komite Unit',
       type: 'item',
       url: '/event-komiteunit',
-      icon: EventNoteIcon,
+      icon: AccountTreeRoundedIcon,
       breadcrumbs: false
     }
   ]
