@@ -29,11 +29,11 @@ const Dashboard = () => {
     icon: GroupsIcon,
     // navigateTo: '/dashboard/total-pegawai',
     },
-    { title: "Total IDP Aktif",
-      content: 1019,
-      icon: NotificationsActiveOutlinedIcon,
-      // navigateTo: '/dashboard/total-pegawai',
-    },
+    // { title: "Total IDP Aktif",
+    //   content: 1019,
+    //   icon: NotificationsActiveOutlinedIcon,
+    //   // navigateTo: '/dashboard/total-pegawai',
+    // },
   ]
 
   return (
@@ -51,7 +51,8 @@ const Dashboard = () => {
         
         <Grid container spacing={2} item xs={12}>
             {cards.map((card, index) => (
-              <Grid item xs={12}sm={6} md={6} key={index}>
+              // <Grid item xs={12}sm={6} md={6} key={index}>
+              <Grid item xs={12}>
                 <DashboardCard
                   isLoading={isLoading}
                   title={card.title}
@@ -84,7 +85,7 @@ const Dashboard = () => {
               <Grid item xs={4}>
                 <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis"/>
               </Grid>
-              <Grid item xs={3}> 
+              <Grid item xs={4}> 
                 <ButtonChart buttonText="B" detail="Bisnis" />
               </Grid>
               <Grid item xs={4}>
@@ -93,7 +94,7 @@ const Dashboard = () => {
               <Grid item xs={4} >
                 <ButtonChart buttonText="MR" detail="Manajemen Risiko dan Kepatuhan" />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <ButtonChart buttonText="PR" detail="Pengelolaan Regulasi" />
               </Grid>
               <Grid item xs={4}>

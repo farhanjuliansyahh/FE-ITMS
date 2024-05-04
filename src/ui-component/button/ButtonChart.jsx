@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 function ButtonChart({ buttonText, detail }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
+    <div style={{ display: 'flex', alignItems: 'baseline', marginTop: '8px' }}>
       <Button variant="contained" size="small" style={{ color:"white", backgroundColor: '#0F1C3E' }} >
         {buttonText}
       </Button>
-      <Typography variant="body1" style={{ fontSize:'14px', marginLeft: '10px', whiteSpace: 'nowrap' }}>
+      <Typography variant="body1" style={{ fontSize:'14px', marginLeft: '10px' }}>
         {detail}
       </Typography>
     </div>

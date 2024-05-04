@@ -35,7 +35,7 @@ const LevelJabatanChart = ({ series, options }) => {
                 <Grid item> 
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
-                      <Typography variant="h3">Total Talent Berdasarkan Rumpun Jabatan</Typography>
+                      <Typography variant="h3">Total Talent Berdasarkan Level Jabatan</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -55,6 +55,7 @@ const LevelJabatanChart = ({ series, options }) => {
 LevelJabatanChart.defaultProps = {
   series: [
     {
+      name: 'Total talent',
       data: [50, 88, 118, 139, 151, 135, 98, 144, 173, 184, 117],
     },
   ],

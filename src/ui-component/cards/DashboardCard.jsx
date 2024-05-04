@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
-import { Avatar, Box, Button, Grid, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Box, Button, Grid, Menu, MenuItem, Typography, Stack } from '@mui/material';
 
 // project imports
 import MainCard from '../../ui-component/cards/MainCard';
@@ -73,39 +73,44 @@ const DashboardCard = ({ isLoading, icon, title, content }) => {
 
 
             <Grid container spacing={2} justifyContent={"space-between"}>
-              <Grid container spacing={0} item xs={6}>
-                <Grid item xs={5}>
-                  <Avatar
-                    variant="rounded"
-                    sx={{
-                      ...theme.typography.commonAvatar,
-                      ...theme.typography.largeAvatar,
-                      backgroundColor: '#F5F8FF',
-                      color: '#1C2D5A',
-                      width: 72,
-                      height: 72,
-                      '& svg': { 
-                        fontSize: '3rem',
-                      },
-                    }}
-                  >
-                    {icon} {/* <GroupsIcon fontSize='large'/> */}
-                  </Avatar>
-                </Grid>
+              <Grid container spacing={2} item xs={4}>
                 <Grid item>
-                  <Typography
-                    sx={{
-                      fontSize: '1rem',
-                      fontWeight: 500,
-                      color: '#1C2D5A'
-                    }}
-                  >
-                    {title}
-                  </Typography>
-                  <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mt: 1, color:'#EF4123' }}>
-                    {content}
-                  </Typography>
+                  <Stack direction="row" spacing={2}>
+                    <Avatar
+                      variant="rounded"
+                      sx={{
+                        ...theme.typography.commonAvatar,
+                        ...theme.typography.largeAvatar,
+                        backgroundColor: '#F5F8FF',
+                        color: '#1C2D5A',
+                        width: 72,
+                        height: 72,
+                        '& svg': { 
+                          fontSize: '3rem',
+                        },
+                      }}
+                    >
+                      {icon} {/* <GroupsIcon fontSize='large'/> */}
+                    </Avatar>
+                    <Grid item>
+                      <Typography
+                        sx={{
+                          fontSize: '1rem',
+                          fontWeight: 500,
+                          color: '#1C2D5A',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        {title}
+                      </Typography>
+                      <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mt: 1, color:'#EF4123' }}>
+                        {content}
+                      </Typography>
                 </Grid>
+                  </Stack>
+                  
+                </Grid>
+                
               </Grid>
               <Grid item justifyContent={"center"} alignItems={"center"}>
                 <Button variant="contained" sx={{borderRadius:"12px", backgroundColor:'#1C2D5A', boxShadow:"none"}} endIcon={<InfoOutlinedIcon />}>
