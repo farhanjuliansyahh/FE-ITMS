@@ -74,7 +74,7 @@ const EventKetuaKomiteTalent = () => {
       <MainCard title="Daftar Event"  secondary={
           <Stack direction="row" spacing={2}>
             <SearchSection2 /> 
-            <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
+            {/* <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/> */}
           </Stack>
         }>
 

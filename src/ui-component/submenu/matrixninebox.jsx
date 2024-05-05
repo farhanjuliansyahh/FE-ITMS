@@ -19,6 +19,8 @@ export default function MatrixNineBox({eventid, totalrows}) {
         padding: '8px 14px',
         borderRadius: '12px',
         minWidth: '10px',
+        height: '36px',
+        width: '36px'
     });
 
     const FlexContainer = styled('div')({
@@ -56,7 +58,7 @@ export default function MatrixNineBox({eventid, totalrows}) {
                 <IconContainer>
                     <EmployeeSum>{totalrows} Karyawan</EmployeeSum>
                     <BoxContainer>
-                        <ButtonIcon>9</ButtonIcon>
+                        <ButtonIcon></ButtonIcon>
                         <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '20px' }}>Jumlah Karyawan</Typography>
                     </BoxContainer>
                 </IconContainer>

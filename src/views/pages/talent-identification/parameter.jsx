@@ -15,6 +15,8 @@ import DaftarPertanyaanTable from '../../../ui-component/tables/DaftarPertanyaan
 import { AssignmentTurnedInOutlined, PersonOutlineOutlined, QuizOutlined } from '@mui/icons-material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+
 
 // ==============================|| PARAMETER TALENT PAGE ||============================== //
 
@@ -95,7 +97,7 @@ const ParameterTalent = () => {
                   <Box sx={{ marginRight: '16px' }}>
                     <ButtonPrimary Color="#ffffff" icon={SaveOutlinedIcon} LabelName={'Simpan'}/>
                   </Box>
-                  <ButtonErrorOutlined Color="#D32F2F" icon={SaveOutlinedIcon} LabelName={'Batalkan'}/>
+                  <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlinedIcon} LabelName={'Batalkan'}/>
                 </Box>
             </Box>
         </CustomTabPanel>
@@ -125,7 +127,7 @@ const ParameterTalent = () => {
                 <Box sx={{ marginRight: '16px' }}>
                   <ButtonPrimary Color="#ffffff" icon={SaveOutlinedIcon} LabelName={'Simpan'}/>
                 </Box>
-                <ButtonErrorOutlined Color="#D32F2F" icon={SaveOutlinedIcon} LabelName={'Batalkan'}/>
+                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlinedIcon} LabelName={'Batalkan'}/>
               </Box>
             </CustomTabPanel>
           </Box>
@@ -156,7 +158,7 @@ const ParameterTalent = () => {
               <Box sx={{ marginRight: '16px' }}>
                 <ButtonPrimary Color="#ffffff" icon={SaveOutlinedIcon} LabelName={'Simpan'}/>
               </Box>
-              <ButtonErrorOutlined Color="#D32F2F" icon={SaveOutlinedIcon} LabelName={'Batalkan'}/>
+              <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlinedIcon} LabelName={'Batalkan'}/>
             </Box>
           </Box>
         </CustomTabPanel>
