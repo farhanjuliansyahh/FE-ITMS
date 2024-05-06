@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, MenuItem, TextField, Typography, Divider } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, MenuItem, TextField, Typography, Divider, TextareaAutosize } from '@mui/material';
 import { CancelOutlined, CreateOutlined } from '@mui/icons-material';
 import KonfirmasiUbahMatrix from './konfirmasi-ubah-matrix';
 
@@ -53,13 +53,21 @@ function UbahKategoriMatrix({ open, onClose, onOpenSecondModal }) {
                         required
                         id="kategori-matrix-akhir"
                         label="Kategori Matrix"
-                        sx={{ width: '100%' }}
+                        sx={{ width: '100%', marginBottom: '16px' }}
                     >
                         <MenuItem value="1">High Potential</MenuItem>
                         <MenuItem value="2">Promotable-4</MenuItem>
                         <MenuItem value="3">Prommotable-3</MenuItem>
                         {/* Add more options if needed */}
                     </TextField>
+                    <TextField
+                        required
+                        id="reason"
+                        label="Alasan"
+                        multiline
+                        rows={5}
+                        sx={{ width: '100%' }}
+                    />
                     <Typography variant="body1" sx={{ width: '90%', margin: 'auto', marginTop: '24px', marginBottom: '24px', fontFamily: 'Roboto', fontSize: '14px', fontWeight: 400, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>
                         Perubahan hanya diperbolehkan naik 1 level atau turun 1 level dari kategori matrix yang sudah ditentukan saat BPJ.
                     </Typography>

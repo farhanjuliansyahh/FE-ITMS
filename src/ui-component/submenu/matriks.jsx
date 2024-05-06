@@ -14,17 +14,17 @@ function createData(colname1, colname2, colname3) {
 }
 
 const rows = [
-  createData('Sleeping Tiger-2', 'Promotable-4', 'High Potential'),
-  createData('Sleeping Tiger-1', 'Promotable-2', 'Promotable-3'),
+  createData('Sleeping Tiger-2', 'Promotable-2', 'High Potential'),
+  createData('Sleeping Tiger-1', 'Promotable-4', 'Promotable-3'),
   createData('Unfit', 'Solid Contributor-1', 'Solid Contributor-2'),
 ];
 
 const colorMapping = {
   'Sleeping Tiger-2': '#FFB74D',
-  'Promotable-4': '#66BB6A',
+  'Promotable-4': '#FFB74D',
   'High Potential': '#388E3C',
   'Sleeping Tiger-1': '#E57373',
-  'Promotable-2': '#FFB74D',
+  'Promotable-2': '#66BB6A',
   'Promotable-3': '#66BB6A',
   'Unfit': '#F44336',
   'Solid Contributor-1': '#E57373',
