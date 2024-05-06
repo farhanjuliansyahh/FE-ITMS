@@ -50,7 +50,7 @@ const RumpunJabatanChart = ({ series, options }) => {
 RumpunJabatanChart.defaultProps = {
   series: [
     {
-      name: 'Total talent',
+      name: 'Total Talent',
       data: [50, 88, 118, 139, 151, 135, 98, 144],
     },
   ],
@@ -58,10 +58,30 @@ RumpunJabatanChart.defaultProps = {
     chart: {
       type: 'bar',
       height: 400,
+      toolbar: {
+        export: {
+          csv: {
+            filename: 'Total talent berdasarkan jobfam',
+            columnDelimiter: ',',
+            headerCategory: 'Rumpun Jabatan',
+            headerValue: 'Total Talent',
+            dateFormatter(timestamp) {
+              return new Date(timestamp).toDateString()
+            }
+          },
+          svg: {
+            filename: 'Total talent berdasarkan jobfam',
+          },
+          png: {
+            filename: 'Total talent berdasarkan jobfam',
+          }
+        },
+      },
     },
     plotOptions: {
       bar: {
         borderRadius: 1,
+        horizontal: false,
         colors: {
           ranges: [
             { from: 1, to: 200, color: '#0F1C3E' },
@@ -86,6 +106,5 @@ RumpunJabatanChart.defaultProps = {
     },
   },
 };
-
 
 export default RumpunJabatanChart;

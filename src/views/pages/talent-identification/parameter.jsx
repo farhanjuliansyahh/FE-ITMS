@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
 
 import PropTypes from 'prop-types';
 import { Container } from '@mui/system';
-import MainCardParameterTalent from '../../../ui-component/cards/MainCardParameterTalent';
 import MainCard from '../../../ui-component/cards/MainCard';
 import PassingGradeTable from '../../../ui-component/tables/PassingGradeTable';
 import KuotaTable from '../../../ui-component/tables/KuotaTable'
