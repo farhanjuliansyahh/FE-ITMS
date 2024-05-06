@@ -14,7 +14,7 @@ const eventkomitetalent = {
       type: 'item',
       url: '/event-karyawan',
       icon: EventSeatRoundedIcon,
-      breadcrumbs: false
+      breadcrumbs: true
     }
   ]
 };
