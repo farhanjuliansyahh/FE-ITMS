@@ -20,6 +20,24 @@ const getStatusStyle = (status) => {
   return { color, backgroundColor };
 };
 
+const getSubmittedByStyle = (status) => {
+  let color, backgroundColor;
+  switch (status) {
+    case 'Admin':
+      color = '#2196F3';
+      backgroundColor = '#EAF8FF';
+      break;
+    case 'Talent':
+      color = '#2196F3';
+      backgroundColor = '#EAF8FF';
+      break;
+    default:
+      color = '#000000';
+      backgroundColor = 'transparent';
+  }
+  return { color, backgroundColor };
+};
+
 const columns = [
   { field: 'id', headerName: 'No', width: 70 },
   { field: 'Nama', headerName: 'Nama', width: 180 },
@@ -51,6 +69,24 @@ const columns = [
     width: 180,
     renderCell: (params) => {
       const { color, backgroundColor } = getStatusStyle(params.value);
+      return (
+        <div>
+          <span style={{
+            color,
+            backgroundColor,
+            padding: '4px 8px',
+            borderRadius: '24px'
+          }}>{params.value}</span>
+        </div>
+      );
+    },
+  },
+  {
+    field: 'Status Submit',
+    headerName: 'Status Submit',
+    width: 180,
+    renderCell: (params) => {
+      const { color, backgroundColor } = getSubmittedByStyle(params.value);
       return (
         <div>
           <span style={{
