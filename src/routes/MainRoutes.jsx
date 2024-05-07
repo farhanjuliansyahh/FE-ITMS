@@ -23,9 +23,8 @@ const EventKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/event-
 const ProfileKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/profile-karyawan')));
 const EventKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/event-ketuakomitetalent')));
 const ClusterKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/cluster-ketuakomitetalent')));
-const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Login3')));
-const AuthRegister3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3')));
 const TalentDetail = Loadable(lazy(() => import('../views/pages/dashboard/talent-detail')));
+import { Navigate } from 'react-router-dom';
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -34,19 +33,18 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <AuthGuard element={<DashboardDefault />} />
+      element: <Navigate to="/login" />
     },
     {
       path: 'dashboard',
-      element: <DashboardDefault />
-
+      element: <AuthGuard element={<DashboardDefault />} />
     },
     {
       path: 'talent',
       children: [
         {
           path: 'event',
-          element: <DaftarEvent />,
+          element: <AuthGuard element={<DaftarEvent />} />
         },
         {
           path: 'parameter',
@@ -54,8 +52,8 @@ const MainRoutes = {
         },
         {
           path: 'detail-event/:id',
-          element: <DetailEvent/>
-        },
+          element: <DetailEvent />
+        }
       ]
     },
     {
@@ -72,7 +70,7 @@ const MainRoutes = {
         {
           path: 'daftar-pengguna',
           element: <DaftarPengguna />
-        },
+        }
       ]
     },
     {
@@ -93,8 +91,8 @@ const MainRoutes = {
     },
     {
       path: 'dashboard/detail-talent',
-      element: <TalentDetail/>
-    },
+      element: <TalentDetail />
+    }
   ]
 };
 
