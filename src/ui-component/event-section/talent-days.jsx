@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Button, Grid, Tab, Tabs, Typography, Stack } from '@mui/material';
+import { Box, Button, Grid, Tab, Tabs, Typography, Stack, TextField, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import MainCard from '../../ui-component/cards/MainCard';
@@ -8,7 +8,7 @@ import EventDetailSearchSection from '../../ui-component/button/EventDetailSearc
 import SearchResetButton from '../../ui-component/button/SearchResetButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { CorporateFareOutlined, PersonOutlined, AddCircleOutlineOutlined } from '@mui/icons-material';
+import { CorporateFareOutlined, PersonOutlined, AddCircleOutlineOutlined, NotificationsNoneOutlined } from '@mui/icons-material';
 
 import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -20,6 +20,11 @@ import { IconFileDownload } from '@tabler/icons-react';
 import TalentDaysBPJTable from '../tables/talentdaysbpj';
 import TalentDaysKaryawanTable from '../tables/talentdayskaryawan';
 import TambahBPJ from '../../ui-component/modal/tambah-bpj';
+import KonfirmasiDetailBPJ from '../../ui-component/modal/konfirmasi-detail-bpj';
+import ButtonOptional from '../../ui-component/button/ButtonOptional';
+import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
+import KonfirmasiIsiSemuaNilaiTalent from '../../ui-component/modal/konfirmasi-isi-semua-nilai-talent';
+
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -83,16 +88,33 @@ const TalentDays = ({eventid}) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    // setOpen(true);
     settambahBPJOpen(true);
   };
 
   const handleClose = () => {
-    // setOpen(false);
     settambahBPJOpen(false);
   };
 
-  
+  const [openDetailBPJ, setDetailBPJOpen] = useState(false);
+
+  const handleOpenDetailBPJ = () => {
+    setDetailBPJOpen(true);
+  };
+
+  const handleCloseDetailBPJ = () => {
+    setDetailBPJOpen(false);
+  };
+
+  const [openIsiSemuaNilai, setIsiSemuaNilaiOpen] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleOpenIsiSemuaNilai = () => {
+    setIsiSemuaNilaiOpen(true);
+  };
+
+  const handleCloseIsiSemuaNilai = () => {
+    setIsiSemuaNilaiOpen(false);
+  };
 
   const FlexContainer = styled('div')({
     display: 'flex',
@@ -153,11 +175,30 @@ daysRow.forEach(item => {
             <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
 
                 <Grid>
-                    <Typography variant="h2" style={{ display: 'flex', fontFamily: 'Roboto', fontWeight: '600', marginTop: '16px', marginBottom: '16px'}} gutterBottom>
-                        Detail BPJ
-                    </Typography>
+                    
+                    <Stack direction="row" spacing={2} alignItems="center" style={{marginTop: '16px', marginBottom: '15px'}}>
+                        <Typography variant="h2" style={{ display: 'inline', fontFamily: 'Roboto', fontWeight: '600' }} gutterBottom>
+                            Detail BPJ
+                        </Typography>
+                        <div style={{ flex: '1' }}> </div>
+                        <Button variant="contained" 
+                            sx={{backgroundColor:'#1C2D5A', borderRadius:'12px', padding: '14px 24px'}} 
+                            endIcon={<NotificationsNoneOutlined />}
+                            onClick={handleOpenDetailBPJ}>
+                                Kirim Notifikasi
+                        </Button>
+                    </Stack>
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={4}>
+                            <TextField sx={{ width: '100%' }}
+                                select
+                                label="Tipe"
+                            >
+                                <MenuItem value="1">Sidang Jabatan</MenuItem>
+                                <MenuItem value="2">Wawancara</MenuItem>
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={4}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoItem>
                                 <DatePicker
@@ -170,7 +211,7 @@ daysRow.forEach(item => {
                             </DemoItem>
                             </LocalizationProvider>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={4}>
                             <EventDetailSearchSection filter={filterLokasi} setFilter={setFilterLokasi} PlaceHolder={'Lokasi'} />
                         </Grid>
                     </Grid>
@@ -181,7 +222,7 @@ daysRow.forEach(item => {
                     Tabel BPJ Karyawan
                     </Typography>
                     <Button
-                        onClick={handleOpen}
+                        // onClick={handleOpen}
                         variant="contained"
                         style={{
                         color: '#2196F3',
@@ -244,6 +285,7 @@ daysRow.forEach(item => {
               </Stack>
 
               <div style={{ flex: '1' }}> </div>
+              <ButtonOptional icon={DoneAllOutlinedIcon} LabelName={'Isi Semua Nilai'} onClick={handleOpenIsiSemuaNilai} disabled={isDisabled}/>
               <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
 
             </FlexContainer>
@@ -277,6 +319,16 @@ daysRow.forEach(item => {
         <TambahBPJ 
           open={tambahBPJOpen}
           handleClose={() => settambahBPJOpen(false)}
+        />
+
+        <KonfirmasiDetailBPJ
+          open={openDetailBPJ}
+          handleClose={() => setDetailBPJOpen(false)}
+        />
+
+        <KonfirmasiIsiSemuaNilaiTalent
+          open={openIsiSemuaNilai}
+          handleClose={() => setIsiSemuaNilaiOpen(false)}
         />
 
       </MainCard>
