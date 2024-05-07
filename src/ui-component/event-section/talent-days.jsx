@@ -124,6 +124,26 @@ const TalentDays = ({eventid}) => {
   });
 
   useEffect(() => {
+    // Define the request body
+    const requestBody = {
+        // Your request body data here
+        eventtalentid: eventidactive,
+    };
+
+    // Fetch data from API with request body
+    fetch(`http://localhost:4000/createdaysbpj`, {
+        method: 'POST', // Specify the HTTP method
+        headers: {
+            'Content-Type': 'application/json', // Specify the content type
+        },
+        body: JSON.stringify(requestBody), // Convert the request body to JSON string
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}, []);
+  useEffect(() => {
     // Fetch data from API
     fetch(`http://localhost:4000/gettablekaryawandays?eventtalentid=${eventidactive}`)
       .then(response => response.json())
@@ -258,7 +278,7 @@ daysRow.forEach(item => {
                     </div>
                 </div>
          
-                <TalentDaysBPJTable rows={daysBpj} />
+                <TalentDaysBPJTable eventid={eventidactive} rows={daysBpj} />
             </Box>
         </CustomTabPanel>
 

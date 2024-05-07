@@ -1,5 +1,5 @@
 import * as React  from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -11,6 +11,7 @@ import SearchSectionManajemenPengguna from '../../../ui-component/button/Manajem
 import DetailKaryawandiKomiteUnit from './detail-karyawandikomiteunit';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 function CustomTabPanel(props) {
@@ -47,16 +48,93 @@ function CustomTabPanel(props) {
   }
 
 export default function DaftarEventKomiteUnit() {
-    const nama_event = 'TRIAL EVENT_ E1-D3_BISNIS';
-    const countdown = '53 Hari Lagi';
-    const tgl_mulai_selesai = '22 Januari 2024 - 22 Maret 2024';
+    const {id} = useParams();
     const [value, setValue] = React.useState(0);
+    const [eventaktif, seteventaktif] = useState([]);
+    const [DaysLeft, setDaysLeft] = useState('');
+    const [rowstrue, setRowstrue] = useState([]);
+    const [rowsfalse, setRowsfalse] = useState([])
+    const [selectedRows, setSelectedRows] = useState([]);
+
+    const nippos= 972365102 //ganti sama hasil fetchingan nippos yang login 
     
+    const fetcheventdetail = () => {
+        return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            return data; // Return the parsed JSON data
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            throw error; // Rethrow the error to handle it elsewhere
+          });
+      };
+
+      useEffect(() => {
+        fetcheventdetail()
+          .then(data => {
+            seteventaktif(data.event);
+            setLoading(false); // Move this line to the end of the .then block
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+          });
+      }, []);
+
+      const { eventid, nama_event, deskripsi,tipe_komite_talent, tipekomite, kode_rumpun,nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
+
+      useEffect(() => {
+        // Convert 'tanggal_selesai' from ISO 8601 format to a Date object
+        const endDate = new Date(tanggal_selesai);
+        // Get the current date
+        const currentDate = new Date();
+        // Calculate the difference in milliseconds between the current date and the 'tanggal_selesai'
+        const timeDifference = endDate.getTime() - currentDate.getTime();
+        // Convert the difference from milliseconds to days
+        const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        // Set the number of days left
+        setDaysLeft(daysDifference);
+      }, [tanggal_selesai]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
-
+      
+  
+      const eventidactive = eventid
+  
+      useEffect(() => {
+        // Fetch data from API
+        fetch(`http://localhost:4000/getkandidatfalse?eventtalentid=${id}&nippos=${nippos}`)
+          .then(response => response.json())
+          .then(datafalse => {
+            // Update state with API data
+            setRowsfalse(datafalse.map((row, index) => ({ ...row, id: index + 1 })));
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []); // Empty dependency array to run effect only once
+    
+      useEffect(() => {
+        // Fetch data from API
+        fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${id}&nippos=${nippos}`)
+          .then(response => response.json())
+          .then(datatrue => {
+            // Update state with API data
+            setRowstrue(datatrue.map((row, index) => ({ ...row, id: index + 1 })));
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []); // Empty dependency array to run effect only once
+      
     const boxStyle = {
         padding: '20px', 
         width: '100%',
@@ -95,7 +173,6 @@ export default function DaftarEventKomiteUnit() {
         fontWeight: 600,
         fontSize:'16px'
     });
-    
 
     return (
         <MainCard>
@@ -108,13 +185,23 @@ export default function DaftarEventKomiteUnit() {
 
                         <FlexTitle>
                             <CalendarIcon style={{color:'#828282'}}/>
-                            <Typography style={{fontSize:'14px', color:'#828282'}}>{tgl_mulai_selesai}</Typography>
+                            <Typography style={{fontSize:'14px', color:'#828282'}}>{tanggal_mulai &&
+            new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })} - {tanggal_selesai &&
+              new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}</Typography>
                         </FlexTitle>
                     </BoxContainer>
 
                     <div style={{ flex: '1' }}> </div>
           
-                    <CountdownLabel>{countdown}</CountdownLabel>
+                    <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari` : ''}</CountdownLabel>
                 </FlexContainer>
             </Box>
 
@@ -133,7 +220,9 @@ export default function DaftarEventKomiteUnit() {
                     Title={'Tabel Karyawan'} 
                     Icon={AddCircleOutlineRoundedIcon} 
                     Label={'Tambah Data'}
-                    ActionForButton={true}/>
+                    ActionForButton={true}
+                    id={id}
+                    rows={rowsfalse}/>
                 </Box> 
             </CustomTabPanel>
             
@@ -146,6 +235,8 @@ export default function DaftarEventKomiteUnit() {
                     <DetailKaryawandiKomiteUnit Title={'Tabel Karyawan Terkualifikasi'} 
                     Icon={FileDownloadOutlinedIcon} 
                     Label={'Unduh Data'}
+                    rows={rowstrue}
+                    nippos={nippos}
                     />
 
                 </Box> 

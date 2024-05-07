@@ -135,6 +135,33 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan }) {
             throw error; // Rethrow the error to handle it elsewhere
           });
       };
+
+      const notifikasikomiteunit = () => {
+        return fetch(`http://localhost:4000/notifkomiteunit`, {
+              method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+              headers: {
+                'Content-Type': 'application/json', // Specify the content type
+              },
+              body: JSON.stringify({
+                  // Include any data you want to send in the request body
+                  eventtalentid: eventid
+              }) // Convert the bodyData object to a JSON string
+            }) 
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+              console.error('Error fetching data:', error);
+              throw error; // Rethrow the error to handle it elsewhere
+            });
+        };
+
     const mulaiButtonStyle = {
         backgroundColor: '#1C2D5A',
         color: '#fff',
@@ -183,6 +210,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan }) {
                 await postdeadlinesource(); // Call the function to post deadline source
                 await posttalentsource(); // Chain posttalentsource() after postdeadlinesource()
                 await mapkomiteunit(); // Chain mapkomiteunit() after posttalentsource()
+                await notifikasikomiteunit()
                 handleClose(); // Close the popup after all operations are finished
             } catch (error) {
                 console.error('Error:', error);

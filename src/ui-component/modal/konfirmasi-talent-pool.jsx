@@ -5,9 +5,42 @@ import { styled } from '@mui/material/styles';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
-function KonfirmasiTalentPool({ open, handleClose, handleConfirmation }) {    
+function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }) {    
+    const eventaktif = eventid;
+    console.log("aktif", eventid);
+
+    const statusselesai = async () => {
+        try {
+            // Make the POST request to the API endpoint
+            const response = await fetch('http://localhost:4000/statusselesai', {
+                
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // Include any data you want to send in the request body
+                    eventid : eventaktif})
+            });
+
+            // Check if the request was successful
+            if (!response.ok) {
+                throw new Error('Failed to post data');
+            }
+
+            // If successful, handle the response data (if needed)
+            const responseData = await response.json();
+            console.log('Response data:', responseData);
+        } catch (error) {
+            // Handle any errors that occur during the API call
+            console.error('Error posting data:', error.message);
+        }
+    };
+
     const handleSelesai = () => {
-        handleConfirmation();
+        statusselesai().then(() => {
+            handleConfirmation();
+        });
     };
 
     const SelesaiButtonStyle = {

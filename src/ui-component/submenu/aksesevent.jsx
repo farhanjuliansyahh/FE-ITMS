@@ -20,9 +20,10 @@ const EventLabel = styled('div')({
   fontSize:'12px'
 });
 
-export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) {
+export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_talent,kode_rumpun, nama_rumpun_jabatan,kuota, tanggal_selesai, tanggal_mulai,status_event, status, ButtonName, pathDetailEvent } ) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [daysLeft, setDaysLeft] = React.useState(null);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -126,15 +127,6 @@ export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) 
     color: '#1C2D5A',
   });
 
-  const StatusLabel = styled('div')(({ status }) => ({
-    backgroundColor: status === 'Berlangsung' ? '#EAF8FF' : status === 'Selesai' ? '#F5FFF5' : '#FFFFFF',
-    color: status === 'Berlangsung' ? '#2196F3' : status === 'Selesai' ? '#66BB6A' : '#000000',
-    padding: '4px 8px',
-    borderRadius: '16px',
-    fontWeight: 400,
-    fontSize: '12px'
-  }));
-
   const akseseventButtonStyle = {
     backgroundColor: '#EF4123',
     color: '#fff',
@@ -174,7 +166,53 @@ export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) 
     margin: '0 auto', 
   };
 
-  const Status = "Selesai";
+  let statusberjalan;
+  if (status === 1) {
+    statusberjalan = "Belum Mulai";
+  } else if (status >= 2 && status <= 7) {
+    statusberjalan = "Berlangsung";
+  } else if (status === 8) {
+    statusberjalan = "Selesai";
+  } else {
+    // Handle other status values if needed
+    statusberjalan = "Unknown Status";
+  }
+
+  const statusColors = {
+    1: { backgroundColor: '#FFEDED', color: '#F44336' }, // Belum Mulai
+    2: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung
+    3: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung (you can add more statuses if needed)
+    4: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung
+    5: { backgroundColor: '#EAF8FF', color: '#2196F3' },
+    6: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung
+    7: { backgroundColor: '#EAF8FF', color: '#2196F3' },
+    8: { backgroundColor: '#F5FFF5', color: '#66BB6A' } // Selesai
+  };
+
+  const { backgroundColor, color } = statusColors[status] || {};
+
+  const StatusLabel = styled('div')(({ backgroundColor, color }) => ({
+    backgroundColor: backgroundColor,
+    color: color,
+    padding: '4px 8px',
+    borderRadius: '16px',
+    fontWeight: 400,
+    fontSize: '12px',
+  }));
+
+  useEffect(() => {
+    // Convert 'tanggal_selesai' from ISO 8601 format to a Date object
+    const endDate = new Date(tanggal_selesai);
+    // Get the current date
+    const currentDate = new Date();
+    // Calculate the difference in milliseconds between the current date and the 'tanggal_selesai'
+    const timeDifference = endDate.getTime() - currentDate.getTime();
+    // Convert the difference from milliseconds to days
+    const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    // Set the number of days left
+    setDaysLeft(daysDifference);
+  }, [tanggal_selesai]);
+  
 
   return (
     <Box sx={boxStyle}>
@@ -193,15 +231,35 @@ export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) 
               color: 'inherit', 
             }}
           >
-              TRIAL EVENT_ E1-D3_BISNIS
+              {nama_event}
           </Typography >
-            <StatusLabel status={Status}>{Status}</StatusLabel>
-            <EventLabel >{namaEvent} </EventLabel>
+            <StatusLabel backgroundColor={backgroundColor} color={color}>{statusberjalan}</StatusLabel>
+            
+            <Typography
+            style={{
+              fontSize: '16px',
+              fontWeight: 'bold',
+              textDecoration: 'none', 
+              color: 'inherit', 
+            }}
+          >
+          </Typography >
+          <EventLabel >{status_event} </EventLabel>
           </FlexTitle>
 
           <FlexTitle>
             <CalendarIcon style={{color:'#828282'}}/>
-            <Typography style={{color:'#828282'}}>22 Januari 2024 - 22 Maret 2024</Typography>
+            <Typography style={{color:'#828282'}}>{tanggal_mulai &&
+              new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })} - {tanggal_selesai &&
+                new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })}</Typography>
           </FlexTitle>
         </BoxContainer>
 
@@ -217,28 +275,33 @@ export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) 
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={3}>
-          <Typography>Deskripsi</Typography>
-          <Typography style={{fontWeight:'bold'}}>Trial</Typography>
+          <Typography>deskripsi</Typography>
+          <Typography style={{fontWeight:'bold'}}>{deskripsi}</Typography>
         </Grid>
 
         <Grid item xs={12} md={3}>
-          <Typography>Tipe</Typography>
-          <Typography style={{fontWeight:'bold'}}>Committee Talent III</Typography>
+          <Typography>Tipe Komite</Typography>
+          <Typography style={{fontWeight:'bold'}}>{tipe_komite_talent}</Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
           <Typography>Job Family</Typography>
-          <Typography style={{fontWeight:'bold'}}>Bisnis</Typography>
+          <Typography style={{fontWeight:'bold'}}>{nama_rumpun_jabatan}</Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
           <Typography>Batas Akhir Event</Typography>
-          <Typography style={{fontWeight:'bold'}}>22 Januari 2024</Typography>
+          <Typography style={{fontWeight:'bold'}}>{tanggal_selesai &&
+            new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}</Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
           <Typography>Hitung Mundur</Typography>
-          <Typography style={{fontWeight:'bold', color:'#F44336'}}>53 hari lagi</Typography>
+          <Typography style={{fontWeight:'bold', color:'#F44336'}}>{daysLeft !== null ? `${daysLeft} hari` : ''}</Typography>
         </Grid>
       </Grid>
     </Box>

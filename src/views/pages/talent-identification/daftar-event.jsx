@@ -151,37 +151,69 @@ console.log("asdasd", eventData);
           </Tabs>
         </Box>
 
-        <CustomTabPanel value={value} index={0} style={{ paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px',}}>
-        {isLoading ? (
-          <Typography >Loading...</Typography>
-        ) : eventData.length > 0 ? (
-          eventData.map(event => (
-            <EventBerjalan 
+        <CustomTabPanel value={value} index={0} style={{ paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px' }}>
+  {isLoading ? (
+    <Typography>Loading...</Typography>
+  ) : (
+    <Box>
+      {eventData
+        .filter(event => event.evenstatus_id !== 8) // Filter events excluding status 8
+        .map(event => (
+          <EventBerjalan 
             key={event.id}
             id={event.id}
             nama_event={event.nama_event}
             deskripsi={event.deskripsi}
             tipe_komite_talent={event.tipekomite.tipe_komite_talent}
-            kode_rumpun = {event.kode_rumpun_jabatan}
+            kode_rumpun={event.kode_rumpun_jabatan}
             nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+            kuota={event.kuota}
             tanggal_mulai={event.tanggal_mulai}
             tanggal_selesai={event.tanggal_selesai}
-            status={event.evenstatus_id}/>
-          ))
-        ) : (
-          <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
-            <img src={notFoundImage} alt="Deskripsi gambar" />
-            <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
-          </Box>
-        )}
-      </CustomTabPanel>
+            status={event.evenstatus_id}
+          />
+        ))}
+      {eventData.filter(event => event.status !== 8).length === 0 && (
+        <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+          <img src={notFoundImage} alt="Deskripsi gambar" />
+          <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+        </Box>
+      )}
+    </Box>
+  )}
+</CustomTabPanel>
 
-        <CustomTabPanel value={value} index={1}>
-          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>         
-                
-          </Container>
-          
-        </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+  {isLoading ? (
+    <Typography>Loading...</Typography>
+  ) : (
+    <Box>
+      {eventData
+        .filter(event => event.evenstatus_id === 8) // Filter events with status 8
+        .map(event => (
+          <EventBerjalan 
+            key={event.id}
+            id={event.id}
+            nama_event={event.nama_event}
+            deskripsi={event.deskripsi}
+            tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+            kode_rumpun={event.kode_rumpun_jabatan}
+            nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+            kuota={event.kuota}
+            tanggal_mulai={event.tanggal_mulai}
+            tanggal_selesai={event.tanggal_selesai}
+            status={event.evenstatus_id}
+          />
+        ))}
+      {eventData.filter(event => event.status === 8).length === 0 && (
+        <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+          <img src={notFoundImage} alt="Deskripsi gambar" />
+          <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+        </Box>
+      )}
+    </Box>
+  )}
+</CustomTabPanel>
         <AddEventModal open={open} handleClose={handleClose} />
 
 

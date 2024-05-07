@@ -5,7 +5,7 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 
 
-function HapusDataBPJ({ open, handleClose }) {
+function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
     const HapusDataBPJButtonStyle = {
         border: '1px solid #EF4123',
         color: '#EF4123',
@@ -45,12 +45,57 @@ function HapusDataBPJ({ open, handleClose }) {
     const [IsHoverHapusDataBPJ, setIsHoverHapusDataBPJ] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
+    const hapusdata = async () => {
+        try {
+            // Make an HTTP DELETE request to your API endpoint
+            const response = await fetch(`http://localhost:4000/hapusbpj`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any other headers if needed
+                },
+                body: JSON.stringify({
+                    // Include any data you want to send in the request body
+                    eventid: eventid,
+                    nippos: nippos
+                })
+                // You can pass any data in the request body if required
+                // body: JSON.stringify({}),
+            });
+    
+            // Check if the request was successful (status code 200-299)
+            if (response.ok) {
+                // If successful, handle the response or perform any necessary actions
+                console.log('Data deleted successfully');
+            } else {
+                // If not successful, throw an error or handle the error response
+                throw new Error('Failed to delete data');
+            }
+        } catch (error) {
+            // Handle any errors that occurred during the process
+            console.error('Error deleting data:', error.message);
+        }
+    };
+
     const HapusDataBPJButton = (
         <Button
             endIcon={<DeleteOutlineRoundedIcon />}
             style={IsHoverHapusDataBPJ ? { ...HapusDataBPJButtonStyle, ...hoverHapusDataBPJStyle } : HapusDataBPJButtonStyle}
             onMouseEnter={() => setIsHoverHapusDataBPJ(true)}
             onMouseLeave={() => setIsHoverHapusDataBPJ(false)}
+            onClick={() => {
+                hapusdata()
+                .then(response => {
+                    // Handle success
+                    console.log(response); // Output: Data successfully deleted
+                    handleClose(); // Close the dialog after successfully deleting data
+                })
+                .catch(error => {
+                    // Handle error
+                    console.error(error); // Output: Failed to delete data
+                    // Optionally, you can handle the error here or show a message to the user
+                });
+            }}
         >
             Ya, Hapus Data
         </Button>

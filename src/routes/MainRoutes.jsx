@@ -63,7 +63,7 @@ const MainRoutes = {
       element: <EventKomiteUnit />
     },
     {
-      path: 'event-komiteunit/daftar-eventkomiteunit',
+      path: 'event-komiteunit/daftar-eventkomiteunit/:id',
       element: <DaftarEventKomiteUnit />
     },
     {
@@ -80,7 +80,7 @@ const MainRoutes = {
       element: <EventKaryawan />
     },
     {
-      path: 'event-karyawan/talent-profile',
+      path: 'event-karyawan/talent-profile/:id',
       element: <ProfileKaryawan/>
     },
     {
