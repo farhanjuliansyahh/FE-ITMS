@@ -93,6 +93,7 @@ const ProfileSection = () => {
         });
         const resultProfile = await responseProfile.json();
         setResultProfile(resultProfile.decoded.user);
+        sessionStorage.setItem('nippos', resultProfile.decoded.user.nippos);
       } catch (error) {
         console.error('Error fetching profile:', error);
       }

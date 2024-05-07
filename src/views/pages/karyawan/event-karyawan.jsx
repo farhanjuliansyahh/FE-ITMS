@@ -50,9 +50,9 @@ const EventKaryawan = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [karyawanevent, setkaryawanevent] = useState([])
+  const nippos = sessionStorage.getItem('nippos');
 
   const fetchkaryawanevent = () => {
-    const nippos= "971351363" //ganti sama hasil fetchingan nippos yang login 
     return fetch(`http://localhost:4000/getkaryawanevent?nippos=${nippos}`) // Replace with your actual endpoint
       .then(response => {
         if (!response.ok) {
