@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
 import AuthGuard from './AuthGuard';
+
 // import DaftarPengguna from 'views/pages/manajemen-pengguna/daftar-pengguna';
 // import SecondLayout from '../layout/SecondLayout';
 
@@ -24,7 +25,7 @@ const EventKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-
 const ClusterKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/cluster-ketuakomitetalent')));
 const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Login3')));
 const AuthRegister3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3')));
-
+const TalentDetail = Loadable(lazy(() => import('../views/pages/dashboard/talent-detail')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -89,6 +90,10 @@ const MainRoutes = {
     {
       path: 'event-ketua-komite-talent/talent-cluster',
       element: <ClusterKetuaKomiteTalent />
+    },
+    {
+      path: 'dashboard/detail-talent',
+      element: <TalentDetail/>
     },
   ]
 };

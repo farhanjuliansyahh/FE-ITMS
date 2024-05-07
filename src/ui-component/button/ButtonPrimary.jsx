@@ -14,6 +14,7 @@ export default function ButtonPrimary({ Color, backgroundColor, icon, LabelName,
         fontSize: '14px', // Custom font size
         padding: '14px 24px', // Custom padding using relative units
         boxShadow: 'none',
+         // Set minWidth here
       }} 
       endIcon={<IconComponent />} // Dynamically setting the icon size using relative units
       onClick={onClick}

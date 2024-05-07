@@ -58,7 +58,7 @@ const Dashboard = () => {
                   title={card.title}
                   content={card.content}
                   icon={<card.icon />}
-                    
+                  PathLink={"/dashboard/detail-talent"}
                 />
               </Grid>
             ))}

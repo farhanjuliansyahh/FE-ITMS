@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Button, Grid, Menu, MenuItem, Typography, Stack } from '@mui/material';
@@ -50,15 +50,18 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const DashboardCard = ({ isLoading, icon, title, content }) => {
+const DashboardCard = ({ isLoading, icon, title, content, PathLink }) => {
   const theme = useTheme();
-
+ 
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+  // const handleButtonClick = () => {
+  //   // Navigate to another page when the button is clicked
+  //   history.push('/manajemen-pengguna/daftar-pengguna'); // Replace '/other-page' with the URL of the page you want to navigate to
+  // };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -113,7 +116,12 @@ const DashboardCard = ({ isLoading, icon, title, content }) => {
                 
               </Grid>
               <Grid item justifyContent={"center"} alignItems={"center"}>
-                <Button variant="contained" sx={{borderRadius:"12px", backgroundColor:'#1C2D5A', boxShadow:"none"}} endIcon={<InfoOutlinedIcon />}>
+                <Button 
+                variant="contained" 
+                component={Link} // Use Link component from React Router
+                to={PathLink} // Specify the target URL
+                sx={{borderRadius:"12px", backgroundColor:'#1C2D5A', boxShadow:"none"}} 
+                endIcon={<InfoOutlinedIcon />}>
                   Detail
                 </Button>
               </Grid>

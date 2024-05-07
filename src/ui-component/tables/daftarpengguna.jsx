@@ -100,7 +100,8 @@ const ActionButton = ({ row, updateRowPeran }) => {
 
 export default function DaftarPenggunaTabel() {
   const [rows, setRows] = useState([
-    { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', jobfam: 'Bisnis', joblevel: 'D3', kantor: 'Kantor Pusat Bandung', komiteunit: 'ABD HAFID', Peran: [] }, // Change Peran to an empty array
+    { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', 
+    jobfam: 'Bisnis', joblevel: 'D3', kantor: 'Kantor Pusat Bandung', komiteunit: 'ABD HAFID', Peran: [] }, // Change Peran to an empty array
   ]);
 
   const updateRowPeran = (rowId, peran) => {
