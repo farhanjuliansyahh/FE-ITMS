@@ -16,7 +16,7 @@ const EventLabel = styled('div')({
   color: '#FFA726',
   padding: '4px 8px',
   borderRadius: '16px',
-  fontWeight: 600,
+  fontWeight: 400,
   fontSize:'12px'
 });
 
@@ -126,14 +126,14 @@ export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) 
     color: '#1C2D5A',
   });
 
-  const StatusLabel = styled('div')({
-    backgroundColor: '#EAF8FF', 
-    color: '#2196F3',
+  const StatusLabel = styled('div')(({ status }) => ({
+    backgroundColor: status === 'Berlangsung' ? '#EAF8FF' : status === 'Selesai' ? '#F5FFF5' : '#FFFFFF',
+    color: status === 'Berlangsung' ? '#2196F3' : status === 'Selesai' ? '#66BB6A' : '#000000',
     padding: '4px 8px',
     borderRadius: '16px',
-    fontWeight: 600,
-    fontSize:'12px'
-  });
+    fontWeight: 400,
+    fontSize: '12px'
+  }));
 
   const akseseventButtonStyle = {
     backgroundColor: '#EF4123',
@@ -174,6 +174,8 @@ export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) 
     margin: '0 auto', 
   };
 
+  const Status = "Selesai";
+
   return (
     <Box sx={boxStyle}>
       <FlexContainer>
@@ -193,18 +195,8 @@ export default function AksesEvent( {namaEvent, pathDetailEvent, ButtonName } ) 
           >
               TRIAL EVENT_ E1-D3_BISNIS
           </Typography >
-            <StatusLabel>Berjalan</StatusLabel>
-            
-            <Typography
-            style={{
-              fontSize: '16px',
-              fontWeight: 'bold',
-              textDecoration: 'none', 
-              color: 'inherit', 
-            }}
-          >
-          </Typography >
-          <EventLabel >{namaEvent} </EventLabel>
+            <StatusLabel status={Status}>{Status}</StatusLabel>
+            <EventLabel >{namaEvent} </EventLabel>
           </FlexTitle>
 
           <FlexTitle>

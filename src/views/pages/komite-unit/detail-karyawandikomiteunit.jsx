@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { CalendarMonthOutlined, RestartAlt, Search } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
@@ -80,6 +80,12 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
                     <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
                         {Title}
                     </Typography>
+                    <Button
+                        variant="contained"
+                        style={{ color: '#2196F3', borderRadius: '15px', borderColor: '#EAF8FF', backgroundColor: '#EAF8FF', boxShadow: 'none' }}
+                    >
+                        0/10 Karyawan
+                    </Button>
                     <div style={{ flex: '1' }}> </div>
                     <ButtonPrimary Color="#ffffff" icon={Icon} LabelName={Label} onClick={toggleModal}/>
                 </FlexContainer>
