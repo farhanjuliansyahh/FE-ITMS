@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, MenuItem, TextField, Typography, Divider, TextareaAutosize } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography } from '@mui/material';
 import { CancelOutlined, CreateOutlined } from '@mui/icons-material';
 import KonfirmasiUbahMatrix from './konfirmasi-ubah-matrix';
 import UbahMatrix from '../../ui-component/tables/ubahmatrix';
@@ -7,17 +7,12 @@ import UbahMatrix from '../../ui-component/tables/ubahmatrix';
 function UbahKategoriMatrix({ open, onClose, onOpenSecondModal }) {
     const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
 
-    const handleOpenKonfirmasiModal = () => {
-        onClose(); // Close the current modal
-        setOpenKonfirmasiModal(true);
-    };
-
     const handleCloseKonfirmasiModal = () => {
         setOpenKonfirmasiModal(false);
     };
 
     const handleUbahMatrixButtonClick = (event) => {
-        event.stopPropagation(); // Stop event propagation here
+        // event.stopPropagation(); // Stop event propagation here
         onClose(); // Close the first modal
         onOpenSecondModal(); // Open the second modal
     };
@@ -51,7 +46,7 @@ function UbahKategoriMatrix({ open, onClose, onOpenSecondModal }) {
             {DividerContainer}
             <DialogContent>
                 <Box>
-                    <UbahMatrix />
+                    <UbahMatrix onOpenSecondModalTable={handleUbahMatrixButtonClick}/>
                     <Typography variant="body1" sx={{ width: '90%', margin: 'auto', marginTop: '24px', marginBottom: '24px', fontFamily: 'Roboto', fontSize: '14px', fontWeight: 400, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>
                         Perubahan hanya diperbolehkan maksimal naik 2 level atau turun 2 level dari kategori matrix yang sudah ditentukan saat BPJ.
                     </Typography>

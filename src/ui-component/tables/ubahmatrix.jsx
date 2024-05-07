@@ -45,7 +45,7 @@ const getStyledRenderCell = (backgroundColor, textColor) => (params) => (
     </div>
 );
 
-export default function UbahMatrix() {
+export default function UbahMatrix({ onOpenSecondModalTable }) {
     const current_category = 'Promotable-4'; // Replace with your current category
     const rows = [
         createData('High Potential'),
@@ -97,6 +97,7 @@ export default function UbahMatrix() {
                                                 icon={direction === 'turun' ? ExpandMoreOutlined : ExpandLessOutlined}
                                                 LabelName={label}
                                                 padding={'6px 16px'}
+                                                onClick={() => onOpenSecondModalTable()}
                                             />
                                         </StyledTableCell>
                                     </TableRow>
