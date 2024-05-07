@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, Typography, Divider } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, Typography, Divider, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { CancelOutlined, CheckCircleOutlined } from '@mui/icons-material';
 
@@ -80,7 +80,7 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>
                 <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
-                    Konfirmasi Ubah Kategori Matrix
+                    Konfirmasi Perubahan Kategori Matrix
                 </Typography>
             </DialogTitle>
             <DividerContainer>
@@ -89,10 +89,18 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
             <DialogContent>
                 <Box>
                     <div>
+                        <TextField
+                            required
+                            id="reason"
+                            label="Alasan Perubahan Kategori Matrix"
+                            multiline
+                            rows={4}
+                            sx={{ width: '100%', marginBottom: '16px' }}
+                        />
                         <Typography variant="subtitle1" sx={{fontFamily: 'Roboto', fontSize: '14px', fontWeight: 600, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>
-                            Apakah anda yakin mengubah matrix data karyawan yang dipilih?
+                            Apakah anda yakin mengubah kategori matrix data karyawan yang dipilih?
                         </Typography>
-                        <Typography variant="body1" sx={{ width: '90%', margin: 'auto', marginTop: '24px', marginBottom: '24px', fontFamily: 'Roboto', fontSize: '14px', fontWeight: 400, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>
+                        <Typography variant="body1" sx={{ width: '90%', margin: 'auto', marginTop: '16px', marginBottom: '16px', fontFamily: 'Roboto', fontSize: '14px', fontWeight: 400, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>
                             Anda tidak dapat membatalkan perubahan dan mengubah kategori matrix hanya diizinkan 1 kali saja.
                         </Typography>
                     </div>

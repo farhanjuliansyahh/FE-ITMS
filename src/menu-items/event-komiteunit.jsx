@@ -14,7 +14,7 @@ const eventkomiteunit = {
       type: 'item',
       url: '/event-komiteunit',
       icon: AccountTreeRoundedIcon,
-      breadcrumbs: true
+      breadcrumbs: false
     }
   ]
 };

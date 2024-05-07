@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 
-export default function ButtonPrimary({ Color, backgroundColor, icon, LabelName, onClick, disabled }) {
+export default function ButtonPrimary({ Color, backgroundColor, icon, LabelName, padding, onClick, disabled }) {
   const IconComponent = icon; // Assuming the icon is passed as a component
 
   return (
@@ -12,7 +12,7 @@ export default function ButtonPrimary({ Color, backgroundColor, icon, LabelName,
         backgroundColor: backgroundColor || '#1C2D5A', 
         borderRadius: '12px', 
         fontSize: '14px', // Custom font size
-        padding: '14px 24px', // Custom padding using relative units
+        padding: padding || '14px 24px', // Custom padding using relative units
         boxShadow: 'none',
          // Set minWidth here
       }} 
