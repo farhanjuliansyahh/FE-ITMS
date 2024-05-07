@@ -16,11 +16,7 @@ import { Link } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import KonfirmasiEvent from '../modal/konfirmasi-event';
 import HapusEvent from '../modal/hapusevent';
-//import DetailEvent from '../../views/pages/talent-identification/detail-event';
-
-import KonfirmasiNextEvent from '../modal/konfirmasi-next-event';
-import { bgcolor } from '@mui/system';
-import { color } from 'framer-motion';
+import EditEvent from '../modal/edit-event';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -132,6 +128,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
 
   const [open, setOpen] = useState(false);
   const [openHapus, setOpenHapus] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
 
 
   const handleOpen = () => {
@@ -145,6 +142,13 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
   };
   const handleCloseHapus = () => {
     setOpenHapus(false);
+  };
+
+  const handleOpenEdit = () => {
+    setOpenEdit(true);
+  };
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
   };
 
   const CalendarIcon = styled(EventIcon)({
@@ -209,7 +213,10 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
   });
 
   const editButton = (
-    <Button sx={editButtonStyle} endIcon={<EditIcon />}>
+    <Button 
+      sx={editButtonStyle} 
+      endIcon={<EditIcon />}
+      onClick={handleOpenEdit}>
       Edit
     </Button>
   );
@@ -412,6 +419,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
       )}
       <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
+      <EditEvent open={openEdit} handleClose={handleCloseEdit}/>
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>
   );

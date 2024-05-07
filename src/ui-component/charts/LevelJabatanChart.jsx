@@ -1,10 +1,7 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-
 import MainCard from '../../ui-component/cards/MainCard';
-
 import { Grid, Typography } from '@mui/material';
-
 import { gridSpacing } from '../../store/constant';
 
 const LevelJabatanChart = ({ series, options }) => {
@@ -41,12 +38,10 @@ const LevelJabatanChart = ({ series, options }) => {
                 </Grid>
               </Grid>
             </Grid>
+
             <Grid item xs={12}>
-              {/* <Chart {...chartRef} /> */}
               <div ref={chartRef} />
-              <Grid item xs={12} md={6}>
             </Grid>
-          </Grid>
           </Grid>
         </MainCard>
   );
@@ -55,7 +50,7 @@ const LevelJabatanChart = ({ series, options }) => {
 LevelJabatanChart.defaultProps = {
   series: [
     {
-      name: 'Total talent',
+      name: 'Total Talent',
       data: [50, 88, 118, 139, 151, 135, 98, 144, 173, 184, 117],
     },
   ],
@@ -63,6 +58,25 @@ LevelJabatanChart.defaultProps = {
     chart: {
       type: 'bar',
       height: 400,
+      toolbar: {
+        export: {
+          csv: {
+            filename: 'Total_talent_berdasarkan_joblevel.csv',
+            columnDelimiter: ',',
+            headerCategory: 'Level_Jabatan',
+            headerValue: 'Total_Talent',
+            dateFormatter(timestamp) {
+              return new Date(timestamp).toDateString()
+            },
+          },
+          svg: {
+            filename: 'Total talent berdasarkan joblevel',
+          },
+          png: {
+            filename: 'Total talent berdasarkan joblevel',
+          }
+        },
+      },
     },
     plotOptions: {
       bar: {
@@ -71,7 +85,6 @@ LevelJabatanChart.defaultProps = {
         colors: {
           ranges: [
             { from: 1, to: 200, color: '#0F1C3E' },
-
           ],
         },
       },
@@ -91,7 +104,6 @@ LevelJabatanChart.defaultProps = {
         'D1',
       ],
     },
-    
   },
 };
 

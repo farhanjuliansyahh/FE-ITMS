@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs, Typography} from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
@@ -15,6 +15,9 @@ import { IconFileDownload } from '@tabler/icons-react';
 import ButtonPrimary from '../button/ButtonPrimary';
 import AdminSearchSectionGroup from '../../ui-component/button/AdminSearchButtonGroup';
 import TalentProfileTable from '../../ui-component/tables/talentprofile';
+import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
+import KonfirmasiSubmitTalentProfile from '../../ui-component/modal/konfirmasi-submit-talent-profile';
+import ButtonOptional from '../../ui-component/button/ButtonOptional';
 
 // ==============================|| DETAIL TALENT PROFILE PAGE ||============================== //
 
@@ -61,6 +64,16 @@ const TalentProfile = ({eventid}) => {
   const [rowsbelum, setrowsbelum] = useState([]);
   const [filterKomite, setFilterKomite] = useState('');
 
+  const [openSubmit, setOpenSubmit] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleOpenSubmit = () => {
+    setOpenSubmit(true);
+  };
+  const handleCloseSubmit = () => {
+    setOpenSubmit(false);
+  };
+
   useEffect(() => {
     // Fetch data from API
     fetch(`http://localhost:4000/getbelumlengkap?eventtalentid=${eventid}`)
@@ -68,11 +81,20 @@ const TalentProfile = ({eventid}) => {
       .then(databelum => {
         // Update state with API data
         setrowsbelum(databelum.map((row, index) => ({ ...row, id: index + 1 })));
+        if (databelum.length === 0) {
+          // Value is null, disable button
+          setIsDisabled(true);
+        } else {
+          // Value is not null, enable button
+          setIsDisabled(false);
+        }
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-      });
-  }, []); // Empty dependency array to run effect only once
+      });
+  }, []);
+
+  console.log("belum lengkap",rowsbelum.length);
 
   useEffect(() => {
     // Fetch data from API
@@ -183,6 +205,7 @@ const TalentProfile = ({eventid}) => {
                 Tabel Karyawan
             </Typography>
             <div style={{ flex: '1' }}> </div>
+            <ButtonOptional icon={DoneAllOutlinedIcon} LabelName={'Submit Semua'} onClick={handleOpenSubmit} disabled={isDisabled}/>
             <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
           </FlexContainer>
                
@@ -261,6 +284,10 @@ const TalentProfile = ({eventid}) => {
           </Box>          
         </CustomTabPanel>
 
+        <KonfirmasiSubmitTalentProfile
+          open={openSubmit}
+          handleClose={() => setOpenSubmit(false)}
+        />
 
       </MainCard>
     </>

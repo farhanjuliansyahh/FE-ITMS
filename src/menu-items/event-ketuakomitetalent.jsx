@@ -14,7 +14,7 @@ const EventKomiteTalentDua = {
       type: 'item',
       url: '/event-ketua-komite-talent',
       icon: GroupsRoundedIcon,
-      breadcrumbs: false
+      breadcrumbs: true
     }
   ]
 };
