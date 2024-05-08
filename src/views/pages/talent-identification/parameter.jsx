@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { Container } from '@mui/system';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
@@ -91,7 +91,7 @@ const ParameterTalent = () => {
                 <PassingGradeTable></PassingGradeTable>
                 </Grid>
             
-                <Box display="flex" justifyContent="flex-end" marginTop={'24px'} width="100%"> {/* Stack of buttons with Flexbox layout */}
+                <Box display="flex" justifyContent="flex-end" marginTop={'24px'} width="100%"> 
                   <Box sx={{ marginRight: '16px' }}>
                     <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
                   </Box>

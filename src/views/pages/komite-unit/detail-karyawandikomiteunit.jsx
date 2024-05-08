@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { CalendarMonthOutlined, RestartAlt, Search } from '@mui/icons-material';
-import { IconFileDownload } from '@tabler/icons-react';
+import { RestartAlt, Search } from '@mui/icons-material';
+
 import MainCard from '../../../ui-component/cards/MainCard';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import SearchResetButton from '../../../ui-component/button/SearchResetButton';
 import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
 import KaryawanKomiteUnit from '../../../ui-component/tables/karyawankomiteunit';
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import KonfirmasiTalentSource from '../../../ui-component/modal/konfirmasi-talentsource';
+
+// ==============================|| DETAIL KARYAWAN DARI KOMITE UNIT ||============================== //
 
 export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionForButton,id, rows, nippos}) {
     const [filterNama, setFilterNama] = useState('');
@@ -18,7 +19,6 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
     const [filterJob, setFilterJob] = useState('');
     const [showModal, setShowModal] = useState(false);  // State to control the visibility of the modal
     const [selectedRows, setSelectedRows] = useState([]);
-
 
     const handleSelectedRowsChange = (newSelectedRows) => {
         setSelectedRows(newSelectedRows);
@@ -28,12 +28,6 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
             setShowModal(!showModal);
         }
     };
-    const boxStyle = {
-        padding: '20px', 
-        width: '100%',
-        borderRadius:'12px',
-        marginBottom: '-16px'
-    };
 
     const FlexContainer = styled('div')({
         display: 'flex',
@@ -41,42 +35,6 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
         gap: '16px', 
         paddingBottom: '24px',
     });
-
-    const BoxContainer = styled('div')({
-        display: 'flex',
-        flexDirection: 'column',
-    });
-
-    const FlexTitle = styled('div')({
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        paddingBottom:0
-    });
-
-    const CalendarIcon = styled(CalendarMonthOutlined)({
-        fontSize: '1rem',
-        color: '#1C2D5A',
-    });
-
-    const CountdownLabel = styled('div')({
-        backgroundColor: '#FFEDED', 
-        color: '#F44336',
-        padding: '8px 16px',
-        borderRadius: '16px',
-        fontWeight: 600,
-        fontSize:'16px'
-    });
-
-    const DividerContainer = styled('div')({
-        width: '100%',
-        textAlign: 'center',
-        marginBottom: '16px',
-    });
-    
-    const dividerStyle = {
-    margin: '0 auto',
-    };
 
     const tablerows= rows
 
@@ -149,11 +107,21 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
                         <SearchResetButton outlineColor="#D32F2F" icon={RestartAlt} LabelName={'Reset'} />
                     </div>
                 </div>
-                <KaryawanKomiteUnit checkboxSelection={true} 
-                rows={tablerows} 
-                selectedRows={selectedRows} onSelectedRowsChange={handleSelectedRowsChange}
-                filter={{nama:filterNama, nippos:filterNippos, job:filterJob}}/>
-                {ActionForButton && <KonfirmasiTalentSource open={showModal} handleClose={() => setShowModal(false)} onConfirmation={handleTambahTalent} />}
+
+                <KaryawanKomiteUnit 
+                    checkboxSelection={true} 
+                    rows={tablerows} 
+                    selectedRows={selectedRows} 
+                    onSelectedRowsChange={handleSelectedRowsChange}
+                    filter={{nama:filterNama, nippos:filterNippos, job:filterJob}}
+                />
+
+                {ActionForButton && <KonfirmasiTalentSource 
+                    open={showModal} 
+                    handleClose={() => setShowModal(false)} 
+                    onConfirmation={handleTambahTalent} />
+                }
+
             </Box>
 
         </MainCard>

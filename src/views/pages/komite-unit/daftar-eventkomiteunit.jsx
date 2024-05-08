@@ -1,18 +1,18 @@
 import * as React  from 'react';
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Box, Button, Tab, Tabs, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { ArrowForwardOutlined, CalendarMonthOutlined, PersonPinOutlined, TaskOutlined } from '@mui/icons-material'
-import MainCard from '../../../ui-component/cards/MainCard';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert';
-import SearchSectionManajemenPengguna from '../../../ui-component/button/ManajemenSearchSectionGroup';
-import DetailKaryawandiKomiteUnit from './detail-karyawandikomiteunit';
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { useLocation, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { AddCircleOutlineRounded, CalendarMonthOutlined, FileDownloadOutlined, PersonPinOutlined, TaskOutlined } from '@mui/icons-material'
+import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 
+import MainCard from '../../../ui-component/cards/MainCard';
+import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert';
+import DetailKaryawandiKomiteUnit from './detail-karyawandikomiteunit';
+
+// ==============================|| DETAIL EVENT KOMITE UNIT ||============================== //
+// ============|| yang ada tab "Daftar Karyawan" dan "Karyawan Terkualifikasi" ||============ //
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -47,7 +47,7 @@ function CustomTabPanel(props) {
     };
   }
 
-export default function DaftarEventKomiteUnit() {
+export default function DetailEventKomiteUnit() {
     const {id} = useParams();
     const [value, setValue] = React.useState(0);
     const [eventaktif, seteventaktif] = useState([]);
@@ -105,7 +105,6 @@ export default function DaftarEventKomiteUnit() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
-      
   
       const eventidactive = eventid
   
@@ -186,16 +185,17 @@ export default function DaftarEventKomiteUnit() {
                         <FlexTitle>
                             <CalendarIcon style={{color:'#828282'}}/>
                             <Typography style={{fontSize:'14px', color:'#828282'}}>{tanggal_mulai &&
-            new Date(tanggal_mulai).toLocaleDateString('id-ID', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })} - {tanggal_selesai &&
-              new Date(tanggal_selesai).toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}</Typography>
+                                new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric',
+                                })} - {tanggal_selesai &&
+                                new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric',
+                                })}
+                            </Typography>
                         </FlexTitle>
                     </BoxContainer>
 
@@ -217,28 +217,27 @@ export default function DaftarEventKomiteUnit() {
                 <Box sx={boxStyle}>
                     <KuotaKomiteUnitAlert />
                     <DetailKaryawandiKomiteUnit 
-                    Title={'Tabel Karyawan'} 
-                    Icon={AddCircleOutlineRoundedIcon} 
-                    Label={'Tambah Data'}
-                    ActionForButton={true}
-                    id={id}
-                    rows={rowsfalse}/>
+                        Title={'Tabel Karyawan'} 
+                        Icon={AddCircleOutlineRounded} 
+                        Label={'Tambah Data'}
+                        ActionForButton={true}
+                        id={id}
+                        rows={rowsfalse}
+                    />
                 </Box> 
             </CustomTabPanel>
             
 
             {/* Karyawan Terkualifikasi*/}
-            
             <CustomTabPanel value={value} index={1}>
                 <Box sx={boxStyle}>
                     <KuotaKomiteUnitAlert />
                     <DetailKaryawandiKomiteUnit Title={'Tabel Karyawan Terkualifikasi'} 
-                    Icon={FileDownloadOutlinedIcon} 
+                    Icon={FileDownloadOutlined} 
                     Label={'Unduh Data'}
                     rows={rowstrue}
                     nippos={nippos}
                     />
-
                 </Box> 
                 
                 <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>

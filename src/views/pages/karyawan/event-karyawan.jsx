@@ -1,15 +1,14 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
-import MainCard from '../../../ui-component/cards/MainCard';
 import { DownloadDone, RotateRight } from '@mui/icons-material';
+import notFoundImage from '../../../assets/images/ilustration/notfound.png';
+
+import MainCard from '../../../ui-component/cards/MainCard';
 import SearchSection2 from '../../../ui-component/searchsection';  
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import BasicPagination from '../../../ui-component/button/pagination';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-import { padding } from '@mui/system';
-
 
 // ==============================|| EVENT KARYAWAN PAGE ||============================== //
 
@@ -90,16 +89,6 @@ useEffect(() => {
     setLoading(false);
   }, []);
 
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const routeid = event.id
 
   return (
@@ -122,32 +111,32 @@ useEffect(() => {
         </Box>
 
         <CustomTabPanel value={value} index={0}>
-  <Box sx={{paddingRight: '24px', paddingLeft: '24px', paddingBottom: '24px'}}>
-    {karyawanevent
-      .filter(event => event.evenstatus_id !== 8) // Filter events with status not equal to 8
-      .map((event, index) => (
-        <Box key={index} sx={{paddingBottom: '24px'}}>
-          <AksesEvent
-            ButtonName={'Akses Event'}
-            namaEvent={event.nama_event}
-            key={event.id}
-            id={event.id}
-            nama_event={event.nama_event}
-            deskripsi={event.deskripsi}
-            tipe_komite_talent={event.tipekomite.tipe_komite_talent}
-            kode_rumpun={event.kode_rumpun_jabatan}
-            nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
-            kuota={event.kuota}
-            tanggal_mulai={event.tanggal_mulai}
-            tanggal_selesai={event.tanggal_selesai}
-            status={event.evenstatus_id}
-            pathDetailEvent={`./talent-profile/${event.id}`}
-          />
-        </Box>
-      ))}
-    <BasicPagination />
-  </Box>
-</CustomTabPanel>
+          <Box sx={{paddingRight: '24px', paddingLeft: '24px', paddingBottom: '24px'}}>
+            {karyawanevent
+              .filter(event => event.evenstatus_id !== 8) // Filter events with status not equal to 8
+              .map((event, index) => (
+                <Box key={index} sx={{paddingBottom: '24px'}}>
+                  <AksesEvent
+                    ButtonName={'Akses Event'}
+                    namaEvent={event.nama_event}
+                    key={event.id}
+                    id={event.id}
+                    nama_event={event.nama_event}
+                    deskripsi={event.deskripsi}
+                    tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+                    kode_rumpun={event.kode_rumpun_jabatan}
+                    nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+                    kuota={event.kuota}
+                    tanggal_mulai={event.tanggal_mulai}
+                    tanggal_selesai={event.tanggal_selesai}
+                    status={event.evenstatus_id}
+                    pathDetailEvent={`./talent-profile/${event.id}`}
+                  />
+                </Box>
+              ))}
+            <BasicPagination />
+          </Box>
+        </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
           <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>

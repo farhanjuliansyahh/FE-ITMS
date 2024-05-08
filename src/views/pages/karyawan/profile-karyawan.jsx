@@ -1,20 +1,21 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
+import { useLocation, useParams } from 'react-router-dom';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { CalendarMonthOutlined, EmojiEvents, Person, PersonPinOutlined, School, TaskOutlined } from '@mui/icons-material'
 
 import MainCard from '../../../ui-component/cards/MainCard';
 import CheckDataAlert from '../../../ui-component/cards/CheckDataAlert';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 import AccordionKaryawan from '../../../ui-component/cards/AccordionKaryawan';
 import RiwayatPendidikanKaryawan from '../../../ui-component/submenu/karyawan-riwayatpendidikan';
 import KompetensiKaryawan from '../../../ui-component/submenu/karyawan-kompetensi';
 import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri';
 import ProfileAccordion from '../../../ui-component/modal/profile-accordion';
 import ConfirmationMessage from '../../../ui-component/cards/Alert-PI-CL';
-import { useLocation, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+
+// ==============================|| PROFIL KARYAWAN ||============================== //
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -158,16 +159,17 @@ export default function ProfileKaryawan() {
                         <FlexTitle>
                             <CalendarIcon style={{color:'#828282'}}/>
                             <Typography style={{fontSize:'14px', color:'#828282'}}>{tanggal_mulai &&
-            new Date(tanggal_mulai).toLocaleDateString('id-ID', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })} - {tanggal_selesai &&
-              new Date(tanggal_selesai).toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}</Typography>
+                                new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric',
+                                })} - {tanggal_selesai &&
+                                  new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                                    day: 'numeric',
+                                    month: 'long',
+                                    year: 'numeric',
+                                  })}
+                            </Typography>
                         </FlexTitle>
                     </BoxContainer>
 

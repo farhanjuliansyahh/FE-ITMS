@@ -1,39 +1,15 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-// import DeleteIcon from '@mui/icons-material/Delete'; // Import DeleteIcon
-// import SendIcon from '@mui/icons-material/Send'; // Import SendIcon
-
-// material-ui
-import { Box, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
-
 import PropTypes from 'prop-types';
-// import { gridSpacing } from 'store/constant';
-import GroupsIcon from '@mui/icons-material/Groups';
-import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import Header from '../../../ui-component/header/header';
-// import MainLayout from 'layout/MainLayout';
-import { Container } from '@mui/system';
-import MainCard from '../../../ui-component/cards/MainCard';
-import { DownloadDone, RotateRight } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
+import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { AddCircleOutline, DownloadDone, RotateRight } from '@mui/icons-material';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-// import SecondCard from 'ui-component/cards/SecondCard';
-// import SearchSection from 'layout/MainLayout/Header/SearchSection';
+
+import MainCard from '../../../ui-component/cards/MainCard';
 import SearchSection2 from '../../../ui-component/searchsection';
 import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
-import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetailevent';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
-import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
-import KonfirmasiEvent from '../../../ui-component/modal/konfirmasi-next-event';
-import KonfirmasiNextEvent from '../../../ui-component/modal/konfirmasi-next-event';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-
-// tambahan
-import TalentDays from '../../../ui-component/event-section/talent-days';
-import DetailEvent from './detail-event';
-
-
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -71,7 +47,7 @@ function a11yProps(index) {
 }
 
 const fetchDataFromDatabase = () => {
-  return fetch('http://localhost:4000/getallevent') // Replace with your actual endpoint
+  return fetch('http://localhost:4000/getallevent') // endpoint
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -113,11 +89,6 @@ const DaftarEvent = () => {
   }, []);
 
 
-  // const handleButtonClick = () => {
-  //   // Logic for button click
-  //console.log(event.rumpun);
-  // };
-
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -135,9 +106,7 @@ console.log("asdasd", eventData);
       <MainCard title="Daftar Event"  secondary={
         <Stack direction="row" spacing={2}>
           <SearchSection2 /> 
-
-          <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Event'} onClick={handleOpen}/>
-        
+          <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
         </Stack>
       }>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -152,71 +121,70 @@ console.log("asdasd", eventData);
         </Box>
 
         <CustomTabPanel value={value} index={0} style={{ paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px' }}>
-  {isLoading ? (
-    <Typography>Loading...</Typography>
-  ) : (
-    <Box>
-      {eventData
-        .filter(event => event.evenstatus_id !== 8) // Filter events excluding status 8
-        .map(event => (
-          <EventBerjalan 
-            key={event.id}
-            id={event.id}
-            nama_event={event.nama_event}
-            deskripsi={event.deskripsi}
-            tipe_komite_talent={event.tipekomite.tipe_komite_talent}
-            kode_rumpun={event.kode_rumpun_jabatan}
-            nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
-            kuota={event.kuota}
-            tanggal_mulai={event.tanggal_mulai}
-            tanggal_selesai={event.tanggal_selesai}
-            status={event.evenstatus_id}
-          />
-        ))}
-      {eventData.filter(event => event.status !== 8).length === 0 && (
-        <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
-          <img src={notFoundImage} alt="Deskripsi gambar" />
-          <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
-        </Box>
-      )}
-    </Box>
-  )}
-</CustomTabPanel>
+          {isLoading ? (
+            <Typography>Loading...</Typography>
+          ) : (
+            <Box>
+              {eventData
+                .filter(event => event.evenstatus_id !== 8) // Filter events excluding status 8
+                .map(event => (
+                  <EventBerjalan 
+                    key={event.id}
+                    id={event.id}
+                    nama_event={event.nama_event}
+                    deskripsi={event.deskripsi}
+                    tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+                    kode_rumpun={event.kode_rumpun_jabatan}
+                    nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+                    kuota={event.kuota}
+                    tanggal_mulai={event.tanggal_mulai}
+                    tanggal_selesai={event.tanggal_selesai}
+                    status={event.evenstatus_id}
+                  />
+                ))}
+              {eventData.filter(event => event.status !== 8).length === 0 && (
+                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                  <img src={notFoundImage} alt="Deskripsi gambar" />
+                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                </Box>
+              )}
+            </Box>
+          )}
+        </CustomTabPanel>
 
-      <CustomTabPanel value={value} index={1}>
-  {isLoading ? (
-    <Typography>Loading...</Typography>
-  ) : (
-    <Box>
-      {eventData
-        .filter(event => event.evenstatus_id === 8) // Filter events with status 8
-        .map(event => (
-          <EventBerjalan 
-            key={event.id}
-            id={event.id}
-            nama_event={event.nama_event}
-            deskripsi={event.deskripsi}
-            tipe_komite_talent={event.tipekomite.tipe_komite_talent}
-            kode_rumpun={event.kode_rumpun_jabatan}
-            nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
-            kuota={event.kuota}
-            tanggal_mulai={event.tanggal_mulai}
-            tanggal_selesai={event.tanggal_selesai}
-            status={event.evenstatus_id}
-          />
-        ))}
-      {eventData.filter(event => event.status === 8).length === 0 && (
-        <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
-          <img src={notFoundImage} alt="Deskripsi gambar" />
-          <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
-        </Box>
-      )}
-    </Box>
-  )}
-</CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          {isLoading ? (
+            <Typography>Loading...</Typography>
+          ) : (
+            <Box>
+              {eventData
+                .filter(event => event.evenstatus_id === 8) // Filter events with status 8
+                .map(event => (
+                  <EventBerjalan 
+                    key={event.id}
+                    id={event.id}
+                    nama_event={event.nama_event}
+                    deskripsi={event.deskripsi}
+                    tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+                    kode_rumpun={event.kode_rumpun_jabatan}
+                    nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+                    kuota={event.kuota}
+                    tanggal_mulai={event.tanggal_mulai}
+                    tanggal_selesai={event.tanggal_selesai}
+                    status={event.evenstatus_id}
+                  />
+                ))}
+              {eventData.filter(event => event.status === 8).length === 0 && (
+                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                  <img src={notFoundImage} alt="Deskripsi gambar" />
+                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                </Box>
+              )}
+            </Box>
+          )}
+        </CustomTabPanel>
+
         <AddEventModal open={open} handleClose={handleClose} />
-
-
       </MainCard>
     </>
   );

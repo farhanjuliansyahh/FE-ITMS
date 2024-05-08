@@ -7,9 +7,8 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import SearchSectionManajemenPengguna from '../../../ui-component/button/ManajemenSearchSectionGroup';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import DaftarPenggunaTabel from '../../../ui-component/tables/daftarpengguna';
-import DaftarPenggunaTabel2 from '../../../ui-component/tables/daftarpengguna2';
 
-// ==============================|| MANAGEMEN PENGGUNA ||============================== //
+// ==============================|| MANAJEMEN PENGGUNA ||============================== //
 
 const DaftarPengguna = () => {
   const [isLoading, setLoading] = useState(true);
@@ -39,7 +38,7 @@ const DaftarPengguna = () => {
                       display: 'inline-block', // Ensure inline display
                       fontSize: '16px',
                       fontFamily:'Roboto',
-                      fontWeight:500
+                      fontWeight: 500
                     }}>
                     14.000 Talent Karyawan
                   </Typography>
