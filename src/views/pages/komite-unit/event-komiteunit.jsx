@@ -47,10 +47,10 @@ function a11yProps(index) {
 const DaftarEventKomiteUnit = () => {
   const [value, setValue] = useState(0);
   const [komiteunitevent, setkomiteunitevent] = useState([])
+  const nippos = sessionStorage.getItem('nippos');
 
   const fetcheventkomiteunit = () => {
-    const nippos= "971332058" //ganti sama hasil fetchingan nippos yang login 
-    return fetch(`http://localhost:4000/getkomiteunitevent?eventtalentid=${nippos}`) // Replace with your actual endpoint
+    return fetch(`http://localhost:4000/getkomiteunitevent?nippos=${nippos}`) // Replace with your actual endpoint
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

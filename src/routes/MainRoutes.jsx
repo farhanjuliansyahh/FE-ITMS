@@ -86,7 +86,7 @@ const MainRoutes = {
       element: <EventKetuaKomiteTalent />
     },
     {
-      path: 'event-ketua-komite-talent/talent-cluster',
+      path: 'event-ketua-komite-talent/talent-cluster/:id',
       element: <ClusterKetuaKomiteTalent />
     },
     {

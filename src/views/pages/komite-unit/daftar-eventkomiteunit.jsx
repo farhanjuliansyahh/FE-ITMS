@@ -55,8 +55,7 @@ export default function DetailEventKomiteUnit() {
     const [rowstrue, setRowstrue] = useState([]);
     const [rowsfalse, setRowsfalse] = useState([])
     const [selectedRows, setSelectedRows] = useState([]);
-
-    const nippos= 972365102 //ganti sama hasil fetchingan nippos yang login 
+    const nippos = sessionStorage.getItem('nippos');
     
     const fetcheventdetail = () => {
         return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
