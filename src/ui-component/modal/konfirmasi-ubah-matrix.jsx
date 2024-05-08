@@ -40,9 +40,14 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
 
     const [isHoveredYakin, setIsHoveredYakin] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
+    const [reason, setReason] = useState(''); // State to store the reason entered in the TextField
+    
+    const handleReasonChange = (event) => {
+        setReason(event.target.value); // Update the reason state when the TextField value changes
+    };
 
     const handleConfirm = () => {
-        // onConfirm();
+        onConfirm(reason);
         onClose();
     };
 
@@ -95,6 +100,8 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
                             label="Alasan Perubahan Kategori Matrix"
                             multiline
                             rows={4}
+                            value={reason} // Bind the value of the TextField to the reason state
+                            onChange={handleReasonChange} // Handle changes in the TextField value
                             sx={{ width: '100%', marginBottom: '16px' }}
                         />
                         <Typography variant="subtitle1" sx={{fontFamily: 'Roboto', fontSize: '14px', fontWeight: 600, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>

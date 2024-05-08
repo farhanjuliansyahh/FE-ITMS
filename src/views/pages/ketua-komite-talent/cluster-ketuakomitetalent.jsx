@@ -11,6 +11,7 @@ import SearchResetButton from '../../../ui-component/button/SearchResetButton';
 import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
 import TalentClusterKetuaKomiteTalentTable from '../../../ui-component/tables/talentclusterketuakomitetalent';
 import { useEffect,useState } from 'react';
+import styled from '@emotion/styled';
 
 export default function ClusterKetuaKomiteTalent() {
     const {id} = useParams();
@@ -24,6 +25,8 @@ export default function ClusterKetuaKomiteTalent() {
     const [filterKategoriMatrix, setFilterKategoriMatrix] = useState('');
     const [clusterRow, setclusterRow] = useState([])
     const [categoryCounts, setCategoryCounts] = useState({});
+    const [refreshstate, setrefreshstate] = useState(false)
+
 
     const fetcheventdetail = () => {
         return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
@@ -126,6 +129,10 @@ export default function ClusterKetuaKomiteTalent() {
     margin: '0 auto',
     };
 
+    const handlerefresh = () => {
+      setrefreshstate(true)
+    }
+
     useEffect(() => {
         // Fetch data from API
         fetch(`http://localhost:4000/getclustertable?eventtalentid=${id}`)
@@ -146,7 +153,8 @@ export default function ClusterKetuaKomiteTalent() {
           .catch(error => {
             console.error('Error fetching data:', error);
           });
-      }, []);
+          setrefreshstate(false)
+      }, [refreshstate]);
     
       const totalRows = Object.values(categoryCounts).reduce((total, count) => total + count, 0);
     
@@ -219,8 +227,8 @@ export default function ClusterKetuaKomiteTalent() {
                     </div>
                 </div>
          
-                <TalentClusterKetuaKomiteTalentTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}
-                rows={clusterRow} counts={categoryCounts}/>
+                <TalentClusterKetuaKomiteTalentTable  filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}
+                eventid={id} rows={clusterRow} counts={categoryCounts} onTableDataRefresh={handlerefresh}/>
             </Box>
 
         </MainCard>

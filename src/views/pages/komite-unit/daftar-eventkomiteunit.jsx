@@ -56,6 +56,7 @@ export default function DetailEventKomiteUnit() {
     const [rowsfalse, setRowsfalse] = useState([])
     const [selectedRows, setSelectedRows] = useState([]);
     const nippos = sessionStorage.getItem('nippos');
+
     
     const fetcheventdetail = () => {
         return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
@@ -132,47 +133,50 @@ export default function DetailEventKomiteUnit() {
             console.error('Error fetching data:', error);
           });
       }, []); // Empty dependency array to run effect only once
+
       
-    const boxStyle = {
+      const boxStyle = {
         padding: '20px', 
         width: '100%',
         borderRadius:'12px'
-    };
-
+      };
+      
     const FlexContainer = styled('div')({
         display: 'flex',
         alignItems: 'center',
         gap: '16px', 
         paddingBottom: '24px',
-    });
-
-    const BoxContainer = styled('div')({
+      });
+      
+      const BoxContainer = styled('div')({
         display: 'flex',
         flexDirection: 'column',
-    });
+      });
 
-    const FlexTitle = styled('div')({
+      const FlexTitle = styled('div')({
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
         paddingBottom:0
-    });
-
-    const CalendarIcon = styled(CalendarMonthOutlined)({
+      });
+      
+      const CalendarIcon = styled(CalendarMonthOutlined)({
         fontSize: '1rem',
         color: '#1C2D5A',
-    });
-
-    const CountdownLabel = styled('div')({
+      });
+      
+      const CountdownLabel = styled('div')({
         backgroundColor: '#FFEDED', 
         color: '#F44336',
         padding: '8px 16px',
         borderRadius: '16px',
         fontWeight: 600,
         fontSize:'16px'
-    });
-
-    return (
+      });
+      
+      const totalLength = rowsfalse.length + rowstrue.length;
+      const halfLength = Math.ceil(totalLength / 2);
+      return (
         <MainCard>
             <Box sx={boxStyle}>
                 <FlexContainer>
@@ -214,7 +218,7 @@ export default function DetailEventKomiteUnit() {
             {/* Daftar Karyawan */}
             <CustomTabPanel value={value} index={0}>
                 <Box sx={boxStyle}>
-                    <KuotaKomiteUnitAlert />
+                    <KuotaKomiteUnitAlert totalKaryawan={totalLength} halfLength={halfLength} />
                     <DetailKaryawandiKomiteUnit 
                         Title={'Tabel Karyawan'} 
                         Icon={AddCircleOutlineRounded} 
@@ -222,6 +226,9 @@ export default function DetailEventKomiteUnit() {
                         ActionForButton={true}
                         id={id}
                         rows={rowsfalse}
+                        source_kuota = {halfLength}
+                        checkboxSelection={true}
+                        sudahdipilih={rowstrue.length}
                     />
                 </Box> 
             </CustomTabPanel>
@@ -230,12 +237,15 @@ export default function DetailEventKomiteUnit() {
             {/* Karyawan Terkualifikasi*/}
             <CustomTabPanel value={value} index={1}>
                 <Box sx={boxStyle}>
-                    <KuotaKomiteUnitAlert />
+                    <KuotaKomiteUnitAlert totalKaryawan={totalLength} halfLength={halfLength} />
                     <DetailKaryawandiKomiteUnit Title={'Tabel Karyawan Terkualifikasi'} 
                     Icon={FileDownloadOutlined} 
                     Label={'Unduh Data'}
                     rows={rowstrue}
                     nippos={nippos}
+                    source_kuota = {halfLength}
+                    checkboxSelection={false}
+                    sudahdipilih={rowstrue.length}
                     />
                 </Box> 
                 

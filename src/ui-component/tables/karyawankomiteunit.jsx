@@ -30,6 +30,7 @@ const KaryawanKomiteUnit = ({rows,checkboxSelection, filter,selectedRows, onSele
                 }}
                 pageSizeOptions={[5, 10]}
                 checkboxSelection={checkboxSelection}
+                disableRowSelectionOnClick={!checkboxSelection}
                 onRowSelectionModelChange={handleSelectionChange}
                 rowSelectionModel={selectedRows}
 

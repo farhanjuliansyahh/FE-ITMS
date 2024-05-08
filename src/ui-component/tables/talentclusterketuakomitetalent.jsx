@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { CreateOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
@@ -49,11 +49,59 @@ const getKategoriMatrixStyle = () => (params) => (
     </div>
 );
 
-const TalentClusterKetuaKomiteTalentTable = ({rows}) => {
+const TalentClusterKetuaKomiteTalentTable = ({eventid, rows,onTableDataRefresh}) => {
     const [openFirstModal, setOpenFirstModal] = useState(false);
     const [openSecondModal, setOpenSecondModal] = useState(false);
+    const [selectedNippos, setSelectedNippos] = useState(null); // State to store selected nippos
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [currentMatrix, setcurrentMatrix] = useState('')
+    const [refreshTable, setRefreshTable] = useState(false); // State to trigger table refresh
 
-    const handleOpenFirstModal = () => {
+    useEffect(() => {
+        if (refreshTable) {
+            // Fetch new data or update existing data
+            setRefreshTable(false); // Reset the flag after refreshing
+        }
+    }, [refreshTable]);
+
+
+    const handleCategorySelect = (category) => {
+        setSelectedCategory(category); // Store the selected category in the state
+    };
+
+    const ubahmatriks = (eventid, nippos, matriks, reason ) => {
+        return fetch('http://localhost:4000/updatematriks', {
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventid: eventid,
+                nippos: nippos,
+                matriks: matriks,
+                reason: reason
+            }) // Convert the bodyData object to a JSON string
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+            setRefreshTable(true);
+    };
+
+    const handleOpenFirstModal = (nippos, kategoriMatrixAkhir) => {
+        setSelectedNippos(nippos); // Store the nippos when the button is clicked
+        setcurrentMatrix(kategoriMatrixAkhir)
         setOpenFirstModal(true); 
     };
 
@@ -65,9 +113,23 @@ const TalentClusterKetuaKomiteTalentTable = ({rows}) => {
         setOpenSecondModal(true);
     };
 
-    const handleCloseSecondModal = () => {
-        setOpenSecondModal(false);
+    const handleCloseSecondModal = (reason) => {
+        console.log("test", eventid,selectedCategory,selectedNippos,reason);
+        ubahmatriks(eventid, selectedNippos, selectedCategory, reason)
+        .then(() => {
+            // Trigger the callback function passed from the parent component to refresh the table data
+            onTableDataRefresh();
+            setOpenSecondModal(false);
+        })
+        .catch(error => {
+            console.error('Error updating data:', error);
+            // Handle error if needed
+        });
     };
+
+    const handlebatalkansecondmodal = () => {
+            setOpenSecondModal(false);
+        };
 
     const columns = [
         { field: 'id', headerName: 'No', width: 70 },
@@ -108,6 +170,7 @@ const TalentClusterKetuaKomiteTalentTable = ({rows}) => {
             headerName: 'Aksi',
             width: 180,
             renderCell: (params) => {
+                const { nippos, 'Matriks Kategori Akhir': kategoriMatrixAkhir } = params.row; // Get nippos value from row data
                 return (
                     <Button 
                         variant="contained" 
@@ -118,7 +181,7 @@ const TalentClusterKetuaKomiteTalentTable = ({rows}) => {
                             padding: '6px 16px'
                         }} 
                         endIcon={<CreateOutlined />}
-                        onClick={handleOpenFirstModal}
+                        onClick={() => handleOpenFirstModal(nippos,kategoriMatrixAkhir)} // Pass nippos to handleOpenFirstModal
                     >
                         Ubah Matrix
                     </Button>
@@ -182,11 +245,13 @@ const TalentClusterKetuaKomiteTalentTable = ({rows}) => {
             <UbahKategoriMatrix 
                 open={openFirstModal} 
                 onClose={handleCloseFirstModal} 
-                onOpenSecondModal={handleOpenSecondModal} />
+                onOpenSecondModal={handleOpenSecondModal} 
+                onSelectCategory={handleCategorySelect}
+                currentMatrix={currentMatrix}/>
 
             <KonfirmasiUbahMatrix 
                 open={openSecondModal} 
-                onClose={handleCloseSecondModal} 
+                onClose={handlebatalkansecondmodal} 
                 onConfirm={handleCloseSecondModal} />
 
         </div>

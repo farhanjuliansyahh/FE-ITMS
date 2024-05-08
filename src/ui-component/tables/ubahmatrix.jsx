@@ -45,17 +45,35 @@ const getStyledRenderCell = (backgroundColor, textColor) => (params) => (
     </div>
 );
 
-export default function UbahMatrix({ onOpenSecondModalTable }) {
-    const current_category = 'Promotable-4'; // Replace with your current category
+export default function UbahMatrix({ onOpenSecondModalTable,currentMatrix }) {
+    const current_category = currentMatrix; // Replace with your current category
+    
+    const categoryToIntMap = {
+        'High Potential': 1,
+        'Promotable 2': 2,
+        'Promotable 3': 3,
+        'Promotable 4': 4,
+        'Sleeping Tiger 2': 5,
+        'Solid Contributor 2': 6,
+        'Sleeping Tiger 1': 7,
+        'Solid Contributor 1': 8,
+        'Unfit': 9
+    };
+    
+    const handleCategoryClick = (category) => {
+        const categoryIntValue = categoryToIntMap[category]
+        onOpenSecondModalTable(categoryIntValue); // Call onSelectCategory when a category is selected
+    };
+    
     const rows = [
         createData('High Potential'),
-        createData('Promotable-2'),
-        createData('Promotable-3'),
-        createData('Promotable-4'),
-        createData('Sleeping Tiger-2'),
-        createData('Solid Contributor-2'),
-        createData('Sleeping Tiger-1'),
-        createData('Solid Contributor-1'),
+        createData('Promotable 2'),
+        createData('Promotable 3'),
+        createData('Promotable 4'),
+        createData('Sleeping Tiger 2'),
+        createData('Solid Contributor 2'),
+        createData('Sleeping Tiger 1'),
+        createData('Solid Contributor 1'),
         createData('Unfit'),
     ];
 
@@ -97,7 +115,7 @@ export default function UbahMatrix({ onOpenSecondModalTable }) {
                                                 icon={direction === 'turun' ? ExpandMoreOutlined : ExpandLessOutlined}
                                                 LabelName={label}
                                                 padding={'6px 16px'}
-                                                onClick={() => onOpenSecondModalTable()}
+                                                onClick={() => handleCategoryClick(row.category)}
                                             />
                                         </StyledTableCell>
                                     </TableRow>

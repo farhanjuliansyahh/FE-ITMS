@@ -13,16 +13,20 @@ import KonfirmasiTalentSource from '../../../ui-component/modal/konfirmasi-talen
 
 // ==============================|| DETAIL KARYAWAN DARI KOMITE UNIT ||============================== //
 
-export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionForButton,id, rows, nippos}) {
+export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionForButton,id, rows, nippos, source_kuota, checkboxSelection,sudahdipilih}) {
     const [filterNama, setFilterNama] = useState('');
     const [filterNippos, setFilterNippos] = useState('');
     const [filterJob, setFilterJob] = useState('');
     const [showModal, setShowModal] = useState(false);  // State to control the visibility of the modal
     const [selectedRows, setSelectedRows] = useState([]);
+    const [checkedCount, setCheckedCount] = useState(0); // State variable to store the count of checked checkboxes
+
 
     const handleSelectedRowsChange = (newSelectedRows) => {
         setSelectedRows(newSelectedRows);
-      };
+        setCheckedCount(newSelectedRows.length); // Update the checkedCount whenever selectedRows changes
+    };
+
     const toggleModal = () => {
         if (ActionForButton) {
             setShowModal(!showModal);
@@ -73,6 +77,42 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
             });
     };
 
+    const alreadySelected = sudahdipilih + checkedCount
+
+    const handleDownloadCSV = () => {
+        let dataToDownload = [];
+        let filename = '';
+
+          dataToDownload = rows;
+          filename = `Talent_Source_Terdaftar.csv`;
+
+        // Create a CSV header with column names
+        const headers = Object.keys(dataToDownload[0]);
+        const idIndex = headers.indexOf('id');
+        if (idIndex !== -1) {
+          headers.splice(idIndex, 1); // Remove 'id' from headers
+          headers.unshift('id'); // Insert 'id' at the beginning
+        }
+        const headerRow = headers.join(',');
+      
+        // Convert data to CSV format
+        const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+          dataToDownload.map(row => headers.map(header => row[header]).join(',')).join('\n');
+      
+        // Create a temporary anchor element
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+      
+        // Trigger the download
+        link.click();
+      
+        // Clean up
+        document.body.removeChild(link);
+      };
+
     return (
         <MainCard>
             <Box paddingLeft={3} paddingRight={3} paddingBottom={3} marginTop={3}>
@@ -84,10 +124,14 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
                         variant="contained"
                         style={{ color: '#2196F3', borderRadius: '15px', borderColor: '#EAF8FF', backgroundColor: '#EAF8FF', boxShadow: 'none' }}
                     >
-                        0/10 Karyawan
+                        sudah terpilih {alreadySelected}/{source_kuota} Karyawan
                     </Button>
                     <div style={{ flex: '1' }}> </div>
-                    <ButtonPrimary Color="#ffffff" icon={Icon} LabelName={Label} onClick={toggleModal}/>
+                    {checkboxSelection ?
+                        <ButtonPrimary Color="#ffffff" icon={Icon} LabelName={Label} onClick={toggleModal} disabled={alreadySelected !== source_kuota || sudahdipilih >= source_kuota} />
+                        :
+                        <ButtonPrimary Color="#ffffff" icon={Icon} LabelName={Label} onClick={handleDownloadCSV} />
+                    }
                 </FlexContainer>
           
                 <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
@@ -109,7 +153,7 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
                 </div>
 
                 <KaryawanKomiteUnit 
-                    checkboxSelection={true} 
+                    checkboxSelection={checkboxSelection} 
                     rows={tablerows} 
                     selectedRows={selectedRows} 
                     onSelectedRowsChange={handleSelectedRowsChange}

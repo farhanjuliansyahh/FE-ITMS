@@ -71,6 +71,7 @@ const TalentDays = ({eventid}) => {
   const [filterNippos, setFilterNippos] = useState('');
   const [daysRow, setdaysRow] = useState([]);
   const [daysBpj, setdaysBpj] = useState([]);
+  
 
   const eventidactive = eventid
   const handleChange = (event, newValue) => {
@@ -150,6 +151,11 @@ const TalentDays = ({eventid}) => {
       .then(datadays => {
         // Update state with API data
         setdaysRow(datadays.map((row, index) => ({ ...row, id: index + 1 })));
+         // Check if any element has status === false
+      const hasFalseStatus = datadays.some(row => row.status === false);
+      
+      // Update isDisabled state based on the presence of false status
+      setIsDisabled(!hasFalseStatus);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -344,11 +350,13 @@ daysRow.forEach(item => {
         <KonfirmasiDetailBPJ
           open={openDetailBPJ}
           handleClose={() => setDetailBPJOpen(false)}
+          eventid = {eventidactive}
         />
 
         <KonfirmasiIsiSemuaNilaiTalent
           open={openIsiSemuaNilai}
           handleClose={() => setIsiSemuaNilaiOpen(false)}
+          activeEvent= {eventidactive}
         />
 
       </MainCard>

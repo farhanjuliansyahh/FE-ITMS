@@ -4,16 +4,16 @@ import { CancelOutlined, CreateOutlined } from '@mui/icons-material';
 import KonfirmasiUbahMatrix from './konfirmasi-ubah-matrix';
 import UbahMatrix from '../../ui-component/tables/ubahmatrix';
 
-function UbahKategoriMatrix({ open, onClose, onOpenSecondModal }) {
+function UbahKategoriMatrix({ open, onClose, onOpenSecondModal, onSelectCategory,currentMatrix }) {
     const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
 
     const handleCloseKonfirmasiModal = () => {
         setOpenKonfirmasiModal(false);
     };
 
-    const handleUbahMatrixButtonClick = (event) => {
-        // event.stopPropagation(); // Stop event propagation here
+    const handleUbahMatrixButtonClick = (selectedCategory) => {
         onClose(); // Close the first modal
+        onSelectCategory(selectedCategory); // Pass the selected category to the parent component
         onOpenSecondModal(); // Open the second modal
     };
 
@@ -46,7 +46,7 @@ function UbahKategoriMatrix({ open, onClose, onOpenSecondModal }) {
             {DividerContainer}
             <DialogContent>
                 <Box>
-                    <UbahMatrix onOpenSecondModalTable={handleUbahMatrixButtonClick}/>
+                    <UbahMatrix onOpenSecondModalTable={handleUbahMatrixButtonClick} currentMatrix={currentMatrix} />
                     <Typography variant="body1" sx={{ width: '90%', margin: 'auto', marginTop: '24px', marginBottom: '24px', fontFamily: 'Roboto', fontSize: '14px', fontWeight: 400, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>
                         Perubahan hanya diperbolehkan maksimal naik 2 level atau turun 2 level dari kategori matrix yang sudah ditentukan saat BPJ.
                     </Typography>
