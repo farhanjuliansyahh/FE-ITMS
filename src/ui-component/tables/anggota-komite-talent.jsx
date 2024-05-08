@@ -12,9 +12,9 @@ import { DeleteOutlined } from '@mui/icons-material';
 import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
 import HapusDataKomiteTalent from '../../ui-component/modal/hapus-data-komite-talent';
 
-const StyledTableCell = styled(TableCell)(({ columnIndex }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#E0E0E0',
+    backgroundColor: '#F5F5F5',
     color: '#1F1F1F',
     fontSize: 14,
     fontWeight: 600,

@@ -1,23 +1,17 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { AddCircleOutline, GppGoodOutlined, PersonOffOutlined, RestartAlt, Search } from '@mui/icons-material';
+import { IconFileDownload } from '@tabler/icons-react';
 
-import PropTypes from 'prop-types';
 import MainCard from '../cards/MainCard';
-import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
-import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import EventDetailSearchSection from '../button/EventDetailSearchSection';
 import SearchResetButton from '../button/SearchResetButton';
-import SearchIcon from '@mui/icons-material/Search';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import KomiteUnitListButton from '../button/KomiteUnitListButton';
-import { IconFileDownload } from '@tabler/icons-react';
 import ButtonPrimary from '../button/ButtonPrimary';
-
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import TalentSourceTable from '../tables/talentsource';
-import AdminSearchSectionGroup from '../button/AdminSearchButtonGroup';
 
 // ==============================|| DETAIL TALENT SOURCE PAGE ||============================== //
 
@@ -143,9 +137,6 @@ const TalentSource = ({eventid}) => {
     document.body.removeChild(link);
   };
   
-
-  
-
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -154,28 +145,12 @@ const TalentSource = ({eventid}) => {
     console.log(filterNama);
   },[filterNama])
 
-  // const handleButtonClick = () => {
-  //   // Logic for button click
-  //   console.log('Button clicked!');
-  // };
-
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const FlexContainer = styled('div')({
     display: 'flex',
     alignItems: 'center',
     gap: '16px', // Adjust the gap between elements as needed
     paddingBottom: '24px',
   });
-
 
   const handleTambahTalent = () => {
     // Find the rows corresponding to the selected IDs
@@ -227,10 +202,10 @@ const TalentSource = ({eventid}) => {
       
       <MainCard>
         
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab icon={<PersonOffOutlinedIcon />} iconPosition="start" label="Belum Terdaftar" {...a11yProps(0)} />
-            <Tab icon={<GppGoodOutlinedIcon />} iconPosition="start" label="Terdaftar" {...a11yProps(1)} />
+            <Tab icon={<PersonOffOutlined />} iconPosition="start" label="Belum Terdaftar" {...a11yProps(0)} />
+            <Tab icon={<GppGoodOutlined />} iconPosition="start" label="Terdaftar" {...a11yProps(1)} />
           </Tabs>
         </Box>
 
@@ -245,15 +220,9 @@ const TalentSource = ({eventid}) => {
 
               <div style={{ flex: '1' }}> </div>
 
-
-            <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Talent'} onClick={handleTambahTalent}/>
-            <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
-          </FlexContainer>
-          
-         
-          {/* <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-            <AdminSearchSectionGroup/>
-          </div> */}
+              <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Talent'} onClick={handleTambahTalent}/>
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
+            </FlexContainer>
 
             <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
               <div style={{ marginRight: '12px', width:'100%'  }}>
@@ -269,20 +238,21 @@ const TalentSource = ({eventid}) => {
                   <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
               </div>
               <div style={{ marginRight: '12px' }}>
-                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
+                  <SearchResetButton outlineColor="#1C2D5A" icon={Search} LabelName={'Cari'} />
               </div>
               <div style={{ marginRight: '0px' }}>
-                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
+                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAlt} LabelName={'Reset'} />
               </div>
             </div>
          
-            <TalentSourceTable checkboxSelection={true} 
-            filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
-            rows={rowsfalse}
-            selectedRows={selectedRows} onSelectedRowsChange={handleSelectedRowsChange} />
-            {/* // onCheckboxChange={handleCheckboxChange}/> */}
+            <TalentSourceTable 
+                checkboxSelection={true} 
+                filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
+                rows={rowsfalse}
+                selectedRows={selectedRows} 
+                onSelectedRowsChange={handleSelectedRowsChange} 
+            />
           </Box>
-
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
@@ -313,16 +283,19 @@ const TalentSource = ({eventid}) => {
                   <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
               </div>
               <div style={{ marginRight: '12px' }}>
-                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
+                  <SearchResetButton outlineColor="#1C2D5A" icon={Search} LabelName={'Cari'} />
               </div>
               <div style={{ marginRight: '0px' }}>
-                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
+                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAlt} LabelName={'Reset'} />
               </div>
             </div>
 
-            <TalentSourceTable checkboxSelection={false} filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} rows ={rowstrue}/>
+            <TalentSourceTable 
+                checkboxSelection={false} 
+                filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
+                rows ={rowstrue}
+            />
           </Box>
-          
         </CustomTabPanel>
 
       </MainCard>
