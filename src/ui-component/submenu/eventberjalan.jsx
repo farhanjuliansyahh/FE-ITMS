@@ -20,10 +20,14 @@ import EditEvent from '../modal/edit-event';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_talent,kode_rumpun, nama_rumpun_jabatan, tanggal_selesai, tanggal_mulai, status }) {
+export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_talent,kode_rumpun, nama_rumpun_jabatan,kuota, tanggal_selesai, tanggal_mulai, status }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [daysLeft, setDaysLeft] = React.useState(null);
+
+  const nama = nama_event;
+  const quotaawal = kuota;
+  const kodefam = kode_rumpun;
 
   let statusberjalan;
   console.log(status);
@@ -419,7 +423,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
       )}
       <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
-      <EditEvent open={openEdit} handleClose={handleCloseEdit}/>
+      <EditEvent open={openEdit} handleClose={handleCloseEdit} eventid={id} nama={nama} jobfam={nama_rumpun_jabatan} koderumpun={kodefam} quotaawal={quotaawal} mulai={tanggal_mulai} selesai={tanggal_selesai} deskripsiawal={deskripsi}/>
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>
   );

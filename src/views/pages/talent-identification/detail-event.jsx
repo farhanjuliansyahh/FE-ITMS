@@ -1,18 +1,7 @@
 import * as React from 'react';
-import { Box } from '@mui/material';
-import MainCard from '../../../ui-component/cards/MainCard';
 import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetailevent';
 import { useLocation, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
-
-import TalentProfile from '../../../ui-component/event-section/talent-profile';
-import TalentQualification from '../../../ui-component/event-section/talent-qualification';
-import TalentSource from '../../../ui-component/event-section/talent-source';
-import TalentDays from '../../../ui-component/event-section/talent-days';
-import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
-import { TextsmsTwoTone } from '@mui/icons-material';
-
 
 // ==============================|| DETAIL EVENT PAGE ||============================== //
 
@@ -56,53 +45,18 @@ export default function DetailEvent() {
     return (
     <>
       {/* <MainLayout /> */}
-      
-      {/* <MainCard sx={{marginBottom : 3}}> */}
-        {/* <Box> */}
+
           <TimelineDetailEvent  
-          eventid={id}
-          nama_event={nama_event}
-          deskripsi= {deskripsi}
-          kodekomite= {tipe_komite_talent} 
-          tipekomite= {tipekomite} 
-          rumpun ={nama_rumpun} 
-          tanggal_mulai ={tanggal_mulai}
-          tanggal_selesai =  {tanggal_selesai}
-          eventstatus_id= {evenstatus_id}/>
-        {/* </Box> */}
-      {/* </MainCard> */}
-      
-{/* 
-      <MainCard sx={{marginBottom : 3}}>
-        <Box>
-        <TalentSource/>
-        </Box>
-      </MainCard>
-
-       
-      <MainCard sx={{marginBottom : 3}}>
-        <Box>
-        <TalentProfile/>
-        </Box>
-      </MainCard>
-
-      <MainCard sx={{marginBottom : 3}}>
-        <Box>
-        <TalentQualification />
-        </Box>
-      </MainCard>
-
-      <MainCard >
-        <Box>
-        <TalentDays />
-        </Box>
-      </MainCard>
-
-      <MainCard>
-        <Box>
-        <MatrixNineBox />
-        </Box>
-      </MainCard> */}
+              eventid={id}
+              nama_event={nama_event}
+              deskripsi= {deskripsi}
+              kodekomite= {tipe_komite_talent} 
+              tipekomite= {tipekomite} 
+              rumpun ={nama_rumpun} 
+              tanggal_mulai ={tanggal_mulai}
+              tanggal_selesai =  {tanggal_selesai}
+              eventstatus_id= {evenstatus_id}
+          />
       
     </>
   );

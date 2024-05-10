@@ -6,7 +6,38 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
-function KonfirmasiSubmitTalentProfile({ open, handleClose }) {    
+function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent }) { 
+    
+    const loloskanprofile = async () => {
+        try {
+            // Make an HTTP DELETE request to your API endpoint
+            const response = await fetch(`http://localhost:4000/loloskanprofile`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any other headers if needed
+                },
+                body: JSON.stringify({
+                    // Include any data you want to send in the request body
+                    eventid: activeEvent
+                })
+                // You can pass any data in the request body if required
+                // body: JSON.stringify({}),
+            });
+    
+            // Check if the request was successful (status code 200-299)
+            if (response.ok) {
+                // If successful, handle the response or perform any necessary actions
+                console.log('Data updated successfully');
+            } else {
+                // If not successful, throw an error or handle the error response
+                throw new Error('Failed to update data');
+            }
+        } catch (error) {
+            // Handle any errors that occurred during the process
+            console.error('Error update data:', error.message);
+        }
+    };
     const PerbaharuiButtonStyle = {
         backgroundColor: '#1C2D5A',
         color:'#fff',
@@ -50,7 +81,16 @@ function KonfirmasiSubmitTalentProfile({ open, handleClose }) {
             style={isHoveredPerbaharui ? { ...PerbaharuiButtonStyle, ...hoverPerbaharuiStyle } : PerbaharuiButtonStyle}
             onMouseEnter={() => setIsHoveredPerbaharui(true)}
             onMouseLeave={() => setIsHoveredPerbaharui(false)}
-            onClick={handleClose}
+            onClick={async () => {
+                try {
+                    await loloskanprofile();
+                    handleClose();
+                } catch (error) {
+                    // Handle error if loloskanprofile() fails
+                    console.error("Error:", error);
+                    // Optionally, you can show an error message to the user
+                }
+            }}
         >
             Perbaharui Status
         </Button>

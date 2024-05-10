@@ -5,7 +5,36 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
-function KonfirmasiDetailBPJ({ open, handleClose }) {    
+function KonfirmasiDetailBPJ({ open, handleClose, eventid }) {
+
+    const eventactive = eventid
+    const notifikasikaryawan = (eventid) => {
+        console.log("event active", eventactive);
+        return fetch('http://localhost:4000/notifbpj', {
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventtalentid: eventid
+            }) // Convert the bodyData object to a JSON string
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+    };
+
     const KirimNotifikasiButtonStyle = {
         backgroundColor: '#1C2D5A',
         color:'#fff',
@@ -49,7 +78,16 @@ function KonfirmasiDetailBPJ({ open, handleClose }) {
             style={isHoveredKirimNotifikasi ? { ...KirimNotifikasiButtonStyle, ...hoverKirimNotifikasiStyle } : KirimNotifikasiButtonStyle}
             onMouseEnter={() => setIsHoveredKirimNotifikasi(true)}
             onMouseLeave={() => setIsHoveredKirimNotifikasi(false)}
-            onClick={handleClose}
+            onClick={async () => {
+                try {
+                    await notifikasikaryawan(eventactive);
+                    handleClose();
+                } catch (error) {
+                    // Handle error if notifkasikaryawan() fails
+                    console.error("Error:", error);
+                    // Optionally, you can show an error message to the user
+                }
+            }}
         >
             Kirim Notifikasi
         </Button>

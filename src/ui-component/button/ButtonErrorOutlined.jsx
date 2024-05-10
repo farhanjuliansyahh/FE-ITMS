@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 
-export default function ButtonErrorOutlined({ Color, backgroundColor, icon, LabelName, onClick, disabled }) {
+export default function ButtonErrorOutlined({ Color, backgroundColor, icon, LabelName, padding, onClick, disabled }) {
   const IconComponent = icon; // Assuming the icon is passed as a component
 
   return (
@@ -13,7 +13,7 @@ export default function ButtonErrorOutlined({ Color, backgroundColor, icon, Labe
         border: '1px solid #D32F2F', // Warna dan lebar border
         borderRadius: '12px', 
         fontSize: '14px', // Custom font size
-        padding: '14px 24px', // Custom padding using relative units
+        padding: padding || '14px 24px',  // Custom padding using relative units
         boxShadow: 'none',
         '&:hover': {
           backgroundColor: '#FFEDED', // Warna latar belakang saat hover

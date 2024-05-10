@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
-const minimumCompetencyQualified = 3
-const minimumPmsQualified = 60
-const minimumAkhlakQualified = 3
-const minimumLearningAgilityQualified = 3
+// const minimumCompetencyQualified = 3
+// const minimumPmsQualified = 60
+// const minimumAkhlakQualified = 3
+// const minimumLearningAgilityQualified = 3
 
 const getColorStyle = (value, minimumValueQualified) => {
     let color, backgroundColor;

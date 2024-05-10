@@ -61,7 +61,7 @@ const TalentQualification = ({eventid, kodekomite}) => {
   const [quallolosRow, setquallolosRow] = useState([])
   const [kkm , setkkm] = useState([])
 
-  const eventidactive = eventid
+  const eventidactive = parseInt(eventid)
   const tipekomite = kodekomite
 
   const handleChange = (event, newValue) => {
@@ -95,7 +95,7 @@ const TalentQualification = ({eventid, kodekomite}) => {
 };
 
 const comparenilai = (eventid) => {
-   return fetch('http://localhost:4000/comparenilai', {
+   return fetch(`http://localhost:4000/comparenilai?eventtalentid=${eventidactive}`, {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
           'Content-Type': 'application/json', // Specify the content type
@@ -138,7 +138,10 @@ const fetchnilaiminimal = (eventid) => {
 
 useEffect(() => {
   // Fetch data from API
-  fetch(`http://localhost:4000/getquallolos?eventtalentid=${eventidactive}`)
+  fetch(`http://localhost:4000/getquallolos?eventtalentid=${eventidactive}`, {
+    method: 'GET', // GET method is used by default
+    // Optionally, you can include headers or other configurations here
+  })
   .then(response => response.json())
   .then(dataqual => {
     // Update state with API data
@@ -148,6 +151,7 @@ useEffect(() => {
     console.error('Error fetching data:', error);
   });
 }, []);
+
 
 
 useEffect(() => {
