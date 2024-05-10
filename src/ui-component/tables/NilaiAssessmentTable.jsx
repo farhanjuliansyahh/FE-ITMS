@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Menu, MenuItem } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
@@ -64,7 +64,7 @@ export default function NilaiAssessmentTable({
   selectedStatusIDP
   }) {
 
-  const filteredRows = rows.filter((row) => {
+    const filteredRows = rows.filter((row) => {
     const kantorMatch = row.kantor === selectedKantor?.nama_kantor;
     const rumpunJabatanMatch = row.jobfam === selectedRumpunJabatan;
     const jobLevelMatch = row.joblevel === selectedJobLevel;

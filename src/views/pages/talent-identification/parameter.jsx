@@ -15,7 +15,7 @@ import AccordionKomiteTalent from '../../../ui-component/cards/AccordionKomiteTa
 import DaftarKomiteTalent from '../../../ui-component/submenu/daftar-komitetalent';
 import NilaiAssessmentTable from '../../../ui-component/tables/NilaiAssessmentTable';
 import DetailTalentPertama from '../../../ui-component/button/DropdownDetailTalentPertama';
-
+import UnggahDataNilaiAssessment from '../../../ui-component/modal/unggah-data-nilai-assessment';
 
 import { 
   AddCircleOutline, AssignmentOutlined, AssignmentTurnedInOutlined, CancelOutlined, 
@@ -67,6 +67,16 @@ const ParameterTalent = () => {
   const [selectedJobLevel, setSelectedJobLevel] = useState(null);
   const [selectedStatusIDP, setSelectedStatusIDP] = useState(null);
   const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
+
+  const [openUnggahData, setopenUnggahData] = useState(false);
+
+  const handleOpen = () => {
+      setopenUnggahData(true);
+    };
+  
+  const handleClose = () => {
+      setopenUnggahData(false);
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -212,7 +222,7 @@ const ParameterTalent = () => {
                     Tabel Karyawan
                 </Typography>
                 <div style={{ flex: '1' }}> </div>
-                <ButtonPrimary Color="#ffffff" icon={FileUploadOutlined} LabelName={'Unggah Data'}/>
+                <ButtonPrimary Color="#ffffff" icon={FileUploadOutlined} LabelName={'Unggah Data'} onClick={handleOpen}/>
                 <ButtonOptional icon={SimCardDownloadOutlined} LabelName={'Unduh Template'}/>
                 <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'}/>
             </FlexContainer>
@@ -239,6 +249,10 @@ const ParameterTalent = () => {
 
         </CustomTabPanel>
 
+        <UnggahDataNilaiAssessment
+            open={openUnggahData}
+            handleClose={() => setopenUnggahData(false)}
+        />
 
      </MainCard>
     </>
