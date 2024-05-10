@@ -67,6 +67,22 @@ const ParameterTalent = () => {
   const [selectedJobLevel, setSelectedJobLevel] = useState(null);
   const [selectedStatusIDP, setSelectedStatusIDP] = useState(null);
   const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
+  const [updatekkmstate, setUpdatekkmstate] = useState(false)
+  const [updatekuotastate, setUpdatekuotastate] = useState(false)
+  const [refetchstate, setRefetchstate] = useState(true)
+  
+  const handleClickKKM = () =>{
+    setUpdatekkmstate(true);
+  }
+
+  const handleClickKuota = () =>{
+    setUpdatekuotastate(true);
+  }
+
+
+  const handleBatalkanKKM = () => {
+    setRefetchstate(true)
+  }
 
   const [openUnggahData, setopenUnggahData] = useState(false);
 
@@ -80,6 +96,7 @@ const ParameterTalent = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setRefetchstate(true)
   };
 
   useEffect(() => {
@@ -102,6 +119,7 @@ const ParameterTalent = () => {
 
   return (
     <>
+
       <MainCard>
         {/* Bagian Tab */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -119,18 +137,18 @@ const ParameterTalent = () => {
             <Box display="flex" marginTop={2} flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'}> 
                 <Grid>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent I</Typography>
-                <PassingGradeTable ></PassingGradeTable>
+                <PassingGradeTable tipekomite={1}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent II</Typography>
-                <PassingGradeTable></PassingGradeTable>
+                <PassingGradeTable tipekomite={2}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent III</Typography>
-                <PassingGradeTable></PassingGradeTable>
+                <PassingGradeTable tipekomite={3}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
                 </Grid>
             
                 <Box display="flex" justifyContent="flex-end" width="100%"> 
                   <Box sx={{ marginRight: '16px' }}>
-                    <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
+                    <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleClickKKM}/>
                   </Box>
-                  <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}/>
+                  <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleBatalkanKKM}/>
                 </Box>
             </Box>
         </CustomTabPanel>
@@ -142,7 +160,12 @@ const ParameterTalent = () => {
             <CustomTabPanel value={value} index={1}>
               <Grid>
                 <Typography fontSize={22} fontWeight={600} marginBottom={2}>Komite Unit</Typography>
-                <KuotaTable header="Kuota Talent Source- (Dalam Satuan Persen)" initialValue={50}></KuotaTable>
+                <KuotaTable header="Kuota Talent Source- (Dalam Satuan Persen)" initialValue={50} bobot={1} 
+                refetchstate={refetchstate} 
+                handlerefetch={() => setRefetchstate(false)}
+                updatekuotastate={updatekuotastate} 
+                onUpdateKuotaStateChange={() => setUpdatekuotastate(false)}
+                />
               </Grid>
             </CustomTabPanel>
           </Box>
@@ -152,15 +175,19 @@ const ParameterTalent = () => {
             <CustomTabPanel value={value} index={1}>
               <Container style={{ textAlign: 'left', paddingLeft: 0, paddingRight: 0 }}>
                 <Typography fontSize={22} fontWeight={600} marginBottom={2}>Ketua Komite Talent</Typography>
-                <KuotaTable header="Kuota Diskresi- (Dalam Satuan Persen)" initialValue={10}></KuotaTable>
+                <KuotaTable header="Kuota Diskresi- (Dalam Satuan Persen)" initialValue={10} bobot={2} 
+                refetchstate={refetchstate} 
+                handlerefetch={() => setRefetchstate(false)} 
+                updatekuotastate={updatekuotastate} 
+                onUpdateKuotaStateChange={() => setUpdatekuotastate(false)} />
               </Container>
 
               {/* Buttons */}
               <Box display="flex" justifyContent="flex-end" marginTop={'24px'}>
                 <Box sx={{ marginRight: '16px' }}>
-                  <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
+                  <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleClickKuota}/>
                 </Box>
-                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}/>
+                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}  onClick={handleBatalkanKKM}/>
               </Box>
             </CustomTabPanel>
           </Box>
@@ -174,7 +201,8 @@ const ParameterTalent = () => {
               {/* Flex container for the title and button */}
               <Box display="flex" justifyContent="space-between" alignItems="center" marginTop={0} marginBottom={'16px'}>
                 <Typography fontSize={22} fontWeight={600}>Daftar Pertanyaan</Typography>
-                <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Data'}/>
+                  <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Data'}/>
+       
               </Box>
               
               {/* Table */}

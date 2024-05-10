@@ -21,24 +21,25 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-function createData(id, nama, nippos, jabatan, kantor, aksi) {
-  return { id, nama, nippos, jabatan, kantor, aksi };
-}
+// function createData(id, nama, nippos, jabatan, kantor, aksi) {
+//   return { id, nama, nippos, jabatan, kantor, aksi };
+// }
 
-const rows = [
-  createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'KANTOR PUSAT BANDUNG'),
-  createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'KANTOR PUSAT BANDUNG'),
-  createData(3, 'Adinda', '998494379', 'Asisten Manajer Pengelolaan Remittance LN', 'KANTOR PUSAT BANDUNG'),
-  createData(4, 'Niken Wijaya', '998494379', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'KANTOR PUSAT JAKARTA'),
-  createData(5, 'Niken', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'KANTOR PUSAT JAKARTA'),
-];
+// const rows = [
+//   createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'KANTOR PUSAT BANDUNG'),
+//   createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'KANTOR PUSAT BANDUNG'),
+//   createData(3, 'Adinda', '998494379', 'Asisten Manajer Pengelolaan Remittance LN', 'KANTOR PUSAT BANDUNG'),
+//   createData(4, 'Niken Wijaya', '998494379', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'KANTOR PUSAT JAKARTA'),
+//   createData(5, 'Niken', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'KANTOR PUSAT JAKARTA'),
+// ];
 
 export default function TabelDaftarAnggotaKomiteUnit({ 
   onOpenSecondModalTable,
   selectedKantor,
   selectedRumpunJabatan,
   selectedJobLevel,
-  selectedStatusIDP
+  selectedStatusIDP,
+  rows
   }) {
 
   const filteredRows = rows.filter((row) => {
@@ -94,7 +95,7 @@ export default function TabelDaftarAnggotaKomiteUnit({
                       icon={AddCircleOutlineOutlined}
                       LabelName={'Tambah'}
                       padding={'6px 16px'}
-                      onClick={() => onOpenSecondModalTable()}
+                      onClick={() => onOpenSecondModalTable(row.nippos)}
                     />
                   </StyledTableCell>
                 </TableRow>

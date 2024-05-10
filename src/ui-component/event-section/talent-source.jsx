@@ -250,7 +250,8 @@ const TalentSource = ({eventid}) => {
                 filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
                 rows={rowsfalse}
                 selectedRows={selectedRows} 
-                onSelectedRowsChange={handleSelectedRowsChange} 
+                onSelectedRowsChange={handleSelectedRowsChange}
+                eventid={eventidactive} 
             />
           </Box>
         </CustomTabPanel>
@@ -294,6 +295,7 @@ const TalentSource = ({eventid}) => {
                 checkboxSelection={false} 
                 filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
                 rows ={rowstrue}
+                eventid={eventidactive} 
             />
           </Box>
         </CustomTabPanel>

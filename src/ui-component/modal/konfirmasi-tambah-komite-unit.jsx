@@ -50,7 +50,7 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {
             style={isHoveredTambah ? { ...TambahButtonStyle, ...hoverTambahStyle } : TambahButtonStyle}
             onMouseEnter={() => setIsHoveredTambah(true)}
             onMouseLeave={() => setIsHoveredTambah(false)}
-            onClick={onClose}
+            onClick={onConfirm}
         >
             Tambah
         </Button>

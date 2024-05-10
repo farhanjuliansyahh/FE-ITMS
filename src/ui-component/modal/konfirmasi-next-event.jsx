@@ -86,7 +86,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
             });
     };
 
-    const notifikasikaryawan = (eventid) => {
+    const notifikasikaryawan = () => {
         console.log("event active", eventactive);
         return fetch('http://localhost:4000/notifkaryawan', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
