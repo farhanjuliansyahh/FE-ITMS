@@ -17,7 +17,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    padding: theme.spacing(0.5),
+    padding: '12px 18px',
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:last-child td, &:last-child th': {
+    border: 0,
   },
 }));
 
@@ -28,28 +34,31 @@ function createData(pertanyaan) {
 export default function DaftarPertanyaanTable() {
   const [rows, setRows] = React.useState([
     createData('Motivasi'),
+    createData('Rencana karir 5 tahun ke depan')
   ]);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 300, tableLayout: 'fixed' }} aria-label="Daftar Pertanyaan Table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Pertanyaan Event</StyledTableCell>
-            <StyledTableCell align='right'>Aksi</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.pertanyaan}</TableCell>
-              <TableCell align="right">
-                <EditOutlined/>
-              </TableCell>
+    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px'}}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 300, tableLayout: 'fixed' }} aria-label="Daftar Pertanyaan Table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Pertanyaan Event</StyledTableCell>
+              <StyledTableCell align='right'>Aksi</StyledTableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <StyledTableRow key={index}>
+                <StyledTableCell>{row.pertanyaan}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <EditOutlined/>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

@@ -133,9 +133,16 @@ useEffect(() => {
             status={event.evenstatus_id}
             pathDetailEvent={`./talent-cluster/${event.id}`}
           />
+          <BasicPagination />
         </Box>
       ))}
-    <BasicPagination />
+      {komitetalentevent.filter(event => event.status !== 8).length === 0 && (
+                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                  <img src={notFoundImage} alt="Deskripsi gambar" />
+                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                </Box>
+              )}
+    
   </Box>
 </CustomTabPanel>
 
@@ -161,9 +168,16 @@ useEffect(() => {
             status={event.evenstatus_id}
             pathDetailEvent={`./talent-cluster/${event.id}`}
           />
+          <BasicPagination />
         </Box>
       ))}
-    <BasicPagination />
+      {komitetalentevent.filter(event => event.status !== 8).length === 0 && (
+                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                  <img src={notFoundImage} alt="Deskripsi gambar" />
+                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                </Box>
+              )}
+    
   </Box>
 </CustomTabPanel>
 

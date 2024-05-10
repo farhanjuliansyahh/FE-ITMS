@@ -56,6 +56,7 @@ export default function DetailEventKomiteUnit() {
     const [rowsfalse, setRowsfalse] = useState([])
     const [selectedRows, setSelectedRows] = useState([]);
     const nippos = sessionStorage.getItem('nippos');
+    const [kuota, setkuota] = useState('')
 
     
     const fetcheventdetail = () => {
@@ -86,6 +87,23 @@ export default function DetailEventKomiteUnit() {
             setLoading(false);
           });
       }, []);
+
+      useEffect(() => {
+        // Fetch data from API
+        fetch(`http://localhost:4000/getparameterkuota?id=1`)
+          .then(response => response.json())
+          .then(data => {
+      
+            // Initialize rows based on fetched score data
+            const kuota = data['kuota'] || 0;
+            // Set the initial values from the fetched data
+            setkuota(kuota);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+        }, []); // Empty dependency array to run effect only once
+
 
       const { eventid, nama_event, deskripsi,tipe_komite_talent, tipekomite, kode_rumpun,nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
 
@@ -175,7 +193,7 @@ export default function DetailEventKomiteUnit() {
       });
       
       const totalLength = rowsfalse.length + rowstrue.length;
-      const halfLength = Math.ceil(totalLength / 2);
+      const halfLength = Math.ceil(totalLength * kuota / 100);
       return (
         <MainCard>
             <Box sx={boxStyle}>
@@ -249,10 +267,10 @@ export default function DetailEventKomiteUnit() {
                     />
                 </Box> 
                 
-                <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
+                {/* <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
                     <img src={notFoundImage} alt="Deskripsi gambar" />
                     <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
-                </Box> 
+                </Box>  */}
             </CustomTabPanel>
         </MainCard>
     );
