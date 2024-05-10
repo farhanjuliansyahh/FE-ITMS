@@ -150,10 +150,10 @@ export default function DaftarEventKomiteUnit() {
 
                 </Box> 
                 
-                <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
+                {/* <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
                     <img src={notFoundImage} alt="Deskripsi gambar" />
                     <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
-                </Box> 
+                </Box>  */}
             </CustomTabPanel>
         </MainCard>
     );
