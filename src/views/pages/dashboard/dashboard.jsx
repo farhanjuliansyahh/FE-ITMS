@@ -10,6 +10,8 @@ import Header from '../../../ui-component/header/header';
 import DashboardCard from '../../../ui-component/cards/DashboardCard';
 import RumpunJabatanChart from '../../../ui-component/charts/RumpunJabatanChart';
 import LevelJabatanChart from '../../../ui-component/charts/LevelJabatanChart';
+import JenisKelaminChart from '../../../ui-component/charts/JenisKelaminChart';
+import GenerasiChart from '../../../ui-component/charts/GenerasiChart';
 import ButtonChart from '../../../ui-component/button/ButtonChart';
 import MainCard from '../../../ui-component/cards/MainCard';
 import { padding } from '@mui/system';
@@ -71,6 +73,17 @@ const Dashboard = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <LevelJabatanChart isLoading={isLoading} />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Grid container spacing={gridSpacing}>
+            <Grid item xs={12} md={6}>
+              <JenisKelaminChart isLoading={isLoading} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <GenerasiChart isLoading={isLoading} />
             </Grid>
           </Grid>
         </Grid>
