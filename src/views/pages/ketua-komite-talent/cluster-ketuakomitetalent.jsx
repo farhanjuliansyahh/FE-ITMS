@@ -202,6 +202,12 @@ export default function ClusterKetuaKomiteTalent() {
                     <Typography style={{fontSize:'24px', fontWeight:'bold'}} gutterBottom>
                         Tabel Karyawan
                     </Typography>
+                    <Button
+                        variant="contained"
+                        style={{ color: '#2196F3', borderRadius: '15px', borderColor: '#EAF8FF', backgroundColor: '#EAF8FF', boxShadow: 'none' }}
+                    >
+                        sudah dilakukan diskresi kepada x/y Karyawan
+                    </Button>
                     <div style={{ flex: '1' }}> </div>
                     <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
                 </FlexContainer>
