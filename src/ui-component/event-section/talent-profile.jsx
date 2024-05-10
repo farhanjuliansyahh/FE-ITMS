@@ -63,10 +63,10 @@ const TalentProfile = ({eventid}) => {
   const [rowslengkap, setrowslengkap] = useState([]);
   const [rowsbelum, setrowsbelum] = useState([]);
   const [filterKomite, setFilterKomite] = useState('');
-
   const [openSubmit, setOpenSubmit] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
 
+  const activeEvent = eventid;
   const handleOpenSubmit = () => {
     setOpenSubmit(true);
   };
@@ -285,6 +285,7 @@ const TalentProfile = ({eventid}) => {
         </CustomTabPanel>
 
         <KonfirmasiSubmitTalentProfile
+          activeEvent= {activeEvent}
           open={openSubmit}
           handleClose={() => setOpenSubmit(false)}
         />

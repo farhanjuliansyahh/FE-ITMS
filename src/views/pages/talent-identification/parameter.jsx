@@ -1,20 +1,20 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import { Container } from '@mui/system';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
-
-import PropTypes from 'prop-types';
-import { Container } from '@mui/system';
 import MainCard from '../../../ui-component/cards/MainCard';
 import PassingGradeTable from '../../../ui-component/tables/PassingGradeTable';
 import KuotaTable from '../../../ui-component/tables/KuotaTable'
 import DaftarPertanyaanTable from '../../../ui-component/tables/DaftarPertanyaanTable'
-import { AssignmentTurnedInOutlined, PersonOutlineOutlined, QuizOutlined } from '@mui/icons-material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import AccordionKomiteTalent from '../../../ui-component/cards/AccordionKomiteTalent';
+import DaftarKomiteTalent from '../../../ui-component/submenu/daftar-komitetalent';
 
+import { 
+  AddCircleOutline, AssignmentTurnedInOutlined, CancelOutlined, GroupsOutlined,
+  PersonOutlineOutlined, QuizOutlined, SaveOutlined } from '@mui/icons-material';
 
 // ==============================|| PARAMETER TALENT PAGE ||============================== //
 
@@ -75,13 +75,13 @@ const ParameterTalent = () => {
             <Tab icon={<AssignmentTurnedInOutlined />} iconPosition="start" label="Passing Grade" {...a11yProps(0)} />
             <Tab icon={<PersonOutlineOutlined />} iconPosition="start" label="Kuota" {...a11yProps(1)} />
             <Tab icon={<QuizOutlined />} iconPosition="start" label="Question Event" {...a11yProps(2)} />
+            <Tab icon={<GroupsOutlined />} iconPosition="start" label="Komite Talent" {...a11yProps(3)} />
           </Tabs>
         </Box>
 
         {/* Passing Grade */}
         <CustomTabPanel value={value} index={0}>
             <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'}> 
-            {/* Container with Flexbox layout */}
                 <Grid>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent I</Typography>
                 <PassingGradeTable ></PassingGradeTable>
@@ -91,11 +91,11 @@ const ParameterTalent = () => {
                 <PassingGradeTable></PassingGradeTable>
                 </Grid>
             
-                <Box display="flex" justifyContent="flex-end" marginTop={'24px'} width="100%"> {/* Stack of buttons with Flexbox layout */}
+                <Box display="flex" justifyContent="flex-end" marginTop={'24px'} width="100%"> 
                   <Box sx={{ marginRight: '16px' }}>
-                    <ButtonPrimary Color="#ffffff" icon={SaveOutlinedIcon} LabelName={'Simpan'}/>
+                    <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
                   </Box>
-                  <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlinedIcon} LabelName={'Batalkan'}/>
+                  <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}/>
                 </Box>
             </Box>
         </CustomTabPanel>
@@ -123,9 +123,9 @@ const ParameterTalent = () => {
               {/* Buttons */}
               <Box display="flex" justifyContent="flex-end" marginTop={'24px'}>
                 <Box sx={{ marginRight: '16px' }}>
-                  <ButtonPrimary Color="#ffffff" icon={SaveOutlinedIcon} LabelName={'Simpan'}/>
+                  <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
                 </Box>
-                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlinedIcon} LabelName={'Batalkan'}/>
+                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}/>
               </Box>
             </CustomTabPanel>
           </Box>
@@ -143,7 +143,7 @@ const ParameterTalent = () => {
                 
                 {/* "Tambah Data" button */}
                 <Box sx={{ marginBottom: '16px' }}>
-                  <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Tambah Data'}/>
+                  <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Data'}/>
                 </Box>
               </Box>
               
@@ -151,14 +151,36 @@ const ParameterTalent = () => {
               <DaftarPertanyaanTable></DaftarPertanyaanTable>
             </Grid>
 
-            {/* Stack of buttons with Flexbox layout */}
             <Box display="flex" justifyContent="flex-end" marginTop={'24px'} width="100%">
               <Box sx={{ marginRight: '16px' }}>
-                <ButtonPrimary Color="#ffffff" icon={SaveOutlinedIcon} LabelName={'Simpan'}/>
+                <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
               </Box>
-              <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlinedIcon} LabelName={'Batalkan'}/>
+              <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}/>
             </Box>
           </Box>
+        </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={3}>
+          <Box display="block" width='100%' flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'} > 
+            <AccordionKomiteTalent 
+              title={'Komite Talent 1'} 
+              subtitle={'Direktur Utama - Faizal Rochmad Djoemadi'}
+              icon={GroupsOutlined} 
+              content={<DaftarKomiteTalent/>}
+            />
+            <AccordionKomiteTalent 
+              title={'Komite Talent 2'} 
+              subtitle={'Direktur HCM - Tonggo Marbun'}
+              icon={GroupsOutlined} 
+              content={<DaftarKomiteTalent/>}
+            />
+            <AccordionKomiteTalent 
+              title={'Komite Talent 3'} 
+              subtitle={'Senior Vice President HCSBP - Chandra Dewi'}
+              icon={GroupsOutlined} 
+              content={<DaftarKomiteTalent/>}
+            />
+          </Box> 
         </CustomTabPanel>
 
      </MainCard>

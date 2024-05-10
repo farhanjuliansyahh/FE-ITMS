@@ -17,26 +17,20 @@ import ButtonError from '../../ui-component/button/ButtonError';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function EditEvent({ open, handleClose }) {
-    const [selectedCommittee, setSelectedCommittee] = useState('');
+function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quotaawal, mulai, selesai, deskripsiawal }) {
     const [selectedDate, setSelectedDate] = useState(null);
-    const [jobLevelOptions, setJobLevelOptions] = useState([]);
-    const [selectedJobLevel, setSelectedJobLevel] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [selectedJobFamily, setSelectedJobFamily] = useState('');
+    const [selectedJobFamily, setSelectedJobFamily] = useState(koderumpun);
     const [jobFamilyOptions, setJobFamilyOptions] = useState([]);
-    const [selectedketuakomite, setselectedketuakomite] = useState('');
-    const [committeememberOptions, setcommitteememberOptions] = useState([]);
-    const [selectedcomitteemember, setSelectedCommitteemember] = useState([]);
-    const [questionOption, setquestionOption] = useState([]);
-    const [selectedquestion, setselectedquestion] = useState([]);
-    const [startdate, setstartdate] = useState('');
-    const [enddate, setenddate] = useState('');
-    const [eventName, setEventName] = useState('');
-    const [quota, setquota] = useState('');
-    const [deskripsi, setdeskripsi] = useState('');
+    const [startdate, setstartdate] = useState(mulai);
+    const [enddate, setenddate] = useState(selesai);
+    const [eventName, setEventName] = useState(nama);
+    const [quota, setquota] = useState(quotaawal);
+    const [deskripsi, setdeskripsi] = useState(deskripsiawal);
     const [isDeskripsiTouched, setIsDeskripsiTouched] = useState(false);
 
+    const quotas = "abc"
+    
     const handleEventNameChange = (event) => {
         setEventName(event.target.value); // Update state with input value
     };
@@ -50,26 +44,26 @@ function EditEvent({ open, handleClose }) {
         setIsDeskripsiTouched(true);
     };
 
-    const handleCommitteeChange = (event) => {
-        setSelectedCommittee(event.target.value);
-        setSelectedCommitteemember([]);
-        fetchJobLevels(event.target.value);
-        fetchketuakomite(event.target.value);
-        fetchcommitteemember(event.target.value);
-    };
+    // const handleCommitteeChange = (event) => {
+    //     setSelectedCommittee(event.target.value);
+    //     setSelectedCommitteemember([]);
+    //     fetchJobLevels(event.target.value);
+    //     fetchketuakomite(event.target.value);
+    //     fetchcommitteemember(event.target.value);
+    // };
 
-    const fetchJobLevels = async (selectedCommittee) => {
-        try {
-            setLoading(true);
-            const response = await fetch(`http://localhost:4000/getjoblevel?tipe_komite=${selectedCommittee}`);
-            const data = await response.json();
-            setJobLevelOptions(data.job_level);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching job levels:', error);
-            setLoading(false);
-        }
-    };
+    // const fetchJobLevels = async (selectedCommittee) => {
+    //     try {
+    //         setLoading(true);
+    //         const response = await fetch(`http://localhost:4000/getjoblevel?tipe_komite=${selectedCommittee}`);
+    //         const data = await response.json();
+    //         setJobLevelOptions(data.job_level);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         console.error('Error fetching job levels:', error);
+    //         setLoading(false);
+    //     }
+    // };
 
     const handleJobLevelChange = (event, newJobLevels) => {
         setSelectedJobLevel(newJobLevels);
@@ -93,58 +87,6 @@ function EditEvent({ open, handleClose }) {
         setSelectedJobFamily(event.target.value);
     };
 
-    useEffect(() => {
-        // Fetch job family data
-        const fetchquestion = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/getquestion');
-                const data = await response.json();
-                setquestionOption(data.quest);
-            } catch (error) {
-                console.error('Error fetching job family:', error);
-            }
-        };
-        fetchquestion();
-    }, []);
-
-    const handlequestionchange = (event) => {
-        setselectedquestion(event.target.value)
-        console.log(selectedquestion)
-    }
-    const fetchketuakomite = async (selectedCommittee) => {
-        try {
-            setLoading(true);
-            const response = await fetch(`http://localhost:4000/getheadcommit?id_komite_talent=${selectedCommittee}`);
-            const data = await response.json();
-            setselectedketuakomite(data[0]);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching job levels:', error);
-            setLoading(false);
-        }
-    };
-
-    const handleHeadOfCommitteeChange = (event) => {
-        setselectedketuakomite(event.target.value);
-    };
-
-    const fetchcommitteemember = async (selectedCommittee) => {
-        try {
-            setLoading(true);
-            const response = await fetch(`http://localhost:4000/getcommite?id_komite_talent=${selectedCommittee}`);
-            const data = await response.json();
-            setcommitteememberOptions(data);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching job levels:', error);
-            setLoading(false);
-        }
-    };
-
-    const handleCommitteememberChange = (event) => {
-        setSelectedCommitteemember(event.target.value);
-    }
-
     const handleStartDateChange = (date) => {
         console.log(date); // Check the date value
         setstartdate(date); // Update the state with the selected date
@@ -157,14 +99,11 @@ function EditEvent({ open, handleClose }) {
 
 
 
-    const postData = async () => {
+    const updateData = async () => {
         try {
-            const arrayquestion = selectedquestion.map(selectedquestion => selectedquestion.id)
-            const arraymember = selectedcomitteemember.map(selectedcomitteemember => selectedcomitteemember.nippos)
-
             console.log(startdate);
             // Make the POST request to the API endpoint
-            const response = await fetch('http://localhost:4000/addevent', {
+            const response = await fetch('http://localhost:4000/updateevent', {
                 
                 method: 'POST',
                 headers: {
@@ -172,17 +111,13 @@ function EditEvent({ open, handleClose }) {
                 },
                 body: JSON.stringify({
                     // Include any data you want to send in the request body
+                    eventid: eventid,
                     nama_event: eventName,
-                    tipe_komite: selectedCommittee,
-                    nippos_ketua: selectedketuakomite.nippos,
                     kode_rumpun_jabatan: selectedJobFamily,
                     kuota: quota,
                     deskripsi: deskripsi,
                     tanggal_mulai: startdate,
                     tanggal_selesai: enddate,
-                    level_jabatan: selectedJobLevel,
-                    id_pertanyaan: arrayquestion,
-                    nippos_komite: arraymember
                 })
             });
 
@@ -199,6 +134,8 @@ function EditEvent({ open, handleClose }) {
             console.error('Error posting data:', error.message);
         }
     };
+
+    console.log(eventid, nama, jobfam, quotaawal, mulai, selesai, deskripsiawal);
 
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -228,15 +165,18 @@ function EditEvent({ open, handleClose }) {
                             label="Nama Event"
                             value={eventName} // Set value from state
                             onChange={handleEventNameChange} // Handle input change
+                            defaultValue={nama}
                         />
 
                         <TextField
                             select
                             required
                             id="outlined-required"
+                            value={koderumpun}
                             label="Job Family"
                             onChange={handleJobFamilyChange}
                         >
+                            <MenuItem value="">Select an option</MenuItem> {/* Placeholder */}
                             {jobFamilyOptions.map((jobFamily) => (
                                 <MenuItem value={jobFamily.kode_rumpun_jabatan}>
                                     {jobFamily.nama_rumpun_jabatan}
@@ -254,6 +194,7 @@ function EditEvent({ open, handleClose }) {
                                 inputMode: 'numeric',
                                 pattern: '[0-9]*'
                             }}
+                            defaultValue={quotas}
                         />
 
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -300,8 +241,8 @@ function EditEvent({ open, handleClose }) {
             <DialogActions sx={{padding: '24px', justifyContent: 'space-between'}}>
                 <ButtonError Color="#ffffff" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleClose}/>
                 <ButtonPrimary Color="#ffffff" icon={SaveOutlinedIcon} LabelName={'Simpan Perubahan'} onClick={() => {
+                    updateData();   // Execute the postData function
                     handleClose(); // Close the dialog
-                    postData();   // Execute the postData function
                 }}/>
 
             </DialogActions>

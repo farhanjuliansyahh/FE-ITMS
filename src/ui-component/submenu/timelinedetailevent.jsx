@@ -186,6 +186,8 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi,kod
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
+  console.log("eventid", eventid);
+
   return (
  
       <Box sx={boxStyle}>
@@ -289,6 +291,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi,kod
           open={talentPoolDialogOpen}
           handleClose={() => setTalentPoolDialogOpen(false)}
           handleConfirmation={handleConfirmation}
+          eventid = {eventid}
         />
 
       </Box>

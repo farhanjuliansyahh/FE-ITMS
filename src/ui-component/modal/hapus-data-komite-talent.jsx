@@ -5,8 +5,8 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 
 
-function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
-    const HapusDataBPJButtonStyle = {
+function HapusDataKomiteTalent({ open, handleClose }) {
+    const HapusDataKomiteTalentButtonStyle = {
         border: '1px solid #EF4123',
         color: '#EF4123',
         borderRadius: '12px',
@@ -24,7 +24,7 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
         fontSize: '14px'
     };
 
-    const hoverHapusDataBPJStyle = {
+    const hoverHapusDataKomiteTalentStyle = {
         backgroundColor: '#D32F2F',
         color: '#fff',
     };
@@ -42,60 +42,16 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
         justifyContent: 'space-between'
     });
 
-    const [IsHoverHapusDataBPJ, setIsHoverHapusDataBPJ] = useState(false);
+    const [IsHoverHapusDataKomiteTalent, setIsHoverHapusDataKomiteTalent] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
-    const hapusdata = async () => {
-        try {
-            // Make an HTTP DELETE request to your API endpoint
-            const response = await fetch(`http://localhost:4000/hapusbpj`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Add any other headers if needed
-                },
-                body: JSON.stringify({
-                    // Include any data you want to send in the request body
-                    eventid: eventid,
-                    nippos: nippos
-                })
-                // You can pass any data in the request body if required
-                // body: JSON.stringify({}),
-            });
-    
-            // Check if the request was successful (status code 200-299)
-            if (response.ok) {
-                // If successful, handle the response or perform any necessary actions
-                console.log('Data deleted successfully');
-            } else {
-                // If not successful, throw an error or handle the error response
-                throw new Error('Failed to delete data');
-            }
-        } catch (error) {
-            // Handle any errors that occurred during the process
-            console.error('Error deleting data:', error.message);
-        }
-    };
-
-    const HapusDataBPJButton = (
+    const HapusDataKomiteTalentButton = (
         <Button
             endIcon={<DeleteOutlineRoundedIcon />}
-            style={IsHoverHapusDataBPJ ? { ...HapusDataBPJButtonStyle, ...hoverHapusDataBPJStyle } : HapusDataBPJButtonStyle}
-            onMouseEnter={() => setIsHoverHapusDataBPJ(true)}
-            onMouseLeave={() => setIsHoverHapusDataBPJ(false)}
-            onClick={() => {
-                hapusdata()
-                .then(response => {
-                    // Handle success
-                    console.log(response); // Output: Data successfully deleted
-                    handleClose(); // Close the dialog after successfully deleting data
-                })
-                .catch(error => {
-                    // Handle error
-                    console.error(error); // Output: Failed to delete data
-                    // Optionally, you can handle the error here or show a message to the user
-                });
-            }}
+            style={IsHoverHapusDataKomiteTalent ? { ...HapusDataKomiteTalentButtonStyle, ...hoverHapusDataKomiteTalentStyle } : HapusDataKomiteTalentButtonStyle}
+            onMouseEnter={() => setIsHoverHapusDataKomiteTalent(true)}
+            onMouseLeave={() => setIsHoverHapusDataKomiteTalent(false)}
+            onClick={handleClose}
         >
             Ya, Hapus Data
         </Button>
@@ -133,7 +89,7 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
                 <Box>
                     <div>
                         <Typography style={{textAlign:'center', fontWeight:'bold', fontSize:'14px', marginTop:'16px'}}>
-                            Apakah anda yakin menghapus data BPJ ini?
+                            Apakah anda yakin menghapus data Komite Talent ini?
                         </Typography>
                         <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px', marginBottom: '16px'}}>
                             Anda tidak dapat mengembalikan data yang sudah dihapus.
@@ -144,11 +100,11 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
             <DialogActions sx={{ padding: '0 24px 24px 24px ' }}>
                 <ButtonsContainer>
                     {batalkanButton}
-                    {HapusDataBPJButton}
+                    {HapusDataKomiteTalentButton}
                 </ButtonsContainer>
             </DialogActions>
         </Dialog>
     );
 }
 
-export default HapusDataBPJ;
+export default HapusDataKomiteTalent;

@@ -1,49 +1,13 @@
+// Draft Popup
+
 import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import { CancelOutlined, CheckCircleOutlineOutlined } from '@mui/icons-material';
 
-function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }) {    
-    const eventaktif = eventid;
-    console.log("aktif", eventid);
-
-    const statusselesai = async () => {
-        try {
-            // Make the POST request to the API endpoint
-            const response = await fetch('http://localhost:4000/statusselesai', {
-                
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    // Include any data you want to send in the request body
-                    eventid : eventaktif})
-            });
-
-            // Check if the request was successful
-            if (!response.ok) {
-                throw new Error('Failed to post data');
-            }
-
-            // If successful, handle the response data (if needed)
-            const responseData = await response.json();
-            console.log('Response data:', responseData);
-        } catch (error) {
-            // Handle any errors that occur during the API call
-            console.error('Error posting data:', error.message);
-        }
-    };
-
-    const handleSelesai = () => {
-        statusselesai().then(() => {
-            handleConfirmation();
-        });
-    };
-
-    const SelesaiButtonStyle = {
+function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {    
+    const TambahButtonStyle = {
         backgroundColor: '#1C2D5A',
         color:'#fff',
         borderRadius: '12px',
@@ -60,7 +24,7 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
         fontSize: '14px'
     };
     
-    const hoverSelesaiStyle = {
+    const hoverTambahStyle = {
         backgroundColor: '#122350' // Darker shade for hover
     };
     
@@ -77,28 +41,28 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
         justifyContent: 'space-between'
     });
 
-    const [isHoveredSelesai, setIsHoveredSelesai] = useState(false);
+    const [isHoveredTambah, setIsHoveredTambah] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
-    const SelesaiButton = (
+    const TambahButton = (
         <Button
-            endIcon={<CheckCircleOutlinedIcon />}
-            style={isHoveredSelesai ? { ...SelesaiButtonStyle, ...hoverSelesaiStyle } : SelesaiButtonStyle}
-            onMouseEnter={() => setIsHoveredSelesai(true)}
-            onMouseLeave={() => setIsHoveredSelesai(false)}
-            onClick={handleSelesai}
+            endIcon={<CheckCircleOutlineOutlined />}
+            style={isHoveredTambah ? { ...TambahButtonStyle, ...hoverTambahStyle } : TambahButtonStyle}
+            onMouseEnter={() => setIsHoveredTambah(true)}
+            onMouseLeave={() => setIsHoveredTambah(false)}
+            onClick={onClose}
         >
-            Selesai
+            Tambah
         </Button>
     );
 
     const batalkanButton = (
         <Button
-            endIcon={<CancelOutlinedIcon />}
+            endIcon={<CancelOutlined />}
             style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
             onMouseEnter={() => setIsHoveredBatalkan(true)}
             onMouseLeave={() => setIsHoveredBatalkan(false)}
-            onClick={handleClose}
+            onClick={onClose}
         >
             Batalkan
         </Button>
@@ -111,10 +75,10 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
     });
 
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={onClose}>
             <DialogTitle>
                 <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
-                    Konfirmasi Talent Pool
+                    Konfirmasi Tambah Komite Unit
                 </Typography>
             </DialogTitle>
             <DividerContainer>
@@ -124,10 +88,9 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
                 <Box>
                     <div>
                         <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
-                            Apakah anda yakin seluruh event sudah selesai?
-                        </Typography>
+                            Apakah anda yakin menambah komite unit yang anda pilih?                        </Typography>
                         <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px', marginBottom: '24px'}}>
-                            Anda tidak dapat kembali ke tahap sebelumnya jika klik selesai.
+                            Anda tidak dapat membatalkan komite unit yang sudah dipilih.
                         </Typography>
                     </div>
                 </Box>
@@ -135,11 +98,11 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
             <DialogActions sx={{padding:'0 24px 24px 24px '}}>
                 <ButtonsContainer>
                     {batalkanButton}
-                    {SelesaiButton}
+                    {TambahButton}
                 </ButtonsContainer>
             </DialogActions>
         </Dialog>
     );
 }
 
-export default KonfirmasiTalentPool;
+export default KonfirmasiTambahKomiteUnit;

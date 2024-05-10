@@ -71,6 +71,7 @@ const TalentDays = ({eventid}) => {
   const [filterNippos, setFilterNippos] = useState('');
   const [daysRow, setdaysRow] = useState([]);
   const [daysBpj, setdaysBpj] = useState([]);
+  
 
   const eventidactive = eventid
   const handleChange = (event, newValue) => {
@@ -124,12 +125,37 @@ const TalentDays = ({eventid}) => {
   });
 
   useEffect(() => {
+    // Define the request body
+    const requestBody = {
+        // Your request body data here
+        eventtalentid: eventidactive,
+    };
+
+    // Fetch data from API with request body
+    fetch(`http://localhost:4000/createdaysbpj`, {
+        method: 'POST', // Specify the HTTP method
+        headers: {
+            'Content-Type': 'application/json', // Specify the content type
+        },
+        body: JSON.stringify(requestBody), // Convert the request body to JSON string
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}, []);
+  useEffect(() => {
     // Fetch data from API
     fetch(`http://localhost:4000/gettablekaryawandays?eventtalentid=${eventidactive}`)
       .then(response => response.json())
       .then(datadays => {
         // Update state with API data
         setdaysRow(datadays.map((row, index) => ({ ...row, id: index + 1 })));
+         // Check if any element has status === false
+      const hasFalseStatus = datadays.some(row => row.status === false);
+      
+      // Update isDisabled state based on the presence of false status
+      setIsDisabled(!hasFalseStatus);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -258,7 +284,7 @@ daysRow.forEach(item => {
                     </div>
                 </div>
          
-                <TalentDaysBPJTable rows={daysBpj} />
+                <TalentDaysBPJTable eventid={eventidactive} rows={daysBpj} />
             </Box>
         </CustomTabPanel>
 
@@ -324,11 +350,13 @@ daysRow.forEach(item => {
         <KonfirmasiDetailBPJ
           open={openDetailBPJ}
           handleClose={() => setDetailBPJOpen(false)}
+          eventid = {eventidactive}
         />
 
         <KonfirmasiIsiSemuaNilaiTalent
           open={openIsiSemuaNilai}
           handleClose={() => setIsiSemuaNilaiOpen(false)}
+          activeEvent= {eventidactive}
         />
 
       </MainCard>

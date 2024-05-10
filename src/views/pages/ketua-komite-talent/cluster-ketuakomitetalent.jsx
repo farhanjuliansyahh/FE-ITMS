@@ -1,25 +1,83 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { Box, Divider, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { CalendarMonthOutlined, RestartAlt, Search } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
+
 import MainCard from '../../../ui-component/cards/MainCard';
 import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
+import { useParams } from 'react-router';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import SearchResetButton from '../../../ui-component/button/SearchResetButton';
 import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
 import TalentClusterKetuaKomiteTalentTable from '../../../ui-component/tables/talentclusterketuakomitetalent';
+import { useEffect,useState } from 'react';
+import styled from '@emotion/styled';
 
 export default function ClusterKetuaKomiteTalent() {
-    const nama_event = 'TRIAL EVENT_ E1-D3_BISNIS';
-    const countdown = '53 Hari Lagi';
-    const tgl_mulai_selesai = '22 Januari 2024 - 22 Maret 2024';
+    const {id} = useParams();
+    const [value, setValue] = React.useState(0);
+    const [eventaktif, seteventaktif] = useState([]);
+    const [DaysLeft, setDaysLeft] = useState('');
 
     const [filterNama, setFilterNama] = useState('');
     const [filterNippos, setFilterNippos] = useState('');
     const [filterJob, setFilterJob] = useState('');
     const [filterKategoriMatrix, setFilterKategoriMatrix] = useState('');
+    const [clusterRow, setclusterRow] = useState([])
+    const [categoryCounts, setCategoryCounts] = useState({});
+    const [refreshstate, setrefreshstate] = useState(false)
+
+
+    const fetcheventdetail = () => {
+        return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            return data; // Return the parsed JSON data
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            throw error; // Rethrow the error to handle it elsewhere
+          });
+      };
+
+      useEffect(() => {
+        fetcheventdetail()
+          .then(data => {
+            seteventaktif(data.event);
+            setLoading(false); // Move this line to the end of the .then block
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+          });
+      }, []);
+
+      const { eventid, nama_event, deskripsi,tipe_komite_talent, tipekomite, kode_rumpun,nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
+
+      useEffect(() => {
+        // Convert 'tanggal_selesai' from ISO 8601 format to a Date object
+        const endDate = new Date(tanggal_selesai);
+        // Get the current date
+        const currentDate = new Date();
+        // Calculate the difference in milliseconds between the current date and the 'tanggal_selesai'
+        const timeDifference = endDate.getTime() - currentDate.getTime();
+        // Convert the difference from milliseconds to days
+        const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        // Set the number of days left
+        setDaysLeft(daysDifference);
+      }, [tanggal_selesai]);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+      };
+      
+  
+      const eventidactive = eventid
 
     const boxStyle = {
         padding: '20px', 
@@ -71,6 +129,37 @@ export default function ClusterKetuaKomiteTalent() {
     margin: '0 auto',
     };
 
+    const handlerefresh = () => {
+      setrefreshstate(true)
+    }
+
+    useEffect(() => {
+        // Fetch data from API
+        fetch(`http://localhost:4000/getclustertable?eventtalentid=${id}`)
+          .then(response => response.json())
+          .then(datacluster => {
+            // Update state with API data
+            setclusterRow(datacluster.map((row, index) => ({ ...row, id: index + 1 })));
+    
+            // Count categories
+            const counts = datacluster.reduce((acc, row) => {
+              const category = row["Matriks Kategori Akhir"];
+              acc[category] = (acc[category] || 0) + 1;
+              return acc;
+            }, {});
+    
+            setCategoryCounts(counts);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+          setrefreshstate(false)
+      }, [refreshstate]);
+    
+      const totalRows = Object.values(categoryCounts).reduce((total, count) => total + count, 0);
+    
+      const hitung = categoryCounts
+
     return (
         <MainCard>
             <Box sx={boxStyle}>
@@ -82,13 +171,23 @@ export default function ClusterKetuaKomiteTalent() {
 
                         <FlexTitle>
                             <CalendarIcon style={{color:'#828282'}}/>
-                            <Typography style={{fontSize:'14px', color:'#828282'}}>{tgl_mulai_selesai}</Typography>
+                            <Typography style={{fontSize:'14px', color:'#828282'}}>{tanggal_mulai &&
+            new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })} - {tanggal_selesai &&
+              new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}</Typography>
                         </FlexTitle>
                     </BoxContainer>
 
                     <div style={{ flex: '1' }}> </div>
           
-                    <CountdownLabel>{countdown}</CountdownLabel>
+                    <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari` : ''}</CountdownLabel>
                 </FlexContainer>
             </Box>
 
@@ -96,7 +195,7 @@ export default function ClusterKetuaKomiteTalent() {
                 <Divider orientation="horizontal" flexItem sx={dividerStyle} />
             </DividerContainer>
 
-            <MatrixNineBox/>
+            <MatrixNineBox eventid={id} totalrows={totalRows}/>
 
             <Box paddingLeft={3} paddingRight={3} paddingBottom={3} marginTop={3}>
                 <FlexContainer>
@@ -128,7 +227,8 @@ export default function ClusterKetuaKomiteTalent() {
                     </div>
                 </div>
          
-                <TalentClusterKetuaKomiteTalentTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}/>
+                <TalentClusterKetuaKomiteTalentTable  filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}
+                eventid={id} rows={clusterRow} counts={categoryCounts} onTableDataRefresh={handlerefresh}/>
             </Box>
 
         </MainCard>

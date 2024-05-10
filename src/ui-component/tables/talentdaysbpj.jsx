@@ -5,10 +5,16 @@ import Button from '@mui/material/Button';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HapusDataBPJ from '../../ui-component/modal/hapus-data-bpj';
 
-export default function TalentDaysBPJTable({rows}) {
+export default function TalentDaysBPJTable({ eventid, rows }) {
   const [HapusBPJOpen, setHapusBPJOpen] = useState(false);
+  const [selectedNippos, setSelectedNippos] = useState(null); // State to store selected nippos
 
-  const handleHapusBPJOpen = () => {
+  useEffect(() => {
+    console.log("nippos untuk di hapus", selectedNippos);
+  }, [selectedNippos]); // Run this effect whenever selectedNippos changes
+
+  const handleHapusBPJOpen = (nippos) => {
+    setSelectedNippos(nippos);
     setHapusBPJOpen(true);
   };
 
@@ -27,22 +33,22 @@ export default function TalentDaysBPJTable({rows}) {
       width: 150,
       renderCell: (params) => {
         return (
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             sx={{
-              backgroundColor:'#FFFFFF', 
+              backgroundColor: '#FFFFFF',
               color: '#D32F2F',
               border: '1px solid #D32F2F',
               borderColor: '#D32F2F',
-              borderRadius:'12px', 
+              borderRadius: '12px',
               marginRight: '8px',
               '&:hover': {
                 backgroundColor: 'transparent',
                 borderColor: '#D32F2F',
               },
-            }} 
+            }}
             endIcon={<DeleteOutlineOutlinedIcon />}
-            onClick={handleHapusBPJOpen}
+            onClick={() => handleHapusBPJOpen(params.row.nippos)} // Pass nippos to the handler
           >
             Hapus
           </Button>
@@ -63,9 +69,13 @@ export default function TalentDaysBPJTable({rows}) {
         }}
         pageSizeOptions={[5, 10]}
       />
-      <HapusDataBPJ 
+      <HapusDataBPJ
         open={HapusBPJOpen}
-        handleClose={() => setHapusBPJOpen(false)}
+        handleClose={() => {
+          setHapusBPJOpen(false);
+          setSelectedNippos(null); // Reset selected nippos when closing modal
+        }}
+        nippos={selectedNippos} // Pass selected nippos as prop
       />
     </div>
   );
