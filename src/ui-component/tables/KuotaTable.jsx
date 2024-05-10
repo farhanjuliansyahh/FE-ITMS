@@ -20,7 +20,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    padding: theme.spacing(0.5),
+    padding: '6px 18px',
+    border: 0
   },
 }));
 
@@ -55,35 +56,37 @@ export default function KuotaTable({ header, initialValue }) {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 300, tableLayout: 'fixed' }} aria-label="Passing Grade Table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell colSpan={2}>
-              <span style={{ color: '#1F1F1F' }}>{header.split('-')[0]}</span>
-              <span style={{ color: '#828282' }}>{header.split('-')[1]}</span>
-            </StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.kuota}</TableCell>
-              <TableCell align="right">
-                <Stack direction="column" alignItems="flex-end">
-                    <IconButton onClick={() => handleIncrease(index, 'kuota')} size="small" sx={{ fontSize: '2px'}}>
-                        <ExpandLess />
-                    </IconButton>
-                    <IconButton onClick={() => handleDecrease(index, 'kuota')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
-                        <ExpandMore />
-                    </IconButton>
-                </Stack>
-              </TableCell>
+    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px'}}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 300, tableLayout: 'fixed' }} aria-label="Passing Grade Table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell colSpan={2}>
+                <span style={{ color: '#1F1F1F' }}>{header.split('-')[0]}</span>
+                <span style={{ color: '#828282' }}>{header.split('-')[1]}</span>
+              </StyledTableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow key={index}>
+                <StyledTableCell>{row.kuota}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <Stack direction="column" alignItems="flex-end">
+                      <IconButton onClick={() => handleIncrease(index, 'kuota')} size="small" sx={{ fontSize: '2px'}}>
+                          <ExpandLess />
+                      </IconButton>
+                      <IconButton onClick={() => handleDecrease(index, 'kuota')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
+                          <ExpandMore />
+                      </IconButton>
+                  </Stack>
+                </StyledTableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
 

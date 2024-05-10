@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Menu, MenuItem } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
-import { AddCircleOutlineOutlined, ExpandMore } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 
 const StyledTableCell = styled(TableCell)(() => ({
@@ -21,20 +21,43 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-function createData(id, nama, nippos, jabatan, kantor, aksi) {
-  return { id, nama, nippos, jabatan, kantor, aksi };
+function createData(id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance) {
+  return { id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance };
 }
 
-const rows = [
-  createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'KANTOR PUSAT BANDUNG'),
-  createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'KANTOR PUSAT BANDUNG'),
-  createData(3, 'Adinda', '998494379', 'Asisten Manajer Pengelolaan Remittance LN', 'KANTOR PUSAT BANDUNG'),
-  createData(4, 'Niken Wijaya', '998494379', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'KANTOR PUSAT JAKARTA'),
-  createData(5, 'Niken', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'KANTOR PUSAT JAKARTA'),
+const headers = [
+    'No', 'Nama', 'NIPPOS', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Kantor', 'Komite Unit',
+    'Kompetensi BUMN', 'Kompetensi Leadership', 'Kompetensi Teknis', 
+    'Potensi', 'AKHLAK', 'Learning Agility', 'Performance'
 ];
 
-export default function TabelDaftarAnggotaKomiteUnit({ 
-  onOpenSecondModalTable,
+const columnKeys = {
+    'id': 'No',
+    'nama': 'Nama',
+    'nippos': 'NIPPOS',
+    'posisi': 'Posisi',
+    'joblevel': 'Job Level',
+    'rumpunjabatan': 'Rumpun Jabatan',
+    'kantor': 'Kantor',
+    'komiteunit': 'Komite Unit',
+    'kompbumn': 'Kompetensi BUMN',
+    'komplead': 'Kompetensi Leadership',
+    'kompteknis': 'Kompetensi Teknis',
+    'potensi': 'Potensi',
+    'akhlak': 'AKHLAK',
+    'learningagility': 'Learning Agility',
+    'performance': 'Performance'
+};
+
+const rows = [
+  createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'D3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABD HAFID'),
+  createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'D3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABDU SOMAD'),
+  createData(3, 'Adinda', '998494379', 'Asisten Manajer Pengelolaan Remittance LN', 'D3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABDUL JAMIL'),
+  createData(4, 'Niken Wijaya', '998494379', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'D3', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ABDUL WAHAB'),
+  createData(5, 'Niken', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'D3', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ACEP RUDI SUPRIADI'),
+];
+
+export default function NilaiAssessmentTable({ 
   selectedKantor,
   selectedRumpunJabatan,
   selectedJobLevel,
@@ -70,35 +93,22 @@ export default function TabelDaftarAnggotaKomiteUnit({
     <div>
       <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px'}}>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }}>
+          <Table stickyHeader sx={{ minWidth: 3000 }}>
             <TableHead>
-              <TableRow>
-                <StyledTableCell>No</StyledTableCell>
-                <StyledTableCell>Nama</StyledTableCell>
-                <StyledTableCell>NIPPOS</StyledTableCell>
-                <StyledTableCell>Jabatan</StyledTableCell>
-                <StyledTableCell>Kantor</StyledTableCell>
-                <StyledTableCell>Aksi</StyledTableCell>
-              </TableRow>
+                <TableRow>
+                    {Object.keys(columnKeys).map((key) => (
+                        <StyledTableCell key={key}>{columnKeys[key]}</StyledTableCell>
+                    ))}
+                </TableRow>
             </TableHead>
             <TableBody>
-              {filteredRows.slice(startIndex, endIndex).map((row) => (
-                <TableRow key={row.id}>
-                  <StyledTableCell>{row.id}</StyledTableCell>
-                  <StyledTableCell>{row.nama}</StyledTableCell>
-                  <StyledTableCell>{row.nippos}</StyledTableCell>
-                  <StyledTableCell>{row.jabatan}</StyledTableCell>
-                  <StyledTableCell>{row.kantor}</StyledTableCell>
-                  <StyledTableCell>
-                    <ButtonPrimary
-                      icon={AddCircleOutlineOutlined}
-                      LabelName={'Tambah'}
-                      padding={'6px 16px'}
-                      onClick={() => onOpenSecondModalTable()}
-                    />
-                  </StyledTableCell>
-                </TableRow>
-              ))}
+                {filteredRows.slice(startIndex, endIndex).map((row) => (
+                    <TableRow key={row.id}>
+                    {Object.keys(columnKeys).map((key) => (
+                        <StyledTableCell key={key}>{row[key]}</StyledTableCell>
+                    ))}
+                    </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

@@ -19,7 +19,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    padding: theme.spacing(0.5),
+    padding: '6px 18px',
+    border: 0
   },
 }));
 
@@ -57,67 +58,69 @@ export default function PassingGradeTable() {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 300, tableLayout: 'fixed' }} aria-label="Passing Grade Table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell colSpan={2}>Competence/Psychotest</StyledTableCell>
-            <StyledTableCell colSpan={2}>Performance</StyledTableCell>
-            <StyledTableCell colSpan={2}>Akhlak</StyledTableCell>
-            <StyledTableCell colSpan={2}>Learning Agility</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.competence}</TableCell>
-              <TableCell align="right">
-                <Stack direction="column" alignItems="center">
-                    <IconButton onClick={() => handleIncrease(index, 'competence')} size="small" sx={{ fontSize: '2px'}}>
-                        <ExpandLess />
-                    </IconButton>
-                    <IconButton onClick={() => handleDecrease(index, 'competence')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
-                        <ExpandMore />
-                    </IconButton>
-                </Stack>
-              </TableCell>
-              <TableCell>{row.performance}</TableCell>
-              <TableCell align="right">
-                <Stack direction="column" alignItems="center">
-                    <IconButton onClick={() => handleIncrease(index, 'performance')} size="small" sx={{ fontSize: '2px' }}>
-                        <ExpandLess />
-                    </IconButton>
-                    <IconButton onClick={() => handleDecrease(index, 'performance')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
-                        <ExpandMore />
-                    </IconButton>
-                </Stack>
-              </TableCell>
-              <TableCell>{row.akhlak}</TableCell>
-              <TableCell align="right">
-                 <Stack direction="column" alignItems="center">
-                    <IconButton onClick={() => handleIncrease(index, 'akhlak')} size="small" sx={{ fontSize: '2px' }}>
-                        <ExpandLess />
-                    </IconButton>
-                    <IconButton onClick={() => handleDecrease(index, 'akhlak')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
-                        <ExpandMore />
-                    </IconButton>
-                 </Stack>
-              </TableCell>
-              <TableCell>{row.learningagility}</TableCell>
-              <TableCell align="right">
-                <Stack direction="column" alignItems="center">
-                    <IconButton onClick={() => handleIncrease(index, 'learningagility')} size="small" sx={{ fontSize: '2px' }}>
-                        <ExpandLess />
-                    </IconButton>
-                    <IconButton onClick={() => handleDecrease(index, 'learningagility')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
-                        <ExpandMore />
-                    </IconButton>
-                </Stack>
-              </TableCell>
+    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px'}}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 300, tableLayout: 'fixed' }} aria-label="Passing Grade Table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell colSpan={2}>Competence/Psychotest</StyledTableCell>
+              <StyledTableCell colSpan={2}>Performance</StyledTableCell>
+              <StyledTableCell colSpan={2}>Akhlak</StyledTableCell>
+              <StyledTableCell colSpan={2}>Learning Agility</StyledTableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow key={index}>
+                <StyledTableCell>{row.competence}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <Stack direction="column" alignItems="center">
+                      <IconButton onClick={() => handleIncrease(index, 'competence')} size="small" sx={{ fontSize: '2px'}}>
+                          <ExpandLess />
+                      </IconButton>
+                      <IconButton onClick={() => handleDecrease(index, 'competence')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
+                          <ExpandMore />
+                      </IconButton>
+                  </Stack>
+                </StyledTableCell>
+                <StyledTableCell>{row.performance}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <Stack direction="column" alignItems="center">
+                      <IconButton onClick={() => handleIncrease(index, 'performance')} size="small" sx={{ fontSize: '2px' }}>
+                          <ExpandLess />
+                      </IconButton>
+                      <IconButton onClick={() => handleDecrease(index, 'performance')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
+                          <ExpandMore />
+                      </IconButton>
+                  </Stack>
+                </StyledTableCell>
+                <StyledTableCell>{row.akhlak}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <Stack direction="column" alignItems="center">
+                      <IconButton onClick={() => handleIncrease(index, 'akhlak')} size="small" sx={{ fontSize: '2px' }}>
+                          <ExpandLess />
+                      </IconButton>
+                      <IconButton onClick={() => handleDecrease(index, 'akhlak')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
+                          <ExpandMore />
+                      </IconButton>
+                  </Stack>
+                </StyledTableCell>
+                <StyledTableCell>{row.learningagility}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <Stack direction="column" alignItems="center">
+                      <IconButton onClick={() => handleIncrease(index, 'learningagility')} size="small" sx={{ fontSize: '2px' }}>
+                          <ExpandLess />
+                      </IconButton>
+                      <IconButton onClick={() => handleDecrease(index, 'learningagility')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
+                          <ExpandMore />
+                      </IconButton>
+                  </Stack>
+                </StyledTableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
