@@ -12,7 +12,7 @@ const JenisKelaminTerbaru = () => {
   const chartOptions = {
     chart: {
       type: 'donut',
-      height: 400,
+      height: 300,
       toolbar: {
         show: true,
         tools: {
@@ -27,26 +27,26 @@ const JenisKelaminTerbaru = () => {
         },
         export: {
           csv: {
-            filename: 'Total talent berdasarkan jenis kelamin',
+            filename: 'Rasio talent menurut kelompok jenis kelamin',
             columnDelimiter: ',',
             headerCategory: 'Jenis Kelamin',
-            headerValue: 'Total talent berdasarkan jenis kelamin',
+            headerValue: 'Rasio talent menurut kelompok jenis kelamin',
             dateFormatter(timestamp) {
               return new Date(timestamp).toDateString();
             }
           },
           svg: {
-            filename: 'Total talent berdasarkan jenis kelamin',
+            filename: 'Rasio talent menurut kelompok jenis kelamin',
           },
           png: {
-            filename: 'Total talent berdasarkan jenis kelamin',
+            filename: 'Rasio talent menurut kelompok jenis kelamin',
           },
         },
       },
     },
     plotOptions: {
       donut: {
-        customScale: 0.8,
+        customScale: 0.6,
         dataLabels: {
           enabled: true,
           formatter: function (val, opts) {
@@ -96,7 +96,7 @@ const JenisKelaminTerbaru = () => {
             <Grid item>
               <Grid container direction="column" spacing={1}>
                 <Grid item>
-                  <Typography variant="h3">Total Talent Berdasarkan Jenis Kelamin </Typography>
+                  <Typography variant="h3">Rasio Talent Menurut Kelompok Jenis Kelamin </Typography>
                 </Grid>
               </Grid>
             </Grid>

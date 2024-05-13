@@ -8,7 +8,7 @@ import { gridSpacing } from '../../store/constant';
 
 const GenerasiTalent = () => {
   const chartRef = useRef(null);
-  const seriesData = [50, 88, 40, 110];
+  const seriesData = [50, 88, 110];
   const chartOptions = {
     chart: {
       type: 'pie',
@@ -27,19 +27,19 @@ const GenerasiTalent = () => {
         },
         export: {
           csv: {
-            filename: 'Total talent berdasarkan generasi',
+            filename: 'Rasio talent menurut kelompok generasi',
             columnDelimiter: ',',
-            headerCategory: 'Total talent berdasarkan generasi',
-            headerValue: 'Total talent berdasarkan generasi',
+            headerCategory: 'Rasio talent menurut kelompok generasi',
+            headerValue: 'Rasio talent menurut kelompok generasi',
             dateFormatter(timestamp) {
               return new Date(timestamp).toDateString();
             }
           },
           svg: {
-            filename: 'Total talent berdasarkan generasi',
+            filename: 'Rasio talent menurut kelompok generasi',
           },
           png: {
-            filename: 'Total talent berdasarkan generasi',
+            filename: 'Rasio talent menurut kelompok generasi',
           },
         },
       },
@@ -65,8 +65,8 @@ const GenerasiTalent = () => {
         placement: 'mid-center',
       },
     },
-    labels: ["Gen X", "Gen Y", "Gen Z", "Milenial"],
-    colors: ['#1C2D5A', '#7e9bc8','#4978b1','#3c6494'], 
+    labels: ["Gen X", "Gen Y", "Gen Z"],
+    colors: ['#1C2D5A', '#7e9bc8','#4978b1'], 
     legend: {
       position: 'right',
       offsetY: 100,
@@ -95,7 +95,7 @@ const GenerasiTalent = () => {
             <Grid item>
               <Grid container direction="column" spacing={1}>
                 <Grid item>
-                  <Typography variant="h3">Total Talent Berdasarkan Kelompok Generasi </Typography>
+                  <Typography variant="h3">Rasio Talent Menurut Kelompok Generasi </Typography>
                 </Grid>
               </Grid>
             </Grid>
