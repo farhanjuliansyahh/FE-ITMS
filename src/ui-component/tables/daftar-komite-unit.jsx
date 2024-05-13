@@ -35,22 +35,21 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 export default function TabelDaftarAnggotaKomiteUnit({ 
   onOpenSecondModalTable,
-  selectedKantor,
-  selectedRumpunJabatan,
-  selectedJobLevel,
-  selectedStatusIDP,
+  searchNama, 
+  searchJabatan,
+  searchKantor,
   rows
   }) {
 
-  const filteredRows = rows.filter((row) => {
-    const kantorMatch = row.kantor === selectedKantor?.nama_kantor;
-    const rumpunJabatanMatch = row.jobfam === selectedRumpunJabatan;
-    const jobLevelMatch = row.joblevel === selectedJobLevel;
-    const statusIDPMatch = row.status_IDP === selectedStatusIDP;
-    
-    return (!selectedKantor || kantorMatch) && (!selectedRumpunJabatan || rumpunJabatanMatch) && 
-            (!selectedJobLevel || jobLevelMatch) && (!selectedStatusIDP || statusIDPMatch);
-  });
+    const filteredRows = rows.filter((row) => {
+      const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+      const jabatanMatch = !searchJabatan || (row.jabatan && row.jabatan.toLowerCase().includes(searchJabatan.toLowerCase())); // Add null check for row.nippos
+      const kantorMatch = !searchKantor || (row.kantor && row.kantor.toLowerCase().includes(searchKantor.toLowerCase())); // Add null check for row.nippos
+  
+      return (!searchNama || namaMatch) 
+      && (!searchJabatan || jabatanMatch) 
+      && (!searchKantor || kantorMatch);
+    });
 
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5); // Default items per page

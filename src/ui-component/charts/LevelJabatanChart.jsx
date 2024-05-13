@@ -32,7 +32,7 @@ const LevelJabatanChart = ({ series, options }) => {
                 <Grid item> 
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
-                      <Typography variant="h3">Total Talent Berdasarkan Level Jabatan</Typography>
+                      <Typography variant="h3">Jumlah Talent Menurut Level Jabatan</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -51,7 +51,7 @@ LevelJabatanChart.defaultProps = {
   series: [
     {
       name: 'Total Talent',
-      data: [50, 88, 118, 139, 151, 135, 98, 144, 173, 184, 117],
+      data: [0, 88, 118, 139, 151, 135, 98, 144, 173, 184, 117, 112],
     },
   ],
   options: {
@@ -61,7 +61,7 @@ LevelJabatanChart.defaultProps = {
       toolbar: {
         export: {
           csv: {
-            filename: 'Total_talent_berdasarkan_joblevel.csv',
+            filename: 'Jumlah_talent_menurut_joblevel.csv',
             columnDelimiter: ',',
             headerCategory: 'Level_Jabatan',
             headerValue: 'Total_Talent',
@@ -70,10 +70,10 @@ LevelJabatanChart.defaultProps = {
             },
           },
           svg: {
-            filename: 'Total talent berdasarkan joblevel',
+            filename: 'Jumlah_talent_menurut_joblevel',
           },
           png: {
-            filename: 'Total talent berdasarkan joblevel',
+            filename: 'Jumlah_talent_menurut_joblevel',
           }
         },
       },
@@ -94,6 +94,7 @@ LevelJabatanChart.defaultProps = {
     },
     xaxis: {
       categories: [
+        'A2',
         'A1',
         'B2',
         'B1',
@@ -102,6 +103,9 @@ LevelJabatanChart.defaultProps = {
         'D3',
         'D2',
         'D1',
+        'E3',
+        'E2',
+        'E1',
       ],
     },
   },

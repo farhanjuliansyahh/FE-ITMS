@@ -83,11 +83,28 @@ const columns = [
 ];
 
 
-export default function TalentClusterTable({rows}) {
+export default function TalentClusterTable({
+  rows,
+  searchNama, // Receive the search term as a prop
+  searchNippos,
+  searchJobLevel,
+  searchKategoriMatrix
+}) {
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+    const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
+    const KategoriMatrixMatch = !searchKategoriMatrix || (row['Matriks Kategori Akhir'] && row['Matriks Kategori Akhir'].toLowerCase().includes(searchKategoriMatrix.toLowerCase())); // Add null check for row.nippos
+
+    return (!searchNama || namaMatch) 
+    && (!searchNippos || nipposMatch) 
+    && (!searchJobLevel || jobLevelMatch) 
+    && (!searchKategoriMatrix || KategoriMatrixMatch);
+  });
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
         initialState={{
           pagination: {

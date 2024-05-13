@@ -1,52 +1,18 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-// import Button from '@mui/material/Button';
-// import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-// import DeleteIcon from '@mui/icons-material/Delete'; // Import DeleteIcon
-// import SendIcon from '@mui/icons-material/Send'; // Import SendIcon
-
-// material-ui
 import { Box, Button, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
-// import { gridSpacing } from 'store/constant';
-// import GroupsIcon from '@mui/icons-material/Groups';
-// import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-// import Header from '../../../ui-component/header/header';
-// import MainLayout from 'layout/MainLayout';
-import { Container } from '@mui/system';
 import MainCard from '../cards/MainCard';
-// import { DownloadDone, RotateRight } from '@mui/icons-material';
-// import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-// import SecondCard from 'ui-component/cards/SecondCard';
-// import SearchSection from 'layout/MainLayout/Header/SearchSection';
-// import SearchSection2 from '../../../ui-component/searchsection';
-// import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
-import TimelineDetailEvent from '../submenu/timelinedetailevent';
 import AddEventModal from '../modal/TambahEvent';
-import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
-import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
-import EventDetailSearchSection from '../button/EventDetailSearchSection';
-import SearchResetButton from '../button/SearchResetButton';
-import SearchIcon from '@mui/icons-material/Search';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import TalentPoolTable from '../tables/talentpool';
-// import KomiteUnitListButton from '../button/KomiteUnitListButton';
-// import { CloudDownload, Download, DownloadDoneRounded, FileDownload, FileDownloadDone, FontDownload } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
 import ButtonPrimary from '../button/ButtonPrimary';
 import LabelInfo from '../../ui-component/label/label-info';
-
-
-
-
-
-
-
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import TalentSourceTable from '../tables/talentsource';
-
+import { RestartAltOutlined } from '@mui/icons-material';
+import CustomSearch from '../searchsection/custom-search';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
 
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
@@ -141,6 +107,39 @@ const TalentPool = ({eventid}) => {
     paddingBottom: '24px',
   });
 
+  // TALENT POOL
+  const listNamaTrue = [...new Set(poolrow.map(row => row.Nama))]
+  const listNipposTrue = [...new Set(poolrow.map(row => row.Nippos))];
+  const listJobLevelTrue = [...new Set(poolrow.map(row => row['Job Level']))];
+  const listStatusTrue = [...new Set(poolrow.map(row => row['Status']))];
+
+  const [selectedNamaTrue, setSelectedNamaTrue] = useState(null);
+  const [selectedNipposTrue, setSelectedNipposTrue] = useState(null);
+  const [selectedJobLevelTrue, setSelectedJobLevelTrue] = useState(null);
+  const [selectedStatusTrue, setSelectedStatusTrue] = useState(null);
+
+  const resetNamaInputTrue = () => {
+    setSelectedNamaTrue('');
+  };
+
+  const resetNipposInputTrue = () => {
+    setSelectedNipposTrue('');
+  };
+
+  const resetJobLevelInputTrue = () => {
+    setSelectedJobLevelTrue('');
+  };
+
+  const resetStatusInputTrue = () => {
+    setSelectedStatusTrue('');
+  };
+
+  const handleResetSearchTrue = () => {
+    resetNamaInputTrue();
+    resetNipposInputTrue();
+    resetJobLevelInputTrue();
+    resetStatusInputTrue();
+  };
 
   return (
     <>
@@ -163,29 +162,24 @@ const TalentPool = ({eventid}) => {
             <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
           </FlexContainer>
           
+          <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaTrue} label={'Nama'} onSearch={setSelectedNamaTrue} value={selectedNamaTrue} resetInput={resetNamaInputTrue} />
+                <CustomSearch field={listNipposTrue} label={'Nippos'} onSearch={setSelectedNipposTrue} value={selectedNipposTrue} resetInput={resetNipposInputTrue} />
+                <CustomSearch field={listJobLevelTrue} label={'Job Level'} onSearch={setSelectedJobLevelTrue} value={selectedJobLevelTrue} resetInput={resetJobLevelInputTrue} />
+                <CustomSearch field={listStatusTrue} label={'Status'} onSearch={setSelectedStatusTrue} value={selectedStatusTrue} resetInput={resetStatusInputTrue} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+            </div>
          
-          <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-            <div style={{ marginRight: '12px', width:'100%'  }}>
-                  <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-            </div>
-            <div style={{ marginRight: '12px', width:'100%' }}>
-                <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-            </div>
-            <div style={{ marginRight: '12px', width:'100%' }}>
-                <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-            </div>
-            <div style={{ marginRight: '24px', width:'100%' }}>
-                <EventDetailSearchSection filter={filterStatus} setFilter={setFilterStatus} PlaceHolder={'Status'} />
-            </div>
-            <div style={{ marginRight: '12px' }}>
-                <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-            </div>
-            <div style={{ marginRight: '0px' }}>
-                <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
-            </div>
-          </div>
-         
-          <TalentPoolTable filter={{nama:filterNama, nippos:filterNippos, job:filterJob, status:filterStatus}} rows={poolrow}/>
+          <TalentPoolTable 
+              filter={{nama:filterNama, nippos:filterNippos, job:filterJob, status:filterStatus}} 
+              rows={poolrow}
+              searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+              searchNippos={selectedNipposTrue}
+              searchJobLevel={selectedJobLevelTrue}
+              searchStatus={selectedStatusTrue}
+            />
           </Box>
 
     

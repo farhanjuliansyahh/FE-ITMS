@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router';
 
 export const useAuth = () => {
   const navigate = useNavigate();
+ 
 
   const doLoginSide = async (username, password) => {
     const headers = {
@@ -28,7 +29,8 @@ export const useAuth = () => {
         navigate('/dashboard');
       }, 1000); // 1000 milliseconds = 1 second
     } else {
-      alert('Salah Nama atau Password!');
+      alert('Salah NIPPOS atau Kata Sandi!');
+  
     }
   };
 

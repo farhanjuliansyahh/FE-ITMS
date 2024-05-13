@@ -29,7 +29,7 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
       },
       responsive: [
         {
-          breakpoint: 480,
+          breakpoint: 300,
           options: {
             legend: {
               position: 'bottom',
@@ -42,7 +42,7 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '50%'
+          columnWidth: '63%'
         }
       },
       xaxis: {
@@ -55,7 +55,7 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
         show: true,
         fontFamily: `'Roboto', sans-serif`,
         position: 'bottom',
-        offsetX: 20,
+        offsetX: -25,
         labels: {
           useSeriesColors: false
         },
@@ -65,7 +65,7 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
           radius: 5
         },
         itemMargin: {
-          horizontal: 15,
+          horizontal: 5,
           vertical: 8
         }
       },
@@ -174,7 +174,7 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
             <Grid item xs={12}>
               <Grid container direction="column" spacing={1}>
                 <Grid item xs={12} md={12}>
-                  <Typography variant="h3">Total Talent Berdasarkan Rumpun Jabatan</Typography>
+                  <Typography variant="h3">Jumlah Talent Menurut Rumpun Jabatan</Typography>
                 </Grid>
               </Grid>
             </Grid>
