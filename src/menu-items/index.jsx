@@ -14,7 +14,8 @@ const menuItems = {
     EventKetuaKomiteTalent,
     EventKomiteUnit,  
     EventKaryawan, 
-    ManajemenPengguna]
+    ManajemenPengguna
+  ]
 };
 
 export default menuItems;

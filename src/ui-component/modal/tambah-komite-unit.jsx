@@ -10,7 +10,7 @@ import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import DetailTalentTable from '../../ui-component/tables/detail-talent-table';
 
-export default function TambahKomiteUnit({ open, onClose, onOpenSecondModal }) {
+export default function TambahKomiteUnit({ open, onClose, onConfirm, onOpenSecondModal }) {
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         setLoading(false);
@@ -20,16 +20,35 @@ export default function TambahKomiteUnit({ open, onClose, onOpenSecondModal }) {
     const [selectedJobLevel, setSelectedJobLevel] = useState(null);
     const [selectedStatusIDP, setSelectedStatusIDP] = useState(null);
     const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
+    const [rows, setRows] = useState([])
+
+    useEffect(() => {
+        // Fetch data from API
+        fetch(`http://localhost:4000/getkomiteunitcandidate`)
+          .then(response => response.json())
+          .then(data => {
+            // Update state with API data
+            setRows(data.map((row, index) => ({ ...row, id: index + 1 })));
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []); // Empty dependency array to run effect only once
 
     const handleCloseKonfirmasiModal = () => {
         setOpenKonfirmasiModal(false);
     };
 
-    const handleTambahKomiteUnitButtonClick = (event) => {
+    const handleTambahKomiteUnitButtonClick = (nippos) => {
         // event.stopPropagation(); // Stop event propagation here
         onClose(); // Close the first modal
-        onOpenSecondModal(); // Open the second modal
+        onOpenSecondModal(nippos); // Open the second modal
     };
+
+    const HandleKonfirmasiModal = () => {
+        onConfirm()
+    }
+
 
     const boxStyle = {
         padding: '20px',
@@ -74,6 +93,7 @@ export default function TambahKomiteUnit({ open, onClose, onOpenSecondModal }) {
                     selectedRumpunJabatan={selectedRumpunJabatan}
                     selectedJobLevel={selectedJobLevel}
                     selectedStatusIDP={selectedStatusIDP}
+                    rows = {rows}
                 />
             </Box>
 

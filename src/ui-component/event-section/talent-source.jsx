@@ -308,11 +308,12 @@ const TalentSource = ({eventid}) => {
                 filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
                 rows={rowsfalse}
                 selectedRows={selectedRows} 
-                onSelectedRowsChange={handleSelectedRowsChange} 
+                onSelectedRowsChange={handleSelectedRowsChange}
                 searchNama={selectedNamaFalse} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
                 searchNippos={selectedNipposFalse}
                 searchJobLevel={selectedJobLevelFalse}
                 searchKomiteUnit={selectedKomiteUnitFalse}
+                eventid={eventidactive} 
             />
           </Box>
         </CustomTabPanel>
@@ -345,6 +346,7 @@ const TalentSource = ({eventid}) => {
                 checkboxSelection={false} 
                 filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
                 rows ={rowstrue}
+                eventid={eventidactive} 
                 searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
                 searchNippos={selectedNipposTrue}
                 searchJobLevel={selectedJobLevelTrue}
