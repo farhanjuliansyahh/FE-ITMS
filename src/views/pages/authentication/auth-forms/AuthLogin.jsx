@@ -20,7 +20,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useAuth } from '../../../../routes/useAuth';
 import { useNavigate } from 'react-router';
 
-const FirebaseLogin = () => {
+
+const Login = () => {
   const { doLoginSide } = useAuth();
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ const FirebaseLogin = () => {
         {/* Nippos Sign In */}
         <Grid item xs={12} container alignItems="center" justifyContent="center">
           <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Sign in with your credentials</Typography>
+            <Typography variant="subtitle1">Masuk dengan kredensial Anda</Typography>
           </Box>
         </Grid>
       </Grid>
@@ -51,9 +52,9 @@ const FirebaseLogin = () => {
         initialValues={{ nippos: '', password: '' }}
         validationSchema={Yup.object().shape({
           nippos: Yup.string()
-            .matches(/^[0-9]{9}$/, 'Must be 9 digits')
-            .required('Nippos is required'),
-          password: Yup.string().required('Password is required')
+            .matches(/^[0-9]{9}$/, 'Harus 9 digit')
+            .required('NIPPOS diperlukan'),
+          password: Yup.string().required('Kata Sandi diperlukan')
         })}
         onSubmit={async (values, { setErrors, setSubmitting }) => {
           try {
@@ -61,7 +62,7 @@ const FirebaseLogin = () => {
             navigate('/');
           } catch (error) {
             console.error(error);
-            setErrors({ submit: 'Invalid nippos or password' });
+            setErrors({ submit: 'NIPPOS atau Kata Sandi Tidak Valid' });
           }
           setSubmitting(false);
         }}
@@ -69,8 +70,8 @@ const FirebaseLogin = () => {
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             {/* Nippos Input */}
-            <FormControl fullWidth error={Boolean(touched.nippos && errors.nippos)}>
-              <InputLabel htmlFor="outlined-adornment-nippos-login">Nippos</InputLabel>
+            <FormControl style={{ marginTop: '16px', marginBottom: '16px'}} fullWidth error={Boolean(touched.nippos && errors.nippos)}>
+              <InputLabel htmlFor="outlined-adornment-nippos-login">NIPPOS</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-nippos-login"
                 type="text"
@@ -86,7 +87,7 @@ const FirebaseLogin = () => {
 
             {/* Password Input */}
             <FormControl fullWidth error={Boolean(touched.password && errors.password)}>
-              <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-password-login">Kata Sandi</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password-login"
                 type={showPassword ? 'text' : 'password'}
@@ -107,9 +108,9 @@ const FirebaseLogin = () => {
             </FormControl>
 
             {/* Submit Button */}
-            <Box sx={{ mt: 2 }}>
-              <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
-                Sign in
+            <Box sx={{ marginTop: '36px' }}>
+              <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary" sx={{ borderRadius: 3 }} >
+                Masuk
               </Button>
             </Box>
 
@@ -126,4 +127,4 @@ const FirebaseLogin = () => {
   );
 };
 
-export default FirebaseLogin;
+export default Login;

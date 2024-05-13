@@ -21,16 +21,6 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-function createData(id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance) {
-  return { id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance };
-}
-
-const headers = [
-    'No', 'Nama', 'NIPPOS', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Kantor', 'Komite Unit',
-    'Kompetensi BUMN', 'Kompetensi Leadership', 'Kompetensi Teknis', 
-    'Potensi', 'AKHLAK', 'Learning Agility', 'Performance'
-];
-
 const columnKeys = {
     'id': 'No',
     'nama': 'Nama',
@@ -49,30 +39,25 @@ const columnKeys = {
     'performance': 'Performance'
 };
 
-const rows = [
-  createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'D3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABD HAFID'),
-  createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'D3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABDU SOMAD'),
-  createData(3, 'Adinda', '998494379', 'Asisten Manajer Pengelolaan Remittance LN', 'D3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABDUL JAMIL'),
-  createData(4, 'Niken Wijaya', '998494379', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'D3', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ABDUL WAHAB'),
-  createData(5, 'Niken', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'D3', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ACEP RUDI SUPRIADI'),
-];
-
 export default function NilaiAssessmentTable({ 
-  selectedKantor,
-  selectedRumpunJabatan,
-  selectedJobLevel,
-  selectedStatusIDP
-  }) {
-
+    rows,
+    searchNama, // Receive the search term as a prop
+    searchNippos,
+    searchJobLevel,
+    searchRumpunJabatan
+}) {
+    // Filter the rows based on selected filters and search term
     const filteredRows = rows.filter((row) => {
-    const kantorMatch = row.kantor === selectedKantor?.nama_kantor;
-    const rumpunJabatanMatch = row.jobfam === selectedRumpunJabatan;
-    const jobLevelMatch = row.joblevel === selectedJobLevel;
-    const statusIDPMatch = row.status_IDP === selectedStatusIDP;
-    
-    return (!selectedKantor || kantorMatch) && (!selectedRumpunJabatan || rumpunJabatanMatch) && 
-            (!selectedJobLevel || jobLevelMatch) && (!selectedStatusIDP || statusIDPMatch);
-  });
+        const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+        const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+        const jobLevelMatch = !searchJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
+        const rumpunJabatanMatch = !searchRumpunJabatan || (row.rumpunjabatan && row.rumpunjabatan.toLowerCase().includes(searchRumpunJabatan.toLowerCase())); // Add null check for row.nippos
+
+        return (!searchNama || namaMatch) 
+        && (!searchNippos || nipposMatch) 
+        && (!searchJobLevel || jobLevelMatch) 
+        && (!searchRumpunJabatan || rumpunJabatanMatch);
+    });
 
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5); // Default items per page

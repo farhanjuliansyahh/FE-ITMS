@@ -8,7 +8,6 @@ import { useTheme } from '@mui/material/styles';
 import {
   Avatar,
   Box,
-  Card,
   Chip,
   ClickAwayListener,
   Divider,
@@ -41,6 +40,7 @@ const ProfileSection = () => {
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
   const token = sessionStorage.getItem('token');
+  const nippos = sessionStorage.getItem('nippos');
   const [resultProfile, setResultProfile] = useState(null);
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -51,6 +51,8 @@ const ProfileSection = () => {
   const anchorRef = useRef(null);
   const handleLogout = async () => {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('nippos');
+    sessionStorage.removeItem('role');
     navigate('/');
   };
 
@@ -104,9 +106,39 @@ const ProfileSection = () => {
     } else {
       navigate('/');
     }
-  }, [token]);
+  }, [token, navigate]);
 
-  console.log(resultProfile);
+  useEffect(() => {
+    const fetchRole = async () => {
+      try {
+        const responseRole = await fetch('http://localhost:4000/getrole', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            nippos: nippos
+          })
+        });
+        const response = await responseRole.json();
+
+        // Extract nama_role(s) from the response
+        const { namaroles } = response;
+        const namaRoles = namaroles.map((role) => role.nama_role);
+
+        if (namaRoles.length > 0) {
+          // Set sessionStorage with the array of nama_roles
+          sessionStorage.setItem('role', JSON.stringify(namaRoles));
+          console.log('nama_roles saved in sessionStorage:', namaRoles);
+        } else {
+          console.error('No nama_roles found in response');
+        }
+      } catch (error) {
+        console.error('Error fetching role:', error);
+      }
+    };
+    fetchRole();
+  }, [nippos]);
 
   return (
     <>
@@ -180,7 +212,16 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">{resultProfile.nama}</Typography>
                       </Stack>
-                      <Typography variant="subtitle2">Project Admin</Typography>
+                      {/* Check if nipposrole exists and has at least one element */}
+                      {resultProfile.nipposrole && resultProfile.nipposrole.length > 0 && (
+                        <Stack>
+                          {resultProfile.nipposrole.map((role, index) => (
+                            <Typography key={index} variant="subtitle2">
+                              {role.roleid.nama_role}
+                            </Typography>
+                          ))}
+                        </Stack>
+                      )}
                     </Stack>
                     <Divider />
                   </Box>

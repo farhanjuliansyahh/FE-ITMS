@@ -1,24 +1,20 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Dialog, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Dialog, Grid, IconButton, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { CloseOutlined } from '@mui/icons-material';
+import { CloseOutlined, RestartAltOutlined } from '@mui/icons-material';
 import TabelDaftarAnggotaKomiteUnit from '../../ui-component/tables/daftar-komite-unit';
 import KonfirmasiTambahKomiteUnit from './konfirmasi-tambah-komite-unit';
-import DetailTalentPertama from '../../ui-component/button/DropdownDetailTalentPertama';
-import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import DetailTalentTable from '../../ui-component/tables/detail-talent-table';
+import CustomSearch from '../searchsection/custom-search';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+
 
 export default function TambahKomiteUnit({ open, onClose, onConfirm, onOpenSecondModal }) {
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         setLoading(false);
     }, []);
-    const [selectedKantor, setSelectedKantor] = useState(null);
-    const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
-    const [selectedJobLevel, setSelectedJobLevel] = useState(null);
-    const [selectedStatusIDP, setSelectedStatusIDP] = useState(null);
+    
     const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
     const [rows, setRows] = useState([])
 
@@ -49,7 +45,6 @@ export default function TambahKomiteUnit({ open, onClose, onConfirm, onOpenSecon
         onConfirm()
     }
 
-
     const boxStyle = {
         padding: '20px',
         width: '100%',
@@ -62,6 +57,33 @@ export default function TambahKomiteUnit({ open, onClose, onConfirm, onOpenSecon
         gap: '16px', 
         paddingBottom: '24px',
     });
+    
+    // DAFTAR KOMITE UNIT
+    const listNama = [...new Set(rows.map(row => row.nama))]
+    const listJabatan = [...new Set(rows.map(row => row.jabatan))];
+    const listKantor = [...new Set(rows.map(row => row.kantor))]
+
+    const [selectedNama, setSelectedNama] = useState(null);
+    const [selectedJabatan, setSelectedJabatan] = useState(null);
+    const [selectedKantor, setSelectedKantor] = useState(null);
+    
+    const resetNamaInput = () => {
+        setSelectedNama('');
+    };
+
+    const resetJabatanInput = () => {
+        setSelectedJabatan('');
+    };
+
+    const resetKantorInput = () => {
+        setSelectedKantor('');
+    };
+
+    const handleResetSearch = () => {
+        resetNamaInput();
+        resetJabatanInput();
+        resetKantorInput();
+    };
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth >
@@ -76,24 +98,21 @@ export default function TambahKomiteUnit({ open, onClose, onConfirm, onOpenSecon
                     </IconButton>
                 </FlexContainer>
 
-                <Grid style={{marginBottom: '0.2%'}}>
-                    <DetailTalentPertama 
-                        selectedRumpunJabatan={selectedRumpunJabatan}
-                        setSelectedRumpunJabatan={setSelectedRumpunJabatan}
-                        selectedJobLevel={selectedJobLevel}
-                        setSelectedJobLevel={setSelectedJobLevel}
-                        selectedKantor={selectedKantor}
-                        setSelectedKantor={setSelectedKantor}
-                        />
-                </Grid>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+                    <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                        <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
+                        <CustomSearch field={listJabatan} label={'Jabatan'} onSearch={setSelectedJabatan} value={selectedJabatan} resetInput={resetJabatanInput} />
+                        <CustomSearch field={listKantor} label={'Kantor'} onSearch={setSelectedKantor} value={selectedKantor} resetInput={resetKantorInput} />
+                    </Stack>
+                    <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+                </div>
 
                 <TabelDaftarAnggotaKomiteUnit 
                     onOpenSecondModalTable={handleTambahKomiteUnitButtonClick}
-                    selectedKantor={selectedKantor}
-                    selectedRumpunJabatan={selectedRumpunJabatan}
-                    selectedJobLevel={selectedJobLevel}
-                    selectedStatusIDP={selectedStatusIDP}
                     rows = {rows}
+                    searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                    searchJabatan={selectedJabatan}
+                    searchKantor={selectedKantor}
                 />
             </Box>
 

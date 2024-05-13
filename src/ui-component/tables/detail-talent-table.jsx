@@ -29,7 +29,7 @@ export default function DetailTalentTable({
         { field: 'joblevel', headerName: 'Job Level', width: 110 },
         { field: 'jobfam', headerName: 'Rumpun Jabatan', width: 110 },
         { field: 'nama_kantor', headerName: 'Nama Kantor', width: 170 },
-        { field: 'status_IDP', headerName: 'Status IDP', width: 130 },
+        // { field: 'status_IDP', headerName: 'Status IDP', width: 130 },
     ];
 
     const filteredRows = rows.filter((row) => {
