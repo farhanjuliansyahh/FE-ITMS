@@ -18,7 +18,7 @@ const Logo = () => {
 
     //if you want to use image instead of svg uncomment following, and comment out <svg> element.
   
-    <img src={logo} alt="ITMS" width="114" height="48" />
+    <img src={logo} alt="ITMS" width="228" height="96" />
     
      
   
