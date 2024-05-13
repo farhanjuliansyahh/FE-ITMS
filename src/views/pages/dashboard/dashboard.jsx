@@ -1,20 +1,15 @@
 import { useEffect, useState } from 'react';
-
-// material-ui
 import { Grid, Typography } from '@mui/material';
-
 import { gridSpacing } from '../../../store/constant';
 import GroupsIcon from '@mui/icons-material/Groups';
-import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import Header from '../../../ui-component/header/header';
 import DashboardCard from '../../../ui-component/cards/DashboardCard';
-import RumpunJabatanChart from '../../../ui-component/charts/RumpunJabatanChart';
 import LevelJabatanChart from '../../../ui-component/charts/LevelJabatanChart';
-import JenisKelaminChart from '../../../ui-component/charts/JenisKelaminChart';
-import GenerasiChart from '../../../ui-component/charts/GenerasiChart';
 import ButtonChart from '../../../ui-component/button/ButtonChart';
 import MainCard from '../../../ui-component/cards/MainCard';
-import { padding } from '@mui/system';
+import RumpunJabatanTerbaru from '../../../ui-component/charts/RumpunJabatanChartTerbaru';
+import JenisKelaminTerbaru from '../../../ui-component/charts/JenisKelaminTerbaru';
+import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent';
 
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
@@ -65,14 +60,15 @@ const Dashboard = () => {
               </Grid>
             ))}
         </Grid>
-        
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
-              <RumpunJabatanChart isLoading={isLoading} />
+              {/* <JenisKelaminChart isLoading={isLoading} /> */}
+              <JenisKelaminTerbaru isLoading={isLoading}/>
             </Grid>
             <Grid item xs={12} md={6}>
-              <LevelJabatanChart isLoading={isLoading} />
+              <GenerasiTalent/>
+              {/* <GenerasiChart isLoading={isLoading} /> */}
             </Grid>
           </Grid>
         </Grid>
@@ -80,10 +76,12 @@ const Dashboard = () => {
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
-              <JenisKelaminChart isLoading={isLoading} />
+              {/* <RumpunJabatanChart isLoading={isLoading} /> */}
+              <RumpunJabatanTerbaru isLoading={isLoading} />
+              
             </Grid>
             <Grid item xs={12} md={6}>
-              <GenerasiChart isLoading={isLoading} />
+              <LevelJabatanChart isLoading={isLoading} />
             </Grid>
           </Grid>
         </Grid>
@@ -123,6 +121,7 @@ const Dashboard = () => {
           </Grid>
           </MainCard>
         </Grid>
+        
       </Grid>
     </>
   );

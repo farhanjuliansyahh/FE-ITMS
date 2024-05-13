@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Menu, MenuItem } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
-import { AddCircleOutlineOutlined, ExpandMore } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 
 const StyledTableCell = styled(TableCell)(() => ({
@@ -21,36 +21,43 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-// function createData(id, nama, nippos, jabatan, kantor, aksi) {
-//   return { id, nama, nippos, jabatan, kantor, aksi };
-// }
+const columnKeys = {
+    'id': 'No',
+    'nama': 'Nama',
+    'nippos': 'NIPPOS',
+    'posisi': 'Posisi',
+    'joblevel': 'Job Level',
+    'rumpunjabatan': 'Rumpun Jabatan',
+    'kantor': 'Kantor',
+    'komiteunit': 'Komite Unit',
+    'kompbumn': 'Kompetensi BUMN',
+    'komplead': 'Kompetensi Leadership',
+    'kompteknis': 'Kompetensi Teknis',
+    'potensi': 'Potensi',
+    'akhlak': 'AKHLAK',
+    'learningagility': 'Learning Agility',
+    'performance': 'Performance'
+};
 
-// const rows = [
-//   createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'KANTOR PUSAT BANDUNG'),
-//   createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'KANTOR PUSAT BANDUNG'),
-//   createData(3, 'Adinda', '998494379', 'Asisten Manajer Pengelolaan Remittance LN', 'KANTOR PUSAT BANDUNG'),
-//   createData(4, 'Niken Wijaya', '998494379', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'KANTOR PUSAT JAKARTA'),
-//   createData(5, 'Niken', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'KANTOR PUSAT JAKARTA'),
-// ];
+export default function NilaiAssessmentTable({ 
+    rows,
+    searchNama, // Receive the search term as a prop
+    searchNippos,
+    searchJobLevel,
+    searchRumpunJabatan
+}) {
+    // Filter the rows based on selected filters and search term
+    const filteredRows = rows.filter((row) => {
+        const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+        const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+        const jobLevelMatch = !searchJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
+        const rumpunJabatanMatch = !searchRumpunJabatan || (row.rumpunjabatan && row.rumpunjabatan.toLowerCase().includes(searchRumpunJabatan.toLowerCase())); // Add null check for row.nippos
 
-export default function TabelDaftarAnggotaKomiteUnit({ 
-  onOpenSecondModalTable,
-  selectedKantor,
-  selectedRumpunJabatan,
-  selectedJobLevel,
-  selectedStatusIDP,
-  rows
-  }) {
-
-  const filteredRows = rows.filter((row) => {
-    const kantorMatch = row.kantor === selectedKantor?.nama_kantor;
-    const rumpunJabatanMatch = row.jobfam === selectedRumpunJabatan;
-    const jobLevelMatch = row.joblevel === selectedJobLevel;
-    const statusIDPMatch = row.status_IDP === selectedStatusIDP;
-    
-    return (!selectedKantor || kantorMatch) && (!selectedRumpunJabatan || rumpunJabatanMatch) && 
-            (!selectedJobLevel || jobLevelMatch) && (!selectedStatusIDP || statusIDPMatch);
-  });
+        return (!searchNama || namaMatch) 
+        && (!searchNippos || nipposMatch) 
+        && (!searchJobLevel || jobLevelMatch) 
+        && (!searchRumpunJabatan || rumpunJabatanMatch);
+    });
 
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5); // Default items per page
@@ -71,35 +78,22 @@ export default function TabelDaftarAnggotaKomiteUnit({
     <div>
       <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px'}}>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }}>
+          <Table stickyHeader sx={{ minWidth: 3000 }}>
             <TableHead>
-              <TableRow>
-                <StyledTableCell>No</StyledTableCell>
-                <StyledTableCell>Nama</StyledTableCell>
-                <StyledTableCell>NIPPOS</StyledTableCell>
-                <StyledTableCell>Jabatan</StyledTableCell>
-                <StyledTableCell>Kantor</StyledTableCell>
-                <StyledTableCell>Aksi</StyledTableCell>
-              </TableRow>
+                <TableRow>
+                    {Object.keys(columnKeys).map((key) => (
+                        <StyledTableCell key={key}>{columnKeys[key]}</StyledTableCell>
+                    ))}
+                </TableRow>
             </TableHead>
             <TableBody>
-              {filteredRows.slice(startIndex, endIndex).map((row) => (
-                <TableRow key={row.id}>
-                  <StyledTableCell>{row.id}</StyledTableCell>
-                  <StyledTableCell>{row.nama}</StyledTableCell>
-                  <StyledTableCell>{row.nippos}</StyledTableCell>
-                  <StyledTableCell>{row.jabatan}</StyledTableCell>
-                  <StyledTableCell>{row.kantor}</StyledTableCell>
-                  <StyledTableCell>
-                    <ButtonPrimary
-                      icon={AddCircleOutlineOutlined}
-                      LabelName={'Tambah'}
-                      padding={'6px 16px'}
-                      onClick={() => onOpenSecondModalTable(row.nippos)}
-                    />
-                  </StyledTableCell>
-                </TableRow>
-              ))}
+                {filteredRows.slice(startIndex, endIndex).map((row) => (
+                    <TableRow key={row.id}>
+                    {Object.keys(columnKeys).map((key) => (
+                        <StyledTableCell key={key}>{row[key]}</StyledTableCell>
+                    ))}
+                    </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

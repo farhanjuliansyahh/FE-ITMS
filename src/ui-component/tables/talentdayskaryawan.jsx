@@ -23,8 +23,6 @@ const getStatusStyle = (status) => {
     return { color, backgroundColor };
   };
 
-
-
 // const rows = [
 //     { id: 1, nama : 'Sri Hartini', nippos:'998494379', posisi :'Asisten Manajer Pengembangan Join Operation', 
 //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABD HAFID', status: 'Belum Diisi' },
@@ -46,7 +44,13 @@ const getStatusStyle = (status) => {
 //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD', status: 'Belum Diisi' },
 //   ];
 
-export default function TalentDaysBPJTable({rows}) {
+export default function TalentDaysBPJTable({
+  rows,
+  searchNama, // Receive the search term as a prop
+  searchNippos,
+  searchJobLevel,
+  searchKomiteUnit
+}) {
   const [nilaiOpen, setNilaiOpen] = useState(false);
 
   const handleOpen = () => {
@@ -108,10 +112,22 @@ export default function TalentDaysBPJTable({rows}) {
     },
   ];
 
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+    const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatch = !searchKomiteUnit || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(searchKomiteUnit.toLowerCase())); // Add null check for row.nippos
+
+    return (!searchNama || namaMatch) 
+    && (!searchNippos || nipposMatch) 
+    && (!searchJobLevel || jobLevelMatch) 
+    && (!searchKomiteUnit || komiteUnitMatch);
+  });
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
         initialState={{
           pagination: {

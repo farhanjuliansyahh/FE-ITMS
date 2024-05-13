@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
 import MainCard from '../../ui-component/cards/MainCard';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
+import { RestartAltOutlined } from '@mui/icons-material';
+
 import EventDetailSearchSection from '../../ui-component/button/EventDetailSearchSection';
 import SearchResetButton from '../../ui-component/button/SearchResetButton';
 import SearchIcon from '@mui/icons-material/Search';
@@ -14,6 +16,9 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { IconFileDownload } from '@tabler/icons-react';
 import ButtonPrimary from '../button/ButtonPrimary';
 import TalentQualificationTable from '../../ui-component/tables/talentqualification';
+import CustomSearch from '../../ui-component/searchsection/custom-search';
+import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
+
 
 // ==============================|| DETAIL TALENT QUALIFICATION PAGE ||============================== //
 
@@ -278,6 +283,75 @@ const getMinimalScore = (kodekomite, id_kriteria_penilaian) => {
     document.body.removeChild(link);
   };
   
+  
+  // TIDAK TERKUALIFIKASI
+  const listNamaFalse = [...new Set(qualRow.map(row => row.Nama))]
+  const listNipposFalse = [...new Set(qualRow.map(row => row.Nippos))];
+  const listJobLevelFalse = [...new Set(qualRow.map(row => row['Job Level']))];
+  const listKomiteUnitFalse = [...new Set(qualRow.map(row => row['Komite Unit']))];
+
+  const [selectedNamaFalse, setSelectedNamaFalse] = useState(null);
+  const [selectedNipposFalse, setSelectedNipposFalse] = useState(null);
+  const [selectedJobLevelFalse, setSelectedJobLevelFalse] = useState(null);
+  const [selectedKomiteUnitFalse, setSelectedKomiteUnitFalse] = useState(null);
+  
+  const resetNamaInputFalse = () => {
+    setSelectedNamaFalse('');
+  };
+
+  const resetNipposInputFalse = () => {
+    setSelectedNipposFalse('');
+  };
+
+  const resetJobLevelInputFalse = () => {
+    setSelectedJobLevelFalse('');
+  };
+
+  const resetKomiteUnitInputFalse = () => {
+    setSelectedKomiteUnitFalse('');
+  };
+
+  const handleResetSearchFalse = () => {
+    resetNamaInputFalse();
+    resetNipposInputFalse();
+    resetJobLevelInputFalse();
+    resetKomiteUnitInputFalse();
+  };
+
+  // TERKUALIFIKASI
+  const listNamaTrue = [...new Set(quallolosRow.map(row => row.Nama))]
+  const listNipposTrue = [...new Set(quallolosRow.map(row => row.Nippos))];
+  const listJobLevelTrue = [...new Set(quallolosRow.map(row => row['Job Level']))];
+  const listKomiteUnitTrue = [...new Set(quallolosRow.map(row => row['Komite Unit']))];
+
+  const [selectedNamaTrue, setSelectedNamaTrue] = useState(null);
+  const [selectedNipposTrue, setSelectedNipposTrue] = useState(null);
+  const [selectedJobLevelTrue, setSelectedJobLevelTrue] = useState(null);
+  const [selectedKomiteUnitTrue, setSelectedKomiteUnitTrue] = useState(null);
+
+  const resetNamaInputTrue = () => {
+    setSelectedNamaTrue('');
+  };
+
+  const resetNipposInputTrue = () => {
+    setSelectedNipposTrue('');
+  };
+
+  const resetJobLevelInputTrue = () => {
+    setSelectedJobLevelTrue('');
+  };
+
+  const resetKomiteUnitInputTrue = () => {
+    setSelectedKomiteUnitTrue('');
+  };
+
+  const handleResetSearchTrue = () => {
+    resetNamaInputTrue();
+    resetNipposInputTrue();
+    resetJobLevelInputTrue();
+    resetKomiteUnitInputTrue();
+  };
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -302,33 +376,26 @@ const getMinimalScore = (kodekomite, id_kriteria_penilaian) => {
               <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
             </FlexContainer>
           
-            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-              <div style={{ marginRight: '12px', width:'100%'  }}>
-                    <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-              </div>
-              <div style={{ marginRight: '24px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
-              </div>
-              <div style={{ marginRight: '12px' }}>
-                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-              </div>
-              <div style={{ marginRight: '0px' }}>
-                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaTrue} label={'Nama'} onSearch={setSelectedNamaTrue} value={selectedNamaTrue} resetInput={resetNamaInputTrue} />
+                <CustomSearch field={listNipposTrue} label={'Nippos'} onSearch={setSelectedNipposTrue} value={selectedNipposTrue} resetInput={resetNipposInputTrue} />
+                <CustomSearch field={listJobLevelTrue} label={'Job Level'} onSearch={setSelectedJobLevelTrue} value={selectedJobLevelTrue} resetInput={resetJobLevelInputTrue} />
+                <CustomSearch field={listKomiteUnitTrue} label={'Komite Unit'} onSearch={setSelectedKomiteUnitTrue} value={selectedKomiteUnitTrue} resetInput={resetKomiteUnitInputTrue} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
             </div>
 
             <TalentQualificationTable
-            minimumCompeten5cyQualified = {compminimal}
-            minimumPmsQualified = {pmsminimal}
-            minimumAkhlakQualified = {akhlakminimal}
-            minimumLearningAgilityQualified = {laminimal} 
+              minimumCompeten5cyQualified = {compminimal}
+              minimumPmsQualified = {pmsminimal}
+              minimumAkhlakQualified = {akhlakminimal}
+              minimumLearningAgilityQualified = {laminimal} 
               rows = {quallolosRow}
+              searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+              searchNippos={selectedNipposTrue}
+              searchJobLevel={selectedJobLevelTrue}
+              searchKomiteUnit={selectedKomiteUnitTrue}
             />
 
           </Box>
@@ -346,33 +413,26 @@ const getMinimalScore = (kodekomite, id_kriteria_penilaian) => {
               <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
             </FlexContainer>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-              <div style={{ marginRight: '12px', width:'100%'  }}>
-                    <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-              </div>
-              <div style={{ marginRight: '24px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
-              </div>
-              <div style={{ marginRight: '12px' }}>
-                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-              </div>
-              <div style={{ marginRight: '0px' }}>
-                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaFalse} label={'Nama'} onSearch={setSelectedNamaFalse} value={selectedNamaFalse} resetInput={resetNamaInputFalse} />
+                <CustomSearch field={listNipposFalse} label={'Nippos'} onSearch={setSelectedNipposFalse} value={selectedNipposFalse} resetInput={resetNipposInputFalse} />
+                <CustomSearch field={listJobLevelFalse} label={'Job Level'} onSearch={setSelectedJobLevelFalse} value={selectedJobLevelFalse} resetInput={resetJobLevelInputFalse} />
+                <CustomSearch field={listKomiteUnitFalse} label={'Komite Unit'} onSearch={setSelectedKomiteUnitFalse} value={selectedKomiteUnitFalse} resetInput={resetKomiteUnitInputFalse} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchFalse} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
             </div>
 
             <TalentQualificationTable
-            minimumCompeten5cyQualified = {compminimal}
-            minimumPmsQualified = {pmsminimal}
-            minimumAkhlakQualified = {akhlakminimal}
-            minimumLearningAgilityQualified = {laminimal}
+              minimumCompeten5cyQualified = {compminimal}
+              minimumPmsQualified = {pmsminimal}
+              minimumAkhlakQualified = {akhlakminimal}
+              minimumLearningAgilityQualified = {laminimal}
               rows = {qualRow}
+              searchNama={selectedNamaFalse} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+              searchNippos={selectedNipposFalse}
+              searchJobLevel={selectedJobLevelFalse}
+              searchKomiteUnit={selectedKomiteUnitFalse}
             />
 
             </Box>

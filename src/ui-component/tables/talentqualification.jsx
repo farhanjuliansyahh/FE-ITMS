@@ -20,7 +20,17 @@ const getColorStyle = (value, minimumValueQualified) => {
 };
   
 
-export default function TalentQualificationTable({rows,minimumCompeten5cyQualified,minimumPmsQualified,minimumAkhlakQualified,minimumLearningAgilityQualified}) {
+export default function TalentQualificationTable({
+  rows,
+  minimumCompeten5cyQualified,
+  minimumPmsQualified,
+  minimumAkhlakQualified,
+  minimumLearningAgilityQualified,
+  searchNama, // Receive the search term as a prop
+  searchNippos,
+  searchJobLevel,
+  searchKomiteUnit
+}) {
   console.log(minimumCompeten5cyQualified,minimumPmsQualified,minimumAkhlakQualified,minimumLearningAgilityQualified);
   const columns = [
       { field: 'id', headerName: 'No', width: 70 },
@@ -104,11 +114,23 @@ export default function TalentQualificationTable({rows,minimumCompeten5cyQualifi
           },
       },
     ];
-  console.log(rows);
+
+    const filteredRows = rows.filter((row) => {
+      const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+      const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+      const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
+      const komiteUnitMatch = !searchKomiteUnit || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(searchKomiteUnit.toLowerCase())); // Add null check for row.nippos
+  
+      return (!searchNama || namaMatch) 
+      && (!searchNippos || nipposMatch) 
+      && (!searchJobLevel || jobLevelMatch) 
+      && (!searchKomiteUnit || komiteUnitMatch);
+    });
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
         initialState={{
           pagination: {

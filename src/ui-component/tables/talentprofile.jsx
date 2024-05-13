@@ -111,7 +111,28 @@ const columns = [
 //   { id: 6, nama: 'Ayu Ning Sukarman', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ACEP RUDI SUPRIADI' },
 // ];
 
-export default function TalentProfileTable({ filter, commitmentLetterValue, paktaIntegritasValue, rows }) {
+export default function TalentProfileTable({ 
+  filter, 
+  commitmentLetterValue, 
+  paktaIntegritasValue, 
+  rows,
+  searchNama, // Receive the search term as a prop
+  searchNippos,
+  searchJobLevel,
+  searchKomiteUnit
+}) {
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+    const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatch = !searchKomiteUnit || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(searchKomiteUnit.toLowerCase())); // Add null check for row.nippos
+
+    return (!searchNama || namaMatch) 
+    && (!searchNippos || nipposMatch) 
+    && (!searchJobLevel || jobLevelMatch) 
+    && (!searchKomiteUnit || komiteUnitMatch);
+  });
+
   const [filterModel, setFilterModel] = React.useState({
     items: [{ field: 'nama', operator: 'contains', value: '' }],
   });
@@ -148,7 +169,7 @@ export default function TalentProfileTable({ filter, commitmentLetterValue, pakt
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows.map(row => ({
+        rows={filteredRows.map(row => ({
           ...row,
           commitmentletter: commitmentLetterValue,
           paktaintegritas: paktaIntegritasValue

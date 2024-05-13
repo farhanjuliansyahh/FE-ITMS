@@ -22,7 +22,6 @@ export const useAuth = () => {
 
     const response = await responseApi.json();
     sessionStorage.setItem('token', response.token);
-    console.log(response.token);
 
     if (response.token) {
       alert(response.message);

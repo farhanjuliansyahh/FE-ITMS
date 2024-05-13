@@ -10,6 +10,7 @@ import SearchSection2 from '../../../ui-component/searchsection';
 import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -98,14 +99,25 @@ const DaftarEvent = () => {
   const handleClose = () => {
     setOpen(false);
   };
-console.log("asdasd", eventData);
+  // console.log("asdasd", eventData);
+
+  const uniqueNamaEvents = [...new Set(eventData.map(event => event.nama_event))];
+  // console.log('LIST NAMA EVENT', uniqueNamaEvents);
+  const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
+
   return (
     <>
       {/* <MainLayout /> */}
       
       <MainCard title="Daftar Event"  secondary={
         <Stack direction="row" spacing={2}>
-          <SearchSection2 /> 
+          {/* <SearchSection2 />  */}
+          <CustomSearch 
+              field={uniqueNamaEvents}
+              label={'Nama Event'}
+              selectedField={selectedNamaEvent}
+              setSelectedField={setSelectedNamaEvent}
+          />
           <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
         </Stack>
       }>

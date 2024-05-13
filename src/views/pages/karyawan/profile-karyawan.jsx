@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { useLocation, useParams } from 'react-router-dom';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
-import { CalendarMonthOutlined, EmojiEvents, Person, PersonPinOutlined, School, TaskOutlined } from '@mui/icons-material'
+import { CalendarMonthOutlined, EmojiEvents, Person, PersonPinOutlined, School, TaskOutlined } from '@mui/icons-material';
 
 import MainCard from '../../../ui-component/cards/MainCard';
 import CheckDataAlert from '../../../ui-component/cards/CheckDataAlert';
@@ -18,205 +18,201 @@ import ConfirmationMessage from '../../../ui-component/cards/Alert-PI-CL';
 // ==============================|| PROFIL KARYAWAN ||============================== //
 
 function CustomTabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box sx={{ pt: 3 }}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
-  
-  CustomTabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+      {value === index && (
+        <Box sx={{ pt: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
   };
-  
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
-    };
-  }
+}
 
 export default function ProfileKaryawan() {
-    const {id} = useParams();
-    const [value, setValue] = React.useState(0);
-    const [eventaktif, seteventaktif] = useState([]);
-    const [DaysLeft, setDaysLeft] = useState('');
+  const { id } = useParams();
+  const [value, setValue] = React.useState(0);
+  const [eventaktif, seteventaktif] = useState([]);
+  const [DaysLeft, setDaysLeft] = useState('');
 
-    const nippos= 971351363 //ganti sama hasil fetchingan nippos yang login 
-    
-    const fetcheventdetail = () => {
-        return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(data => {
-            return data; // Return the parsed JSON data
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-            throw error; // Rethrow the error to handle it elsewhere
-          });
-      };
+  const nippos = 971351363; //ganti sama hasil fetchingan nippos yang login
 
-      useEffect(() => {
-        fetcheventdetail()
-          .then(data => {
-            seteventaktif(data.event);
-            setLoading(false); // Move this line to the end of the .then block
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-            setLoading(false);
-          });
-      }, []);
+  const fetcheventdetail = () => {
+    return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
 
-      const { eventid, nama_event, deskripsi,tipe_komite_talent, tipekomite, kode_rumpun,nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
+  useEffect(() => {
+    fetcheventdetail()
+      .then((data) => {
+        seteventaktif(data.event);
+        setLoading(false); // Move this line to the end of the .then block
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
 
-      useEffect(() => {
-        // Convert 'tanggal_selesai' from ISO 8601 format to a Date object
-        const endDate = new Date(tanggal_selesai);
-        // Get the current date
-        const currentDate = new Date();
-        // Calculate the difference in milliseconds between the current date and the 'tanggal_selesai'
-        const timeDifference = endDate.getTime() - currentDate.getTime();
-        // Convert the difference from milliseconds to days
-        const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-        // Set the number of days left
-        setDaysLeft(daysDifference);
-      }, [tanggal_selesai]);
+  const {
+    eventid,
+    nama_event,
+    deskripsi,
+    tipe_komite_talent,
+    tipekomite,
+    kode_rumpun,
+    nama_rumpun,
+    tanggal_mulai,
+    tanggal_selesai,
+    evenstatus_id
+  } = eventaktif;
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-      };
+  useEffect(() => {
+    // Convert 'tanggal_selesai' from ISO 8601 format to a Date object
+    const endDate = new Date(tanggal_selesai);
+    // Get the current date
+    const currentDate = new Date();
+    // Calculate the difference in milliseconds between the current date and the 'tanggal_selesai'
+    const timeDifference = endDate.getTime() - currentDate.getTime();
+    // Convert the difference from milliseconds to days
+    const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    // Set the number of days left
+    setDaysLeft(daysDifference);
+  }, [tanggal_selesai]);
 
-    const boxStyle = {
-        padding: '20px', 
-        width: '100%',
-        borderRadius:'12px'
-    };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    const FlexContainer = styled('div')({
-        display: 'flex',
-        alignItems: 'center',
-        gap: '16px', 
-        paddingBottom: '24px',
-    });
+  const boxStyle = {
+    padding: '20px',
+    width: '100%',
+    borderRadius: '12px'
+  };
 
-    const BoxContainer = styled('div')({
-        display: 'flex',
-        flexDirection: 'column',
-    });
+  const FlexContainer = styled('div')({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+    paddingBottom: '24px'
+  });
 
-    const FlexTitle = styled('div')({
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        paddingBottom:0
-    });
+  const BoxContainer = styled('div')({
+    display: 'flex',
+    flexDirection: 'column'
+  });
 
-    const CalendarIcon = styled(CalendarMonthOutlined)({
-        fontSize: '1rem',
-        color: '#1C2D5A',
-    });
+  const FlexTitle = styled('div')({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    paddingBottom: 0
+  });
 
-    const CountdownLabel = styled('div')({
-        backgroundColor: '#FFEDED', 
-        color: '#F44336',
-        padding: '8px 16px',
-        borderRadius: '16px',
-        fontWeight: 600,
-        fontSize:'16px'
-    });
+  const CalendarIcon = styled(CalendarMonthOutlined)({
+    fontSize: '1rem',
+    color: '#1C2D5A'
+  });
 
-    const eventidactive = eventid;
+  const CountdownLabel = styled('div')({
+    backgroundColor: '#FFEDED',
+    color: '#F44336',
+    padding: '8px 16px',
+    borderRadius: '16px',
+    fontWeight: 600,
+    fontSize: '16px'
+  });
 
-    return (
-        <MainCard>
-            <Box sx={boxStyle}>
-                <FlexContainer>
-                    <BoxContainer>
-                        <FlexTitle style={{paddingBottom:'8px'}}>
-                            <Typography style={{fontSize:'24px', fontWeight:'bold'}}>{nama_event}</Typography>
-                        </FlexTitle>
+  const eventidactive = eventid;
 
-                        <FlexTitle>
-                            <CalendarIcon style={{color:'#828282'}}/>
-                            <Typography style={{fontSize:'14px', color:'#828282'}}>{tanggal_mulai &&
-                                new Date(tanggal_mulai).toLocaleDateString('id-ID', {
-                                  day: 'numeric',
-                                  month: 'long',
-                                  year: 'numeric',
-                                })} - {tanggal_selesai &&
-                                  new Date(tanggal_selesai).toLocaleDateString('id-ID', {
-                                    day: 'numeric',
-                                    month: 'long',
-                                    year: 'numeric',
-                                  })}
-                            </Typography>
-                        </FlexTitle>
-                    </BoxContainer>
+  return (
+    <MainCard>
+      <Box sx={boxStyle}>
+        <FlexContainer>
+          <BoxContainer>
+            <FlexTitle style={{ paddingBottom: '8px' }}>
+              <Typography style={{ fontSize: '24px', fontWeight: 'bold' }}>{nama_event}</Typography>
+            </FlexTitle>
 
-                    <div style={{ flex: '1' }}> </div>
-          
-                    <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari` : ''}</CountdownLabel>
-                </FlexContainer>
-            </Box>
+            <FlexTitle>
+              <CalendarIcon style={{ color: '#828282' }} />
+              <Typography style={{ fontSize: '14px', color: '#828282' }}>
+                {tanggal_mulai &&
+                  new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}{' '}
+                -{' '}
+                {tanggal_selesai &&
+                  new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}
+              </Typography>
+            </FlexTitle>
+          </BoxContainer>
 
-            <Box sx={{ borderBottom: 1, borderTop: 1, borderColor: 'divider', marginTop: -3 }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab icon={<PersonPinOutlined />} iconPosition="start" label="Data Diri" {...a11yProps(0)} />
-                    <Tab icon={<TaskOutlined />} iconPosition="start" label="Persetujuan Talent" {...a11yProps(1)} />
-                </Tabs>
-            </Box>
+          <div style={{ flex: '1' }}> </div>
 
-            {/* Data Diri */}
-            <CustomTabPanel value={value} index={0}>
-                <Box sx={boxStyle}>
-                    <CheckDataAlert/>
-                    <AccordionKaryawan 
-                        summary={'Data Diri'} 
-                        icon={Person} 
-                        content={<DataDiriKaryawan/>}
-                    />
-                    <AccordionKaryawan 
-                        summary={'Riwayat Pendidikan'} 
-                        icon={School} 
-                        content={<RiwayatPendidikanKaryawan/>}
-                    />
-                    <AccordionKaryawan 
-                        summary={'Kompetensi'} 
-                        icon={EmojiEvents} 
-                        content={<KompetensiKaryawan/>}
-                    />
-                </Box> 
-            </CustomTabPanel>
+          <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari` : ''}</CountdownLabel>
+        </FlexContainer>
+      </Box>
 
-            {/* Persetujuan Talent*/}
-            <CustomTabPanel value={value} index={1}>
-            <Box sx={boxStyle}>
-                <ConfirmationMessage/> 
-                <div style={{ marginTop: '24px',}}>
-                    <ProfileAccordion/>
-                </div> 
-            </Box>
-            </CustomTabPanel>
-        </MainCard>
-    );
+      <Box sx={{ borderBottom: 1, borderTop: 1, borderColor: 'divider', marginTop: -3 }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab icon={<PersonPinOutlined />} iconPosition="start" label="Data Diri" {...a11yProps(0)} />
+          <Tab icon={<TaskOutlined />} iconPosition="start" label="Persetujuan Talent" {...a11yProps(1)} />
+        </Tabs>
+      </Box>
+
+      {/* Data Diri */}
+      <CustomTabPanel value={value} index={0}>
+        <Box sx={boxStyle}>
+          <CheckDataAlert />
+          <AccordionKaryawan summary={'Data Diri'} icon={Person} content={<DataDiriKaryawan />} />
+          <AccordionKaryawan summary={'Riwayat Pendidikan'} icon={School} content={<RiwayatPendidikanKaryawan />} />
+          <AccordionKaryawan summary={'Kompetensi'} icon={EmojiEvents} content={<KompetensiKaryawan />} />
+        </Box>
+      </CustomTabPanel>
+
+      {/* Persetujuan Talent*/}
+      <CustomTabPanel value={value} index={1}>
+        <Box sx={boxStyle}>
+          <ConfirmationMessage />
+          <div style={{ marginTop: '24px' }}>
+            <ProfileAccordion />
+          </div>
+        </Box>
+      </CustomTabPanel>
+    </MainCard>
+  );
 }

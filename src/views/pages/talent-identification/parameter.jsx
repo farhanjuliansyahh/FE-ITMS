@@ -2,19 +2,27 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Container } from '@mui/system';
-import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Box, Button, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
+import ButtonOptional from '../../../ui-component/button/ButtonOptional';
 import MainCard from '../../../ui-component/cards/MainCard';
 import PassingGradeTable from '../../../ui-component/tables/PassingGradeTable';
 import KuotaTable from '../../../ui-component/tables/KuotaTable'
 import DaftarPertanyaanTable from '../../../ui-component/tables/DaftarPertanyaanTable'
 import AccordionKomiteTalent from '../../../ui-component/cards/AccordionKomiteTalent';
 import DaftarKomiteTalent from '../../../ui-component/submenu/daftar-komitetalent';
+import NilaiAssessmentTable from '../../../ui-component/tables/NilaiAssessmentTable';
+import UnggahDataNilaiAssessment from '../../../ui-component/modal/unggah-data-nilai-assessment';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
+
 
 import { 
-  AddCircleOutline, AssignmentTurnedInOutlined, CancelOutlined, GroupsOutlined,
-  PersonOutlineOutlined, QuizOutlined, SaveOutlined } from '@mui/icons-material';
+  AddCircleOutline, AssignmentOutlined, AssignmentTurnedInOutlined, CancelOutlined, 
+  FileDownloadOutlined, FileUploadOutlined, GroupsOutlined,
+  PersonOutlineOutlined, QuizOutlined, RestartAltOutlined, SaveOutlined, SimCardDownloadOutlined 
+} from '@mui/icons-material';
 
 // ==============================|| PARAMETER TALENT PAGE ||============================== //
 
@@ -55,15 +63,112 @@ const ParameterTalent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
 
+  const [selectedKantor, setSelectedKantor] = useState(null);
+  // const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
+  // const [selectedJobLevel, setSelectedJobLevel] = useState(null);
+  const [selectedStatusIDP, setSelectedStatusIDP] = useState(null);
+  const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
+  const [updatekkmstate, setUpdatekkmstate] = useState(false)
+  const [updatekuotastate, setUpdatekuotastate] = useState(false)
+  const [refetchstate, setRefetchstate] = useState(true)
+  
+  const handleClickKKM = () =>{
+    setUpdatekkmstate(true);
+  }
+
+  const handleClickKuota = () =>{
+    setUpdatekuotastate(true);
+  }
+
+
+  const handleBatalkanKKM = () => {
+    setRefetchstate(true)
+  }
+
+  const [openUnggahData, setopenUnggahData] = useState(false);
+
+  const handleOpen = () => {
+      setopenUnggahData(true);
+    };
+  
+  const handleClose = () => {
+      setopenUnggahData(false);
+  };
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setRefetchstate(true)
   };
 
   useEffect(() => {
     setLoading(false);
   }, []);
 
-  const [open, setOpen] = useState(false);
+  const boxStyle = {
+    padding: '20px',
+    width: '100%',
+    borderRadius: '12px',
+    marginTop: '-55px'
+};
+
+  const FlexContainer = styled('div')({
+      display: 'flex',
+      alignItems: 'center',
+      gap: '16px', 
+      paddingBottom: '24px',
+  });
+
+  function createData(id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance) {
+    return { id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance };
+  };
+
+  const rows = [
+    createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'E3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABD HAFID'),
+    createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'D2', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABDU SOMAD'),
+    createData(3, 'Adinda', '998495379', 'Asisten Manajer Pengelolaan Remittance LN', 'D1', 'SDM', 'KANTOR PUSAT BANDUNG', 'ABDUL JAMIL'),
+    createData(4, 'Niken Wijaya', '998494389', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'E3', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ABDUL WAHAB'),
+    createData(5, 'Abang', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'E2', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ACEP RUDI SUPRIADI'),
+  ];
+
+  // create list of Nama, Nippos, Job Level, Rumpun Jabatan
+  const listNama = [...new Set(rows.map(row => row.nama))];
+  const listNippos = [...new Set(rows.map(row => row.nippos))];
+  const listJobLevel = [...new Set(rows.map(row => row.joblevel))];
+  const listRumpunJabatan = [...new Set(rows.map(row => row.rumpunjabatan))];
+
+  const [selectedNama, setSelectedNama] = useState(null);
+  const [selectedNippos, setSelectedNippos] = useState(null);
+  const [selectedJobLevel, setSelectedJobLevel] = useState(null);
+  const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
+
+  const resetNamaInput = () => {
+    setSelectedNama('');
+  };
+
+  const resetNipposInput = () => {
+    setSelectedNippos('');
+  };
+
+  const resetJobLevelInput = () => {
+    setSelectedJobLevel('');
+  };
+
+  const resetRumpunJabatanInput = () => {
+    setSelectedRumpunJabatan('');
+  };
+
+  const handleResetSearch = () => {
+    setSelectedNama('');
+    setSelectedNippos('');
+    setSelectedJobLevel('');
+    setSelectedRumpunJabatan('');
+
+    // Call resetInput function for each CustomSearch component
+    resetNamaInput();
+    resetNipposInput();
+    resetJobLevelInput();
+    resetRumpunJabatanInput();
+  };
 
   return (
     <>
@@ -76,38 +181,44 @@ const ParameterTalent = () => {
             <Tab icon={<PersonOutlineOutlined />} iconPosition="start" label="Kuota" {...a11yProps(1)} />
             <Tab icon={<QuizOutlined />} iconPosition="start" label="Question Event" {...a11yProps(2)} />
             <Tab icon={<GroupsOutlined />} iconPosition="start" label="Komite Talent" {...a11yProps(3)} />
+            <Tab icon={<AssignmentOutlined />} iconPosition="start" label="Nilai Assessment" {...a11yProps(4)} />
           </Tabs>
         </Box>
 
         {/* Passing Grade */}
         <CustomTabPanel value={value} index={0}>
-            <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'}> 
+            <Box display="flex" marginTop={2} flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'}> 
                 <Grid>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent I</Typography>
-                <PassingGradeTable ></PassingGradeTable>
+                <PassingGradeTable tipekomite={1}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent II</Typography>
-                <PassingGradeTable></PassingGradeTable>
+                <PassingGradeTable tipekomite={2}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
                 <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent III</Typography>
-                <PassingGradeTable></PassingGradeTable>
+                <PassingGradeTable tipekomite={3}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
                 </Grid>
             
-                <Box display="flex" justifyContent="flex-end" marginTop={'24px'} width="100%"> 
+                <Box display="flex" justifyContent="flex-end" width="100%"> 
                   <Box sx={{ marginRight: '16px' }}>
-                    <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
+                    <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleClickKKM}/>
                   </Box>
-                  <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}/>
+                  <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleBatalkanKKM}/>
                 </Box>
             </Box>
         </CustomTabPanel>
 
         {/* Kuota */}
-        <Box display="flex" marginTop={2} width="100%" paddingLeft={'24px'} paddingRight={'24px'} paddingBottom={'24px'}>
+        <Box display="flex" marginTop={4} width="100%" paddingLeft={'24px'} paddingRight={'24px'} paddingBottom={'24px'}>
           {/* Left Table */}
           <Box flex={1} marginRight={2}>
             <CustomTabPanel value={value} index={1}>
               <Grid>
                 <Typography fontSize={22} fontWeight={600} marginBottom={2}>Komite Unit</Typography>
-                <KuotaTable header="Kuota Talent Source- (Dalam Satuan Persen)" initialValue={50}></KuotaTable>
+                <KuotaTable header="Kuota Talent Source- (Dalam Satuan Persen)" initialValue={50} bobot={1} 
+                refetchstate={refetchstate} 
+                handlerefetch={() => setRefetchstate(false)}
+                updatekuotastate={updatekuotastate} 
+                onUpdateKuotaStateChange={() => setUpdatekuotastate(false)}
+                />
               </Grid>
             </CustomTabPanel>
           </Box>
@@ -117,15 +228,19 @@ const ParameterTalent = () => {
             <CustomTabPanel value={value} index={1}>
               <Container style={{ textAlign: 'left', paddingLeft: 0, paddingRight: 0 }}>
                 <Typography fontSize={22} fontWeight={600} marginBottom={2}>Ketua Komite Talent</Typography>
-                <KuotaTable header="Kuota Diskresi- (Dalam Satuan Persen)" initialValue={10}></KuotaTable>
+                <KuotaTable header="Kuota Diskresi- (Dalam Satuan Persen)" initialValue={10} bobot={2} 
+                refetchstate={refetchstate} 
+                handlerefetch={() => setRefetchstate(false)} 
+                updatekuotastate={updatekuotastate} 
+                onUpdateKuotaStateChange={() => setUpdatekuotastate(false)} />
               </Container>
 
               {/* Buttons */}
               <Box display="flex" justifyContent="flex-end" marginTop={'24px'}>
                 <Box sx={{ marginRight: '16px' }}>
-                  <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
+                  <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleClickKuota}/>
                 </Box>
-                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}/>
+                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}  onClick={handleBatalkanKKM}/>
               </Box>
             </CustomTabPanel>
           </Box>
@@ -133,25 +248,21 @@ const ParameterTalent = () => {
 
         {/* Question Event */}
         <CustomTabPanel value={value} index={2}>
-          <Box display="flex" flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'} paddingBottom={'24px'}> 
+          <Box display="flex" flexDirection="column" alignItems="center" marginTop={'-35px'} paddingLeft={'24px'} paddingRight={'24px'} paddingBottom={'24px'}> 
           {/* Container with Flexbox layout */}
             <Grid>
               {/* Flex container for the title and button */}
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                {/* Title */}
-                <Typography fontSize={22} fontWeight={600} marginBottom={4}>Daftar Pertanyaan</Typography>
-                
-                {/* "Tambah Data" button */}
-                <Box sx={{ marginBottom: '16px' }}>
+              <Box display="flex" justifyContent="space-between" alignItems="center" marginTop={0} marginBottom={'16px'}>
+                <Typography fontSize={22} fontWeight={600}>Daftar Pertanyaan</Typography>
                   <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Data'}/>
-                </Box>
+       
               </Box>
               
               {/* Table */}
               <DaftarPertanyaanTable></DaftarPertanyaanTable>
             </Grid>
 
-            <Box display="flex" justifyContent="flex-end" marginTop={'24px'} width="100%">
+            <Box display="flex" justifyContent="flex-end" width="100%">
               <Box sx={{ marginRight: '16px' }}>
                 <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'}/>
               </Box>
@@ -160,8 +271,9 @@ const ParameterTalent = () => {
           </Box>
         </CustomTabPanel>
 
+        {/* Komite Talent */}
         <CustomTabPanel value={value} index={3}>
-          <Box display="block" width='100%' flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'} > 
+          <Box display="block" width='100%' flexDirection="column" alignItems="center" padding={'12px 24px'} marginTop={-5}> 
             <AccordionKomiteTalent 
               title={'Komite Talent 1'} 
               subtitle={'Direktur Utama - Faizal Rochmad Djoemadi'}
@@ -182,6 +294,46 @@ const ParameterTalent = () => {
             />
           </Box> 
         </CustomTabPanel>
+
+        {/* Nilai Assessment */}
+        <CustomTabPanel value={value} index={4}>
+        <Box sx={boxStyle}>
+            <FlexContainer>
+                <Typography style={{fontSize:'22px', fontWeight:'600'}}>
+                    Tabel Karyawan
+                </Typography>
+                <div style={{ flex: '1' }}> </div>
+                <ButtonPrimary Color="#ffffff" icon={FileUploadOutlined} LabelName={'Unggah Data'} onClick={handleOpen}/>
+                <ButtonOptional icon={SimCardDownloadOutlined} LabelName={'Unduh Template'}/>
+                <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'}/>
+            </FlexContainer>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
+                <CustomSearch field={listNippos} label={'Nippos'} onSearch={setSelectedNippos} value={selectedNippos} resetInput={resetNipposInput} />
+                <CustomSearch field={listJobLevel} label={'Job Level'} onSearch={setSelectedJobLevel} value={selectedJobLevel} resetInput={resetJobLevelInput} />
+                <CustomSearch field={listRumpunJabatan} label={'Rumpun Jabatan'} onSearch={setSelectedRumpunJabatan} value={selectedRumpunJabatan} resetInput={resetRumpunJabatanInput} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+            </div>
+            
+            <NilaiAssessmentTable 
+                rows={rows}
+                searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                searchNippos={selectedNippos}
+                searchJobLevel={selectedJobLevel}
+                searchRumpunJabatan={selectedRumpunJabatan}
+            />
+
+          </Box>
+
+        </CustomTabPanel>
+
+        <UnggahDataNilaiAssessment
+            open={openUnggahData}
+            handleClose={() => setopenUnggahData(false)}
+        />
 
      </MainCard>
     </>

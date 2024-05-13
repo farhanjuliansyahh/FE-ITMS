@@ -94,7 +94,7 @@ export default function DetailTalentPertama({
                         onChange={handleChangeJobLevel}
                         renderInput={(params) => <TextField {...params} label="Level Jabatan" />}/>
                     </div>
-                    <div style={{ marginRight: '0px', width:'100%'  }}>
+                    {/* <div style={{ marginRight: '0px', width:'100%'  }}>
                     <Autocomplete
                         disablePortal
                         id="status-IDP"
@@ -102,7 +102,7 @@ export default function DetailTalentPertama({
                         value={selectedStatusIDP}
                         onChange={handleChangeStatusIDP}
                         renderInput={(params) => <TextField {...params} label="Status IDP" />}/>
-                    </div>
+                    </div> */}
                     
                 </div>
             </Stack>

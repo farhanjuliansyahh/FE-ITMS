@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import { DeleteOutlined } from '@mui/icons-material';
 import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
 import HapusDataKomiteTalent from '../../ui-component/modal/hapus-data-komite-talent';
+import { minWidth } from '@mui/system';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -18,12 +19,17 @@ const StyledTableCell = styled(TableCell)(() => ({
     color: '#1F1F1F',
     fontSize: 14,
     fontWeight: 600,
-    border: 0
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
     minHeight: 20,
     verticalAlign: 'center',
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:last-child td, &:last-child th': {
+    border: 0,
   },
 }));
 
@@ -56,7 +62,7 @@ export default function TabelDaftarAnggotaKomiteTalent({ rows }) {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow>
+            <StyledTableRow>
               <StyledTableCell>{row.id}</StyledTableCell>
               <StyledTableCell>{row.nama}</StyledTableCell>
               <StyledTableCell>{row.nippos}</StyledTableCell>
@@ -73,7 +79,7 @@ export default function TabelDaftarAnggotaKomiteTalent({ rows }) {
                   />
               </StyledTableCell>
 
-            </TableRow>
+            </StyledTableRow>
           ))}
         </TableBody>
       </Table>
