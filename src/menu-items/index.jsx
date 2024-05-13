@@ -31,7 +31,7 @@ const filterMenuItems = (role) => {
 };
 
 const roleString = sessionStorage.getItem('role');
-const role = JSON.parse(roleString)[0]; // Parse the string back to an array and get the first element
+const role = roleString ? JSON.parse(roleString)[0] : null;
 
 console.log('inirole', role);
 
