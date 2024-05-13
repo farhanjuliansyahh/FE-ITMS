@@ -64,6 +64,9 @@ const JenisKelaminTerbaru = () => {
         colors: ['#fff'], // Color of the labels
         placement: 'mid-center',
       },
+      formatter: function (val, opts) {
+        return `${Math.round(val )}%`;
+      }
     },
     labels: ["Perempuan", "Laki-laki"],
     colors: ['#4978b1', '#1C2D5A'], // Change the colors here

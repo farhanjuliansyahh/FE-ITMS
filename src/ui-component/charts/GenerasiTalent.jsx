@@ -50,8 +50,9 @@ const GenerasiTalent = () => {
         dataLabels: {
           enabled: true,
           formatter: function (val, opts) {
-            return opts.w.config.labels[opts.seriesIndex] + ": " + val;
-          }
+            return opts.w.config.labels[opts.seriesIndex] + " : " + val;
+          },
+          offsetY: -10, 
         }
       },
     },
@@ -62,8 +63,24 @@ const GenerasiTalent = () => {
         fontWeight: 380,
         fontSize: '20px', 
         colors: ['#fff'],
-        placement: 'mid-center',
       },
+      // formatter: function (val, opts) {
+      //   return `${Math.round(val )}%`;    
+      // },
+      formatter: function (val, opts) {
+        const seriesIndex = opts.seriesIndex;
+        let formattedValue;
+        
+        if (seriesIndex === 1) {
+            formattedValue = Math.floor(val) + '%';
+        } else if (seriesIndex === 2){
+            formattedValue = Math.floor(val) + '%';
+        } else {
+          formattedValue = Math.ceil(val) + '%';
+      } 
+    
+        return formattedValue;
+    }
     },
     labels: ["Gen X", "Gen Y", "Gen Z"],
     colors: ['#1C2D5A', '#7e9bc8','#4978b1'], 
