@@ -2,8 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
-import { AddCircleOutline, GppGoodOutlined, PersonOffOutlined, RestartAlt, Search } from '@mui/icons-material';
+import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { AddCircleOutline, GppGoodOutlined, PersonOffOutlined, RestartAlt, RestartAltOutlined, Search } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
 
 import MainCard from '../cards/MainCard';
@@ -11,7 +11,9 @@ import EventDetailSearchSection from '../button/EventDetailSearchSection';
 import SearchResetButton from '../button/SearchResetButton';
 import KomiteUnitListButton from '../button/KomiteUnitListButton';
 import ButtonPrimary from '../button/ButtonPrimary';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
 import TalentSourceTable from '../tables/talentsource';
+import CustomSearch from '../searchsection/custom-search';
 
 // ==============================|| DETAIL TALENT SOURCE PAGE ||============================== //
 
@@ -62,7 +64,7 @@ const TalentSource = ({eventid}) => {
   const handleSelectedRowsChange = (newSelectedRows) => {
     setSelectedRows(newSelectedRows);
   };
-  console.log("selected row", selectedRows);
+  // console.log("selected row", selectedRows);
 
   const eventidactive = eventid
 
@@ -195,6 +197,73 @@ const TalentSource = ({eventid}) => {
     });
   };
 
+  // BELUM TERDAFTAR
+  const listNamaFalse = [...new Set(rowsfalse.map(row => row.Nama))]
+  const listNipposFalse = [...new Set(rowsfalse.map(row => row.Nippos))];
+  const listJobLevelFalse = [...new Set(rowsfalse.map(row => row['Job Level']))];
+  const listKomiteUnitFalse = [...new Set(rowsfalse.map(row => row['Komite Unit']))];
+
+  const [selectedNamaFalse, setSelectedNamaFalse] = useState(null);
+  const [selectedNipposFalse, setSelectedNipposFalse] = useState(null);
+  const [selectedJobLevelFalse, setSelectedJobLevelFalse] = useState(null);
+  const [selectedKomiteUnitFalse, setSelectedKomiteUnitFalse] = useState(null);
+  
+  const resetNamaInputFalse = () => {
+    setSelectedNamaFalse('');
+  };
+
+  const resetNipposInputFalse = () => {
+    setSelectedNipposFalse('');
+  };
+
+  const resetJobLevelInputFalse = () => {
+    setSelectedJobLevelFalse('');
+  };
+
+  const resetKomiteUnitInputFalse = () => {
+    setSelectedKomiteUnitFalse('');
+  };
+
+  const handleResetSearchFalse = () => {
+    resetNamaInputFalse();
+    resetNipposInputFalse();
+    resetJobLevelInputFalse();
+    resetKomiteUnitInputFalse();
+  };
+
+  // TERDAFTAR
+  const listNamaTrue = [...new Set(rowstrue.map(row => row.Nama))]
+  const listNipposTrue = [...new Set(rowstrue.map(row => row.Nippos))];
+  const listJobLevelTrue = [...new Set(rowstrue.map(row => row['Job Level']))];
+  const listKomiteUnitTrue = [...new Set(rowstrue.map(row => row['Komite Unit']))];
+
+  const [selectedNamaTrue, setSelectedNamaTrue] = useState(null);
+  const [selectedNipposTrue, setSelectedNipposTrue] = useState(null);
+  const [selectedJobLevelTrue, setSelectedJobLevelTrue] = useState(null);
+  const [selectedKomiteUnitTrue, setSelectedKomiteUnitTrue] = useState(null);
+
+  const resetNamaInputTrue = () => {
+    setSelectedNamaTrue('');
+  };
+
+  const resetNipposInputTrue = () => {
+    setSelectedNipposTrue('');
+  };
+
+  const resetJobLevelInputTrue = () => {
+    setSelectedJobLevelTrue('');
+  };
+
+  const resetKomiteUnitInputTrue = () => {
+    setSelectedKomiteUnitTrue('');
+  };
+
+  const handleResetSearchTrue = () => {
+    resetNamaInputTrue();
+    resetNipposInputTrue();
+    resetJobLevelInputTrue();
+    resetKomiteUnitInputTrue();
+  };
 
   return (
     <>
@@ -224,33 +293,26 @@ const TalentSource = ({eventid}) => {
               <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
             </FlexContainer>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-              <div style={{ marginRight: '12px', width:'100%'  }}>
-                    <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-              </div>
-              <div style={{ marginRight: '24px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
-              </div>
-              <div style={{ marginRight: '12px' }}>
-                  <SearchResetButton outlineColor="#1C2D5A" icon={Search} LabelName={'Cari'} />
-              </div>
-              <div style={{ marginRight: '0px' }}>
-                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAlt} LabelName={'Reset'} />
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaFalse} label={'Nama'} onSearch={setSelectedNamaFalse} value={selectedNamaFalse} resetInput={resetNamaInputFalse} />
+                <CustomSearch field={listNipposFalse} label={'Nippos'} onSearch={setSelectedNipposFalse} value={selectedNipposFalse} resetInput={resetNipposInputFalse} />
+                <CustomSearch field={listJobLevelFalse} label={'Job Level'} onSearch={setSelectedJobLevelFalse} value={selectedJobLevelFalse} resetInput={resetJobLevelInputFalse} />
+                <CustomSearch field={listKomiteUnitFalse} label={'Komite Unit'} onSearch={setSelectedKomiteUnitFalse} value={selectedKomiteUnitFalse} resetInput={resetKomiteUnitInputFalse} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchFalse} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
             </div>
-         
+
             <TalentSourceTable 
                 checkboxSelection={true} 
                 filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
                 rows={rowsfalse}
                 selectedRows={selectedRows} 
                 onSelectedRowsChange={handleSelectedRowsChange} 
+                searchNama={selectedNamaFalse} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                searchNippos={selectedNipposFalse}
+                searchJobLevel={selectedJobLevelFalse}
+                searchKomiteUnit={selectedKomiteUnitFalse}
             />
           </Box>
         </CustomTabPanel>
@@ -269,31 +331,24 @@ const TalentSource = ({eventid}) => {
               <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
             </FlexContainer>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-              <div style={{ marginRight: '12px', width:'100%'  }}>
-                    <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-              </div>
-              <div style={{ marginRight: '24px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
-              </div>
-              <div style={{ marginRight: '12px' }}>
-                  <SearchResetButton outlineColor="#1C2D5A" icon={Search} LabelName={'Cari'} />
-              </div>
-              <div style={{ marginRight: '0px' }}>
-                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAlt} LabelName={'Reset'} />
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaTrue} label={'Nama'} onSearch={setSelectedNamaTrue} value={selectedNamaTrue} resetInput={resetNamaInputTrue} />
+                <CustomSearch field={listNipposTrue} label={'Nippos'} onSearch={setSelectedNipposTrue} value={selectedNipposTrue} resetInput={resetNipposInputTrue} />
+                <CustomSearch field={listJobLevelTrue} label={'Job Level'} onSearch={setSelectedJobLevelTrue} value={selectedJobLevelTrue} resetInput={resetJobLevelInputTrue} />
+                <CustomSearch field={listKomiteUnitTrue} label={'Komite Unit'} onSearch={setSelectedKomiteUnitTrue} value={selectedKomiteUnitTrue} resetInput={resetKomiteUnitInputTrue} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
             </div>
 
             <TalentSourceTable 
                 checkboxSelection={false} 
                 filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
                 rows ={rowstrue}
+                searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                searchNippos={selectedNipposTrue}
+                searchJobLevel={selectedJobLevelTrue}
+                searchKomiteUnit={selectedKomiteUnitTrue}
             />
           </Box>
         </CustomTabPanel>

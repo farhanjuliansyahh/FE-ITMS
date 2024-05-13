@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Container } from '@mui/system';
 import { styled } from '@mui/material/styles';
-import { Box, Button, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
 import ButtonOptional from '../../../ui-component/button/ButtonOptional';
@@ -14,13 +14,14 @@ import DaftarPertanyaanTable from '../../../ui-component/tables/DaftarPertanyaan
 import AccordionKomiteTalent from '../../../ui-component/cards/AccordionKomiteTalent';
 import DaftarKomiteTalent from '../../../ui-component/submenu/daftar-komitetalent';
 import NilaiAssessmentTable from '../../../ui-component/tables/NilaiAssessmentTable';
-import DetailTalentPertama from '../../../ui-component/button/DropdownDetailTalentPertama';
 import UnggahDataNilaiAssessment from '../../../ui-component/modal/unggah-data-nilai-assessment';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
+
 
 import { 
   AddCircleOutline, AssignmentOutlined, AssignmentTurnedInOutlined, CancelOutlined, 
   FileDownloadOutlined, FileUploadOutlined, GroupsOutlined,
-  PersonOutlineOutlined, QuizOutlined, SaveOutlined, SimCardDownloadOutlined 
+  PersonOutlineOutlined, QuizOutlined, RestartAltOutlined, SaveOutlined, SimCardDownloadOutlined 
 } from '@mui/icons-material';
 
 // ==============================|| PARAMETER TALENT PAGE ||============================== //
@@ -63,8 +64,8 @@ const ParameterTalent = () => {
   const [value, setValue] = React.useState(0);
 
   const [selectedKantor, setSelectedKantor] = useState(null);
-  const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
-  const [selectedJobLevel, setSelectedJobLevel] = useState(null);
+  // const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
+  // const [selectedJobLevel, setSelectedJobLevel] = useState(null);
   const [selectedStatusIDP, setSelectedStatusIDP] = useState(null);
   const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
 
@@ -99,6 +100,58 @@ const ParameterTalent = () => {
       gap: '16px', 
       paddingBottom: '24px',
   });
+
+  function createData(id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance) {
+    return { id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance };
+  };
+
+  const rows = [
+    createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'E3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABD HAFID'),
+    createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'D2', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABDU SOMAD'),
+    createData(3, 'Adinda', '998495379', 'Asisten Manajer Pengelolaan Remittance LN', 'D1', 'SDM', 'KANTOR PUSAT BANDUNG', 'ABDUL JAMIL'),
+    createData(4, 'Niken Wijaya', '998494389', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'E3', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ABDUL WAHAB'),
+    createData(5, 'Abang', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'E2', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ACEP RUDI SUPRIADI'),
+  ];
+
+  // create list of Nama, Nippos, Job Level, Rumpun Jabatan
+  const listNama = [...new Set(rows.map(row => row.nama))];
+  const listNippos = [...new Set(rows.map(row => row.nippos))];
+  const listJobLevel = [...new Set(rows.map(row => row.joblevel))];
+  const listRumpunJabatan = [...new Set(rows.map(row => row.rumpunjabatan))];
+
+  const [selectedNama, setSelectedNama] = useState(null);
+  const [selectedNippos, setSelectedNippos] = useState(null);
+  const [selectedJobLevel, setSelectedJobLevel] = useState(null);
+  const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
+
+  const resetNamaInput = () => {
+    setSelectedNama('');
+  };
+
+  const resetNipposInput = () => {
+    setSelectedNippos('');
+  };
+
+  const resetJobLevelInput = () => {
+    setSelectedJobLevel('');
+  };
+
+  const resetRumpunJabatanInput = () => {
+    setSelectedRumpunJabatan('');
+  };
+
+  const handleResetSearch = () => {
+    setSelectedNama('');
+    setSelectedNippos('');
+    setSelectedJobLevel('');
+    setSelectedRumpunJabatan('');
+
+    // Call resetInput function for each CustomSearch component
+    resetNamaInput();
+    resetNipposInput();
+    resetJobLevelInput();
+    resetRumpunJabatanInput();
+  };
 
   return (
     <>
@@ -227,22 +280,22 @@ const ParameterTalent = () => {
                 <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'}/>
             </FlexContainer>
 
-            <Grid style={{marginBottom: '0.2%'}}>
-                <DetailTalentPertama 
-                    selectedRumpunJabatan={selectedRumpunJabatan}
-                    setSelectedRumpunJabatan={setSelectedRumpunJabatan}
-                    selectedJobLevel={selectedJobLevel}
-                    setSelectedJobLevel={setSelectedJobLevel}
-                    selectedKantor={selectedKantor}
-                    setSelectedKantor={setSelectedKantor}
-                    />
-            </Grid>
-
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
+                <CustomSearch field={listNippos} label={'Nippos'} onSearch={setSelectedNippos} value={selectedNippos} resetInput={resetNipposInput} />
+                <CustomSearch field={listJobLevel} label={'Job Level'} onSearch={setSelectedJobLevel} value={selectedJobLevel} resetInput={resetJobLevelInput} />
+                <CustomSearch field={listRumpunJabatan} label={'Rumpun Jabatan'} onSearch={setSelectedRumpunJabatan} value={selectedRumpunJabatan} resetInput={resetRumpunJabatanInput} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+            </div>
+            
             <NilaiAssessmentTable 
-                selectedKantor={selectedKantor}
-                selectedRumpunJabatan={selectedRumpunJabatan}
-                selectedJobLevel={selectedJobLevel}
-                selectedStatusIDP={selectedStatusIDP}
+                rows={rows}
+                searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                searchNippos={selectedNippos}
+                searchJobLevel={selectedJobLevel}
+                searchRumpunJabatan={selectedRumpunJabatan}
             />
 
           </Box>
