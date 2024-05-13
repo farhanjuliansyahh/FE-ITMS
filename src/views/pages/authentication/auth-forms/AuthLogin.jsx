@@ -20,7 +20,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useAuth } from '../../../../routes/useAuth';
 import { useNavigate } from 'react-router';
 
-
 const Login = () => {
   const { doLoginSide } = useAuth();
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ const Login = () => {
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             {/* Nippos Input */}
-            <FormControl style={{ marginTop: '16px', marginBottom: '16px'}} fullWidth error={Boolean(touched.nippos && errors.nippos)}>
+            <FormControl style={{ marginTop: '16px', marginBottom: '16px' }} fullWidth error={Boolean(touched.nippos && errors.nippos)}>
               <InputLabel htmlFor="outlined-adornment-nippos-login">NIPPOS</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-nippos-login"
@@ -109,7 +108,16 @@ const Login = () => {
 
             {/* Submit Button */}
             <Box sx={{ marginTop: '36px' }}>
-              <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary" sx={{ borderRadius: 3 }} >
+              <Button
+                disableElevation
+                disabled={isSubmitting}
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+                color="primary"
+                sx={{ borderRadius: 3 }}
+              >
                 Masuk
               </Button>
             </Box>
