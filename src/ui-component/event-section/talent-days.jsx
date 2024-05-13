@@ -154,8 +154,7 @@ const TalentDays = ({eventid}) => {
         // Update state with API data
         setdaysRow(datadays.map((row, index) => ({ ...row, id: index + 1 })));
          // Check if any element has status === false
-      const hasFalseStatus = datadays.some(row => row.status === false);
-      
+      const hasFalseStatus = datadays.some(row => row.Status === "Belum Diisi");
       // Update isDisabled state based on the presence of false status
       setIsDisabled(!hasFalseStatus);
       })
