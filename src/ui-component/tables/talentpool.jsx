@@ -57,8 +57,27 @@ const columns = [
 //   { id: 6, nama: 'Ayu Ning Sukarman', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', kantor: 'Kantor Pusat Bandung', kategorimatrix: 'Promotable-3', status: 'Talent' },
 // ];
 
-export default function TalentPool({filter, rows}) {
+export default function TalentPool({
+  filter, 
+  rows,
+  searchNama, // Receive the search term as a prop
+  searchNippos,
+  searchJobLevel,
+  searchStatus
+}) {
   console.log("daftar pool", rows);
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+    const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
+    // const StatusMatch = !searchStatus || (row['Status'] && row['Status'].toLowerCase().includes(searchStatus.toLowerCase())); // Add null check for row.nippos
+
+    return (!searchNama || namaMatch) 
+    && (!searchNippos || nipposMatch) 
+    && (!searchJobLevel || jobLevelMatch) 
+    // && (!searchStatus || StatusMatch);
+  });
+
   const [filterModel, setFilterModel] = React.useState({
     items: [{ field: 'nama', operator: 'contains', value: '' }],
   });
@@ -95,7 +114,7 @@ export default function TalentPool({filter, rows}) {
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
         initialState={{
           pagination: {

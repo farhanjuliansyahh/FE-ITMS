@@ -5,7 +5,20 @@ import Button from '@mui/material/Button';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HapusDataBPJ from '../../ui-component/modal/hapus-data-bpj';
 
-export default function TalentDaysBPJTable({ eventid, rows }) {
+export default function TalentDaysBPJTable({ 
+    eventid, 
+    rows,
+    searchNama, // Receive the search term as a prop
+    searchNippos
+ }) {
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+    const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+
+    return (!searchNama || namaMatch) 
+    && (!searchNippos || nipposMatch);
+  });
+
   const [HapusBPJOpen, setHapusBPJOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState(null); // State to store selected nippos
 
@@ -60,7 +73,7 @@ export default function TalentDaysBPJTable({ eventid, rows }) {
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
         initialState={{
           pagination: {

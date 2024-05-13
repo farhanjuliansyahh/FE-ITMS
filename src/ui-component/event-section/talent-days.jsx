@@ -8,7 +8,7 @@ import EventDetailSearchSection from '../../ui-component/button/EventDetailSearc
 import SearchResetButton from '../../ui-component/button/SearchResetButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { CorporateFareOutlined, PersonOutlined, AddCircleOutlineOutlined, NotificationsNoneOutlined } from '@mui/icons-material';
+import { CorporateFareOutlined, PersonOutlined, AddCircleOutlineOutlined, NotificationsNoneOutlined, RestartAltOutlined } from '@mui/icons-material';
 
 import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -24,6 +24,8 @@ import KonfirmasiDetailBPJ from '../../ui-component/modal/konfirmasi-detail-bpj'
 import ButtonOptional from '../../ui-component/button/ButtonOptional';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import KonfirmasiIsiSemuaNilaiTalent from '../../ui-component/modal/konfirmasi-isi-semua-nilai-talent';
+import CustomSearch from '../searchsection/custom-search';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
 
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
@@ -184,6 +186,60 @@ daysRow.forEach(item => {
   } 
 });
 
+  // BPJ
+  const listNamaFalse = [...new Set(daysBpj.map(row => row.Nama))]
+  const listNipposFalse = [...new Set(daysBpj.map(row => row.Nippos))];
+
+  const [selectedNamaFalse, setSelectedNamaFalse] = useState(null);
+  const [selectedNipposFalse, setSelectedNipposFalse] = useState(null);
+  
+  const resetNamaInputFalse = () => {
+    setSelectedNamaFalse('');
+  };
+
+  const resetNipposInputFalse = () => {
+    setSelectedNipposFalse('');
+  };
+
+  const handleResetSearchFalse = () => {
+    resetNamaInputFalse();
+    resetNipposInputFalse();
+  };
+
+  // DAFTAR KARYAWAN
+  const listNamaTrue = [...new Set(daysRow.map(row => row.Nama))]
+  const listNipposTrue = [...new Set(daysRow.map(row => row.Nippos))];
+  const listJobLevelTrue = [...new Set(daysRow.map(row => row['Job Level']))];
+  const listKomiteUnitTrue = [...new Set(daysRow.map(row => row['Komite Unit']))];
+
+  const [selectedNamaTrue, setSelectedNamaTrue] = useState(null);
+  const [selectedNipposTrue, setSelectedNipposTrue] = useState(null);
+  const [selectedJobLevelTrue, setSelectedJobLevelTrue] = useState(null);
+  const [selectedKomiteUnitTrue, setSelectedKomiteUnitTrue] = useState(null);
+
+  const resetNamaInputTrue = () => {
+    setSelectedNamaTrue('');
+  };
+
+  const resetNipposInputTrue = () => {
+    setSelectedNipposTrue('');
+  };
+
+  const resetJobLevelInputTrue = () => {
+    setSelectedJobLevelTrue('');
+  };
+
+  const resetKomiteUnitInputTrue = () => {
+    setSelectedKomiteUnitTrue('');
+  };
+
+  const handleResetSearchTrue = () => {
+    resetNamaInputTrue();
+    resetNipposInputTrue();
+    resetJobLevelInputTrue();
+    resetKomiteUnitInputTrue();
+  };
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -269,22 +325,20 @@ daysRow.forEach(item => {
                     </Button>
                 </Stack>
           
-                <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-                    <div style={{ marginRight: '12px', width:'100%'  }}>
-                        <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-                    </div>
-                    <div style={{ marginRight: '12px', width:'100%' }}>
-                        <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-                    </div>
-                    <div style={{ marginRight: '12px' }}>
-                        <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-                    </div>
-                    <div style={{ marginRight: '0px' }}>
-                        <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
-                    </div>
-                </div>
-         
-                <TalentDaysBPJTable eventid={eventidactive} rows={daysBpj} />
+                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaFalse} label={'Nama'} onSearch={setSelectedNamaFalse} value={selectedNamaFalse} resetInput={resetNamaInputFalse} />
+                <CustomSearch field={listNipposFalse} label={'Nippos'} onSearch={setSelectedNipposFalse} value={selectedNipposFalse} resetInput={resetNipposInputFalse} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchFalse} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+            </div>
+
+                <TalentDaysBPJTable 
+                  eventid={eventidactive} 
+                  rows={daysBpj} 
+                  searchNama={selectedNamaFalse} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                  searchNippos={selectedNipposFalse}
+                />
             </Box>
         </CustomTabPanel>
 
@@ -316,28 +370,23 @@ daysRow.forEach(item => {
 
             </FlexContainer>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-              <div style={{ marginRight: '12px', width:'100%'  }}>
-                    <EventDetailSearchSection PlaceHolder={'Nama'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection PlaceHolder={'NIPPOS'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection PlaceHolder={'Job Level'} />
-              </div>
-              <div style={{ marginRight: '24px', width:'100%' }}>
-                  <EventDetailSearchSection PlaceHolder={'Komite Unit'} />
-              </div>
-              <div style={{ marginRight: '12px' }}>
-                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-              </div>
-              <div style={{ marginRight: '0px' }}>
-                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaTrue} label={'Nama'} onSearch={setSelectedNamaTrue} value={selectedNamaTrue} resetInput={resetNamaInputTrue} />
+                <CustomSearch field={listNipposTrue} label={'Nippos'} onSearch={setSelectedNipposTrue} value={selectedNipposTrue} resetInput={resetNipposInputTrue} />
+                <CustomSearch field={listJobLevelTrue} label={'Job Level'} onSearch={setSelectedJobLevelTrue} value={selectedJobLevelTrue} resetInput={resetJobLevelInputTrue} />
+                <CustomSearch field={listKomiteUnitTrue} label={'Komite Unit'} onSearch={setSelectedKomiteUnitTrue} value={selectedKomiteUnitTrue} resetInput={resetKomiteUnitInputTrue} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
             </div>
           
-            <TalentDaysKaryawanTable rows={daysRow} />
+            <TalentDaysKaryawanTable 
+              rows={daysRow} 
+              searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+              searchNippos={selectedNipposTrue}
+              searchJobLevel={selectedJobLevelTrue}
+              searchKomiteUnit={selectedKomiteUnitTrue}
+            />
 
           </Box>          
         </CustomTabPanel>
