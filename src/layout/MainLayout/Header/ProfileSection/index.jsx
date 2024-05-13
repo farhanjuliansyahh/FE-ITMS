@@ -129,9 +129,6 @@ const ProfileSection = () => {
         if (namaRoles.length > 0) {
           // Set sessionStorage with the array of nama_roles
           sessionStorage.setItem('role', JSON.stringify(namaRoles));
-          console.log('nama_roles saved in sessionStorage:', namaRoles);
-        } else {
-          console.error('No nama_roles found in response');
         }
       } catch (error) {
         console.error('Error fetching role:', error);

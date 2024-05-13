@@ -53,7 +53,7 @@ const EventKetuaKomiteTalent = () => {
   const nippos = sessionStorage.getItem('nippos');
 
 
-  const fetcheventkomiteunit = () => {
+  const fetcheventkomitalent = () => {
     return fetch(`http://localhost:4000/getkomiteevent?nippos=${nippos}`) // Replace with your actual endpoint
       .then(response => {
         if (!response.ok) {
@@ -71,7 +71,7 @@ const EventKetuaKomiteTalent = () => {
   };
 
 useEffect(() => {
-    fetcheventkomiteunit()
+  fetcheventkomitalent()
       .then(data => {
         setkomitetalentevent(data.event);
         setLoading(false); // Move this line to the end of the .then block

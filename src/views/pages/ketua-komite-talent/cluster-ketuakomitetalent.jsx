@@ -26,6 +26,8 @@ export default function ClusterKetuaKomiteTalent() {
     const [clusterRow, setclusterRow] = useState([])
     const [categoryCounts, setCategoryCounts] = useState({});
     const [refreshstate, setrefreshstate] = useState(false)
+    const [kuota, setkuota] = useState('')
+
 
 
     const fetcheventdetail = () => {
@@ -132,7 +134,7 @@ export default function ClusterKetuaKomiteTalent() {
     const handlerefresh = () => {
       setrefreshstate(true)
     }
-
+ console.log(clusterRow);
     useEffect(() => {
         // Fetch data from API
         fetch(`http://localhost:4000/getclustertable?eventtalentid=${id}`)
@@ -155,10 +157,41 @@ export default function ClusterKetuaKomiteTalent() {
           });
           setrefreshstate(false)
       }, [refreshstate]);
+
+      useEffect(() => {
+        // Fetch data from API
+        fetch(`http://localhost:4000/getparameterkuota?id=2`)
+          .then(response => response.json())
+          .then(data => {
+      
+            // Initialize rows based on fetched score data
+            const kuota = data['kuota'] || 0;
+            // Set the initial values from the fetched data
+            setkuota(kuota);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+        }, []); // Empty dependency array to run effect only once
+
+        const countSelected = () => {
+          // Filter rows where "Kategori Matrix Awal" is not equal to "Kategori Matrix Akhir"
+          const filteredRows = clusterRow.filter(row => row["Matriks Kategori Awal"] !== row["Matriks Kategori Akhir"]);
+          // Count the filtered rows
+          const count = filteredRows.length;
+          return count;
+        };
+
+        const selected = countSelected();
+        console.log("Number of rows with different Kategori Matrix:", selected);
+
     
-      const totalRows = Object.values(categoryCounts).reduce((total, count) => total + count, 0);
+      const totalRows = clusterRow.length;
+
+      const halfLength = Math.ceil(totalRows * kuota / 100);
+
+      const isDiskresiDone = selected === halfLength;
     
-      const hitung = categoryCounts
 
     return (
         <MainCard>
@@ -206,7 +239,7 @@ export default function ClusterKetuaKomiteTalent() {
                         variant="contained"
                         style={{ color: '#2196F3', borderRadius: '15px', borderColor: '#EAF8FF', backgroundColor: '#EAF8FF', boxShadow: 'none' }}
                     >
-                        sudah dilakukan diskresi kepada x/y Karyawan
+                        sudah dilakukan diskresi kepada {selected}/{halfLength} Karyawan
                     </Button>
                     <div style={{ flex: '1' }}> </div>
                     <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
@@ -234,7 +267,7 @@ export default function ClusterKetuaKomiteTalent() {
                 </div>
          
                 <TalentClusterKetuaKomiteTalentTable  filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}
-                eventid={id} rows={clusterRow} counts={categoryCounts} onTableDataRefresh={handlerefresh}/>
+                eventid={id} rows={clusterRow} counts={categoryCounts} onTableDataRefresh={handlerefresh} disabled={isDiskresiDone}/>
             </Box>
 
         </MainCard>

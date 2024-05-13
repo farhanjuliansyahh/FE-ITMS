@@ -132,17 +132,52 @@ useEffect(() => {
                     status={event.evenstatus_id}
                     pathDetailEvent={`./talent-profile/${event.id}`}
                   />
+                  <BasicPagination />
                 </Box>
               ))}
-            <BasicPagination />
+              {karyawanevent.filter(event => event.status !== 8).length === 0 && (
+                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                  <img src={notFoundImage} alt="Deskripsi gambar" />
+                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                </Box>
+              )}
+            
           </Box>
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={1}>
-          <Box style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px',}}>
-            <img src={notFoundImage} alt="Deskripsi gambar" />
-            <Typography variant='h4' marginTop={3}> Tidak Ada Data </Typography>
-          </Box>          
+        <Box sx={{paddingRight: '24px', paddingLeft: '24px', paddingBottom: '24px'}}>
+    {karyawanevent
+      .filter(event => event.evenstatus_id === 8) // Filter events with status equal to 8
+      .map((event, index) => (
+        <Box key={index} sx={{paddingBottom: '24px'}}>
+          <AksesEvent
+            ButtonName={'Akses Event'}
+            namaEvent={event.nama_event}
+            key={event.id}
+            id={event.id}
+            nama_event={event.nama_event}
+            deskripsi={event.deskripsi}
+            tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+            kode_rumpun={event.kode_rumpun_jabatan}
+            nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+            kuota={event.kuota}
+            tanggal_mulai={event.tanggal_mulai}
+            tanggal_selesai={event.tanggal_selesai}
+            status={event.evenstatus_id}
+            pathDetailEvent={`./talent-cluster/${event.id}`}
+          />
+          <BasicPagination />
+        </Box>
+      ))}
+      {karyawanevent.filter(event => event.status !== 8).length === 0 && (
+                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                  <img src={notFoundImage} alt="Deskripsi gambar" />
+                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                </Box>
+              )}
+    
+  </Box>       
         </CustomTabPanel>
 
       </MainCard>
