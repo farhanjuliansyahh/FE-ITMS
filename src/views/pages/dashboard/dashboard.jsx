@@ -93,25 +93,25 @@ const Dashboard = () => {
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={2} justifyContent="start">
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis"/>
               </Grid>
-              <Grid item xs={4}> 
+              <Grid item xs={2.5}> 
                 <ButtonChart buttonText="B" detail="Bisnis" />
               </Grid>
               <Grid item xs={4}>
                 <ButtonChart buttonText="OP" detail="Operasi" />
               </Grid>
-              <Grid item xs={4} >
+              <Grid item xs={3} >
                 <ButtonChart buttonText="MR" detail="Manajemen Risiko dan Kepatuhan" />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={2.5}>
                 <ButtonChart buttonText="PR" detail="Pengelolaan Regulasi" />
               </Grid>
               <Grid item xs={4}>
                 <ButtonChart buttonText="DI" detail="Pengelolaan Teknologi" />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <ButtonChart buttonText="KU" detail="Keuangan" />
               </Grid>
               <Grid item xs={4}>
