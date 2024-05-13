@@ -16,6 +16,8 @@ import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent';
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
+  const [datarumpun, setDatarumpun] = useState([])
+  const [datajoblevel, setJoblevel] = useState([])
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -32,6 +34,21 @@ const Dashboard = () => {
     //   // navigateTo: '/dashboard/total-pegawai',
     // },
   ]
+
+  useEffect(() => {
+    fetch("http://localhost:4000/getdatatalentrumpun")
+    .then(response => response.json())
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    .then(data => setDatarumpun(data))
+  },[])
+
+  useEffect(() => {
+    fetch("http://localhost:4000/getdatatalentjoblevel")
+    .then(response => response.json())
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    .then(data => setJoblevel(data))
+  },[])
+  console.log(datarumpun);
 
   return (
     <>
@@ -77,11 +94,11 @@ const Dashboard = () => {
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
               {/* <RumpunJabatanChart isLoading={isLoading} /> */}
-              <RumpunJabatanTerbaru isLoading={isLoading} />
+              <RumpunJabatanTerbaru isLoading={isLoading} data={datarumpun} />
               
             </Grid>
             <Grid item xs={12} md={6}>
-              <LevelJabatanChart isLoading={isLoading} />
+              <LevelJabatanChart isLoading={isLoading} data={datajoblevel}/>
             </Grid>
           </Grid>
         </Grid>
@@ -93,25 +110,25 @@ const Dashboard = () => {
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={2} justifyContent="start">
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis"/>
               </Grid>
-              <Grid item xs={4}> 
+              <Grid item xs={2.5}> 
                 <ButtonChart buttonText="B" detail="Bisnis" />
               </Grid>
               <Grid item xs={4}>
                 <ButtonChart buttonText="OP" detail="Operasi" />
               </Grid>
-              <Grid item xs={4} >
+              <Grid item xs={3} >
                 <ButtonChart buttonText="MR" detail="Manajemen Risiko dan Kepatuhan" />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={2.5}>
                 <ButtonChart buttonText="PR" detail="Pengelolaan Regulasi" />
               </Grid>
               <Grid item xs={4}>
                 <ButtonChart buttonText="DI" detail="Pengelolaan Teknologi" />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <ButtonChart buttonText="KU" detail="Keuangan" />
               </Grid>
               <Grid item xs={4}>

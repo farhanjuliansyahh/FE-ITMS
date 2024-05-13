@@ -9,9 +9,9 @@ export default function ButtonError({ Color, backgroundColor, icon, LabelName, o
       variant="contained"
       sx={{ 
         color: Color || '#ffffff',  
-        backgroundColor: backgroundColor || '#F44336',
+        backgroundColor: backgroundColor || '#D32F2F',
         '&:hover': {
-          backgroundColor: '#D32F2F', // Ubah warna latar belakang saat dihover
+          backgroundColor: '#B71C1C', // Ubah warna latar belakang saat dihover
         }, 
         borderRadius: '12px', 
         fontSize: '14px', // Custom font size

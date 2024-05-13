@@ -49,7 +49,7 @@ const getKategoriMatrixStyle = () => (params) => (
     </div>
 );
 
-const TalentClusterKetuaKomiteTalentTable = ({eventid, rows,onTableDataRefresh}) => {
+const TalentClusterKetuaKomiteTalentTable = ({eventid, rows,onTableDataRefresh, disabled}) => {
     const [openFirstModal, setOpenFirstModal] = useState(false);
     const [openSecondModal, setOpenSecondModal] = useState(false);
     const [selectedNippos, setSelectedNippos] = useState(null); // State to store selected nippos
@@ -182,6 +182,7 @@ const TalentClusterKetuaKomiteTalentTable = ({eventid, rows,onTableDataRefresh})
                         }} 
                         endIcon={<CreateOutlined />}
                         onClick={() => handleOpenFirstModal(nippos,kategoriMatrixAkhir)} // Pass nippos to handleOpenFirstModal
+                        disabled={disabled}
                     >
                         Ubah Matrix
                     </Button>

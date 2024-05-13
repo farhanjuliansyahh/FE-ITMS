@@ -12,7 +12,44 @@ import ApexCharts from 'apexcharts';
 import Chart from 'react-apexcharts';
 
 // ==============================|| TOTAL GROWTH BAR CHART ||============================== //
-const RumpunJabatanTerbaru = ({ isLoading }) => {
+const RumpunJabatanTerbaru = ({ isLoading, data }) => {
+  const [chartSeries, setChartSeries] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (!isLoading && data.length > 0) {
+      // Define all desired categories
+      const allCategories = ['OP', 'B', 'PP', 'MR', 'PR', 'TI', 'KU', 'SDM'];
+  
+      // Extracting unique categories from data
+      const uniqueCategories = Array.from(new Set(data.map(item => item.nama_rumpun_jabatan)));
+  
+      // Add any missing categories to the unique categories array
+      allCategories.forEach(category => {
+        if (!uniqueCategories.includes(category)) {
+          uniqueCategories.push(category);
+        }
+      });
+  
+      // Extracting unique stack categories
+      const uniqueStackCategories = Array.from(new Set(data.map(item => item.Nama_Matriks_Kategori)));
+  
+      // Mapping data to series format
+      const seriesData = uniqueStackCategories.map(stackCategory => {
+        return {
+          name: stackCategory,
+          data: uniqueCategories.map(category => {
+            const foundItem = data.find(item => item.nama_rumpun_jabatan === category && item.Nama_Matriks_Kategori === stackCategory);
+            return foundItem ? parseInt(foundItem.count) : 0;
+          })
+        };
+      });
+  
+      setChartSeries(seriesData);
+      setCategories(uniqueCategories);
+    }
+  }, [isLoading, data]);
+
   const chartDataStackBar = {
     height: 480,
     type: 'bar',
@@ -27,9 +64,12 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
           enabled: true
         }
       },
+      xaxis: {
+        categories: categories
+      },
       responsive: [
         {
-          breakpoint: 480,
+          breakpoint: 300,
           options: {
             legend: {
               position: 'bottom',
@@ -42,20 +82,14 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '50%'
+          columnWidth: '63%'
         }
-      },
-      xaxis: {
-        type: 'category',
-        categories: ['PP', 'B', 'OP', 'MR', 'PR', 'DI', 'KU', 'SD'],
-        titles: ['Perencanaan dan Pengelolaan Strategis', 'Bisnis', 'Operasi', 'Manajemen Risiko dan Kepatuhan', 
-                'Pengelolaan Regulasi', 'Pengelolaan Teknologi', 'Keuangan', 'Sumber Daya Manusia']
       },
       legend: {
         show: true,
         fontFamily: `'Roboto', sans-serif`,
         position: 'bottom',
-        offsetX: 20,
+        offsetX: -25,
         labels: {
           useSeriesColors: false
         },
@@ -65,7 +99,7 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
           radius: 5
         },
         itemMargin: {
-          horizontal: 15,
+          horizontal: 5,
           vertical: 8
         }
       },
@@ -79,25 +113,10 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
         show: true
       }
     },
-    series: [
-      {
-        name: 'High Potential',
-        data: [35, 125, 35, 35, 35, 80, 35, 20]
-      },
-      {
-        name: 'Promotable-2',
-        data: [35, 15, 15, 35, 65, 40, 80, 25]
-      },
-      {
-        name: 'Promotable-3',
-        data: [35, 145, 35, 35, 20, 105, 100, 10]
-      },
-      {
-        name: 'Promotable-4',
-        data: [0, 0, 75, 0, 0, 115, 0, 0]
-      }
-    ]
+    series: chartSeries
   };
+
+  
 
   const theme = useTheme();
 
@@ -174,7 +193,7 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
             <Grid item xs={12}>
               <Grid container direction="column" spacing={1}>
                 <Grid item xs={12} md={12}>
-                  <Typography variant="h3">Total Talent Berdasarkan Rumpun Jabatan</Typography>
+                  <Typography variant="h3">Jumlah Talent Menurut Rumpun Jabatan</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -197,7 +216,8 @@ const RumpunJabatanTerbaru = ({ isLoading }) => {
 };
 
 RumpunJabatanTerbaru.propTypes = {
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  data: PropTypes.array
 };
 
 export default RumpunJabatanTerbaru;

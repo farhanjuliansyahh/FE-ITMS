@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 export default function DetailTalentTable({
@@ -7,20 +7,15 @@ export default function DetailTalentTable({
     selectedJobLevel,
     selectedStatusIDP,
   }) {
-    const rows = [
-        { id: 1, nama: 'Adinda', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-        joblevel: 'A1', jobfam: 'Bisnis', nama_kantor:'KANTOR PUSAT BANDUNG', status_IDP:'Selesai'},
-        { id: 2, nama: 'Berlian Hadi', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-        joblevel: 'A2', jobfam: 'Keuangan', nama_kantor:'KANTOR PUSAT JAKARTA', status_IDP:'Selesai'},
-        { id: 3, nama: 'Dwi Puspitasari ', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-        joblevel: 'C2', jobfam: 'Perencanaan dan Pengelolaan Strategis', nama_kantor:'KANTOR PUSAT JAKARTA', status_IDP:'Belum berjalan'},
-        { id: 4, nama: 'Erlin Maulidina ', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-        joblevel: 'D3', jobfam: 'Manajemen Risiko dan Kepatuhan', nama_kantor:'KANTOR REGIONAL I MEDAN', status_IDP:'Selesai'},
-        { id: 5, nama: 'Fransisko Adi ', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-        joblevel: 'E3', jobfam: 'Pengelolaan Teknologi', nama_kantor:'KANTOR REGIONAL I MEDAN', status_IDP:'Berjalan'},
-        { id: 6, nama: 'Ganjar Arifin ', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-        joblevel: 'C1', jobfam: 'Bisnis', nama_kantor:'KCU JAKARTACENTRUM', status_IDP:'Selesai'}
-    ];
+const [rows, selectedRows] = useState([])
+
+useEffect(() => {
+    fetch("http://localhost:4000/getdetailtalent")
+    .then(response => response.json())
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    .then(data => selectedRows(data))
+  },[])
+
     const columns = [
         { field: 'id', headerName: 'No', width: 70 },
         { field: 'nama', headerName: 'Nama', width: 110 },
@@ -29,6 +24,7 @@ export default function DetailTalentTable({
         { field: 'joblevel', headerName: 'Job Level', width: 110 },
         { field: 'jobfam', headerName: 'Rumpun Jabatan', width: 110 },
         { field: 'nama_kantor', headerName: 'Nama Kantor', width: 170 },
+        { field: 'nama_event', headerName: 'Nama Event', width: 110}
         // { field: 'status_IDP', headerName: 'Status IDP', width: 130 },
     ];
 

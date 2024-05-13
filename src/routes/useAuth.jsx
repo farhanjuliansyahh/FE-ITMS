@@ -2,15 +2,14 @@ import { useNavigate } from 'react-router';
 
 export const useAuth = () => {
   const navigate = useNavigate();
- 
 
-  const doLoginSide = async (username, password) => {
+  const doLoginSide = async (nippos, password) => {
     const headers = {
       'Content-Type': 'application/json'
     };
 
     const content = JSON.stringify({
-      nippos: username,
+      nippos: nippos,
       password: password
     });
 
@@ -30,7 +29,6 @@ export const useAuth = () => {
       }, 1000); // 1000 milliseconds = 1 second
     } else {
       alert('Salah NIPPOS atau Kata Sandi!');
-  
     }
   };
 
