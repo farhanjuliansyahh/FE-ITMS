@@ -9,6 +9,7 @@ import SearchSection2 from '../../../ui-component/searchsection';
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import BasicPagination from '../../../ui-component/button/pagination';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
 
 // ==============================|| DAFTAR EVENT KOMITE UNIT ||============================== //
 
@@ -50,7 +51,7 @@ const DaftarEventKomiteUnit = () => {
   const nippos = sessionStorage.getItem('nippos');
 
   const fetcheventkomiteunit = () => {
-    return fetch(`http://localhost:4000/getkomiteunitevent?nippos=${nippos}`) // Replace with your actual endpoint
+    return fetch(`http://localhost:4000/getkomiteunitevent?nippos=${nippos}`) // Replace with your actual endpoint 
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -83,11 +84,24 @@ useEffect(() => {
     setValue(newValue);
   };
 
+  const uniqueNamaEvents = [...new Set(komiteunitevent.map(event => event.nama_event))];
+  const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
+
+  const filteredEvents = komiteunitevent.filter((event) => {
+    const namaMatch = !selectedNamaEvent || (event.nama_event && event.nama_event.toLowerCase().includes(selectedNamaEvent.toLowerCase())); // Add null check
+    return (!selectedNamaEvent || namaMatch);
+  });
+
   return (
     <>
       <MainCard title="Daftar Event" secondary={
         <Stack direction="row" spacing={0}>
-          <SearchSection2 />
+          <CustomSearch 
+            field={uniqueNamaEvents} 
+            label={' Cari Nama Event'} 
+            onSearch={setSelectedNamaEvent} 
+            value={selectedNamaEvent} 
+          />
         </Stack>
       }>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -99,7 +113,7 @@ useEffect(() => {
 
         <CustomTabPanel value={value} index={0}>
           <Box sx={{paddingRight: '24px', paddingLeft: '24px', paddingBottom: '24px'}}>
-            {komiteunitevent
+            {filteredEvents
               .filter(event => event.evenstatus_id !== 8) // Filter events with status not equal to 8
               .map((event, index) => (
                 <Box key={index} sx={{paddingBottom: '24px'}}>
@@ -123,7 +137,7 @@ useEffect(() => {
                 </Box>
                 
               ))}
-              {komiteunitevent.filter(event => event.status !== 8).length === 0 && (
+              {filteredEvents.filter(event => event.status !== 8).length === 0 && (
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
@@ -135,7 +149,7 @@ useEffect(() => {
 
         <CustomTabPanel value={value} index={1}>
           <Box sx={{paddingRight: '24px', paddingLeft: '24px', paddingBottom: '24px'}}>
-            {komiteunitevent
+            {filteredEvents
               .filter(event => event.evenstatus_id === 8) // Filter events with status equal to 8
               .map((event, index) => (
                 <Box key={index} sx={{paddingBottom: '24px'}}>
@@ -157,7 +171,7 @@ useEffect(() => {
                   <BasicPagination />
                 </Box>
               ))}
-              {komiteunitevent.filter(event => event.status !== 8).length === 0 && (
+              {filteredEvents.filter(event => event.status !== 8).length === 0 && (
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>

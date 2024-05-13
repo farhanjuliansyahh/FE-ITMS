@@ -10,6 +10,7 @@ import SearchSection2 from '../../../ui-component/searchsection';
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import BasicPagination from '../../../ui-component/button/pagination';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
 
 // ==============================|| EVENT KETUA KOMITE TALENT PAGE ||============================== //
 
@@ -90,13 +91,26 @@ useEffect(() => {
     setLoading(false);
   }, []);
 
+  const uniqueNamaEvents = [...new Set(komitetalentevent.map(event => event.nama_event))];
+  const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
+
+  const filteredEvents = komitetalentevent.filter((event) => {
+    const namaMatch = !selectedNamaEvent || (event.nama_event && event.nama_event.toLowerCase().includes(selectedNamaEvent.toLowerCase())); // Add null check
+    return (!selectedNamaEvent || namaMatch);
+  });
+
   return (
     <>
       {/* <MainLayout /> */}
       
       <MainCard title="Daftar Event"  secondary={
           <Stack direction="row" spacing={2}>
-            <SearchSection2 /> 
+              <CustomSearch 
+                field={uniqueNamaEvents} 
+                label={' Cari Nama Event'} 
+                onSearch={setSelectedNamaEvent} 
+                value={selectedNamaEvent} 
+              />
           </Stack>
         }>
 
@@ -113,7 +127,7 @@ useEffect(() => {
 
         <CustomTabPanel value={value} index={0}>
   <Box sx={{paddingRight: '24px', paddingLeft: '24px', paddingBottom: '24px'}}>
-    {komitetalentevent
+    {filteredEvents
       .filter(event => event.evenstatus_id !== 8) // Filter events with status not equal to 8
       .map((event, index) => (
         <Box key={index} sx={{paddingBottom: '24px'}}>
@@ -136,7 +150,7 @@ useEffect(() => {
           <BasicPagination />
         </Box>
       ))}
-      {komitetalentevent.filter(event => event.status !== 8).length === 0 && (
+      {filteredEvents.filter(event => event.status !== 8).length === 0 && (
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
@@ -148,7 +162,7 @@ useEffect(() => {
 
 <CustomTabPanel value={value} index={1}>
   <Box sx={{paddingRight: '24px', paddingLeft: '24px', paddingBottom: '24px'}}>
-    {komitetalentevent
+    {filteredEvents
       .filter(event => event.evenstatus_id === 8) // Filter events with status equal to 8
       .map((event, index) => (
         <Box key={index} sx={{paddingBottom: '24px'}}>
@@ -171,7 +185,7 @@ useEffect(() => {
           <BasicPagination />
         </Box>
       ))}
-      {komitetalentevent.filter(event => event.status !== 8).length === 0 && (
+      {filteredEvents.filter(event => event.status !== 8).length === 0 && (
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>

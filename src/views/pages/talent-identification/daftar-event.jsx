@@ -102,22 +102,24 @@ const DaftarEvent = () => {
   // console.log("asdasd", eventData);
 
   const uniqueNamaEvents = [...new Set(eventData.map(event => event.nama_event))];
-  // console.log('LIST NAMA EVENT', uniqueNamaEvents);
   const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
+
+  const filteredEvents = eventData.filter((event) => {
+    const namaMatch = !selectedNamaEvent || (event.nama_event && event.nama_event.toLowerCase().includes(selectedNamaEvent.toLowerCase())); // Add null check
+    return (!selectedNamaEvent || namaMatch);
+  });
 
   return (
     <>
       {/* <MainLayout /> */}
       
       <MainCard title="Daftar Event"  secondary={
-        <Stack direction="row" spacing={2}>
-          {/* <SearchSection2 />  */}
+        <Stack direction="row" spacing={2} >
           <CustomSearch 
-              field={uniqueNamaEvents}
-              label={'Nama Event'}
-              selectedField={selectedNamaEvent}
-              setSelectedField={setSelectedNamaEvent}
-          />
+              field={uniqueNamaEvents} 
+              label={'Cari Nama Event'} 
+              onSearch={setSelectedNamaEvent} 
+              value={selectedNamaEvent}  />
           <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
         </Stack>
       }>
@@ -137,7 +139,7 @@ const DaftarEvent = () => {
             <Typography>Loading...</Typography>
           ) : (
             <Box>
-              {eventData
+              {filteredEvents
                 .filter(event => event.evenstatus_id !== 8) // Filter events excluding status 8
                 .map(event => (
                   <EventBerjalan 
@@ -154,7 +156,7 @@ const DaftarEvent = () => {
                     status={event.evenstatus_id}
                   />
                 ))}
-              {eventData.filter(event => event.status !== 8).length === 0 && (
+              {filteredEvents.filter(event => event.status !== 8).length === 0 && (
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
@@ -169,7 +171,7 @@ const DaftarEvent = () => {
             <Typography>Loading...</Typography>
           ) : (
             <Box>
-              {eventData
+              {filteredEvents
                 .filter(event => event.evenstatus_id === 8) // Filter events with status 8
                 .map(event => (
                   <EventBerjalan 
@@ -186,7 +188,7 @@ const DaftarEvent = () => {
                     status={event.evenstatus_id}
                   />
                 ))}
-              {eventData.filter(event => event.status === 8).length === 0 && (
+              {filteredEvents.filter(event => event.status === 8).length === 0 && (
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
