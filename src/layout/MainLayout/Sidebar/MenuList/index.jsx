@@ -9,7 +9,7 @@ import menuItem from '../../../../menu-items';
 
 const MenuList = () => {
   console.log(menuItem);
-  const navItems = menuItem.itemss.items.map((item) => {
+  const navItems = menuItem.map((item) => {
     switch (item.type) {
       case 'group':
         return <NavGroup key={item.id} item={item} />;

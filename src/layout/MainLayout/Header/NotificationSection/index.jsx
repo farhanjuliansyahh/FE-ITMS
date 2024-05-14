@@ -55,6 +55,7 @@ const status = [
 // ==============================|| NOTIFICATION ||============================== //
 
 const NotificationSection = ({ notiflist, onToggleReadStatus }) => {
+  
   const unreadNotifications = notiflist.filter(notif => !notif.read_status);
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
