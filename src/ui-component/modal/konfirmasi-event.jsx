@@ -15,6 +15,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
     const [deadlinesource, setdeadlinesource] = useState('');
     const [activejoblevel, setactivejoblevel] = useState(['']);
     const [activejobfam, setactivejobfam]     = useState('');
+    const [isLoading, setLoading] = useState(true);
 
 
     const handleDateChange = (date) => {

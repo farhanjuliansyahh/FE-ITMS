@@ -21,9 +21,6 @@ const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme 
     letterSpacing: '0.5px',
     textAlign: 'left',
   },
-  [theme.breakpoints.down('lg')]: {
-    width: 250
-  },
   [theme.breakpoints.down('md')]: {
     width: '100%',
     marginLeft: 4,
@@ -31,47 +28,39 @@ const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme 
   }
 }));
 
-
-// ==============================|| SEARCH INPUT ||============================== //
-
 const CustomSearch = ({
-    field, // list value dari kolom yang mau dicari
-    label, // tulisan yang ada di box searchnya
-    onSearch, // Function to handle real-time filtering
-    value, // Current value of the input
-    resetInput // Function to reset the input value
+  field,
+  label,
+  onSearch,
+  value,
+  resetInput
 }) => {
+  const [searchTerm, setSearchTerm] = useState(null);
 
-    const [searchTerm, setSearchTerm] = useState(null);
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    onSearch(value);
+  };
 
-    const handleInputChange = (event) => {
-        const value = event.target.value;
-        onSearch(value); // Call the filtering function with the current search term
-    };
+  useEffect(() => {
+    setSearchTerm(value);
+  }, [value]);
 
-    useEffect(() => {
-        // Set input value when the value prop changes
-        setSearchTerm(value);
-    }, [value]);
-
-    return (
-        <>
-            <Box style={{ display: { xs: 'none', md: 'block' }, width: '100%' }}>
-                <OutlineInputStyle
-                    id={field}
-                    placeholder={label}
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <SearchOutlined stroke={1.5} size="1rem" color='#828282'/>
-                        </InputAdornment>
-                    }
-                    value={searchTerm}
-                    onChange={handleInputChange}
-                />
-            </Box>
-        </>
-    );
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <OutlineInputStyle
+        id={field}
+        placeholder={label}
+        startAdornment={
+          <InputAdornment position="start">
+            <SearchOutlined stroke={1.5} size="1rem" color="#828282" />
+          </InputAdornment>
+        }
+        value={searchTerm}
+        onChange={handleInputChange}
+      />
+    </Box>
+  );
 };
-
 
 export default CustomSearch;

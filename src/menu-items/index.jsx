@@ -22,7 +22,12 @@ const filterMenuItems = (role) => {
 
 const roleString = sessionStorage.getItem('role');
 const role = roleString ? JSON.parse(roleString) : null;
+
+console.log('ini role', role);
+console.log('ini rolestring', roleString);
+
 let menuItems = [];
+
 if (role) {
   const menuByRole = role.map((i) => {
     return filterMenuItems(i);
@@ -30,7 +35,11 @@ if (role) {
   const lat = menuByRole.flat();
   const sets = [...new Set(lat)];
 
-  menuItems = { items: sets };
+  menuItems = sets;
 }
+
+// const menuItems = {
+//   items: [dashboard, TalentIdentification, EventKetuaKomiteTalent, EventKomiteUnit, EventKaryawan, ManajemenPengguna]
+// };
 
 export default menuItems;

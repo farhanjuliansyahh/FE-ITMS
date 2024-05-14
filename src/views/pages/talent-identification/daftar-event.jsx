@@ -1,30 +1,22 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
-import { AddCircleOutline, DownloadDone, RotateRight } from '@mui/icons-material';
+import { Box, Menu, MenuItem, Pagination, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { AddCircleOutline, DownloadDone, ExpandMore, RotateRight } from '@mui/icons-material';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 
 import MainCard from '../../../ui-component/cards/MainCard';
-import SearchSection2 from '../../../ui-component/searchsection';
 import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
-
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
         <Box sx={{ pt: 3 }}>
           <Typography>{children}</Typography>
@@ -37,28 +29,28 @@ function CustomTabPanel(props) {
 CustomTabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
 };
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
   };
 }
 
 const fetchDataFromDatabase = () => {
   return fetch('http://localhost:4000/getallevent') // endpoint
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       return data; // Return the parsed JSON data
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error fetching data:', error);
       throw error; // Rethrow the error to handle it elsewhere
     });
@@ -68,19 +60,19 @@ const DaftarEvent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [eventData, setEventData] = useState([]);
-  
+
   useEffect(() => {
     fetchDataFromDatabase()
-      .then(data => {
+      .then((data) => {
         setEventData(data.event);
         setLoading(false); // Move this line to the end of the .then block
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching data:', error);
         setLoading(false);
       });
   }, []);
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -88,7 +80,6 @@ const DaftarEvent = () => {
   useEffect(() => {
     setLoading(false);
   }, []);
-
 
   const [open, setOpen] = useState(false);
 
@@ -101,7 +92,11 @@ const DaftarEvent = () => {
   };
   // console.log("asdasd", eventData);
 
-  const uniqueNamaEvents = [...new Set(eventData.map(event => event.nama_event))];
+  const handleEventAdded = () => {
+    fetchEventData(); // Re-fetch the data when a new event is added
+  };
+
+  const uniqueNamaEvents = [...new Set(eventData.map((event) => event.nama_event))];
   const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
 
   const filteredEvents = eventData.filter((event) => {
@@ -109,20 +104,54 @@ const DaftarEvent = () => {
     return (!selectedNamaEvent || namaMatch);
   });
 
+  const [pageTab0, setPageTab0] = useState(1);
+  const [itemsPerPageTab0, setItemsPerPageTab0] = useState(5);
+
+  const handleChangePageTab0 = (event, newPage) => {
+    setPageTab0(newPage);
+  };
+
+  const handleItemsPerPageChangeTab0 = (newItemsPerPage) => {
+    setItemsPerPageTab0(newItemsPerPage);
+    setPageTab0(1);
+  };
+
+  const startIndexTab0 = (pageTab0 - 1) * itemsPerPageTab0;
+  const endIndexTab0 = startIndexTab0 + itemsPerPageTab0;
+  const filteredEventsTab0 = filteredEvents.filter(event => event.evenstatus_id !== 8);
+  const paginatedEventsTab0 = filteredEventsTab0.slice(startIndexTab0, endIndexTab0);
+
+  const [pageTab1, setPageTab1] = useState(1);
+  const [itemsPerPageTab1, setItemsPerPageTab1] = useState(5);
+
+  const handleChangePageTab1 = (event, newPage) => {
+    setPageTab1(newPage);
+  };
+
+  const handleItemsPerPageChangeTab1 = (newItemsPerPage) => {
+    setItemsPerPageTab1(newItemsPerPage);
+    setPageTab1(1);
+  };
+
+  const startIndexTab1 = (pageTab1 - 1) * itemsPerPageTab1;
+  const endIndexTab1 = startIndexTab1 + itemsPerPageTab1;
+  const filteredEventsTab1 = filteredEvents.filter(event => event.evenstatus_id === 8);
+  const paginatedEventsTab1 = filteredEventsTab1.slice(startIndexTab1, endIndexTab1);
+
+
   return (
     <>
       {/* <MainLayout /> */}
-      
-      <MainCard title="Daftar Event"  secondary={
-        <Stack direction="row" spacing={2} >
-          <CustomSearch 
-              field={uniqueNamaEvents} 
-              label={'Cari Nama Event'} 
-              onSearch={setSelectedNamaEvent} 
-              value={selectedNamaEvent}  />
-          <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
-        </Stack>
-      }>
+
+      <MainCard
+        title="Daftar Event"
+        secondary={
+          <Stack direction="row" spacing={2}>
+            <CustomSearch field={uniqueNamaEvents} label={'Cari Nama Event'} onSearch={setSelectedNamaEvent} value={selectedNamaEvent} />
+            <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen} />
+          </Stack>
+        }
+      >
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <Typography variant="h5"></Typography>
         </Box>
@@ -139,9 +168,7 @@ const DaftarEvent = () => {
             <Typography>Loading...</Typography>
           ) : (
             <Box>
-              {filteredEvents
-                .filter(event => event.evenstatus_id !== 8) // Filter events excluding status 8
-                .map(event => (
+              {paginatedEventsTab0.map(event => (
                   <EventBerjalan 
                     key={event.id}
                     id={event.id}
@@ -157,24 +184,35 @@ const DaftarEvent = () => {
                     status={event.evenstatus_id}
                   />
                 ))}
-              {filteredEvents.filter(event => event.status !== 8).length === 0 && (
+              {paginatedEventsTab0.length === 0 ? (
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
-                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                  <Typography variant="h4" marginTop={3}>
+                    Tidak Ada Data
+                  </Typography>
                 </Box>
+              ) : (
+                <Stack spacing={2} direction="row" sx={{ marginTop: '24px' }}>
+                  <Pagination
+                    count={Math.ceil(filteredEventsTab0.length / itemsPerPageTab0)}
+                    page={pageTab0}
+                    onChange={handleChangePageTab0}
+                    color="primary"
+                  />
+                  <div style={{ flex: '1' }}></div>
+                  <FilterButton itemsPerPage={itemsPerPageTab0} setItemsPerPage={handleItemsPerPageChangeTab0} />
+                </Stack>
               )}
             </Box>
           )}
         </CustomTabPanel>
 
-        <CustomTabPanel value={value} index={1}>
+        <CustomTabPanel value={value} index={1} style={{ paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px' }}>
           {isLoading ? (
             <Typography>Loading...</Typography>
           ) : (
             <Box>
-              {filteredEvents
-                .filter(event => event.evenstatus_id === 8) // Filter events with status 8
-                .map(event => (
+              {paginatedEventsTab1.map(event => (
                   <EventBerjalan 
                     key={event.id}
                     id={event.id}
@@ -189,20 +227,76 @@ const DaftarEvent = () => {
                     status={event.evenstatus_id}
                   />
                 ))}
-              {filteredEvents.filter(event => event.status === 8).length === 0 && (
-                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+              {paginatedEventsTab1.length === 0 ? (
+              <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
-                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                  <Typography variant="h4" marginTop={3}>
+                    Tidak Ada Data
+                  </Typography>
                 </Box>
+              ) : (
+                <Stack spacing={2} direction="row" sx={{ marginTop: '24px' }}>
+                  <Pagination
+                    count={Math.ceil(filteredEventsTab1.length / itemsPerPageTab1)}
+                    page={pageTab1}
+                    onChange={handleChangePageTab1}
+                    color="primary"
+                  />
+                  <div style={{ flex: '1' }}></div>
+                  <FilterButton itemsPerPage={itemsPerPageTab1} setItemsPerPage={handleItemsPerPageChangeTab1} />
+                </Stack>
               )}
-            </Box>
+              </Box>
           )}
         </CustomTabPanel>
 
-        <AddEventModal open={open} handleClose={handleClose} />
+        <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />
       </MainCard>
     </>
   );
 };
 
 export default DaftarEvent;
+
+function FilterButton({ itemsPerPage, setItemsPerPage }) {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleItemClick = (value) => {
+    setItemsPerPage(value);
+    handleClose();
+  };
+
+  return (
+    <div>
+      <ButtonPrimary
+        Color={'#1F1F1F'}
+        backgroundColor={'#FFFFFF'}
+        icon={ExpandMore}
+        LabelName={`${itemsPerPage} rows`}
+        padding={'6px 16px'}
+        onClick={handleClick}
+        hoverColor={'#1F1F1F'}
+        hoverBackgroundColor={'#F5F5F5'}
+      />
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={() => handleItemClick(3)}>3</MenuItem>
+        <MenuItem onClick={() => handleItemClick(5)}>5</MenuItem>
+        <MenuItem onClick={() => handleItemClick(10)}>10</MenuItem>
+      </Menu>
+    </div>
+  );
+}
