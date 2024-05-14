@@ -17,13 +17,7 @@ function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
         <Box sx={{ pt: 3 }}>
           <Typography>{children}</Typography>
@@ -36,28 +30,28 @@ function CustomTabPanel(props) {
 CustomTabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
 };
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
   };
 }
 
 const fetchDataFromDatabase = () => {
   return fetch('http://localhost:4000/getallevent') // endpoint
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       return data; // Return the parsed JSON data
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error fetching data:', error);
       throw error; // Rethrow the error to handle it elsewhere
     });
@@ -67,19 +61,19 @@ const DaftarEvent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [eventData, setEventData] = useState([]);
-  
+
   useEffect(() => {
     fetchDataFromDatabase()
-      .then(data => {
+      .then((data) => {
         setEventData(data.event);
         setLoading(false); // Move this line to the end of the .then block
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching data:', error);
         setLoading(false);
       });
   }, []);
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -87,7 +81,6 @@ const DaftarEvent = () => {
   useEffect(() => {
     setLoading(false);
   }, []);
-
 
   const [open, setOpen] = useState(false);
 
@@ -100,7 +93,11 @@ const DaftarEvent = () => {
   };
   // console.log("asdasd", eventData);
 
-  const uniqueNamaEvents = [...new Set(eventData.map(event => event.nama_event))];
+  const handleEventAdded = () => {
+    fetchEventData(); // Re-fetch the data when a new event is added
+  };
+
+  const uniqueNamaEvents = [...new Set(eventData.map((event) => event.nama_event))];
   const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
 
   const filteredEvents = eventData.filter((event) => {
@@ -146,17 +143,16 @@ const DaftarEvent = () => {
   return (
     <>
       {/* <MainLayout /> */}
-      
-      <MainCard title="Daftar Event"  secondary={
-        <Stack direction="row" spacing={2} >
-          <CustomSearch 
-              field={uniqueNamaEvents} 
-              label={'Cari Nama Event'} 
-              onSearch={setSelectedNamaEvent} 
-              value={selectedNamaEvent}  />
-          <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
-        </Stack>
-      }>
+
+      <MainCard
+        title="Daftar Event"
+        secondary={
+          <Stack direction="row" spacing={2}>
+            <CustomSearch field={uniqueNamaEvents} label={'Cari Nama Event'} onSearch={setSelectedNamaEvent} value={selectedNamaEvent} />
+            <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen} />
+          </Stack>
+        }
+      >
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <Typography variant="h5"></Typography>
         </Box>
@@ -191,7 +187,9 @@ const DaftarEvent = () => {
               {paginatedEventsTab0.length === 0 ? (
                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
-                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                  <Typography variant="h4" marginTop={3}>
+                    Tidak Ada Data
+                  </Typography>
                 </Box>
               ) : (
                 <Stack spacing={2} direction="row" sx={{ marginTop: '24px' }}>
@@ -232,7 +230,9 @@ const DaftarEvent = () => {
               {paginatedEventsTab1.length === 0 ? (
               <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                   <img src={notFoundImage} alt="Deskripsi gambar" />
-                  <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                  <Typography variant="h4" marginTop={3}>
+                    Tidak Ada Data
+                  </Typography>
                 </Box>
               ) : (
                 <Stack spacing={2} direction="row" sx={{ marginTop: '24px' }}>
@@ -250,7 +250,7 @@ const DaftarEvent = () => {
           )}
         </CustomTabPanel>
 
-        <AddEventModal open={open} handleClose={handleClose} />
+        <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />
       </MainCard>
     </>
   );
