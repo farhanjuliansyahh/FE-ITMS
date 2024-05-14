@@ -26,7 +26,8 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
                 posttalentprofile()
                     .then(() => updatedeadline(eventactive))
                     .then(() => notifikasikaryawan(eventactive))
-                    .then(() => handleConfirmation(selectedDate));
+                    .then(() => handleConfirmation(selectedDate))
+                    .then(() => rolekaryawan(eventactive));
                 break;
             case 3:
                 posttalentqual()
@@ -252,6 +253,33 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
             body: JSON.stringify({
                 // Include any data you want to send in the request body
                 eventtalentid: eventid
+            }) // Convert the bodyData object to a JSON string
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+    };
+
+    const rolekaryawan = () => {
+        console.log("event active", eventactive);
+        return fetch('http://localhost:4000/assignkaryawan', {
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventid: eventid,
             }) // Convert the bodyData object to a JSON string
         })
             .then(response => {

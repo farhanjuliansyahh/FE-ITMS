@@ -11,11 +11,96 @@ import NotificationSection from './NotificationSection';
 
 // assets
 import { IconMenu2 } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = ({ handleLeftDrawerToggle }) => {
   const theme = useTheme();
+  const nippos = sessionStorage.getItem('nippos');
+  const [notificationList, setNotificationList] = useState([])
+  
+  const updatenotifstatus = (nippos, eventid, jenisnotif) => {
+    return fetch('http://localhost:4000/updatestatusnotif', {
+      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+      headers: {
+        'Content-Type': 'application/json', // Specify the content type
+      },
+      body: JSON.stringify({
+          // Include any data you want to send in the request body
+          nippos: nippos,
+          eventid: eventid,
+          jenis_notifikasi: jenisnotif
+      }) // Convert the bodyData object to a JSON string
+    }) 
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      return data; // Return the parsed JSON data
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      throw error; // Rethrow the error to handle it elsewhere
+    });
+  }
+
+  const handleToggleReadStatus = (index, notif) => {
+    setNotificationList((prevNotificationList) => {
+      const updatedNotificationList = [...prevNotificationList];
+      const currentStatus = updatedNotificationList[index].read_status;
+      // Check if the current status is unread before toggling
+      if (!currentStatus) {
+        updatedNotificationList[index].read_status = true; // Toggle read_status to true
+  
+        // Call API to update notification status
+        updatenotifstatus(notif.nippos, notif.eventtalentid, notif.id_referensi_notifikasi)
+          .then((response) => {
+            // Handle success response if needed
+            console.log('Notification status updated successfully:', response);
+          })
+          .catch((error) => {
+            // Handle error if needed
+            console.error('Error updating notification status:', error);
+          });
+      }
+      return updatedNotificationList;
+    });
+  };
+  
+
+
+  const fetchnotification = (nippos) => {
+    return fetch(`http://localhost:4000/getnotification?nippos=${nippos}`) // endpoint
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        return data; // Return the parsed JSON data
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
+
+  useEffect(() => {
+    fetchnotification(nippos)
+      .then(data => {
+        setNotificationList(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  console.log("lets see", notificationList);
 
   return (
     <>
@@ -59,7 +144,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
       <Box sx={{ flexGrow: 1 }} />
 
       {/* notification & profile */}
-      <NotificationSection />
+      <NotificationSection notiflist={notificationList} onToggleReadStatus={handleToggleReadStatus} />
       <ProfileSection />
     </>
   );

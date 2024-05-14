@@ -48,7 +48,6 @@ const Dashboard = () => {
         // 4. Setting *dogImage* to the image url that we received from the response above
     .then(data => setJoblevel(data))
   },[])
-  console.log(datarumpun);
 
   return (
     <>

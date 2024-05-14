@@ -34,14 +34,14 @@ const styles = {
       textAlign: 'justify',
     }
   }
-export default function PICLcontent ({Body1,Body2,Body3}) {
-  return (
+  export default function PICLcontent ({Body1,Body2,Body3,data}) {
+    return (
     <div>
       <Typography style={styles.typog3}>
         Saya yang menyetujui,
       </Typography>
       <Typography style={{ paddingLeft: '34px', marginBottom: '10px' }}>
-        <PaktaIntegritas/>
+        <PaktaIntegritas detail={data}/>
       </Typography>
       
       <Typography style={styles.typog4}>

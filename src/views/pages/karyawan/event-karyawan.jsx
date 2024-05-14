@@ -68,6 +68,7 @@ const EventKaryawan = () => {
         throw error; // Rethrow the error to handle it elsewhere
       });
   };
+  
 
 useEffect(() => {
     fetchkaryawanevent()
@@ -89,8 +90,6 @@ useEffect(() => {
   useEffect(() => {
     setLoading(false);
   }, []);
-
-  const routeid = event.id
 
   const uniqueNamaEvents = [...new Set(karyawanevent.map(event => event.nama_event))];
   const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);

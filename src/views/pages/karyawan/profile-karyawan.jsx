@@ -49,11 +49,64 @@ export default function ProfileKaryawan() {
   const [value, setValue] = React.useState(0);
   const [eventaktif, seteventaktif] = useState([]);
   const [DaysLeft, setDaysLeft] = useState('');
+  const [infokaryawan, setInforkaryawan] = useState([])
+  const  [statusprofile, setStatusproflie] = useState([])
 
-  const nippos = 971351363; //ganti sama hasil fetchingan nippos yang login
+  const nippos = sessionStorage.getItem('nippos'); 
 
   const fetcheventdetail = () => {
     return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
+
+  const fetchstatusprofile = () => {
+    return fetch(`http://localhost:4000/getallprofile?eventtalentid=${id}&nippos=${nippos}`) // Replace with your actual endpoint
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
+
+  const fetchinforkaryawan = () => {
+    return fetch(`http://localhost:4000/getinforkaryawan?nippos=${nippos}`) // Replace with your actual endpoint
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
+
+  const fetchprofile = () => {
+    return fetch(`http://localhost:4000/getinforkaryawan?nippos=${nippos}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -73,6 +126,30 @@ export default function ProfileKaryawan() {
     fetcheventdetail()
       .then((data) => {
         seteventaktif(data.event);
+        setLoading(false); // Move this line to the end of the .then block
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetchinforkaryawan()
+      .then((data) => {
+        setInforkaryawan(data);
+        setLoading(false); // Move this line to the end of the .then block
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetchstatusprofile()
+      .then((data) => {
+        setStatusproflie(data);
         setLoading(false); // Move this line to the end of the .then block
       })
       .catch((error) => {
@@ -209,7 +286,7 @@ export default function ProfileKaryawan() {
         <Box sx={boxStyle}>
           <ConfirmationMessage />
           <div style={{ marginTop: '24px' }}>
-            <ProfileAccordion />
+            <ProfileAccordion detail={infokaryawan} eventid={id} statusprofile={statusprofile}/>
           </div>
         </Box>
       </CustomTabPanel>

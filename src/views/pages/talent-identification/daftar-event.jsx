@@ -147,6 +147,7 @@ const DaftarEvent = () => {
                     id={event.id}
                     nama_event={event.nama_event}
                     deskripsi={event.deskripsi}
+                    ketua = {event.nippos_ketua_komite}
                     tipe_komite_talent={event.tipekomite.tipe_komite_talent}
                     kode_rumpun={event.kode_rumpun_jabatan}
                     nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
