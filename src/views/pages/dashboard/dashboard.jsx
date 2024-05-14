@@ -66,7 +66,6 @@ const Dashboard = () => {
       console.error("error fetching data");
     })
   },[])
-  console.log(datarumpun);
 
   return (
     <>

@@ -73,6 +73,32 @@ const TalentSourceTable = ({eventid,
         });
 };
 
+const updatekomiterole = (nippos) => {
+  return fetch(`http://localhost:4000/assignkomiteunibybutton`, {
+        method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+        headers: {
+          'Content-Type': 'application/json', // Specify the content type
+        },
+        body: JSON.stringify({
+            // Include any data you want to send in the request body
+            nippos: nippos
+        }) // Convert the bodyData object to a JSON string
+      }) 
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        return data; // Return the parsed JSON data
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
+
   const handleOpenFirstModal = (nippos) => {
       setSelectedNippos(nippos); 
       setOpenFirstModal(true);
@@ -92,11 +118,14 @@ const TalentSourceTable = ({eventid,
       console.log("selected ku", selectedKU);
   };
 
+
+
   const handleConfirm = () => {
     console.log("Confirm button clicked");
     updatekomiteunit(activeEvent,selectedNippos,selectedKU)
         .then(() => {
             // Trigger the callback function passed from the parent component to refresh the table data
+            updatekomiterole(selectedKU)
             setRefreshTable(true);
             setOpenSecondModal(false);
         })

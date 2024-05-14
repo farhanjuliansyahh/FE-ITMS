@@ -10,6 +10,7 @@ import TalentCheckbox from '../../ui-component/checkbox/talent-checkbox';
 import PosLogo from '../../assets/images/ilustration/PosIND_MainColor.png';
 import ITMSLogo from '../../assets/images/logo.svg';
 import PICLcontent from '../../ui-component/cards/PICL-content';
+import { useState,useEffect } from 'react';
 const styles = {
   accord: {
     height: 70,
@@ -107,15 +108,18 @@ const statusStyles = {
   }
 };
 
-export default function ProfileAccordion() {
-  const [statusPakta, setStatusPakta] = React.useState("Belum Submit");
-  const [statusCL, setStatusCL] = React.useState("Belum Submit");
+export default function ProfileAccordion({detail,eventid,statusprofile}) {
+  const [statusPakta, setStatusPakta] = useState(statusprofile[0]?.pakta_integritas ? "Submit" : "Belum Submit");
+  const [statusCL, setStatusCL] = useState(statusprofile[0]?.commitmenletter ? "Submit" : "Belum Submit");
+
   const handleStatusUpdatePakta = () => {
     setStatusPakta("Submit");
   };
   const handleStatusUpdateCL = () => {
     setStatusCL("Submit");
 
+
+    
   };
   return (
     <div >
@@ -142,14 +146,19 @@ export default function ProfileAccordion() {
               yang berlaku di PT. Pos Indonesia sebagai berikut :' 
               Body2='D. Apabila saya melakukan pelanggaran terhadap Pakta Integritas, 
               maka saya siap menerima sanksi hukuman sesuai peraturan yang berlaku di Perusahaan.' 
-              Body3='Demikian Pakta Integritas ini saya setujui untuk digunakan sebagaimana mestinya. '/>
+              Body3='Demikian Pakta Integritas ini saya setujui untuk digunakan sebagaimana mestinya. '
+              data ={detail}/>
             <div style={{ paddingLeft: '40px', paddingRight: '50px' }}>
               <TalentCheckbox
                 onStatusUpdate={handleStatusUpdatePakta}
                 Title='Konfirmasi Talent Profile'
                 Body='Apakah anda yakin akan submit Pakta Integritas?'
                 subBody='Anda tidak dapat membatalkan jika sudah memilih submit.'
-                Footer='Saya telah membaca dan menyetujui Pakta Integritas ini' />
+                Footer='Saya telah membaca dan menyetujui Pakta Integritas ini' 
+                data={detail}
+                eventid={eventid}
+                datatoupdate={1}
+                statusprofile={statusprofile[0]?.pakta_integritas}/>
             </div>
           </AccordionDetails>
         </Accordion>
@@ -177,14 +186,19 @@ export default function ProfileAccordion() {
               yang berlaku di PT. Pos Indonesia sebagai berikut :' 
               Body2='D. Apabila saya melakukan pelanggaran terhadap Commitment Letter, 
               maka saya siap menerima sanksi hukuman sesuai peraturan yang berlaku di Perusahaan.' 
-              Body3='Demikian Commitment Letter ini saya setujui untuk digunakan sebagaimana mestinya. '/>
+              Body3='Demikian Commitment Letter ini saya setujui untuk digunakan sebagaimana mestinya. '
+              data = {detail}/>
             <div style={{ paddingLeft: '40px', paddingRight: '50px' }}>
               <TalentCheckbox
                 onStatusUpdate={handleStatusUpdateCL}
                 Title='Konfirmasi Talent Profile'
                 Body='Apakah anda yakin akan submit Commitment Letter?'
                 subBody='Anda tidak dapat membatalkan jika sudah memilih submit.'
-                Footer='Saya telah membaca dan menyetujui Commitment Letter ini' />
+                Footer='Saya telah membaca dan menyetujui Commitment Letter ini' 
+                data={detail}
+                eventid={eventid}
+                datatoupdate={2}
+                statusprofile={statusprofile[0]?.commitmenletter}/>
             </div>
 
           </AccordionDetails>

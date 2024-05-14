@@ -54,15 +54,13 @@ const status = [
 
 // ==============================|| NOTIFICATION ||============================== //
 
-const NotificationSection = () => {
+const NotificationSection = ({ notiflist, onToggleReadStatus }) => {
+  const unreadNotifications = notiflist.filter(notif => !notif.read_status);
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
-  /**
-   * anchorRef is used on different componets and specifying one type leads to other components throwing an error
-   * */
   const anchorRef = useRef(null);
 
   const handleToggle = () => {
@@ -154,7 +152,7 @@ const NotificationSection = () => {
                             <Typography variant="subtitle1">All Notification</Typography>
                             <Chip
                               size="small"
-                              label="01"
+                              label={notiflist.length}
                               sx={{
                                 color: theme.palette.background.default,
                                 bgcolor: theme.palette.warning.dark
@@ -196,7 +194,7 @@ const NotificationSection = () => {
                             <Divider sx={{ my: 0 }} />
                           </Grid>
                         </Grid>
-                        <NotificationList />
+                        <NotificationList notiflist={notiflist} onToggleReadStatus={onToggleReadStatus}/>
                       </PerfectScrollbar>
                     </Grid>
                   </Grid>

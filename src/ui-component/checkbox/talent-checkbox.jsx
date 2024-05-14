@@ -9,10 +9,38 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-export default function TalentCheckbox({ onStatusUpdate, Title, Body , subBody, Footer}) {
+export default function TalentCheckbox({ onStatusUpdate, Title, Body , subBody, Footer, data, eventid, datatoupdate, statusprofile}) {
     const [checked, setChecked] = useState(false);
     const [openModal, setOpenModal] = useState(false); // State to manage modal open/close
-    const [processCompleted, setProcessCompleted] = useState(false); // State to track if process is completed
+    const [processCompleted, setProcessCompleted] = useState(statusprofile); // State to track if process is completed
+
+    const updatepakta = (eventid,nippos,datatoupdate) => {
+        return fetch(`http://localhost:4000/updatepaktacommitpribadi`, {
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventtalentid: eventid,
+                nippos: nippos,
+                datatoupdate: datatoupdate
+            }) // Convert the bodyData object to a JSON string
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+    };
 
     const handleChange = (event) => {
         setChecked(event.target.checked);
@@ -29,6 +57,7 @@ export default function TalentCheckbox({ onStatusUpdate, Title, Body , subBody, 
     const handleSelesai = () => {
         // Your logic for handling "Selesai" button click
         onStatusUpdate(); // Call the callback function to update the status in ProfileAccordion
+        updatepakta(eventid, data.nippos,datatoupdate )
         setProcessCompleted(true); // Mark the process as completed
         setOpenModal(false); // Close the modal after handling
     };

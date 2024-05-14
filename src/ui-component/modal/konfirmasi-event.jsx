@@ -11,16 +11,43 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan }) {
+function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua }) {
     const [deadlinesource, setdeadlinesource] = useState('');
     const [activejoblevel, setactivejoblevel] = useState(['']);
     const [activejobfam, setactivejobfam]     = useState('');
+    const [isLoading, setLoading] = useState(true);
 
 
     const handleDateChange = (date) => {
         console.log(date); // Check the date value
         setdeadlinesource(date); // Update the state with the selected date
     };
+
+    const ketuakomiterole = (nippos) => {
+      return fetch('http://localhost:4000/assignroleketuakomite', {
+        method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+        headers: {
+          'Content-Type': 'application/json', // Specify the content type
+        },
+        body: JSON.stringify({
+            // Include any data you want to send in the request body
+            nippos: nippos
+        }) // Convert the bodyData object to a JSON string
+      }) 
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        return data; // Return the parsed JSON data
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+    }
 
     const postdeadlinesource = () => {
         return fetch('http://localhost:4000/createdeadline', {
@@ -162,6 +189,32 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan }) {
             });
         };
 
+        const rolekomiteunit = () => {
+          return fetch('http://localhost:4000/assignkomiteunit', {
+              method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+              headers: {
+                  'Content-Type': 'application/json', // Specify the content type
+              },
+              body: JSON.stringify({
+                  // Include any data you want to send in the request body
+                  eventid: eventid,
+              }) // Convert the bodyData object to a JSON string
+          })
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  return data; // Return the parsed JSON data
+              })
+              .catch(error => {
+                  console.error('Error fetching data:', error);
+                  throw error; // Rethrow the error to handle it elsewhere
+              });
+      };
+
     const mulaiButtonStyle = {
         backgroundColor: '#1C2D5A',
         color: '#fff',
@@ -210,7 +263,9 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan }) {
                 await postdeadlinesource(); // Call the function to post deadline source
                 await posttalentsource(); // Chain posttalentsource() after postdeadlinesource()
                 await mapkomiteunit(); // Chain mapkomiteunit() after posttalentsource()
-                await notifikasikomiteunit()
+                await notifikasikomiteunit();
+                await rolekomiteunit();
+                await ketuakomiterole(ketua)
                 handleClose(); // Close the popup after all operations are finished
             } catch (error) {
                 console.error('Error:', error);
