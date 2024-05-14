@@ -337,7 +337,8 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
       <Grid container spacing={2} style={{ paddingBottom: '24px' }}>
         <Grid item xs={12} md={3}>
           <Typography>Deskripsi</Typography>
-          <Typography style={{ fontWeight: 'bold' }}>{deskripsi}</Typography>
+          <Typography style={{ fontWeight: 'bold', wordWrap: 'break-word', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {deskripsi}</Typography>
         </Grid>
 
         <Grid item xs={12} md={3}>
@@ -386,41 +387,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
         })}
       </Stepper>
 
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 5, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
-            {/* <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back */}
-            {/* </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-            {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )} */}
-{/* 
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button> */}
-          </Box>
-        </React.Fragment>
-      )}
+
       <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
       <EditEvent open={openEdit} handleClose={handleCloseEdit} eventid={id} nama={nama} jobfam={nama_rumpun_jabatan} koderumpun={kodefam} quotaawal={quotaawal} mulai={tanggal_mulai} selesai={tanggal_selesai} deskripsiawal={deskripsi}/>
