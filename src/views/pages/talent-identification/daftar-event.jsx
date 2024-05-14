@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { AddCircleOutline, DownloadDone, RotateRight } from '@mui/icons-material';
+import { Grid} from '@mui/material';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 
 import MainCard from '../../../ui-component/cards/MainCard';
@@ -11,7 +12,6 @@ import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
-
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
 function CustomTabPanel(props) {
@@ -116,9 +116,11 @@ const DaftarEvent = () => {
               field={uniqueNamaEvents}
               label={'Nama Event'}
               selectedField={selectedNamaEvent}
-              setSelectedField={setSelectedNamaEvent}
+              setSelectedF
+              ield={setSelectedNamaEvent}
           />
-          <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
+            <ButtonPrimary Color="#ffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
+
         </Stack>
       }>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

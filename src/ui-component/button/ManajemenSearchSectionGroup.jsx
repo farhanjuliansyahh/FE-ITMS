@@ -30,9 +30,9 @@ const [filterKategoriMatrix, setFilterKategoriMatrix] = useState('');
                     <div style={{ marginRight: '12px', width:'100%' }}>
                         <EventDetailSearchSection filter={filterKategoriMatrix} setFilter={setFilterKategoriMatrix} PlaceHolder={'Kategori Matriks'} />
                     </div>
-                    <div style={{ marginRight: '12px' }}>
+                    {/* <div style={{ marginRight: '12px' }}>
                         <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-                    </div>
+                    </div> */}
                     <div style={{ marginRight: '0px' }}>
                         <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
                     </div>
