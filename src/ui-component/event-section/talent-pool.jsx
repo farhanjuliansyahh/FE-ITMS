@@ -63,6 +63,7 @@ const TalentPool = ({eventid}) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   useEffect(() => {
     // Fetch data from API
     fetch(`http://localhost:4000/gettalentpool?eventtalentid=${eventidactive}`)
@@ -140,6 +141,8 @@ const TalentPool = ({eventid}) => {
     resetJobLevelInputTrue();
     resetStatusInputTrue();
   };
+  const poolLength = poolrow.length
+
 
   return (
     <>
@@ -155,7 +158,7 @@ const TalentPool = ({eventid}) => {
                 Tabel Karyawan
             </Typography>
            
-            <LabelInfo/>
+            <LabelInfo length={poolLength}/>
         
             <div style={{ flex: '1' }}> </div>
 

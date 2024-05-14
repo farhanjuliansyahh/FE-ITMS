@@ -16,6 +16,8 @@ import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent';
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
+  const [datarumpun, setDatarumpun] = useState([])
+  const [datajoblevel, setJoblevel] = useState([])
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -32,6 +34,21 @@ const Dashboard = () => {
     //   // navigateTo: '/dashboard/total-pegawai',
     // },
   ]
+
+  useEffect(() => {
+    fetch("http://localhost:4000/getdatatalentrumpun")
+    .then(response => response.json())
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    .then(data => setDatarumpun(data))
+  },[])
+
+  useEffect(() => {
+    fetch("http://localhost:4000/getdatatalentjoblevel")
+    .then(response => response.json())
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    .then(data => setJoblevel(data))
+  },[])
+  console.log(datarumpun);
 
   return (
     <>
@@ -77,11 +94,11 @@ const Dashboard = () => {
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
               {/* <RumpunJabatanChart isLoading={isLoading} /> */}
-              <RumpunJabatanTerbaru isLoading={isLoading} />
+              <RumpunJabatanTerbaru isLoading={isLoading} data={datarumpun} />
               
             </Grid>
             <Grid item xs={12} md={6}>
-              <LevelJabatanChart isLoading={isLoading} />
+              <LevelJabatanChart isLoading={isLoading} data={datajoblevel}/>
             </Grid>
           </Grid>
         </Grid>
