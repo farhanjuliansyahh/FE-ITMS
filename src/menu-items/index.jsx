@@ -16,13 +16,13 @@ const filterMenuItems = (role) => {
     case 'Ketua Komite Talent':
       return [EventKetuaKomiteTalent];
     default:
-      return [];
+      return [dashboard, TalentIdentification, ManajemenPengguna,EventKomiteUnit,EventKetuaKomiteTalent];
   }
 };
 
 const roleString = sessionStorage.getItem('role');
 const role = roleString ? JSON.parse(roleString) : null;
-let menuItems = [];
+let menuItems = [dashboard, TalentIdentification, ManajemenPengguna,EventKomiteUnit,EventKetuaKomiteTalent];
 if (role) {
   const menuByRole = role.map((i) => {
     return filterMenuItems(i);

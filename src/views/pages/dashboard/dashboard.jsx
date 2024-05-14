@@ -37,16 +37,34 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetch("http://localhost:4000/getdatatalentrumpun")
-    .then(response => response.json())
+    .then(response => {
+      if(response.ok){
+        return response.json()
+      } else {
+        throw new Error("Network response was not OK");
+      }
+    })
         // 4. Setting *dogImage* to the image url that we received from the response above
     .then(data => setDatarumpun(data))
+    .catch(error => {
+      console.error("error fetching data");
+    })
   },[])
 
   useEffect(() => {
     fetch("http://localhost:4000/getdatatalentjoblevel")
-    .then(response => response.json())
+    .then(response => {
+      if(response.ok){
+        return response.json()
+      } else {
+        throw new Error("Network response was not OK");
+      }
+    })
         // 4. Setting *dogImage* to the image url that we received from the response above
     .then(data => setJoblevel(data))
+    .catch(error => {
+      console.error("error fetching data");
+    })
   },[])
   console.log(datarumpun);
 
@@ -84,7 +102,7 @@ const Dashboard = () => {
               <JenisKelaminTerbaru isLoading={isLoading}/>
             </Grid>
             <Grid item xs={12} md={6}>
-              <GenerasiTalent/>
+              <GenerasiTalent isLoading={isLoading}/>
               {/* <GenerasiChart isLoading={isLoading} /> */}
             </Grid>
           </Grid>

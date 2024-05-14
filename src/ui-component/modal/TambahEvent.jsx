@@ -20,7 +20,6 @@ import ButtonError from '../../ui-component/button/ButtonError';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-
 function AddEventModal({ open, handleClose }) {
     const [selectedCommittee, setSelectedCommittee] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
@@ -40,6 +39,7 @@ function AddEventModal({ open, handleClose }) {
     const [quota, setquota] = useState('');
     const [deskripsi, setdeskripsi] = useState('');
     const [isDeskripsiTouched, setIsDeskripsiTouched] = useState(false);
+    const [isHeadOfCommitteeFetched, setIsHeadOfCommitteeFetched] = useState(false);
 
     const handleEventNameChange = (event) => {
         setEventName(event.target.value); // Update state with input value
@@ -115,12 +115,14 @@ function AddEventModal({ open, handleClose }) {
         setselectedquestion(event.target.value)
         console.log(selectedquestion)
     }
+
     const fetchketuakomite = async (selectedCommittee) => {
         try {
             setLoading(true);
             const response = await fetch(`http://localhost:4000/getheadcommit?id_komite_talent=${selectedCommittee}`);
             const data = await response.json();
             setselectedketuakomite(data[0]);
+            setIsHeadOfCommitteeFetched(true); // Set to true when data is fetched
             setLoading(false);
         } catch (error) {
             console.error('Error fetching job levels:', error);
@@ -159,8 +161,6 @@ function AddEventModal({ open, handleClose }) {
         setenddate(date); // Update the state with the selected date
     };
 
-
-
     const postData = async () => {
         try {
             const arrayquestion = selectedquestion.map(selectedquestion => selectedquestion.id)
@@ -169,7 +169,6 @@ function AddEventModal({ open, handleClose }) {
             console.log(startdate);
             // Make the POST request to the API endpoint
             const response = await fetch('http://localhost:4000/addevent', {
-                
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -204,8 +203,30 @@ function AddEventModal({ open, handleClose }) {
         }
     };
 
+    const CloseDialog = () => {
+        setSelectedCommittee('')
+        setJobLevelOptions([])
+        setSelectedJobLevel([])
+        setSelectedJobFamily('')
+        setJobFamilyOptions([])
+        setselectedketuakomite('')
+        setcommitteememberOptions([])
+        setSelectedCommitteemember([])
+        setquestionOption([])
+        setselectedquestion([])
+        setstartdate('')
+        setenddate('')
+        setEventName('')
+        setquota('')
+        setdeskripsi('')
+        setIsDeskripsiTouched(false)
+        setIsHeadOfCommitteeFetched(false)
+
+        handleClose()
+    }
+
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={CloseDialog}>
             <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', textAlign: 'center' }}>
                 <Typography style={{ fontSize: '24px', fontWeight: 'bold' }}>
                     Tambah Event
@@ -219,8 +240,6 @@ function AddEventModal({ open, handleClose }) {
                         paddingTop: '32px',
                         paddingLeft: '12px',
                         paddingBottom: '12px',
-                        
-                       
                     }}
                     noValidate
                     autoComplete="off"
@@ -270,7 +289,6 @@ function AddEventModal({ open, handleClose }) {
                             )}
                         />
 
-
                         <TextField
                             select
                             required
@@ -279,7 +297,7 @@ function AddEventModal({ open, handleClose }) {
                             onChange={handleJobFamilyChange}
                         >
                             {jobFamilyOptions.map((jobFamily) => (
-                                <MenuItem value={jobFamily.kode_rumpun_jabatan}>
+                                <MenuItem key={jobFamily.kode_rumpun_jabatan} value={jobFamily.kode_rumpun_jabatan}>
                                     {jobFamily.nama_rumpun_jabatan}
                                 </MenuItem>
                             ))}
@@ -289,8 +307,9 @@ function AddEventModal({ open, handleClose }) {
                             required
                             id="outlined-required"
                             label="Head of Committee"
-                            value={selectedketuakomite.nama}
+                            value={selectedketuakomite.nama || ''}
                             onChange={handleHeadOfCommitteeChange}
+                            InputLabelProps={{ shrink: isHeadOfCommitteeFetched }} // Ensure label is always shrunk if data is fetched
                         />
 
                         <Autocomplete
@@ -379,19 +398,16 @@ function AddEventModal({ open, handleClose }) {
                             required // Tandai bahwa field ini harus diisi
                             error={isDeskripsiTouched && !deskripsi} // Set error jika deskripsi kosong
                             helperText={isDeskripsiTouched && !deskripsi && "Deskripsi tidak boleh kosong"} // Tampilkan pesan error jika deskripsi kosong
-                            
-                            
                         />
                     </div>
                 </Box>
             </DialogContent>
-            <DialogActions sx={{padding: '24px', justifyContent: 'space-between'}}>
-                <ButtonError Color="#ffffff" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleClose}/>
+            <DialogActions sx={{ padding: '24px', justifyContent: 'space-between' }}>
+                <ButtonError Color="#ffffff" icon={CancelOutlined} LabelName={'Batalkan'} onClick={CloseDialog} />
                 <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Buat Event'} onClick={() => {
-                    handleClose(); // Close the dialog
+                    CloseDialog(); // Close the dialog
                     postData();   // Execute the postData function
-                }}/>
-
+                }} />
             </DialogActions>
         </Dialog>
     );

@@ -5,6 +5,8 @@ import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { AddCircleOutline, DownloadDone, RotateRight } from '@mui/icons-material';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
 
+import { styled } from '@mui/material/styles';
+
 import MainCard from '../../../ui-component/cards/MainCard';
 import SearchSection2 from '../../../ui-component/searchsection';
 import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
@@ -100,6 +102,12 @@ const DaftarEvent = () => {
     setOpen(false);
   };
   // console.log("asdasd", eventData);
+  
+  const BoxContainer = styled('div')({
+    display: 'flex',
+    flexDirection: 'column',
+  });
+
 
   const uniqueNamaEvents = [...new Set(eventData.map(event => event.nama_event))];
   const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
@@ -113,15 +121,17 @@ const DaftarEvent = () => {
     <>
       {/* <MainLayout /> */}
       
-      <MainCard title="Daftar Event"  secondary={
-        <Stack direction="row" spacing={2} >
-          <CustomSearch 
-              field={uniqueNamaEvents} 
-              label={'Cari Nama Event'} 
-              onSearch={setSelectedNamaEvent} 
-              value={selectedNamaEvent}  />
+      <MainCard title="Daftar Event" secondary={
+       <Stack direction="row" spacing={2}>
+          <BoxContainer>
+            <CustomSearch 
+                field={uniqueNamaEvents} 
+                label={'Cari Nama Event'} 
+                onSearch={setSelectedNamaEvent} 
+                value={selectedNamaEvent}  />
+          </BoxContainer>
           <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
-        </Stack>
+          </Stack>
       }>
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <Typography variant="h5"></Typography>

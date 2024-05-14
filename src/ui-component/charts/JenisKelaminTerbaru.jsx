@@ -12,7 +12,7 @@ const JenisKelaminTerbaru = () => {
   const chartOptions = {
     chart: {
       type: 'donut',
-      height: 300,
+      height: 400,
       toolbar: {
         show: true,
         tools: {
@@ -46,11 +46,11 @@ const JenisKelaminTerbaru = () => {
     },
     plotOptions: {
       donut: {
-        customScale: 0.6,
+        customScale: 1,
         dataLabels: {
           enabled: true,
           formatter: function (val, opts) {
-            return opts.w.config.labels[opts.seriesIndex] + ": " + val;
+            return opts.w.config.labels[opts.seriesIndex] + " : " + val;
           }
         }
       },
@@ -62,7 +62,7 @@ const JenisKelaminTerbaru = () => {
         fontWeight: 380,
         fontSize: '18px', // Adjust the font size as needed
         colors: ['#fff'], // Color of the labels
-        placement: 'mid-center',
+       
       },
       formatter: function (val, opts) {
         return `${Math.round(val )}%`;
@@ -73,8 +73,8 @@ const JenisKelaminTerbaru = () => {
     legend: {
       fontsize:'20px',
       position: 'right',
-      offsetY: 120,
-      offsetX: 0,
+      offsetY: 140,
+      offsetX: 40,
     },
   };
 
@@ -93,7 +93,7 @@ const JenisKelaminTerbaru = () => {
 
   return (
     <MainCard maxWidth="lg">
-      <Grid container spacing={gridSpacing} paddingTop={3} paddingLeft={3} paddingRight={3}>
+      <Grid container spacing={gridSpacing} paddingTop={3} paddingLeft={3} paddingRight={3} paddingBottom={3}>
         <Grid item xs={12} md={12}>
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>

@@ -46,13 +46,12 @@ const GenerasiTalent = () => {
     },
     plotOptions: {
       pie: {
-        customScale: 0.8,
+        customScale: 1,
         dataLabels: {
           enabled: true,
           formatter: function (val, opts) {
             return opts.w.config.labels[opts.seriesIndex] + " : " + val;
-          },
-          offsetY: -10, 
+          }
         }
       },
     },
@@ -61,7 +60,7 @@ const GenerasiTalent = () => {
       style: {
         fontFamily:'Roboto',
         fontWeight: 380,
-        fontSize: '20px', 
+        fontSize: '18px', 
         colors: ['#fff'],
       },
       // formatter: function (val, opts) {
@@ -86,8 +85,8 @@ const GenerasiTalent = () => {
     colors: ['#1C2D5A', '#7e9bc8','#4978b1'], 
     legend: {
       position: 'right',
-      offsetY: 100,
-      offsetX: 0,
+      offsetY: 140,
+      offsetX: 40,
     },
   };
 
@@ -106,7 +105,7 @@ const GenerasiTalent = () => {
 
   return (
     <MainCard maxWidth="lg">
-      <Grid container spacing={gridSpacing} paddingTop={3} paddingLeft={3} paddingRight={3}>
+      <Grid container spacing={gridSpacing} paddingTop={3} paddingLeft={3} paddingRight={3} paddingBottom={3}>
         <Grid item xs={12} md={12}>
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
