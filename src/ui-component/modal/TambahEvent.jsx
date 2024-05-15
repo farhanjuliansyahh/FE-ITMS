@@ -6,14 +6,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import PropTypes from 'prop-types';
 import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CancelOutlined from '@mui/icons-material/CancelOutlined';
-
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import ButtonError from '../../ui-component/button/ButtonError';
 
@@ -22,36 +20,56 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 function AddEventModal({ open, handleClose }) {
     const [selectedCommittee, setSelectedCommittee] = useState('');
+    const [isCommitteeTouched, setIsCommitteeTouched] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [jobLevelOptions, setJobLevelOptions] = useState([]);
     const [selectedJobLevel, setSelectedJobLevel] = useState([]);
+    const [isJobLevelTouched, setIsJobLevelTouched] = useState(false);
     const [loading, setLoading] = useState(false);
     const [selectedJobFamily, setSelectedJobFamily] = useState('');
     const [jobFamilyOptions, setJobFamilyOptions] = useState([]);
+    const [isJobFamilyTouched, setIsJobFamilyTouched] = useState(false);
     const [selectedketuakomite, setselectedketuakomite] = useState('');
+    const [isKetuaKomiteTouched, setIsKetuaKomiteTouched] = useState(false);
     const [committeememberOptions, setcommitteememberOptions] = useState([]);
     const [selectedcomitteemember, setSelectedCommitteemember] = useState([]);
+    const [isComitteeMemberTouched, setIsComitteeMemberTouched] = useState(false);
     const [questionOption, setquestionOption] = useState([]);
     const [selectedquestion, setselectedquestion] = useState([]);
+    const [isQuestionTouched, setIsQuestionTouched] = useState(false);
     const [startdate, setstartdate] = useState('');
+    const [isStartDateTouched, setIsStartDateTouched] = useState(false);
     const [enddate, setenddate] = useState('');
+    const [isEndDateTouched, setIsEndDateTouched] = useState(false); // State for end date touch
     const [eventName, setEventName] = useState('');
+    const [isEventNameTouched, setIsEventNameTouched] = useState(false);
     const [quota, setquota] = useState('');
+    const [quotaError, setQuotaError] = useState(false); // State to track quota error
+    const [isQuotaTouched, setIsQoutaTouched] = useState(false);
     const [deskripsi, setdeskripsi] = useState('');
     const [isDeskripsiTouched, setIsDeskripsiTouched] = useState(false);
     const [isHeadOfCommitteeFetched, setIsHeadOfCommitteeFetched] = useState(false);
+    const [isFormValid, setIsFormValid] = useState(false);
 
     const handleEventNameChange = (event) => {
         setEventName(event.target.value); // Update state with input value
+
     };
 
     const handlequotachange = (event) => {
-        setquota(event.target.value); // Update state with input value
+        const value = event.target.value;
+        // Check if the value is a valid number
+        if (/^\d*$/.test(value)) {
+            setQuotaError(false);
+            setquota(value); // Update state with input value
+        } else {
+            setQuotaError(true);
+        }
     };
 
     const handledeskripsichange = (event) => {
         setdeskripsi(event.target.value); // Update state with input value
-        setIsDeskripsiTouched(true);
+       
     };
 
     const handleCommitteeChange = (event) => {
@@ -60,6 +78,7 @@ function AddEventModal({ open, handleClose }) {
         fetchJobLevels(event.target.value);
         fetchketuakomite(event.target.value);
         fetchcommitteemember(event.target.value);
+        setSelectedJobLevel([]);
     };
 
     const fetchJobLevels = async (selectedCommittee) => {
@@ -76,6 +95,7 @@ function AddEventModal({ open, handleClose }) {
     };
 
     const handleJobLevelChange = (event, newJobLevels) => {
+        console.log("joblevebl", newJobLevels);
         setSelectedJobLevel(newJobLevels);
     };
 
@@ -147,10 +167,6 @@ function AddEventModal({ open, handleClose }) {
         }
     };
 
-    const handleCommitteememberChange = (event) => {
-        setSelectedCommitteemember(event.target.value);
-    }
-
     const handleStartDateChange = (date) => {
         console.log(date); // Check the date value
         setstartdate(date); // Update the state with the selected date
@@ -160,6 +176,10 @@ function AddEventModal({ open, handleClose }) {
         console.log(date); // Check the date value
         setenddate(date); // Update the state with the selected date
     };
+
+    useEffect(()=>{
+        console.log("enddate",enddate);
+    },[enddate])
 
     const postData = async () => {
         try {
@@ -225,6 +245,27 @@ function AddEventModal({ open, handleClose }) {
         handleClose()
     }
 
+    useEffect(() => {
+        const validateForm = () => {
+            return eventName && selectedCommittee && selectedJobLevel.length > 0 && selectedJobFamily && selectedketuakomite && selectedcomitteemember.length > 0 && selectedquestion.length > 0 && quota && !quotaError && deskripsi && startdate && enddate;
+        };
+
+        setIsFormValid(validateForm());
+    }, [eventName, selectedCommittee, selectedJobLevel, selectedJobFamily, selectedketuakomite, selectedcomitteemember, selectedquestion, quota, quotaError, deskripsi, startdate, enddate]);
+
+    const validateQuota = () => {
+        if (isQuotaTouched) {
+            if (quotaError) {
+                return "Kuota harus berupa angka" 
+            } else if (!quota) {
+                return "Kuota harus diisi"
+            } 
+        } else {
+            return ""
+        }
+
+    }
+
     return (
         <Dialog open={open} onClose={CloseDialog}>
             <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', textAlign: 'center' }}>
@@ -251,6 +292,10 @@ function AddEventModal({ open, handleClose }) {
                             label="Nama Event"
                             value={eventName} // Set value from state
                             onChange={handleEventNameChange} // Handle input change
+                            onBlur={() => setIsEventNameTouched(true)}
+                            error={isEventNameTouched && !eventName}
+                            helperText={isEventNameTouched && !eventName ? "Nama Event tidak boleh kosong" : ""}
+                            
                         />
                         <TextField
                             select
@@ -259,6 +304,9 @@ function AddEventModal({ open, handleClose }) {
                             label="Tipe Committee Talent"
                             value={selectedCommittee}
                             onChange={handleCommitteeChange}
+                            onBlur={() => setIsCommitteeTouched(true)}
+                            error={isCommitteeTouched && !selectedCommittee}
+                            helperText={isCommitteeTouched && !selectedCommittee ? "Tipe Komite Talent tidak boleh kosong" : ""}
                         >
                             <MenuItem value="1">Committee 1</MenuItem>
                             <MenuItem value="2">Committee 2</MenuItem>
@@ -269,6 +317,7 @@ function AddEventModal({ open, handleClose }) {
                             multiple
                             id="checkboxes-tags-demo"
                             options={jobLevelOptions}
+                            value={selectedJobLevel} // Ubah value menjadi selectedJobLevel
                             onChange={handleJobLevelChange}
                             disableCloseOnSelect
                             getOptionLabel={(option) => option}
@@ -285,7 +334,16 @@ function AddEventModal({ open, handleClose }) {
                             )}
                             style={{ width: 500 }}
                             renderInput={(params) => (
-                                <TextField {...params} label="Job Level" placeholder="Job Level" />
+                                <TextField 
+                                required
+                                onBlur={() => {
+                                    setIsJobLevelTouched(true);
+                                    console.log("params", params);
+                                }}
+                                error={isJobLevelTouched && !selectedJobLevel.length > 0}
+                                helperText={isJobLevelTouched && !selectedJobLevel.length > 0 ? "Job Level tidak boleh kosong" : ""}
+                                {...params}
+                                label="Job Level" placeholder="Job Level" />
                             )}
                         />
 
@@ -295,6 +353,9 @@ function AddEventModal({ open, handleClose }) {
                             id="outlined-required"
                             label="Job Family"
                             onChange={handleJobFamilyChange}
+                            onBlur={() => setIsJobFamilyTouched(true)}
+                            error={isJobFamilyTouched && !selectedJobFamily}
+                            helperText={isJobFamilyTouched && !selectedJobFamily? "Job Family tidak boleh kosong" : ""}
                         >
                             {jobFamilyOptions.map((jobFamily) => (
                                 <MenuItem key={jobFamily.kode_rumpun_jabatan} value={jobFamily.kode_rumpun_jabatan}>
@@ -310,6 +371,9 @@ function AddEventModal({ open, handleClose }) {
                             value={selectedketuakomite.nama || ''}
                             onChange={handleHeadOfCommitteeChange}
                             InputLabelProps={{ shrink: isHeadOfCommitteeFetched }} // Ensure label is always shrunk if data is fetched
+                            onBlur={() => setIsKetuaKomiteTouched(true)}
+                            error={isKetuaKomiteTouched && !selectedketuakomite}
+                            helperText={isKetuaKomiteTouched && !selectedketuakomite? "Head of Committe tidak boleh kosong" : ""}
                         />
 
                         <Autocomplete
@@ -327,6 +391,10 @@ function AddEventModal({ open, handleClose }) {
                                     {...params}
                                     label="Committee"
                                     variant="outlined"
+                                    required
+                                    onBlur={() => setIsComitteeMemberTouched(true)}
+                                    error={isComitteeMemberTouched && !selectedcomitteemember.length > 0}
+                                    helperText={isComitteeMemberTouched && !selectedcomitteemember.length > 0? "Committee tidak boleh kosong" : ""}
                                 />
                             )}
                         />
@@ -346,6 +414,10 @@ function AddEventModal({ open, handleClose }) {
                                     {...params}
                                     label="Questions"
                                     variant="outlined"
+                                    required
+                                    onBlur={() => setIsQuestionTouched(true)}
+                                    error={isQuestionTouched && !selectedquestion.length > 0}
+                                    helperText={isQuestionTouched && !selectedquestion.length > 0? "Questions tidak boleh kosong" : ""}
                                 />
                             )}
                         />
@@ -356,6 +428,10 @@ function AddEventModal({ open, handleClose }) {
                             label="Talent Pool Quota"
                             value={quota} // Set value from state
                             onChange={handlequotachange} // Handle input change
+                            onFocus={() => setIsQoutaTouched(true)}
+                            onBlur={()=>setQuotaError(false)}
+                            error={ isQuotaTouched && (quotaError || !quota)} // Display error state if invalid
+                            helperText={validateQuota()}
                             inputProps={{
                                 inputMode: 'numeric',
                                 pattern: '[0-9]*'
@@ -371,6 +447,15 @@ function AddEventModal({ open, handleClose }) {
                                     onChange={handleStartDateChange}
                                     format='YYYY-MM-DD'
                                     required
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            onBlur={() => setIsStartDateTouched(true)}
+                                            error={isStartDateTouched && !startdate}
+                                            helperText={isStartDateTouched && !startdate ? "Tanggal Mulai tidak boleh kosong" : ""}
+                                        />
+                                    )
+                                }
                                 />
                             </DemoItem>
                         </LocalizationProvider>
@@ -384,6 +469,15 @@ function AddEventModal({ open, handleClose }) {
                                     onChange={handleEndDateChange}
                                     format='YYYY-MM-DD'
                                     required
+                                    renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                onBlur={() => setIsEndDateTouched(true)}
+                                                error={isEndDateTouched && !enddate}
+                                                helperText={isEndDateTouched && !enddate ? "Tanggal Berakhir tidak boleh kosong" : ""}
+                                            />
+                                        )
+                                    }
                                 />
                             </DemoItem>
                         </LocalizationProvider>
@@ -396,6 +490,7 @@ function AddEventModal({ open, handleClose }) {
                             value={deskripsi} // Set value from state
                             onChange={handledeskripsichange} // Handle input change
                             required // Tandai bahwa field ini harus diisi
+                            onBlur={() => setIsDeskripsiTouched(true)}
                             error={isDeskripsiTouched && !deskripsi} // Set error jika deskripsi kosong
                             helperText={isDeskripsiTouched && !deskripsi && "Deskripsi tidak boleh kosong"} // Tampilkan pesan error jika deskripsi kosong
                         />
@@ -404,7 +499,7 @@ function AddEventModal({ open, handleClose }) {
             </DialogContent>
             <DialogActions sx={{ padding: '24px', justifyContent: 'space-between' }}>
                 <ButtonError Color="#ffffff" icon={CancelOutlined} LabelName={'Batalkan'} onClick={CloseDialog} />
-                <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Buat Event'} onClick={() => {
+                <ButtonPrimary Color="#ffffff" icon={AddCircleOutlineIcon} LabelName={'Buat Event'} disabled={!isFormValid} onClick={() => {
                     CloseDialog(); // Close the dialog
                     postData();   // Execute the postData function
                 }} />
