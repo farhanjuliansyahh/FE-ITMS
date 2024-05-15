@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
-function KonfirmasiIsiSemuaNilaiTalent({ open, handleClose, activeEvent }) {  
+function KonfirmasiIsiSemuaNilaiTalent({ open, handleClose, activeEvent,confirm }) {  
     
     const loloskandays = async () => {
         try {
@@ -84,6 +84,7 @@ function KonfirmasiIsiSemuaNilaiTalent({ open, handleClose, activeEvent }) {
             onClick={async () => {
                 try {
                     await loloskandays();
+                    confirm();
                     handleClose();
                 } catch (error) {
                     // Handle error if loloskanprofile() fails

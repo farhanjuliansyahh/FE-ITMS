@@ -98,8 +98,6 @@ const TalentProfile = ({eventid}) => {
       });
   }, []);
 
-  console.log("belum lengkap",rowsbelum.length);
-
   useEffect(() => {
     // Fetch data from API
     fetch(`http://localhost:4000/getlengkap?eventtalentid=${eventid}`)
@@ -112,6 +110,27 @@ const TalentProfile = ({eventid}) => {
         console.error('Error fetching data:', error);
       });
   }, []); // Empty dependency array to run effect only once
+
+  const fetchData = () => {
+    fetch(`http://localhost:4000/getbelumlengkap?eventtalentid=${eventid}`)
+      .then(response => response.json())
+      .then(databelum => {
+        setrowsbelum(databelum.map((row, index) => ({ ...row, id: index + 1 })));
+        setIsDisabled(databelum.length === 0);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+    fetch(`http://localhost:4000/getlengkap?eventtalentid=${eventid}`)
+      .then(response => response.json())
+      .then(datalengkap => {
+        setrowslengkap(datalengkap.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -369,6 +388,7 @@ const TalentProfile = ({eventid}) => {
           activeEvent= {activeEvent}
           open={openSubmit}
           handleClose={() => setOpenSubmit(false)}
+          confirm = {fetchData}
         />
 
       </MainCard>

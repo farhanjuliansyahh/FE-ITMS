@@ -284,23 +284,35 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
           </FlexTitle> */}
           <FlexTitle style={{ paddingBottom: '8px' }}>
             {/* Wrap the Typography with Link */}
-            <Typography
-              style={{
-                fontSize: '16px',
-                fontWeight: 'bold',
-                textDecoration: 'none', // Remove underline
-                color: 'inherit', // Inherit color from parent
-              }}
-            >
-              <Link
-                to={{
-                  pathname: `/talent/detail-event/${id}`,
-                }}
-                style={{ color: 'inherit' }}
-              >
-                {nama_event}
-              </Link>
-            </Typography>
+            {status !== 1 ? (
+    <Typography
+      style={{
+        fontSize: '16px',
+        fontWeight: 'bold',
+        textDecoration: 'none',
+        color: 'inherit',
+      }}
+    >
+      <Link
+        to={{
+          pathname: `/talent/detail-event/${id}`,
+        }}
+        style={{ color: 'inherit' }}
+      >
+        {nama_event}
+      </Link>
+    </Typography>
+  ) : (
+    <Typography
+      style={{
+        fontSize: '16px',
+        fontWeight: 'bold',
+        color: 'inherit',
+      }}
+    >
+      {nama_event}
+    </Typography>
+  )}
             <StatusLabel backgroundColor={backgroundColor} color={color}>{statusberjalan}</StatusLabel>
           </FlexTitle>
 
@@ -388,7 +400,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
       </Stepper>
 
 
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} />
+      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun}  />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
       <EditEvent open={openEdit} handleClose={handleCloseEdit} eventid={id} nama={nama} jobfam={nama_rumpun_jabatan} koderumpun={kodefam} quotaawal={quotaawal} mulai={tanggal_mulai} selesai={tanggal_selesai} deskripsiawal={deskripsi}/>
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}

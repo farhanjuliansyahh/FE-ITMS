@@ -266,6 +266,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
                 await notifikasikomiteunit();
                 await rolekomiteunit();
                 await ketuakomiterole(ketua)
+                window.location.href = `http://localhost:3000/talent/detail-event/${eventid}`;
                 handleClose(); // Close the popup after all operations are finished
             } catch (error) {
                 console.error('Error:', error);
@@ -283,6 +284,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
             style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
             onMouseEnter={() => setIsHoveredBatalkan(true)}
             onMouseLeave={() => setIsHoveredBatalkan(false)}
+            onClick={handleClose}
         >
             Batalkan
         </Button>
