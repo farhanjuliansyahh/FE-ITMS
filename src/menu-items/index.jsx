@@ -7,16 +7,16 @@ import EventKetuaKomiteTalent from './event-ketuakomitetalent';
 
 const filterMenuItems = (role) => {
   switch (role) {
-    case 'Admin':
-      return [dashboard, TalentIdentification, ManajemenPengguna];
+    case 'Super Admin':
+      return [dashboard, TalentIdentification, ManajemenPengguna, EventKomiteUnit, EventKetuaKomiteTalent, ManajemenPengguna];
+    case 'Admin Talent':
+      return [dashboard, TalentIdentification];
     case 'Karyawan':
       return [EventKaryawan];
     case 'Komite Unit':
       return [EventKomiteUnit];
-    case 'Ketua Komite Talent':
-      return [EventKetuaKomiteTalent];
     default:
-      return [dashboard, TalentIdentification, ManajemenPengguna,EventKomiteUnit,EventKetuaKomiteTalent];
+      return [EventKetuaKomiteTalent];
   }
 };
 

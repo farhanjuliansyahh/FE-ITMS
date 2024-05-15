@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Dialog, Stack, DialogTitle, DialogContent, DialogActions, Checkbox, FormControlLabel } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-// import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-const peranOptions = ['Admin Talent', 'Karyawan','Ketua Komite Talent','Komite Unit', 'Super Admin'];
-const ActionButton = ({ row }) => {
+
+const peranOptions = ['Admin Talent', 'Karyawan', 'Ketua Komite Talent', 'Komite Unit', 'Super Admin'];
+
+const ActionButton = ({ row, onSave }) => {
   const [open, setOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -18,6 +19,12 @@ const ActionButton = ({ row }) => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (open) {
+      setSelectedOptions(row.Peran ? row.Peran.split(', ').map(role => role.trim()) : []);
+    }
+  }, [open, row.Peran]);
+
   const handleCheckboxChange = (option) => (event) => {
     if (event.target.checked) {
       setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, option]);
@@ -26,35 +33,32 @@ const ActionButton = ({ row }) => {
     }
   };
 
-  const posttalentpool = (nippos, selectedrole) => {
-    return fetch(`http://localhost:4000/updaterolemanagement`, {
-        method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+  const postTalentPool = async (nippos, selectedRole) => {
+    try {
+      const response = await fetch(`http://localhost:4000/updaterolemanagement`, {
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json', // Specify the content type
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            // Include any data you want to send in the request body
-            nippos: nippos,
-            updatedRoles: selectedrole
-        }) // Convert the bodyData object to a JSON string
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data; // Return the parsed JSON data
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            throw error; // Rethrow the error to handle it elsewhere
-        });
-};
+          nippos: nippos,
+          updatedRoles: selectedRole,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
 
-  const handleSavePeran = () => {
-    posttalentpool("969355737",selectedOptions)
+  const handleSavePeran = async () => {
+    await postTalentPool(row.nippos, selectedOptions);
+    onSave(row.id, selectedOptions); // Update the parent state with the new roles
     setOpen(false);
     setSelectedOptions([]);
   };
@@ -71,12 +75,12 @@ const ActionButton = ({ row }) => {
       </Button>
       <Dialog open={open} onClose={handleModalClose}>
         <Stack direction="row" alignItems="center" marginTop="10px">
-          <h2 style={{paddingLeft : '20px', color:'#1F1F1F'}} justifyContent="start">Daftar Peran Pengguna</h2>
-          <Button onClick={handleModalClose} color="primary" justifyContent="end" style={{color: '#D32F2F',marginLeft : '100px'}}>
-            <CloseIcon/>
+          <h2 style={{ paddingLeft: '20px', color: '#1F1F1F' }} justifyContent="start">Daftar Peran Pengguna</h2>
+          <Button onClick={handleModalClose} color="primary" justifyContent="end" style={{ color: '#D32F2F', marginLeft: '100px' }}>
+            <CloseIcon />
           </Button>
         </Stack>
-        
+
         <DialogContent style={{ width: '400px', maxHeight: '300px', overflowY: 'auto' }}>
           {peranOptions.map((option, index) => (
             <FormControlLabel
@@ -86,36 +90,35 @@ const ActionButton = ({ row }) => {
             />
           ))}
         </DialogContent>
-        <DialogActions style={{paddingBottom: '12px', paddingRight: '12px'}}>
+        <DialogActions style={{ paddingBottom: '12px', paddingRight: '12px' }}>
           <Button onClick={handleSavePeran}
-          variant="contained"
-          endIcon={<SaveOutlinedIcon/>}
-          sx={{ 
-            color:'#ffffff',  
-            backgroundColor: '#1C2D5A', 
-            borderRadius: '12px', 
-            fontSize: '14px', // Custom font size
-            padding: '8px 18px', // Custom padding using relative units
-            boxShadow: 'none',
-            width: '110px' || 'auto', // Set width (default: auto)
-            height: '40px' || 'auto', // Set height (default: auto)
-
-          }} >
+            variant="contained"
+            endIcon={<SaveOutlinedIcon />}
+            sx={{
+              color: '#ffffff',
+              backgroundColor: '#1C2D5A',
+              borderRadius: '12px',
+              fontSize: '14px',
+              padding: '8px 18px',
+              boxShadow: 'none',
+              width: '110px',
+              height: '40px',
+            }} >
             Save
           </Button>
           <Button onClick={handleModalClose}
-           endIcon={<HighlightOffOutlinedIcon/>}
-           sx={{ 
-            color:'#D32F2F',  
-            backgroundColor: '#ffffff', 
-            borderRadius: '12px', 
-            fontSize: '14px', // Custom font size
-            padding: '8px 18px', // Custom padding using relative units
-            boxShadow: 'none',
-            width: '110px' || 'auto', // Set width (default: auto)
-            height: '40px' || 'auto', // Set height (default: auto)
-            border: '1.5px solid #D32F2F'
-           }} >
+            endIcon={<HighlightOffOutlinedIcon />}
+            sx={{
+              color: '#D32F2F',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              fontSize: '14px',
+              padding: '8px 18px',
+              boxShadow: 'none',
+              width: '110px',
+              height: '40px',
+              border: '1.5px solid #D32F2F'
+            }} >
             Batalkan
           </Button>
         </DialogActions>
@@ -124,8 +127,23 @@ const ActionButton = ({ row }) => {
   );
 };
 
-export default function DaftarPenggunaTabel({rows}) {
-  const [updatedrows, setupdatedrows] = useState(rows);
+export default function DaftarPenggunaTabel({ 
+  rows,
+  searchNama, 
+  searchNippos,
+  searchPeran,
+}) {
+  const [updatedRows, setUpdatedRows] = useState([]);
+
+  useEffect(() => {
+    setUpdatedRows(rows);
+  }, [rows]);
+
+  const handleSave = (id, newRoles) => {
+    setUpdatedRows((prevRows) =>
+      prevRows.map((row) => (row.id === id ? { ...row, Peran: newRoles.join(', ') } : row))
+    );
+  };
 
   const columns = [
     { field: 'id', headerName: 'No', width: 70 },
@@ -140,18 +158,29 @@ export default function DaftarPenggunaTabel({rows}) {
       headerName: 'Aksi',
       width: 130,
       renderCell: (params) => (
-        <ActionButton row={params.row}/>
+        <ActionButton row={params.row} onSave={handleSave} />
       ),
     },
   ];
 
+  // Filter the rows based on selected filters and search term
+  const filteredRows = updatedRows.filter((row) => {
+    const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); 
+    const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); 
+    const peranMatch = !searchPeran || (row.Peran && row.Peran.toLowerCase().includes(searchPeran.toLowerCase())); 
+
+    return (!searchNama || namaMatch) 
+        && (!searchNippos || nipposMatch) 
+        && (!searchPeran || peranMatch);
+  });
+
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
         pageSizeOptions={[5, 10, 100]}
       />
-    </div>
-  );
+    </div>
+  );
 }

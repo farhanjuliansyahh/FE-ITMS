@@ -2,19 +2,12 @@ import React, { useEffect,useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 export default function DetailTalentTable({
-    selectedKantor,
-    selectedRumpunJabatan,
-    selectedJobLevel,
-    selectedStatusIDP,
+    rows,
+    searchNama, 
+    searchJobLevel,
+    searchRumpunJabatan,
+    searchKantor
   }) {
-const [rows, selectedRows] = useState([])
-
-useEffect(() => {
-    fetch("http://localhost:4000/getdetailtalent")
-    .then(response => response.json())
-        // 4. Setting *dogImage* to the image url that we received from the response above
-    .then(data => selectedRows(data))
-  },[])
 
     const columns = [
         { field: 'id', headerName: 'No', width: 70 },
@@ -29,14 +22,16 @@ useEffect(() => {
     ];
 
     const filteredRows = rows.filter((row) => {
-        const kantorMatch = row.nama_kantor === selectedKantor?.nama_kantor;
-        const rumpunJabatanMatch = row.jobfam === selectedRumpunJabatan;
-        const jobLevelMatch = row.joblevel === selectedJobLevel;
-        const statusIDPMatch = row.status_IDP === selectedStatusIDP;
-        
-        return (!selectedKantor || kantorMatch) && (!selectedRumpunJabatan || rumpunJabatanMatch) && 
-               (!selectedJobLevel || jobLevelMatch) && (!selectedStatusIDP || statusIDPMatch);
-      });
+        const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); 
+        const jobLevelMatch = !searchJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(searchJobLevel.toLowerCase())); 
+        const rumpunJabatanMatch = !searchRumpunJabatan || (row.jobfam && row.jobfam.toLowerCase().includes(searchRumpunJabatan.toLowerCase())); 
+        const kantorMatch = !searchKantor || (row.nama_kantor && row.nama_kantor.toLowerCase().includes(searchKantor.toLowerCase())); 
+
+        return (!searchNama || namaMatch) 
+        && (!searchJobLevel || jobLevelMatch) 
+        && (!searchRumpunJabatan || rumpunJabatanMatch) 
+        && (!searchKantor || kantorMatch);
+    });
 
     return (
         <div style={{ height: 400, width: '100%' }}>
