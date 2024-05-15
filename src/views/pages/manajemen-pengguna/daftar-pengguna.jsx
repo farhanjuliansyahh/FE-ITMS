@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { gridSpacing } from '../../../store/constant';
 import { Grid, Stack,Typography, Box} from '@mui/material';
-import { FileDownloadOutlined } from '@mui/icons-material';
+import { FileDownloadOutlined, RestartAltOutlined } from '@mui/icons-material';
 
 import MainCard from '../../../ui-component/cards/MainCard';
-import SearchSectionManajemenPengguna from '../../../ui-component/button/ManajemenSearchSectionGroup';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import DaftarPenggunaTabel from '../../../ui-component/tables/daftarpengguna';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
+import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
 
 // ==============================|| MANAJEMEN PENGGUNA ||============================== //
 
@@ -31,7 +32,40 @@ const DaftarPengguna = () => {
       });
   }, []);
 
-  const userLength = rowsUser.length
+    const userLength = rowsUser.length
+
+    //
+    const listNama = [...new Set(rowsUser.map(row => row.nama))];
+    const listNippos = [...new Set(rowsUser.map(row => row.nippos))];
+    const listPeran = [...new Set(rowsUser.map(row => row.Peran))];
+
+    const [selectedNama, setSelectedNama] = useState(null);
+    const [selectedNippos, setSelectedNippos] = useState(null);
+    const [selectedPeran, setSelectedPeran] = useState(null);
+  
+    const resetNamaInput = () => {
+      setSelectedNama('');
+    };
+  
+    const resetNipposInput = () => {
+      setSelectedNippos('');
+    };
+  
+    const resetPeranInput = () => {
+      setSelectedPeran('');
+    };
+  
+    const handleResetSearch = () => {
+      setSelectedNama('');
+      setSelectedNippos('');
+      setSelectedPeran('');
+  
+      // Call resetInput function for each CustomSearch component
+      resetNamaInput();
+      resetNipposInput();
+      resetPeranInput();
+    };
+  
 
   return (
     <>
@@ -43,7 +77,7 @@ const DaftarPengguna = () => {
               <Grid item xs={12}>
               <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <Stack direction="row" spacing={2} alignItems="center"  style={{marginBottom: '16px'}}>
-                  <Typography variant="h2" style={{display: 'inline',fontFamily: 'Roboto',fontSize:'20px',fontWeight: '500' }} gutterBottom>
+                  <Typography style={{display: 'inline',fontFamily: 'Roboto', fontSize:'24px', fontWeight: '700' }} gutterBottom>
                     Tabel Karyawan
                   </Typography>
                   <Typography variant="body2" 
@@ -64,8 +98,22 @@ const DaftarPengguna = () => {
                     <ButtonPrimary Color="#ffffff" icon={FileDownloadOutlined} LabelName={'Unduh Data'}/>
                   </Stack>
                 </Stack>
-                <SearchSectionManajemenPengguna />
-                <DaftarPenggunaTabel rows={rowsUser}/>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+                  <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                    <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
+                    <CustomSearch field={listNippos} label={'Nippos'} onSearch={setSelectedNippos} value={selectedNippos} resetInput={resetNipposInput} />
+                    <CustomSearch field={listPeran} label={'Peran'} onSearch={setSelectedPeran} value={selectedPeran} resetInput={resetPeranInput} />
+                  </Stack>
+                  <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+                </div>
+
+                <DaftarPenggunaTabel 
+                  rows={rowsUser}
+                  searchNama={selectedNama} 
+                  searchNippos={selectedNippos}
+                  searchPeran={selectedPeran}
+                />
               </Box>
               </Grid>
             </Grid>

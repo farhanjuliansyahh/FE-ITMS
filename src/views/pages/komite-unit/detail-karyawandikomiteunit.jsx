@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { RestartAlt, Search } from '@mui/icons-material';
+import { RestartAltOutlined, Search } from '@mui/icons-material';
 
 import MainCard from '../../../ui-component/cards/MainCard';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-import SearchResetButton from '../../../ui-component/button/SearchResetButton';
-import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
 import KaryawanKomiteUnit from '../../../ui-component/tables/karyawankomiteunit';
 import KonfirmasiTalentSource from '../../../ui-component/modal/konfirmasi-talentsource';
+import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
 
 // ==============================|| DETAIL KARYAWAN DARI KOMITE UNIT ||============================== //
 
@@ -111,7 +111,39 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
       
         // Clean up
         document.body.removeChild(link);
-      };
+    };
+        
+    // create list of Nama, Nippos, Job Level
+    const listNama = [...new Set(tablerows.map(row => row.Nama))];
+    const listNippos = [...new Set(tablerows.map(row => row.Nippos))];
+    const listJobLevel = [...new Set(tablerows.map(row => row['Job Level']))];
+
+    const [selectedNama, setSelectedNama] = useState(null);
+    const [selectedNippos, setSelectedNippos] = useState(null);
+    const [selectedJobLevel, setSelectedJobLevel] = useState(null);
+
+    const resetNamaInput = () => {
+        setSelectedNama('');
+    };
+
+    const resetNipposInput = () => {
+        setSelectedNippos('');
+    };
+
+    const resetJobLevelInput = () => {
+        setSelectedJobLevel('');
+    };
+
+    const handleResetSearch = () => {
+        setSelectedNama('');
+        setSelectedNippos('');
+        setSelectedJobLevel('');
+
+        // Call resetInput function for each CustomSearch component
+        resetNamaInput();
+        resetNipposInput();
+        resetJobLevelInput();
+    };
 
     return (
         <MainCard>
@@ -134,22 +166,13 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
                     }
                 </FlexContainer>
           
-                <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-                    <div style={{ marginRight: '12px', width:'100%'  }}>
-                        <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-                    </div>
-                    <div style={{ marginRight: '12px', width:'100%' }}>
-                        <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-                    </div>
-                    <div style={{ marginRight: '12px', width:'100%' }}>
-                        <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-                    </div>
-                    <div style={{ marginRight: '12px' }}>
-                        <SearchResetButton outlineColor="#1C2D5A" icon={Search} LabelName={'Cari'} />
-                    </div>
-                    <div style={{ marginRight: '0px' }}>
-                        <SearchResetButton outlineColor="#D32F2F" icon={RestartAlt} LabelName={'Reset'} />
-                    </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+                    <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                        <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
+                        <CustomSearch field={listNippos} label={'Nippos'} onSearch={setSelectedNippos} value={selectedNippos} resetInput={resetNipposInput} />
+                        <CustomSearch field={listJobLevel} label={'Job Level'} onSearch={setSelectedJobLevel} value={selectedJobLevel} resetInput={resetJobLevelInput} />
+                    </Stack>
+                    <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
                 </div>
 
                 <KaryawanKomiteUnit 
@@ -157,7 +180,9 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
                     rows={tablerows} 
                     selectedRows={selectedRows} 
                     onSelectedRowsChange={handleSelectedRowsChange}
-                    filter={{nama:filterNama, nippos:filterNippos, job:filterJob}}
+                    searchNama={selectedNama}
+                    searchNippos={selectedNippos}
+                    searchJobLevel={selectedJobLevel}
                 />
 
                 {ActionForButton && <KonfirmasiTalentSource 

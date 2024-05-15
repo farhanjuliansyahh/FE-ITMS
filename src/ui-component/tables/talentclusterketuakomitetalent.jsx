@@ -49,7 +49,16 @@ const getKategoriMatrixStyle = () => (params) => (
     </div>
 );
 
-const TalentClusterKetuaKomiteTalentTable = ({eventid, rows,onTableDataRefresh, disabled}) => {
+const TalentClusterKetuaKomiteTalentTable = ({
+    eventid, 
+    rows,
+    onTableDataRefresh, 
+    disabled,
+    searchNama, 
+    searchNippos,
+    searchJobLevel,
+    searchKategoriMatrix
+}) => {
     const [openFirstModal, setOpenFirstModal] = useState(false);
     const [openSecondModal, setOpenSecondModal] = useState(false);
     const [selectedNippos, setSelectedNippos] = useState(null); // State to store selected nippos
@@ -191,49 +200,22 @@ const TalentClusterKetuaKomiteTalentTable = ({eventid, rows,onTableDataRefresh, 
         },
     ];
 
-    // const rows = [
-    //     { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation',
-    //     joblevel: 'D3', jobfam: 'Bisnis', kantor: 'Kantor Pusat Bandung', komiteunit: 'ABD HAFID',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Turun',
-    //     kategorimatrix: 'Promotable-4' },
-    //     { id: 2, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Naik',
-    //     kategorimatrix: 'Promotable-4' },
-    //     { id: 3, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Tetap',
-    //     kategorimatrix: 'High Potential' },
-    //     { id: 4, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Turun' ,
-    //     kategorimatrix: 'Promotable-4' },
-    //     { id: 5, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Naik' ,
-    //     kategorimatrix: 'Promotable-4' },
-    //     { id: 6, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Tetap' ,
-    //     kategorimatrix: 'High Potential' },
-    //     { id: 7, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Turun' ,
-    //     kategorimatrix: 'Promotable-4' },
-    //     { id: 8, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Naik' ,
-    //     kategorimatrix: 'Promotable-4' },
-    //     { id: 9, nama : 'Muhamad Arsyi', nippos:'999494379', posisi :'Asisten Manajer Acquisition Biller', 
-    //     joblevel:'D3', jobfam :'Bisnis', kantor:'Kantor Pusat Bandung', komiteunit:'ABDU SOMAD',
-    //     competency: 3.5, pms: 88, akhlak: 4.9, learningagility: 4.9, avgtalentdays: 88, status: 'Tetap' ,
-    //     kategorimatrix: 'High Potential' },
-    // ];
+    const filteredRows = rows.filter((row) => {
+        const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+        const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
+        const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
+        const KategoriMatrixMatch = !searchKategoriMatrix || (row['Matriks Kategori Akhir'] && row['Matriks Kategori Akhir'].toLowerCase().includes(searchKategoriMatrix.toLowerCase())); // Add null check for row.nippos
+    
+        return (!searchNama || namaMatch) 
+        && (!searchNippos || nipposMatch) 
+        && (!searchJobLevel || jobLevelMatch) 
+        && (!searchKategoriMatrix || KategoriMatrixMatch);
+    });
 
     return (
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid
-                rows={rows}
+                rows={filteredRows}
                 columns={columns}
                 initialState={{
                     pagination: {

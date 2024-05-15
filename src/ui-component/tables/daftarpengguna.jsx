@@ -127,7 +127,12 @@ const ActionButton = ({ row, onSave }) => {
   );
 };
 
-export default function DaftarPenggunaTabel({ rows }) {
+export default function DaftarPenggunaTabel({ 
+  rows,
+  searchNama, 
+  searchNippos,
+  searchPeran,
+}) {
   const [updatedRows, setUpdatedRows] = useState([]);
 
   useEffect(() => {
@@ -158,10 +163,21 @@ export default function DaftarPenggunaTabel({ rows }) {
     },
   ];
 
+  // Filter the rows based on selected filters and search term
+  const filteredRows = updatedRows.filter((row) => {
+    const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); 
+    const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); 
+    const peranMatch = !searchPeran || (row.Peran && row.Peran.toLowerCase().includes(searchPeran.toLowerCase())); 
+
+    return (!searchNama || namaMatch) 
+        && (!searchNippos || nipposMatch) 
+        && (!searchPeran || peranMatch);
+  });
+
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <DataGrid
-        rows={updatedRows}
+        rows={filteredRows}
         columns={columns}
         pageSizeOptions={[5, 10, 100]}
       />
