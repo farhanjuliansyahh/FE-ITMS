@@ -206,6 +206,7 @@ useEffect(() => {
                     tanggal_mulai={event.tanggal_mulai}
                     tanggal_selesai={event.tanggal_selesai}
                     status={event.evenstatus_id}
+                    pathDetailEvent={`./daftar-eventkomiteunit/${event.id}`}
                   />
                 </Box>
               ))}
