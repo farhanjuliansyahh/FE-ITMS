@@ -21,7 +21,7 @@ import TalentCluster from '../../ui-component/event-section/talent-cluster';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, kodekomite, tipekomite, rumpun, tanggal_mulai, tanggal_selesai, eventstatus_id }) {
+export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, kodekomite, tipekomite, rumpun, tanggal_mulai, tanggal_selesai, eventstatus_id, handleActiveStepChange }) {
   const [activeStep, setActiveStep] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [talentPoolDialogOpen, setTalentPoolDialogOpen] = useState(false);
@@ -115,9 +115,11 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
       setDialogOpen(false);
       setSelectedDate(date);
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      handleActiveStepChange();
     } else if (activeStep === 5) {
       setTalentPoolDialogOpen(false);
-      setActiveStep((prevActiveStep) => prevActiveStep + 1)
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      handleActiveStepChange();
     }
   };
 

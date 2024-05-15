@@ -9,8 +9,8 @@ import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutline
 import ButtonOptional from '../../../ui-component/button/ButtonOptional';
 import MainCard from '../../../ui-component/cards/MainCard';
 import PassingGradeTable from '../../../ui-component/tables/PassingGradeTable';
-import KuotaTable from '../../../ui-component/tables/KuotaTable'
-import DaftarPertanyaanTable from '../../../ui-component/tables/DaftarPertanyaanTable'
+import KuotaTable from '../../../ui-component/tables/KuotaTable';
+import DaftarPertanyaanTable from '../../../ui-component/tables/DaftarPertanyaanTable';
 import AccordionKomiteTalent from '../../../ui-component/cards/AccordionKomiteTalent';
 import DaftarKomiteTalent from '../../../ui-component/submenu/daftar-komitetalent';
 import NilaiAssessmentTable from '../../../ui-component/tables/NilaiAssessmentTable';
@@ -19,30 +19,29 @@ import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AddQuestionModal from '../../../ui-component/modal/tambah-pertanyaan';
 import AlertSimpan from '../../../ui-component/modal/alert-simpan';
 import SimpanLogo from '../../../assets/images/ilustration/simpan.png';
-import * as XLSX from 'xlsx';
 
 import {
-  AddCircleOutline, AssignmentOutlined, AssignmentTurnedInOutlined, CancelOutlined,
-  FileDownloadOutlined, FileUploadOutlined, GroupsOutlined,
-  PersonOutlineOutlined, QuizOutlined, RestartAltOutlined, SaveOutlined, SimCardDownloadOutlined
+  AddCircleOutline,
+  AssignmentOutlined,
+  AssignmentTurnedInOutlined,
+  CancelOutlined,
+  FileDownloadOutlined,
+  FileUploadOutlined,
+  GroupsOutlined,
+  PersonOutlineOutlined,
+  QuizOutlined,
+  RestartAltOutlined,
+  SaveOutlined,
+  SimCardDownloadOutlined
 } from '@mui/icons-material';
 
-
 // ==============================|| PARAMETER TALENT PAGE ||============================== //
-
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
-
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
         <Box>
           <Typography>{children}</Typography>
@@ -52,143 +51,179 @@ function CustomTabPanel(props) {
   );
 }
 
-
 CustomTabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
 };
-
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
   };
 }
-
 
 const ParameterTalent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
-
 
   const [selectedKantor, setSelectedKantor] = useState(null);
   // const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
   // const [selectedJobLevel, setSelectedJobLevel] = useState(null);
   const [selectedStatusIDP, setSelectedStatusIDP] = useState(null);
   const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
-  const [updatekkmstate, setUpdatekkmstate] = useState(false)
-  const [updatekuotastate, setUpdatekuotastate] = useState(false)
-  const [refetchstate, setRefetchstate] = useState(true)
- 
-  const handleClickKKM = () =>{
+  const [updatekkmstate, setUpdatekkmstate] = useState(false);
+  const [updatekuotastate, setUpdatekuotastate] = useState(false);
+  const [refetchstate, setRefetchstate] = useState(true);
+
+  const handleClickKKM = () => {
     setUpdatekkmstate(true);
-  }
+  };
 
-
-  const handleClickKuota = () =>{
+  const handleClickKuota = () => {
     setUpdatekuotastate(true);
-  }
-
-
-
+  };
 
   const handleBatalkanKKM = () => {
-    setRefetchstate(true)
-  }
-
+    setRefetchstate(true);
+  };
 
   const [openUnggahData, setopenUnggahData] = useState(false);
 
-
   const handleOpen = () => {
-      setopenUnggahData(true);
-    };
- 
+    setopenUnggahData(true);
+  };
+
   const handleClose = () => {
-      setopenUnggahData(false);
+    setopenUnggahData(false);
   };
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setRefetchstate(true)
+    setRefetchstate(true);
   };
-
 
   useEffect(() => {
     setLoading(false);
   }, []);
-
 
   const boxStyle = {
     padding: '20px',
     width: '100%',
     borderRadius: '12px',
     marginTop: '-55px'
-};
-
-
-  const FlexContainer = styled('div')({
-      display: 'flex',
-      alignItems: 'center',
-      gap: '16px',
-      paddingBottom: '24px',
-  });
-
-
-  function createData(id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance) {
-    return { id, nama, nippos, posisi, joblevel, rumpunjabatan, kantor, komiteunit, kompbumn, komplead, kompteknis, potensi, akhlak, learningagility, performance };
   };
 
+  const FlexContainer = styled('div')({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+    paddingBottom: '24px'
+  });
+
+  function createData(
+    id,
+    nama,
+    nippos,
+    posisi,
+    joblevel,
+    rumpunjabatan,
+    kantor,
+    komiteunit,
+    kompbumn,
+    komplead,
+    kompteknis,
+    potensi,
+    akhlak,
+    learningagility,
+    performance
+  ) {
+    return {
+      id,
+      nama,
+      nippos,
+      posisi,
+      joblevel,
+      rumpunjabatan,
+      kantor,
+      komiteunit,
+      kompbumn,
+      komplead,
+      kompteknis,
+      potensi,
+      akhlak,
+      learningagility,
+      performance
+    };
+  }
 
   const rows = [
-    createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'E3', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABD HAFID'),
+    createData(
+      1,
+      'Sri Hartini',
+      '998494379',
+      'Asisten Manajer Pengembangan Join Operation',
+      'E3',
+      'Bisnis',
+      'KANTOR PUSAT BANDUNG',
+      'ABD HAFID'
+    ),
     createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'D2', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABDU SOMAD'),
     createData(3, 'Adinda', '998495379', 'Asisten Manajer Pengelolaan Remittance LN', 'D1', 'SDM', 'KANTOR PUSAT BANDUNG', 'ABDUL JAMIL'),
-    createData(4, 'Niken Wijaya', '998494389', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'E3', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ABDUL WAHAB'),
-    createData(5, 'Abang', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'E2', 'Bisnis', 'KANTOR PUSAT JAKARTA', 'ACEP RUDI SUPRIADI'),
+    createData(
+      4,
+      'Niken Wijaya',
+      '998494389',
+      'Asisten Manajer Penjualan dan Kemitraan Pospay',
+      'E3',
+      'Bisnis',
+      'KANTOR PUSAT JAKARTA',
+      'ABDUL WAHAB'
+    ),
+    createData(
+      5,
+      'Abang',
+      '998494379',
+      'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding',
+      'E2',
+      'Bisnis',
+      'KANTOR PUSAT JAKARTA',
+      'ACEP RUDI SUPRIADI'
+    )
   ];
 
-
   // create list of Nama, Nippos, Job Level, Rumpun Jabatan
-  const listNama = [...new Set(rows.map(row => row.nama))];
-  const listNippos = [...new Set(rows.map(row => row.nippos))];
-  const listJobLevel = [...new Set(rows.map(row => row.joblevel))];
-  const listRumpunJabatan = [...new Set(rows.map(row => row.rumpunjabatan))];
-
+  const listNama = [...new Set(rows.map((row) => row.nama))];
+  const listNippos = [...new Set(rows.map((row) => row.nippos))];
+  const listJobLevel = [...new Set(rows.map((row) => row.joblevel))];
+  const listRumpunJabatan = [...new Set(rows.map((row) => row.rumpunjabatan))];
 
   const [selectedNama, setSelectedNama] = useState(null);
   const [selectedNippos, setSelectedNippos] = useState(null);
   const [selectedJobLevel, setSelectedJobLevel] = useState(null);
   const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
 
-
   const resetNamaInput = () => {
     setSelectedNama('');
   };
-
 
   const resetNipposInput = () => {
     setSelectedNippos('');
   };
 
-
   const resetJobLevelInput = () => {
     setSelectedJobLevel('');
   };
 
-
   const resetRumpunJabatanInput = () => {
     setSelectedRumpunJabatan('');
   };
-
 
   const handleResetSearch = () => {
     setSelectedNama('');
     setSelectedNippos('');
     setSelectedJobLevel('');
     setSelectedRumpunJabatan('');
-
 
     // Call resetInput function for each CustomSearch component
     resetNamaInput();
@@ -201,16 +236,16 @@ const ParameterTalent = () => {
   // Initialize a variable to track the next ID
   let nextId = 1;
   const generateId = () => {
-  return nextId++;
+    return nextId++;
   };
 
   // Define the array of questions with auto-incrementing IDs
   const [pertanyaan, setPertanyaan] = useState([
     { id: generateId(), text: 'Motivasi' },
-    { id: generateId(), text: 'Rencana karir 5 tahun ke depan' },
+    { id: generateId(), text: 'Rencana karir 5 tahun ke depan' }
   ]);
   const [openAddQuestionModal, setOpenAddQuestionModal] = useState(false);
-  
+
   const handleOpenAddQuestionModal = () => {
     setOpenAddQuestionModal(true);
   };
@@ -219,24 +254,23 @@ const ParameterTalent = () => {
     setOpenAddQuestionModal(false);
   };
   const handleAddQuestion = (newQuestionText) => {
-  const newQuestion = {
+    const newQuestion = {
       id: generateId(),
-      text: newQuestionText,
+      text: newQuestionText
     };
-    console.log("Adding new question:", newQuestion);
-    setPertanyaan([...pertanyaan, newQuestion]); 
+    console.log('Adding new question:', newQuestion);
+    setPertanyaan([...pertanyaan, newQuestion]);
   };
 
   //Save question automaticcaly per row
   const handleSaveQuestionAutomatic = (id, newText) => {
-  const updatedPertanyaan = pertanyaan.map(question =>
-      question.id === id ? { ...question, text: newText } : question
-    );
+    const updatedPertanyaan = pertanyaan.map((question) => (question.id === id ? { ...question, text: newText } : question));
     setPertanyaan(updatedPertanyaan);
     setChangesMade(true);
   };
   useEffect(() => {
-    console.log("Rows:", pertanyaan);}, [pertanyaan]);
+    console.log('Rows:', pertanyaan);
+  }, [pertanyaan]);
 
   // Save all the changes of questions using Simpan Button and show Success Modal
   const [openAlertBerhasilSimpan, setOpenAlertBerhasilSimpan] = useState(false);
@@ -248,13 +282,14 @@ const ParameterTalent = () => {
   };
   const [changesMade, setChangesMade] = useState(false);
   const handleSaveAllChanges = () => {
-  setChangesMade(false);
-  setOpenAlertBerhasilSimpan(true)}
-
+    setChangesMade(false);
+    setOpenAlertBerhasilSimpan(true);
+  };
 
   const handleDownload = () => {
     // Define the URL of the Google Sheets file to download
-    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/1WOFR8vKbbwaSJoVB_50Z45nEr3XijTei/edit?usp=drive_link&ouid=116933319260090654956&rtpof=true&sd=true';
+    const googleSheetUrl =
+      'https://docs.google.com/spreadsheets/d/1WOFR8vKbbwaSJoVB_50Z45nEr3XijTei/edit?usp=drive_link&ouid=116933319260090654956&rtpof=true&sd=true';
 
     // Construct the modified URL with the export parameter for CSV format
     const modifiedUrl = `${googleSheetUrl}/export?format=csv`;
@@ -279,26 +314,45 @@ const ParameterTalent = () => {
     document.body.removeChild(link);
   };
 
-// Download Tabel Karyawan pada Button Unduh Data Parameter-Assesment
-const convertRowsToWorksheet = (rows) => {
-  const worksheet = XLSX.utils.json_to_sheet(rows);
-  return worksheet;
-};
-const downloadExcelFile = (worksheet, filename) => {
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-  XLSX.writeFile(workbook, filename);
-};
-const handleDownloadData = () => {
-  const worksheet = convertRowsToWorksheet(rows);
-  downloadExcelFile(worksheet, 'data_karyawan.xlsx');
-};
+  const handleDownloadCSV = () => {
+    let dataToDownload = [];
+    let filename = '';
 
+    dataToDownload = rows;
+    filename = `nilai_assessment_karyawan.csv`;
+
+    // Create a CSV header with column names
+    const headers = Object.keys(dataToDownload[0]);
+    const idIndex = headers.indexOf('id');
+    if (idIndex !== -1) {
+      headers.splice(idIndex, 1); // Remove 'id' from headers
+      headers.unshift('id'); // Insert 'id' at the beginning
+    }
+    const headerRow = headers.join(',');
+
+    // Convert data to CSV format
+    const csvContent =
+      'data:text/csv;charset=utf-8,' +
+      headerRow +
+      '\n' +
+      dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+
+    // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+
+    // Trigger the download
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+  };
 
   return (
     <>
-
-
       <MainCard>
         {/* Bagian Tab */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -311,28 +365,50 @@ const handleDownloadData = () => {
           </Tabs>
         </Box>
 
-
         {/* Passing Grade */}
         <CustomTabPanel value={value} index={0}>
-            <Box display="flex" marginTop={2} flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'}>
-                <Grid>
-                <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent I</Typography>
-                <PassingGradeTable tipekomite={1}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
-                <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent II</Typography>
-                <PassingGradeTable tipekomite={2}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
-                <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>Komite Talent III</Typography>
-                <PassingGradeTable tipekomite={3}  updatekkmstate={updatekkmstate} refetchstate={refetchstate} onUpdateKkmStateChange={() => setUpdatekkmstate(false)} handlerefetch={() => setRefetchstate(false)}/>
-                </Grid>
-           
-                <Box display="flex" justifyContent="flex-end" width="100%">
-                  <Box sx={{ marginRight: '16px' }}>
-                    <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleClickKKM}/>
-                  </Box>
-                  <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleBatalkanKKM}/>
-                </Box>
-            </Box>
-        </CustomTabPanel>
+          <Box display="flex" marginTop={2} flexDirection="column" alignItems="center" paddingLeft={'24px'} paddingRight={'24px'}>
+            <Grid>
+              <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>
+                Komite Talent I
+              </Typography>
+              <PassingGradeTable
+                tipekomite={1}
+                updatekkmstate={updatekkmstate}
+                refetchstate={refetchstate}
+                onUpdateKkmStateChange={() => setUpdatekkmstate(false)}
+                handlerefetch={() => setRefetchstate(false)}
+              />
+              <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>
+                Komite Talent II
+              </Typography>
+              <PassingGradeTable
+                tipekomite={2}
+                updatekkmstate={updatekkmstate}
+                refetchstate={refetchstate}
+                onUpdateKkmStateChange={() => setUpdatekkmstate(false)}
+                handlerefetch={() => setRefetchstate(false)}
+              />
+              <Typography fontSize={22} fontWeight={600} marginTop={2} marginBottom={2}>
+                Komite Talent III
+              </Typography>
+              <PassingGradeTable
+                tipekomite={3}
+                updatekkmstate={updatekkmstate}
+                refetchstate={refetchstate}
+                onUpdateKkmStateChange={() => setUpdatekkmstate(false)}
+                handlerefetch={() => setRefetchstate(false)}
+              />
+            </Grid>
 
+            <Box display="flex" justifyContent="flex-end" width="100%">
+              <Box sx={{ marginRight: '16px' }}>
+                <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleClickKKM} />
+              </Box>
+              <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleBatalkanKKM} />
+            </Box>
+          </Box>
+        </CustomTabPanel>
 
         {/* Kuota */}
         <Box display="flex" marginTop={4} width="100%" paddingLeft={'24px'} paddingRight={'24px'} paddingBottom={'24px'}>
@@ -340,144 +416,175 @@ const handleDownloadData = () => {
           <Box flex={1} marginRight={2}>
             <CustomTabPanel value={value} index={1}>
               <Grid>
-                <Typography fontSize={22} fontWeight={600} marginBottom={2}>Komite Unit</Typography>
-                <KuotaTable header="Kuota Talent Source- (Dalam Satuan Persen)" initialValue={50} bobot={1}
-                refetchstate={refetchstate}
-                handlerefetch={() => setRefetchstate(false)}
-                updatekuotastate={updatekuotastate}
-                onUpdateKuotaStateChange={() => setUpdatekuotastate(false)}
+                <Typography fontSize={22} fontWeight={600} marginBottom={2}>
+                  Komite Unit
+                </Typography>
+                <KuotaTable
+                  header="Kuota Talent Source- (Dalam Satuan Persen)"
+                  initialValue={50}
+                  bobot={1}
+                  refetchstate={refetchstate}
+                  handlerefetch={() => setRefetchstate(false)}
+                  updatekuotastate={updatekuotastate}
+                  onUpdateKuotaStateChange={() => setUpdatekuotastate(false)}
                 />
               </Grid>
             </CustomTabPanel>
           </Box>
 
-
           {/* Right Table */}
           <Box flex={1} marginLeft={2}>
             <CustomTabPanel value={value} index={1}>
               <Container style={{ textAlign: 'left', paddingLeft: 0, paddingRight: 0 }}>
-                <Typography fontSize={22} fontWeight={600} marginBottom={2}>Ketua Komite Talent</Typography>
-                <KuotaTable header="Kuota Diskresi- (Dalam Satuan Persen)" initialValue={10} bobot={2}
-                refetchstate={refetchstate}
-                handlerefetch={() => setRefetchstate(false)}
-                updatekuotastate={updatekuotastate}
-                onUpdateKuotaStateChange={() => setUpdatekuotastate(false)} />
+                <Typography fontSize={22} fontWeight={600} marginBottom={2}>
+                  Ketua Komite Talent
+                </Typography>
+                <KuotaTable
+                  header="Kuota Diskresi- (Dalam Satuan Persen)"
+                  initialValue={10}
+                  bobot={2}
+                  refetchstate={refetchstate}
+                  handlerefetch={() => setRefetchstate(false)}
+                  updatekuotastate={updatekuotastate}
+                  onUpdateKuotaStateChange={() => setUpdatekuotastate(false)}
+                />
               </Container>
-
 
               {/* Buttons */}
               <Box display="flex" justifyContent="flex-end" marginTop={'24px'}>
                 <Box sx={{ marginRight: '16px' }}>
-                  <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleClickKuota}/>
+                  <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleClickKuota} />
                 </Box>
-                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'}  onClick={handleBatalkanKKM}/>
+                <ButtonErrorOutlined Color="#D32F2F" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleBatalkanKKM} />
               </Box>
             </CustomTabPanel>
           </Box>
         </Box>
 
-
         {/* Question Event */}
         <CustomTabPanel value={value} index={2}>
-          <Box display="flex" flexDirection="column" alignItems="center" marginTop={'-35px'} paddingLeft={'24px'} paddingRight={'24px'} paddingBottom={'24px'}>
-          {/* Container with Flexbox layout */}
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            marginTop={'-35px'}
+            paddingLeft={'24px'}
+            paddingRight={'24px'}
+            paddingBottom={'24px'}
+          >
+            {/* Container with Flexbox layout */}
             <Grid>
               {/* Flex container for the title and button */}
               <Box display="flex" justifyContent="space-between" alignItems="center" marginTop={0} marginBottom={'16px'}>
-                <Typography fontSize={22} fontWeight={600}>Daftar Pertanyaan</Typography>
-                  <ButtonPrimary onClick={handleOpenAddQuestionModal} Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Data'}/>
-       
+                <Typography fontSize={22} fontWeight={600}>
+                  Daftar Pertanyaan
+                </Typography>
+                <ButtonPrimary onClick={handleOpenAddQuestionModal} Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Data'} />
               </Box>
-             
-              {/* Table */}
-              <DaftarPertanyaanTable pertanyaan={pertanyaan} handleSaveQuestion={handleSaveQuestionAutomatic}/>
-            </Grid>
 
+              {/* Table */}
+              <DaftarPertanyaanTable pertanyaan={pertanyaan} handleSaveQuestion={handleSaveQuestionAutomatic} />
+            </Grid>
 
             <Box display="flex" justifyContent="flex-end" width="100%">
               <Box sx={{ marginRight: '16px' }}>
-                <ButtonPrimary Color="#ffffff" icon={SaveOutlined} LabelName={'Simpan'} onClick={handleSaveAllChanges} disabled={!changesMade}  />
+                <ButtonPrimary
+                  Color="#ffffff"
+                  icon={SaveOutlined}
+                  LabelName={'Simpan'}
+                  onClick={handleSaveAllChanges}
+                  disabled={!changesMade}
+                />
               </Box>
             </Box>
           </Box>
         </CustomTabPanel>
 
-
         {/* Komite Talent */}
         <CustomTabPanel value={value} index={3}>
-          <Box display="block" width='100%' flexDirection="column" alignItems="center" padding={'12px 24px'} marginTop={-5}>
+          <Box display="block" width="100%" flexDirection="column" alignItems="center" padding={'12px 24px'} marginTop={-5}>
             <AccordionKomiteTalent
               title={'Komite Talent 1'}
               subtitle={'Direktur Utama - Faizal Rochmad Djoemadi'}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent/>}
+              content={<DaftarKomiteTalent />}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 2'}
               subtitle={'Direktur HCM - Tonggo Marbun'}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent/>}
+              content={<DaftarKomiteTalent />}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 3'}
               subtitle={'Senior Vice President HCSBP - Chandra Dewi'}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent/>}
+              content={<DaftarKomiteTalent />}
             />
           </Box>
         </CustomTabPanel>
-
 
         {/* Nilai Assessment */}
         <CustomTabPanel value={value} index={4}>
-        <Box sx={boxStyle}>
+          <Box sx={boxStyle}>
             <FlexContainer>
-                <Typography style={{fontSize:'22px', fontWeight:'600'}}>
-                    Tabel Karyawan
-                </Typography>
-                <div style={{ flex: '1' }}> </div>
-                <ButtonPrimary Color="#ffffff" icon={FileUploadOutlined} LabelName={'Unggah Data'} onClick={handleOpen}/>
-                <ButtonOptional icon={SimCardDownloadOutlined} LabelName={'Unduh Template'} onClick={handleDownload}/>
-                <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'} onClick={handleDownloadData}/>
+              <Typography style={{ fontSize: '22px', fontWeight: '600' }}>Tabel Karyawan</Typography>
+              <div style={{ flex: '1' }}> </div>
+              <ButtonPrimary Color="#ffffff" icon={FileUploadOutlined} LabelName={'Unggah Data'} onClick={handleOpen} />
+              <ButtonOptional icon={SimCardDownloadOutlined} LabelName={'Unduh Template'} onClick={handleDownload} />
+              <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'} onClick={handleDownloadCSV} />
             </FlexContainer>
 
-
-            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width: '100%' }}>
               <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
                 <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
-                <CustomSearch field={listNippos} label={'Nippos'} onSearch={setSelectedNippos} value={selectedNippos} resetInput={resetNipposInput} />
-                <CustomSearch field={listJobLevel} label={'Job Level'} onSearch={setSelectedJobLevel} value={selectedJobLevel} resetInput={resetJobLevelInput} />
-                <CustomSearch field={listRumpunJabatan} label={'Rumpun Jabatan'} onSearch={setSelectedRumpunJabatan} value={selectedRumpunJabatan} resetInput={resetRumpunJabatanInput} />
+                <CustomSearch
+                  field={listNippos}
+                  label={'Nippos'}
+                  onSearch={setSelectedNippos}
+                  value={selectedNippos}
+                  resetInput={resetNipposInput}
+                />
+                <CustomSearch
+                  field={listJobLevel}
+                  label={'Job Level'}
+                  onSearch={setSelectedJobLevel}
+                  value={selectedJobLevel}
+                  resetInput={resetJobLevelInput}
+                />
+                <CustomSearch
+                  field={listRumpunJabatan}
+                  label={'Rumpun Jabatan'}
+                  onSearch={setSelectedRumpunJabatan}
+                  value={selectedRumpunJabatan}
+                  resetInput={resetRumpunJabatanInput}
+                />
               </Stack>
-              <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+              <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
             </div>
-           
+
             <NilaiAssessmentTable
-                rows={rows}
-                searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-                searchNippos={selectedNippos}
-                searchJobLevel={selectedJobLevel}
-                searchRumpunJabatan={selectedRumpunJabatan}
+              rows={rows}
+              searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+              searchNippos={selectedNippos}
+              searchJobLevel={selectedJobLevel}
+              searchRumpunJabatan={selectedRumpunJabatan}
             />
-
-
           </Box>
-
-
         </CustomTabPanel>
 
-
-        <UnggahDataNilaiAssessment
-            open={openUnggahData}
-            handleClose={() => setopenUnggahData(false)}
-        />
+        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={() => setopenUnggahData(false)} />
         <AddQuestionModal open={openAddQuestionModal} handleClose={handleCloseAddQuestionModal} handleAddQuestion={handleAddQuestion} />
-        <AlertSimpan open={openAlertBerhasilSimpan} handleClose={handleCloseAlertBerhasilSimpan} Severity={"success"} Logo={SimpanLogo} Keterangan={"Berhasil Simpan"}/>
-
-     </MainCard>
+        <AlertSimpan
+          open={openAlertBerhasilSimpan}
+          handleClose={handleCloseAlertBerhasilSimpan}
+          Severity={'success'}
+          Logo={SimpanLogo}
+          Keterangan={'Berhasil Simpan'}
+        />
+      </MainCard>
     </>
   );
 };
-
 
 export default ParameterTalent;

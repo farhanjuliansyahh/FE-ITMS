@@ -25,7 +25,7 @@ const DaftarPengguna = () => {
       .then(response => response.json())
       .then(data => {
         // Update state with API data
-        setRowsUser(data);
+        setRowsUser(data.map((row, index) => ({ ...row, id: index + 1 })))
       })
       .catch(error => {
         console.error('Error fetching data:', error);

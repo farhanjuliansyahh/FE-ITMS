@@ -6,7 +6,7 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
-function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent }) { 
+function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent, confirm }) { 
     
     const loloskanprofile = async () => {
         try {
@@ -84,6 +84,7 @@ function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent }) {
             onClick={async () => {
                 try {
                     await loloskanprofile();
+                    await confirm();
                     handleClose();
                 } catch (error) {
                     // Handle error if loloskanprofile() fails

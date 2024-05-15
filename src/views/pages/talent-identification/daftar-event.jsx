@@ -41,27 +41,27 @@ function a11yProps(index) {
   };
 }
 
-const fetchDataFromDatabase = () => {
-  return fetch('http://localhost:4000/getallevent') // endpoint
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data; // Return the parsed JSON data
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
-      throw error; // Rethrow the error to handle it elsewhere
-    });
-};
-
 const DaftarEvent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [eventData, setEventData] = useState([]);
+
+  const fetchDataFromDatabase = () => {
+    return fetch('http://localhost:4000/getallevent') // endpoint
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
 
   useEffect(() => {
     fetchDataFromDatabase()
@@ -93,19 +93,18 @@ const DaftarEvent = () => {
     setOpen(false);
   };
   // console.log("asdasd", eventData);
-  
+
   const BoxContainer = styled('div')({
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   });
-
 
   const handleEventAdded = () => {
     fetchEventData(); // Re-fetch the data when a new event is added
   };
 
   const uniqueNamaEvents = [...new Set(eventData.map((event) => event.nama_event))];
-  const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
+  const [selectedNamaEvent, setSelectedNamaEvent] = useState('');
 
   const filteredEvents = eventData.filter((event) => {
     const namaMatch = !selectedNamaEvent || (event.nama_event && event.nama_event.toLowerCase().includes(selectedNamaEvent.toLowerCase())); // Add null check
@@ -149,19 +148,18 @@ const DaftarEvent = () => {
   return (
     <>
       {/* <MainLayout /> */}
-      
-      <MainCard title="Daftar Event" secondary={
-       <Stack direction="row" spacing={2}>
-          <BoxContainer>
-            <CustomSearch 
-                field={uniqueNamaEvents} 
-                label={'Cari Nama Event'} 
-                onSearch={setSelectedNamaEvent} 
-                value={selectedNamaEvent}  />
-          </BoxContainer>
-          <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen}/>
+
+      <MainCard
+        title="Daftar Event"
+        secondary={
+          <Stack direction="row" spacing={2}>
+            <BoxContainer>
+              <CustomSearch field={uniqueNamaEvents} label={'Cari Nama Event'} onSearch={setSelectedNamaEvent} value={selectedNamaEvent} />
+            </BoxContainer>
+            <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen} />
           </Stack>
-      }>
+        }
+      >
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <Typography variant="h5"></Typography>
         </Box>
@@ -178,22 +176,22 @@ const DaftarEvent = () => {
             <Typography>Loading...</Typography>
           ) : (
             <Box>
-              {paginatedEventsTab0.map(event => (
-                  <EventBerjalan 
-                    key={event.id}
-                    id={event.id}
-                    nama_event={event.nama_event}
-                    deskripsi={event.deskripsi}
-                    ketua = {event.nippos_ketua_komite}
-                    tipe_komite_talent={event.tipekomite.tipe_komite_talent}
-                    kode_rumpun={event.kode_rumpun_jabatan}
-                    nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
-                    kuota={event.kuota}
-                    tanggal_mulai={event.tanggal_mulai}
-                    tanggal_selesai={event.tanggal_selesai}
-                    status={event.evenstatus_id}
-                  />
-                ))}
+              {paginatedEventsTab0.map((event) => (
+                <EventBerjalan
+                  key={event.id}
+                  id={event.id}
+                  nama_event={event.nama_event}
+                  deskripsi={event.deskripsi}
+                  ketua={event.nippos_ketua_komite}
+                  tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+                  kode_rumpun={event.kode_rumpun_jabatan}
+                  nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+                  kuota={event.kuota}
+                  tanggal_mulai={event.tanggal_mulai}
+                  tanggal_selesai={event.tanggal_selesai}
+                  status={event.evenstatus_id}
+                />
+              ))}
               {paginatedEventsTab0.length === 0 ? (
                 <Box
                   style={{
@@ -278,7 +276,9 @@ const DaftarEvent = () => {
           )}
         </CustomTabPanel>
 
-        <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />
+          {open && 
+            <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />
+          }
       </MainCard>
     </>
   );
