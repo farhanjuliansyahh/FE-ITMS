@@ -40,7 +40,7 @@ const ProfileSection = () => {
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
   const token = sessionStorage.getItem('token');
-  const nippos = sessionStorage.getItem('nippos');
+  // const nippos = sessionStorage.getItem('nippos');
   const [resultProfile, setResultProfile] = useState(null);
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -94,8 +94,21 @@ const ProfileSection = () => {
           }
         });
         const resultProfile = await responseProfile.json();
-        setResultProfile(resultProfile.decoded.user);
-        sessionStorage.setItem('nippos', resultProfile.decoded.user.nippos);
+
+        // Extract the user data
+        const user = resultProfile.decoded.user;
+
+        // Set the user profile in state
+        setResultProfile(user);
+
+        // Store the nippos in session storage
+        sessionStorage.setItem('nippos', user.nippos);
+
+        // Extract nama_role values
+        const namaRoles = user.nipposrole.map((role) => role.roleid.nama_role);
+
+        // Store the nama_roles in session storage
+        sessionStorage.setItem('role', JSON.stringify(namaRoles));
       } catch (error) {
         console.error('Error fetching profile:', error);
       }
@@ -108,34 +121,34 @@ const ProfileSection = () => {
     }
   }, [token, navigate]);
 
-  useEffect(() => {
-    const fetchRole = async () => {
-      try {
-        const responseRole = await fetch('http://localhost:4000/getrole', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            nippos: nippos
-          })
-        });
-        const response = await responseRole.json();
+  // useEffect(() => {
+  //   const fetchRole = async () => {
+  //     try {
+  //       const responseRole = await fetch('http://localhost:4000/getrole', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         },
+  //         body: JSON.stringify({
+  //           nippos: nippos
+  //         })
+  //       });
+  //       const response = await responseRole.json();
 
-        // Extract nama_role(s) from the response
-        const { namaroles } = response;
-        const namaRoles = namaroles.map((role) => role.nama_role);
+  //       // Extract nama_role(s) from the response
+  //       const { namaroles } = response;
+  //       const namaRoles = namaroles.map((role) => role.nama_role);
 
-        if (namaRoles.length > 0) {
-          // Set sessionStorage with the array of nama_roles
-          sessionStorage.setItem('role', JSON.stringify(namaRoles));
-        }
-      } catch (error) {
-        console.error('Error fetching role:', error);
-      }
-    };
-    fetchRole();
-  }, [nippos]);
+  //       if (namaRoles.length > 0) {
+  //         // Set sessionStorage with the array of nama_roles
+  //         sessionStorage.setItem('role', JSON.stringify(namaRoles));
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching role:', error);
+  //     }
+  //   };
+  //   fetchRole();
+  // }, [nippos]);
 
   return (
     <>

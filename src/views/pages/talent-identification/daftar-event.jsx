@@ -109,7 +109,7 @@ const DaftarEvent = () => {
 
   const filteredEvents = eventData.filter((event) => {
     const namaMatch = !selectedNamaEvent || (event.nama_event && event.nama_event.toLowerCase().includes(selectedNamaEvent.toLowerCase())); // Add null check
-    return (!selectedNamaEvent || namaMatch);
+    return !selectedNamaEvent || namaMatch;
   });
 
   const [pageTab0, setPageTab0] = useState(1);
@@ -126,7 +126,7 @@ const DaftarEvent = () => {
 
   const startIndexTab0 = (pageTab0 - 1) * itemsPerPageTab0;
   const endIndexTab0 = startIndexTab0 + itemsPerPageTab0;
-  const filteredEventsTab0 = filteredEvents.filter(event => event.evenstatus_id !== 8);
+  const filteredEventsTab0 = filteredEvents.filter((event) => event.evenstatus_id !== 8);
   const paginatedEventsTab0 = filteredEventsTab0.slice(startIndexTab0, endIndexTab0);
 
   const [pageTab1, setPageTab1] = useState(1);
@@ -143,9 +143,8 @@ const DaftarEvent = () => {
 
   const startIndexTab1 = (pageTab1 - 1) * itemsPerPageTab1;
   const endIndexTab1 = startIndexTab1 + itemsPerPageTab1;
-  const filteredEventsTab1 = filteredEvents.filter(event => event.evenstatus_id === 8);
+  const filteredEventsTab1 = filteredEvents.filter((event) => event.evenstatus_id === 8);
   const paginatedEventsTab1 = filteredEventsTab1.slice(startIndexTab1, endIndexTab1);
-
 
   return (
     <>
@@ -196,7 +195,16 @@ const DaftarEvent = () => {
                   />
                 ))}
               {paginatedEventsTab0.length === 0 ? (
-                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                <Box
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '24px',
+                    marginBottom: '24px'
+                  }}
+                >
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant="h4" marginTop={3}>
                     Tidak Ada Data
@@ -223,23 +231,32 @@ const DaftarEvent = () => {
             <Typography>Loading...</Typography>
           ) : (
             <Box>
-              {paginatedEventsTab1.map(event => (
-                  <EventBerjalan 
-                    key={event.id}
-                    id={event.id}
-                    nama_event={event.nama_event}
-                    deskripsi={event.deskripsi}
-                    tipe_komite_talent={event.tipekomite.tipe_komite_talent}
-                    kode_rumpun={event.kode_rumpun_jabatan}
-                    nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
-                    kuota={event.kuota}
-                    tanggal_mulai={event.tanggal_mulai}
-                    tanggal_selesai={event.tanggal_selesai}
-                    status={event.evenstatus_id}
-                  />
-                ))}
+              {paginatedEventsTab1.map((event) => (
+                <EventBerjalan
+                  key={event.id}
+                  id={event.id}
+                  nama_event={event.nama_event}
+                  deskripsi={event.deskripsi}
+                  tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+                  kode_rumpun={event.kode_rumpun_jabatan}
+                  nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+                  kuota={event.kuota}
+                  tanggal_mulai={event.tanggal_mulai}
+                  tanggal_selesai={event.tanggal_selesai}
+                  status={event.evenstatus_id}
+                />
+              ))}
               {paginatedEventsTab1.length === 0 ? (
-              <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                <Box
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '24px',
+                    marginBottom: '24px'
+                  }}
+                >
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant="h4" marginTop={3}>
                     Tidak Ada Data
@@ -257,7 +274,7 @@ const DaftarEvent = () => {
                   <FilterButton itemsPerPage={itemsPerPageTab1} setItemsPerPage={handleItemsPerPageChangeTab1} />
                 </Stack>
               )}
-              </Box>
+            </Box>
           )}
         </CustomTabPanel>
 
@@ -297,13 +314,7 @@ function FilterButton({ itemsPerPage, setItemsPerPage }) {
         hoverColor={'#1F1F1F'}
         hoverBackgroundColor={'#F5F5F5'}
       />
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
+      <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={() => handleItemClick(3)}>3</MenuItem>
         <MenuItem onClick={() => handleItemClick(5)}>5</MenuItem>
         <MenuItem onClick={() => handleItemClick(10)}>10</MenuItem>
