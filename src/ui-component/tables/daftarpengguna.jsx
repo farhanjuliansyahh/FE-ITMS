@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Dialog, Stack, DialogTitle, DialogContent, DialogActions, Checkbox, FormControlLabel } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-const peranOptions = ['Admin Talent', 'Coach', 'Karyawan','Ketua Komite Talent','Komite Unit','Talent'];
 import CloseIcon from '@mui/icons-material/Close';
 // import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-const ActionButton = ({ row, updateRowPeran }) => {
+const peranOptions = ['Admin Talent', 'Karyawan','Ketua Komite Talent','Komite Unit', 'Super Admin'];
+const ActionButton = ({ row }) => {
   const [open, setOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -26,9 +26,35 @@ const ActionButton = ({ row, updateRowPeran }) => {
     }
   };
 
+  const posttalentpool = (nippos, selectedrole) => {
+    return fetch(`http://localhost:4000/updaterolemanagement`, {
+        method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+        headers: {
+            'Content-Type': 'application/json', // Specify the content type
+        },
+        body: JSON.stringify({
+            // Include any data you want to send in the request body
+            nippos: nippos,
+            updatedRoles: selectedrole
+        }) // Convert the bodyData object to a JSON string
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data; // Return the parsed JSON data
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            throw error; // Rethrow the error to handle it elsewhere
+        });
+};
+
   const handleSavePeran = () => {
-    const updatedPeran = selectedOptions.join(', ');
-    updateRowPeran(row.id, updatedPeran);
+    posttalentpool("969355737",selectedOptions)
     setOpen(false);
     setSelectedOptions([]);
   };
@@ -98,21 +124,8 @@ const ActionButton = ({ row, updateRowPeran }) => {
   );
 };
 
-export default function DaftarPenggunaTabel() {
-  const [rows, setRows] = useState([
-    { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', 
-    jobfam: 'Bisnis', joblevel: 'D3', kantor: 'Kantor Pusat Bandung', komiteunit: 'ABD HAFID', Peran: [] }, // Change Peran to an empty array
-  ]);
-
-  const updateRowPeran = (rowId, peran) => {
-    const updatedRows = rows.map(row => {
-      if (row.id === rowId) {
-        return { ...row, Peran: peran };
-      }
-      return row;
-    });
-    setRows(updatedRows);
-  };
+export default function DaftarPenggunaTabel({rows}) {
+  const [updatedrows, setupdatedrows] = useState(rows);
 
   const columns = [
     { field: 'id', headerName: 'No', width: 70 },
@@ -127,7 +140,7 @@ export default function DaftarPenggunaTabel() {
       headerName: 'Aksi',
       width: 130,
       renderCell: (params) => (
-        <ActionButton row={params.row} updateRowPeran={updateRowPeran} />
+        <ActionButton row={params.row}/>
       ),
     },
   ];
@@ -137,7 +150,7 @@ export default function DaftarPenggunaTabel() {
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[5, 10, 100]}
       />
     </div>
   );

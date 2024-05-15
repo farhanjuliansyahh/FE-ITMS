@@ -12,9 +12,26 @@ import DaftarPenggunaTabel from '../../../ui-component/tables/daftarpengguna';
 
 const DaftarPengguna = () => {
   const [isLoading, setLoading] = useState(true);
+  const [rowsUser, setRowsUser] = useState([])
+
   useEffect(() => {
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getallroles`)
+      .then(response => response.json())
+      .then(data => {
+        // Update state with API data
+        setRowsUser(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  const userLength = rowsUser.length
 
   return (
     <>
@@ -40,7 +57,7 @@ const DaftarPengguna = () => {
                       fontFamily:'Roboto',
                       fontWeight: 500
                     }}>
-                    14.000 Talent Karyawan
+                    {userLength} Talent Karyawan
                   </Typography>
                   <Box sx={{ flexGrow: 1 }} /> {/* This will push the following elements to the right */}
                   <Stack direction="row" spacing={1}>
@@ -48,7 +65,7 @@ const DaftarPengguna = () => {
                   </Stack>
                 </Stack>
                 <SearchSectionManajemenPengguna />
-                <DaftarPenggunaTabel/>
+                <DaftarPenggunaTabel rows={rowsUser}/>
               </Box>
               </Grid>
             </Grid>
