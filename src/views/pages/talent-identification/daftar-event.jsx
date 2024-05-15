@@ -276,7 +276,9 @@ const DaftarEvent = () => {
           )}
         </CustomTabPanel>
 
-        <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />
+          {open && 
+            <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />
+          }
       </MainCard>
     </>
   );

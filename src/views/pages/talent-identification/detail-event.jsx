@@ -27,6 +27,13 @@ export default function DetailEvent() {
       });
   };
 
+  const handleActiveStepChange = (newActiveStep) => {
+    // Do something with the new activeStep, like updating state or performing other actions
+    fetcheventdetail()
+      .then(data => {
+        seteventaktif(data.event)})
+  };
+
   useEffect(() => {
     fetcheventdetail()
       .then(data => {
@@ -56,6 +63,7 @@ export default function DetailEvent() {
               tanggal_mulai ={tanggal_mulai}
               tanggal_selesai =  {tanggal_selesai}
               eventstatus_id= {evenstatus_id}
+              handleActiveStepChange = {handleActiveStepChange}
           />
       
     </>

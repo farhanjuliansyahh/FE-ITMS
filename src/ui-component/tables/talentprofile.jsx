@@ -144,7 +144,6 @@ export default function TalentProfileTable({
 
   React.useEffect(() => {
     if (filter) {
-      console.log(filter);
       setFilterNama(filter.nama);
       setFilterNippos(filter.nippos);
       setFilterJob(filter.job);

@@ -146,7 +146,9 @@ const TalentDays = ({eventid}) => {
         console.error('Error fetching data:', error);
     });
 }, []);
-  useEffect(() => {
+
+
+  const fetchkaryawandays = () => {
     // Fetch data from API
     fetch(`http://localhost:4000/gettablekaryawandays?eventtalentid=${eventidactive}`)
       .then(response => response.json())
@@ -161,20 +163,26 @@ const TalentDays = ({eventid}) => {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+};
 
-  useEffect(() => {
+  const fetchbpjdays = () => {
     // Fetch data from API
     fetch(`http://localhost:4000/gettablebpjdays?eventtalentid=${eventidactive}`)
       .then(response => response.json())
       .then(datadays => {
         // Update state with API data
         setdaysBpj(datadays.map((row, index) => ({ ...row, id: index + 1 })));
+        setLoading(false); // Set loading to false once data is fetched
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+};
+
+useEffect(() => {
+  fetchbpjdays(),
+  fetchkaryawandays()
+}, []);
 
 let sudahdipilihcount = 0;
 let totalkaryawan = daysRow.length;
@@ -337,6 +345,7 @@ daysRow.forEach(item => {
                   rows={daysBpj} 
                   searchNama={selectedNamaFalse} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
                   searchNippos={selectedNipposFalse}
+                  confirm={fetchbpjdays}
                 />
             </Box>
         </CustomTabPanel>
@@ -405,6 +414,7 @@ daysRow.forEach(item => {
           open={openIsiSemuaNilai}
           handleClose={() => setIsiSemuaNilaiOpen(false)}
           activeEvent= {eventidactive}
+          confirm = {fetchkaryawandays}
         />
 
       </MainCard>

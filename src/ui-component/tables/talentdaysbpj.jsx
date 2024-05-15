@@ -9,7 +9,8 @@ export default function TalentDaysBPJTable({
     eventid, 
     rows,
     searchNama, // Receive the search term as a prop
-    searchNippos
+    searchNippos,
+    confirm
  }) {
   const filteredRows = rows.filter((row) => {
     const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
@@ -85,6 +86,7 @@ export default function TalentDaysBPJTable({
       <HapusDataBPJ
         open={HapusBPJOpen}
         handleClose={() => {
+          confirm()
           setHapusBPJOpen(false);
           setSelectedNippos(null); // Reset selected nippos when closing modal
         }}
