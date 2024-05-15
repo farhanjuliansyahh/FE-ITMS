@@ -170,6 +170,34 @@ const ParameterTalent = () => {
     resetRumpunJabatanInput();
   };
 
+  const handleDownload = () => {
+    // Define the URL of the Google Sheets file to download
+    const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/1WOFR8vKbbwaSJoVB_50Z45nEr3XijTei/edit?usp=drive_link&ouid=116933319260090654956&rtpof=true&sd=true';
+
+    // Construct the modified URL with the export parameter for CSV format
+    const modifiedUrl = `${googleSheetUrl}/export?format=csv`;
+
+    // Create a new anchor element
+    const link = document.createElement('a');
+
+    // Set the href attribute of the anchor element to the modified URL
+    link.href = modifiedUrl;
+
+    // Set the download attribute to specify the filename when downloaded
+    link.download = 'filename.csv';
+
+    // Set the target attribute to open the link in a new tab
+    link.target = '_blank';
+
+    // Programmatically click the anchor element to trigger the download
+    document.body.appendChild(link);
+    link.click();
+
+    // Remove the anchor element from the DOM
+    document.body.removeChild(link);
+  };
+
+
   return (
     <>
 
@@ -304,7 +332,7 @@ const ParameterTalent = () => {
                 </Typography>
                 <div style={{ flex: '1' }}> </div>
                 <ButtonPrimary Color="#ffffff" icon={FileUploadOutlined} LabelName={'Unggah Data'} onClick={handleOpen}/>
-                <ButtonOptional icon={SimCardDownloadOutlined} LabelName={'Unduh Template'}/>
+                <ButtonOptional icon={SimCardDownloadOutlined} LabelName={'Unduh Template'} onClick={handleDownload}/>
                 <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'}/>
             </FlexContainer>
 
