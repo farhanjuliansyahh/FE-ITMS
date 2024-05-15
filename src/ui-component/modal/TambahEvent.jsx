@@ -358,8 +358,21 @@ function AddEventModal({ open, handleClose }) {
                             onChange={handlequotachange} // Handle input change
                             inputProps={{
                                 inputMode: 'numeric',
-                                pattern: '[0-9]*'
+                                pattern: '[0-9]*',
+                                onKeyPress: (event) => {
+                                    // Allow only numbers
+                                    const keyCode = event.keyCode || event.which;
+                                    const keyValue = String.fromCharCode(keyCode);
+                                    const isValid = /\d/.test(keyValue);
+                                    if (!isValid) {
+                                        event.preventDefault();
+                                    }
+                                },
                             }}
+                            // inputProps={{
+                            //     inputMode: 'numeric',
+                            //     pattern: '[0-9]*'
+                            // }}
                         />
 
                         <LocalizationProvider dateAdapter={AdapterDayjs}>

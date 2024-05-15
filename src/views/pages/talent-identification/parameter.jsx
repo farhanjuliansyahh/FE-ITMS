@@ -19,7 +19,7 @@ import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AddQuestionModal from '../../../ui-component/modal/tambah-pertanyaan';
 import AlertSimpan from '../../../ui-component/modal/alert-simpan';
 import SimpanLogo from '../../../assets/images/ilustration/simpan.png';
-
+import * as XLSX from 'xlsx';
 
 import {
   AddCircleOutline, AssignmentOutlined, AssignmentTurnedInOutlined, CancelOutlined,
@@ -252,7 +252,6 @@ const ParameterTalent = () => {
   setOpenAlertBerhasilSimpan(true)}
 
 
-
   const handleDownload = () => {
     // Define the URL of the Google Sheets file to download
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/1WOFR8vKbbwaSJoVB_50Z45nEr3XijTei/edit?usp=drive_link&ouid=116933319260090654956&rtpof=true&sd=true';
@@ -279,6 +278,21 @@ const ParameterTalent = () => {
     // Remove the anchor element from the DOM
     document.body.removeChild(link);
   };
+
+// Download Tabel Karyawan pada Button Unduh Data Parameter-Assesment
+const convertRowsToWorksheet = (rows) => {
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  return worksheet;
+};
+const downloadExcelFile = (worksheet, filename) => {
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+  XLSX.writeFile(workbook, filename);
+};
+const handleDownloadData = () => {
+  const worksheet = convertRowsToWorksheet(rows);
+  downloadExcelFile(worksheet, 'data_karyawan.xlsx');
+};
 
 
   return (
@@ -424,7 +438,7 @@ const ParameterTalent = () => {
                 <div style={{ flex: '1' }}> </div>
                 <ButtonPrimary Color="#ffffff" icon={FileUploadOutlined} LabelName={'Unggah Data'} onClick={handleOpen}/>
                 <ButtonOptional icon={SimCardDownloadOutlined} LabelName={'Unduh Template'} onClick={handleDownload}/>
-                <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'}/>
+                <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'} onClick={handleDownloadData}/>
             </FlexContainer>
 
 
