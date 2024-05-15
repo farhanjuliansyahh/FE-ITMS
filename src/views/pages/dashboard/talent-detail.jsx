@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-// material-ui
-import { Grid} from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { gridSpacing } from '../../../store/constant';
+import { RestartAltOutlined } from '@mui/icons-material';
 import Header from '../../../ui-component/header/header';
 import MainCard from '../../../ui-component/cards/MainCard';
-import DetailTalentPertama from '../../../ui-component/button/DropdownDetailTalentPertama';
 import DetailTalentTable from '../../../ui-component/tables/detail-talent-table';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
+import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
+
 // ==============================|| DETAIL TALENT - DASHBOARD ||============================== //
 
 export default function TalentDetail() {
@@ -15,11 +15,58 @@ export default function TalentDetail() {
   useEffect(() => {
     setLoading(false);
   }, []);
-  const [selectedKantor, setSelectedKantor] = useState(null);
-  const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
-  const [selectedJobLevel, setSelectedJobLevel] = useState(null);
-  const [selectedStatusIDP, setSelectedStatusIDP] = useState(null);
+
+  const [rows, selectedRows] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:4000/getdetailtalent")
+    .then(response => response.json())
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    .then(data => selectedRows(data))
+  },[])
+
   
+  // create list of Nama, Nippos, Job Level, Rumpun Jabatan
+  const listNama = [...new Set(rows.map(row => row.nama))];
+  const listJobLevel = [...new Set(rows.map(row => row.joblevel))];
+  const listRumpunJabatan = [...new Set(rows.map(row => row.jobfam))];
+  const listKantor = [...new Set(rows.map(row => row.nama_kantor))];
+
+  const [selectedNama, setSelectedNama] = useState(null);
+  const [selectedJobLevel, setSelectedJobLevel] = useState(null);
+  const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
+  const [selectedKantor, setSelectedKantor] = useState(null);
+
+  const resetNamaInput = () => {
+    setSelectedNama('');
+  };
+
+  const resetJobLevelInput = () => {
+    setSelectedJobLevel('');
+  };
+
+  const resetRumpunJabatanInput = () => {
+    setSelectedRumpunJabatan('');
+  };
+
+  const resetKantorInput = () => {
+    setSelectedKantor('');
+  };
+
+  const handleResetSearch = () => {
+    setSelectedNama('');
+    setSelectedJobLevel('');
+    setSelectedRumpunJabatan('');
+    setSelectedKantor('');
+
+    // Call resetInput function for each CustomSearch component
+    resetNamaInput();
+    resetJobLevelInput();
+    resetRumpunJabatanInput();
+    resetKantorInput();
+
+  };
+
   return (
     <>
       {/* <MainLayout/> */}
@@ -35,29 +82,25 @@ export default function TalentDetail() {
         
         <Grid item xs={12}>
         <MainCard style={{ padding: '24px 24px'}} >
-            <Grid style={{marginBottom: '0.2%'}}>
-               <DetailTalentPertama 
-                selectedKantor={selectedKantor}
-                setSelectedKantor={setSelectedKantor}
-                selectedRumpunJabatan={selectedRumpunJabatan}
-                setSelectedRumpunJabatan={setSelectedRumpunJabatan}
-                selectedJobLevel={selectedJobLevel}
-                setSelectedJobLevel={setSelectedJobLevel}
-                selectedStatusIDP={selectedStatusIDP}
-                setSelectedStatusIDP={setSelectedStatusIDP}/>
-            </Grid>
-            <Grid style={{marginBottom: '2%'}}>
-              <div  style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-              <ButtonPrimary Color='#ffffff' backgroundColor='#1C2D5A' icon={FileDownloadOutlinedIcon} LabelName='Unduh Data' />
-              </div>
-               
-            </Grid>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
+                <CustomSearch field={listJobLevel} label={'Job Level'} onSearch={setSelectedJobLevel} value={selectedJobLevel} resetInput={resetJobLevelInput} />
+                <CustomSearch field={listRumpunJabatan} label={'Rumpun Jabatan'} onSearch={setSelectedRumpunJabatan} value={selectedRumpunJabatan} resetInput={resetRumpunJabatanInput} />
+                <CustomSearch field={listKantor} label={'Kantor'} onSearch={setSelectedKantor} value={selectedKantor} resetInput={resetKantorInput} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+            </div>
+
             <Grid style={{marginBottom: '0.5%'}}>
                <DetailTalentTable 
-                selectedKantor={selectedKantor}
-                selectedRumpunJabatan={selectedRumpunJabatan}
-                selectedJobLevel={selectedJobLevel}
-                selectedStatusIDP={selectedStatusIDP}/>
+                rows={rows}
+                searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                searchJobLevel={selectedJobLevel}
+                searchRumpunJabatan={selectedRumpunJabatan}
+                searchKantor={selectedKantor}
+               />
             </Grid>
         </MainCard>
         </Grid>

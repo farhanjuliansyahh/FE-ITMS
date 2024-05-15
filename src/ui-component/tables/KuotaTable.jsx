@@ -9,20 +9,38 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Stack } from '@mui/material';
+import { OutlinedInput, Stack } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState, useEffect} from "react"
 
+const OutlineInputStyle = styled(OutlinedInput)(({ theme }) => ({
+  width: '100%',
+  background: '#FFFFFF',
+  '& input': {
+    background: '#FFFFFF',
+    height: '24px'
+  },
+  '& fieldset': {
+    borderColor: '#ffffff',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+  },
+  '&:hover fieldset, &:focus fieldset, &:not(:focus-visible) fieldset': {
+    borderColor: 'transparent !important', 
+  },
+}));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.action.hover,
     color: theme.palette.common.black,
+    whiteSpace: 'normal', 
+    wordWrap: 'break-word',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     padding: '6px 18px',
-    border: 0
+    border: 0,
   },
 }));
 
@@ -167,6 +185,43 @@ const handleDecrease = (index, field) => {
     }
   };
 
+  const handleInputChange = (index, field, value) => {
+    // Remove non-numeric characters from the input
+    const numericValue = value.replace(/[^0-9]/g, '');
+
+    // Convert the value to a number
+    let updatedValue = parseInt(numericValue, 10);
+
+    // If the input is empty or NaN, set the value to 0
+    if (isNaN(updatedValue) || numericValue === '') {
+      updatedValue = 0;
+    }
+
+    // Ensure the value is within the specified range
+    updatedValue = Math.min(MAX_VALUES[field], Math.max(0, updatedValue));
+
+    const updatedRows = [...rows];
+    updatedRows[index][field] = updatedValue;
+    setRows(updatedRows);
+
+    switch (field) {
+      case 'competence':
+        setCompetencyFromRows(updatedValue);
+        break;
+      case 'performance':
+        setPerformanceFromRows(updatedValue);
+        break;
+      case 'akhlak':
+        setAkhlakFromRows(updatedValue);
+        break;
+      case 'learningagility':
+        setLearningAgilityFromRows(updatedValue);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px'}}>
       <TableContainer component={Paper}>
@@ -182,14 +237,26 @@ const handleDecrease = (index, field) => {
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index}>
-                <StyledTableCell>{row.kuota}</StyledTableCell>
+                <StyledTableCell>
+                  <OutlineInputStyle
+                      value={row.kuota}
+                      inputProps={{ min: 0, max: 100 }}
+                      onChange={(e) => handleInputChange(index, 'kuota', e.target.value)} 
+                    />
+                </StyledTableCell>
                 <StyledTableCell align="right">
                   <Stack direction="column" alignItems="flex-end">
-                      <IconButton onClick={() => handleIncrease(index, 'kuota')} size="small" sx={{ fontSize: '2px'}}>
-                          <ExpandLess />
+                      <IconButton
+                        onClick={() => handleIncrease(index, 'kuota')}
+                        sx={{ padding: '0', marginBottom: '1px' }}
+                      >
+                        <ExpandLess sx={{ fontSize: '16px' }} />
                       </IconButton>
-                      <IconButton onClick={() => handleDecrease(index, 'kuota')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
-                          <ExpandMore />
+                      <IconButton
+                        onClick={() => handleDecrease(index, 'kuota')}
+                        sx={{ padding: '0', marginTop: '1px' }}
+                      >
+                        <ExpandMore sx={{ fontSize: '16px' }} />
                       </IconButton>
                   </Stack>
                 </StyledTableCell>

@@ -7,39 +7,43 @@ import EventKetuaKomiteTalent from './event-ketuakomitetalent';
 
 const filterMenuItems = (role) => {
   switch (role) {
-    case 'Admin':
-      return [dashboard, TalentIdentification, ManajemenPengguna];
+    case 'Super Admin':
+      return [dashboard, TalentIdentification, ManajemenPengguna, EventKomiteUnit, EventKetuaKomiteTalent, ManajemenPengguna];
+    case 'Admin Talent':
+      return [dashboard, TalentIdentification];
     case 'Karyawan':
       return [EventKaryawan];
     case 'Komite Unit':
       return [EventKomiteUnit];
-    case 'Ketua Komite Talent':
-      return [EventKetuaKomiteTalent];
     default:
-      return [dashboard, TalentIdentification, ManajemenPengguna,EventKomiteUnit,EventKetuaKomiteTalent];
+      return [EventKetuaKomiteTalent];
   }
 };
 
-const roleString = sessionStorage.getItem('role');
-const role = roleString ? JSON.parse(roleString) : null;
+const getMenuItems = (roleString) => {
+  // const roleString = sessionStorage.getItem('role');
+  console.log('agfagsfh', roleString);
+  const role = roleString ? JSON.parse(roleString) : null;
 
-console.log('ini role', role);
-console.log('ini rolestring', roleString);
+  // console.log('ini role', role);
+  // console.log('ini rolestring', roleString);
 
-let menuItems = [dashboard, TalentIdentification, ManajemenPengguna,EventKomiteUnit,EventKetuaKomiteTalent];
+  let menuItems = [];
 
-if (role) {
-  const menuByRole = role.map((i) => {
-    return filterMenuItems(i);
-  });
-  const lat = menuByRole.flat();
-  const sets = [...new Set(lat)];
+  if (role) {
+    const menuByRole = role.map((i) => {
+      return filterMenuItems(i);
+    });
+    const lat = menuByRole.flat();
+    const sets = [...new Set(lat)];
 
-  menuItems = sets;
-}
+    menuItems = sets;
+    return menuItems;
+  }
 
-// const menuItems = {
-//   items: [dashboard, TalentIdentification, EventKetuaKomiteTalent, EventKomiteUnit, EventKaryawan, ManajemenPengguna]
-// };
+  // const menuItems = {
+  //   items: [dashboard, TalentIdentification, EventKetuaKomiteTalent, EventKomiteUnit, EventKaryawan, ManajemenPengguna]
+  // };
+};
 
-export default menuItems;
+export default getMenuItems;

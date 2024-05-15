@@ -18,7 +18,13 @@ function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+    <div 
+      role="tabpanel" 
+      hidden={value !== index} 
+      id={`simple-tabpanel-${index}`} 
+      aria-labelledby={`simple-tab-${index}`} 
+      {...other}
+      >
       {value === index && (
         <Box sx={{ pt: 3 }}>
           <Typography>{children}</Typography>
@@ -41,27 +47,27 @@ function a11yProps(index) {
   };
 }
 
-const fetchDataFromDatabase = () => {
-  return fetch('http://localhost:4000/getallevent') // endpoint
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data; // Return the parsed JSON data
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
-      throw error; // Rethrow the error to handle it elsewhere
-    });
-};
-
 const DaftarEvent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [eventData, setEventData] = useState([]);
+
+  const fetchDataFromDatabase = () => {
+    return fetch('http://localhost:4000/getallevent') // endpoint
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        return data; // Return the parsed JSON data
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
 
   useEffect(() => {
     fetchDataFromDatabase()
@@ -69,7 +75,7 @@ const DaftarEvent = () => {
         setEventData(data.event);
         setLoading(false); // Move this line to the end of the .then block
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error fetching data:', error);
         setLoading(false);
       });
@@ -104,12 +110,12 @@ const DaftarEvent = () => {
     fetchEventData(); // Re-fetch the data when a new event is added
   };
 
-  const uniqueNamaEvents = [...new Set(eventData.map((event) => event.nama_event))];
-  const [selectedNamaEvent, setSelectedNamaEvent] = useState(null);
+  const uniqueNamaEvents = [...new Set(eventData.map(event => event.nama_event))];
+  const [selectedNamaEvent, setSelectedNamaEvent] = useState('');
 
   const filteredEvents = eventData.filter((event) => {
     const namaMatch = !selectedNamaEvent || (event.nama_event && event.nama_event.toLowerCase().includes(selectedNamaEvent.toLowerCase())); // Add null check
-    return (!selectedNamaEvent || namaMatch);
+    return !selectedNamaEvent || namaMatch;
   });
 
   const [pageTab0, setPageTab0] = useState(1);
@@ -145,7 +151,6 @@ const DaftarEvent = () => {
   const endIndexTab1 = startIndexTab1 + itemsPerPageTab1;
   const filteredEventsTab1 = filteredEvents.filter(event => event.evenstatus_id === 8);
   const paginatedEventsTab1 = filteredEventsTab1.slice(startIndexTab1, endIndexTab1);
-
 
   return (
     <>
@@ -196,7 +201,16 @@ const DaftarEvent = () => {
                   />
                 ))}
               {paginatedEventsTab0.length === 0 ? (
-                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                <Box
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '24px',
+                    marginBottom: '24px'
+                  }}
+                >
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant="h4" marginTop={3}>
                     Tidak Ada Data
@@ -223,25 +237,34 @@ const DaftarEvent = () => {
             <Typography>Loading...</Typography>
           ) : (
             <Box>
-              {paginatedEventsTab1.map(event => (
-                  <EventBerjalan 
-                    key={event.id}
-                    id={event.id}
-                    nama_event={event.nama_event}
-                    deskripsi={event.deskripsi}
-                    tipe_komite_talent={event.tipekomite.tipe_komite_talent}
-                    kode_rumpun={event.kode_rumpun_jabatan}
-                    nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
-                    kuota={event.kuota}
-                    tanggal_mulai={event.tanggal_mulai}
-                    tanggal_selesai={event.tanggal_selesai}
-                    status={event.evenstatus_id}
-                  />
-                ))}
+              {paginatedEventsTab1.map((event) => (
+                <EventBerjalan
+                  key={event.id}
+                  id={event.id}
+                  nama_event={event.nama_event}
+                  deskripsi={event.deskripsi}
+                  tipe_komite_talent={event.tipekomite.tipe_komite_talent}
+                  kode_rumpun={event.kode_rumpun_jabatan}
+                  nama_rumpun_jabatan={event.rumpun.nama_rumpun_jabatan}
+                  kuota={event.kuota}
+                  tanggal_mulai={event.tanggal_mulai}
+                  tanggal_selesai={event.tanggal_selesai}
+                  status={event.evenstatus_id}
+                />
+              ))}
               {paginatedEventsTab1.length === 0 ? (
-              <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+                <Box
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '24px',
+                    marginBottom: '24px'
+                  }}
+                >
                   <img src={notFoundImage} alt="Deskripsi gambar" />
-                  <Typography variant="h4" marginTop={3}>
+                  <Typography variant='h4' marginTop={3}>
                     Tidak Ada Data
                   </Typography>
                 </Box>
@@ -257,7 +280,7 @@ const DaftarEvent = () => {
                   <FilterButton itemsPerPage={itemsPerPageTab1} setItemsPerPage={handleItemsPerPageChangeTab1} />
                 </Stack>
               )}
-              </Box>
+            </Box>
           )}
         </CustomTabPanel>
 
@@ -299,11 +322,11 @@ function FilterButton({ itemsPerPage, setItemsPerPage }) {
         hoverColor={'#1F1F1F'}
         hoverBackgroundColor={'#F5F5F5'}
       />
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
+      <Menu 
+        id="simple-menu" 
+        anchorEl={anchorEl} 
+        keepMounted 
+        open={Boolean(anchorEl)} 
         onClose={handleClose}
       >
         <MenuItem onClick={() => handleItemClick(3)}>3</MenuItem>

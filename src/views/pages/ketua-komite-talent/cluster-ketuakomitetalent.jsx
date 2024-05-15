@@ -1,17 +1,18 @@
 import * as React from 'react';
 import { Box, Button, Divider, Typography } from '@mui/material';
-import { CalendarMonthOutlined, RestartAlt, Search } from '@mui/icons-material';
+import { CalendarMonthOutlined, RestartAltOutlined, Search } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
 
 import MainCard from '../../../ui-component/cards/MainCard';
 import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
 import { useParams } from 'react-router';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-import SearchResetButton from '../../../ui-component/button/SearchResetButton';
-import EventDetailSearchSection from '../../../ui-component/button/EventDetailSearchSection';
 import TalentClusterKetuaKomiteTalentTable from '../../../ui-component/tables/talentclusterketuakomitetalent';
 import { useEffect,useState } from 'react';
 import styled from '@emotion/styled';
+import CustomSearch from '../../../ui-component/searchsection/custom-search';
+import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
+
 
 export default function ClusterKetuaKomiteTalent() {
     const {id} = useParams();
@@ -192,6 +193,38 @@ export default function ClusterKetuaKomiteTalent() {
 
       const isDiskresiDone = selected === halfLength;
     
+    const listNama = [...new Set(clusterRow.map(row => row.nama))]
+    const listNippos = [...new Set(clusterRow.map(row => row.nippos))];
+    const listJobLevel = [...new Set(clusterRow.map(row => row['Job Level']))];
+    const listKategoriMatrix = [...new Set(clusterRow.map(row => row['Matriks Kategori Akhir']))];
+  
+    const [selectedNama, setSelectedNama] = useState(null);
+    const [selectedNippos, setSelectedNippos] = useState(null);
+    const [selectedJobLevel, setSelectedJobLevel] = useState(null);
+    const [selectedKategoriMatrix, setSelectedKategoriMatrix] = useState(null);
+  
+    const resetNamaInput = () => {
+      setSelectedNama('');
+    };
+  
+    const resetNipposInput = () => {
+      setSelectedNippos('');
+    };
+  
+    const resetJobLevelInput = () => {
+      setSelectedJobLevel('');
+    };
+  
+    const resetKategoriMatrixInput = () => {
+      setSelectedKategoriMatrix('');
+    };
+  
+    const handleResetSearch = () => {
+      resetNamaInput();
+      resetNipposInput();
+      resetJobLevelInput();
+      resetKategoriMatrixInput();
+    };
 
     return (
         <MainCard>
@@ -245,29 +278,27 @@ export default function ClusterKetuaKomiteTalent() {
                     <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
                 </FlexContainer>
           
-                <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-                    <div style={{ marginRight: '12px', width:'100%'  }}>
-                        <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-                    </div>
-                    <div style={{ marginRight: '12px', width:'100%' }}>
-                        <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-                    </div>
-                    <div style={{ marginRight: '12px', width:'100%' }}>
-                        <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-                    </div>
-                    <div style={{ marginRight: '24px', width:'100%' }}>
-                        <EventDetailSearchSection filter={filterKategoriMatrix} setFilter={setFilterKategoriMatrix} PlaceHolder={'Kategori Matrix'} />
-                    </div>
-                    <div style={{ marginRight: '12px' }}>
-                        <SearchResetButton outlineColor="#1C2D5A" icon={Search} LabelName={'Cari'} />
-                    </div>
-                    <div style={{ marginRight: '0px' }}>
-                        <SearchResetButton outlineColor="#D32F2F" icon={RestartAlt} LabelName={'Reset'} />
-                    </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+                  <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                    <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
+                    <CustomSearch field={listNippos} label={'Nippos'} onSearch={setSelectedNippos} value={selectedNippos} resetInput={resetNipposInput} />
+                    <CustomSearch field={listJobLevel} label={'Job Level'} onSearch={setSelectedJobLevel} value={selectedJobLevel} resetInput={resetJobLevelInput} />
+                    <CustomSearch field={listKategoriMatrix} label={'Kategori Matrix'} onSearch={setSelectedKategoriMatrix} value={selectedKategoriMatrix} resetInput={resetKategoriMatrixInput} />
+                  </Stack>
+                  <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
                 </div>
          
-                <TalentClusterKetuaKomiteTalentTable  filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}}
-                eventid={id} rows={clusterRow} counts={categoryCounts} onTableDataRefresh={handlerefresh} disabled={isDiskresiDone}/>
+                <TalentClusterKetuaKomiteTalentTable  
+                  eventid={id} 
+                  rows={clusterRow} 
+                  counts={categoryCounts} 
+                  onTableDataRefresh={handlerefresh} 
+                  disabled={isDiskresiDone}
+                  searchNama={selectedNama} 
+                  searchNippos={selectedNippos}
+                  searchJobLevel={selectedJobLevel}
+                  searchKategoriMatrix={selectedKategoriMatrix}
+                />
             </Box>
 
         </MainCard>

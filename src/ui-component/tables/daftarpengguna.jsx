@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Dialog, Stack, DialogTitle, DialogContent, DialogActions, Checkbox, FormControlLabel } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-const peranOptions = ['Admin Talent', 'Coach', 'Karyawan','Ketua Komite Talent','Komite Unit','Talent'];
 import CloseIcon from '@mui/icons-material/Close';
-// import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-const ActionButton = ({ row, updateRowPeran }) => {
+
+const peranOptions = ['Admin Talent', 'Karyawan', 'Ketua Komite Talent', 'Komite Unit', 'Super Admin'];
+
+const ActionButton = ({ row, onSave }) => {
   const [open, setOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -18,6 +19,12 @@ const ActionButton = ({ row, updateRowPeran }) => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (open) {
+      setSelectedOptions(row.Peran ? row.Peran.split(', ').map(role => role.trim()) : []);
+    }
+  }, [open, row.Peran]);
+
   const handleCheckboxChange = (option) => (event) => {
     if (event.target.checked) {
       setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, option]);
@@ -26,9 +33,32 @@ const ActionButton = ({ row, updateRowPeran }) => {
     }
   };
 
-  const handleSavePeran = () => {
-    const updatedPeran = selectedOptions.join(', ');
-    updateRowPeran(row.id, updatedPeran);
+  const postTalentPool = async (nippos, selectedRole) => {
+    try {
+      const response = await fetch(`http://localhost:4000/updaterolemanagement`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nippos: nippos,
+          updatedRoles: selectedRole,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+
+  const handleSavePeran = async () => {
+    await postTalentPool(row.nippos, selectedOptions);
+    onSave(row.id, selectedOptions); // Update the parent state with the new roles
     setOpen(false);
     setSelectedOptions([]);
   };
@@ -45,12 +75,12 @@ const ActionButton = ({ row, updateRowPeran }) => {
       </Button>
       <Dialog open={open} onClose={handleModalClose}>
         <Stack direction="row" alignItems="center" marginTop="10px">
-          <h2 style={{paddingLeft : '20px', color:'#1F1F1F'}} justifyContent="start">Daftar Peran Pengguna</h2>
-          <Button onClick={handleModalClose} color="primary" justifyContent="end" style={{color: '#D32F2F',marginLeft : '100px'}}>
-            <CloseIcon/>
+          <h2 style={{ paddingLeft: '20px', color: '#1F1F1F' }} justifyContent="start">Daftar Peran Pengguna</h2>
+          <Button onClick={handleModalClose} color="primary" justifyContent="end" style={{ color: '#D32F2F', marginLeft: '100px' }}>
+            <CloseIcon />
           </Button>
         </Stack>
-        
+
         <DialogContent style={{ width: '400px', maxHeight: '300px', overflowY: 'auto' }}>
           {peranOptions.map((option, index) => (
             <FormControlLabel
@@ -60,36 +90,35 @@ const ActionButton = ({ row, updateRowPeran }) => {
             />
           ))}
         </DialogContent>
-        <DialogActions style={{paddingBottom: '12px', paddingRight: '12px'}}>
+        <DialogActions style={{ paddingBottom: '12px', paddingRight: '12px' }}>
           <Button onClick={handleSavePeran}
-          variant="contained"
-          endIcon={<SaveOutlinedIcon/>}
-          sx={{ 
-            color:'#ffffff',  
-            backgroundColor: '#1C2D5A', 
-            borderRadius: '12px', 
-            fontSize: '14px', // Custom font size
-            padding: '8px 18px', // Custom padding using relative units
-            boxShadow: 'none',
-            width: '110px' || 'auto', // Set width (default: auto)
-            height: '40px' || 'auto', // Set height (default: auto)
-
-          }} >
+            variant="contained"
+            endIcon={<SaveOutlinedIcon />}
+            sx={{
+              color: '#ffffff',
+              backgroundColor: '#1C2D5A',
+              borderRadius: '12px',
+              fontSize: '14px',
+              padding: '8px 18px',
+              boxShadow: 'none',
+              width: '110px',
+              height: '40px',
+            }} >
             Save
           </Button>
           <Button onClick={handleModalClose}
-           endIcon={<HighlightOffOutlinedIcon/>}
-           sx={{ 
-            color:'#D32F2F',  
-            backgroundColor: '#ffffff', 
-            borderRadius: '12px', 
-            fontSize: '14px', // Custom font size
-            padding: '8px 18px', // Custom padding using relative units
-            boxShadow: 'none',
-            width: '110px' || 'auto', // Set width (default: auto)
-            height: '40px' || 'auto', // Set height (default: auto)
-            border: '1.5px solid #D32F2F'
-           }} >
+            endIcon={<HighlightOffOutlinedIcon />}
+            sx={{
+              color: '#D32F2F',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              fontSize: '14px',
+              padding: '8px 18px',
+              boxShadow: 'none',
+              width: '110px',
+              height: '40px',
+              border: '1.5px solid #D32F2F'
+            }} >
             Batalkan
           </Button>
         </DialogActions>
@@ -98,20 +127,22 @@ const ActionButton = ({ row, updateRowPeran }) => {
   );
 };
 
-export default function DaftarPenggunaTabel() {
-  const [rows, setRows] = useState([
-    { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', 
-    jobfam: 'Bisnis', joblevel: 'D3', kantor: 'Kantor Pusat Bandung', komiteunit: 'ABD HAFID', Peran: [] }, // Change Peran to an empty array
-  ]);
+export default function DaftarPenggunaTabel({ 
+  rows,
+  searchNama, 
+  searchNippos,
+  searchPeran,
+}) {
+  const [updatedRows, setUpdatedRows] = useState([]);
 
-  const updateRowPeran = (rowId, peran) => {
-    const updatedRows = rows.map(row => {
-      if (row.id === rowId) {
-        return { ...row, Peran: peran };
-      }
-      return row;
-    });
-    setRows(updatedRows);
+  useEffect(() => {
+    setUpdatedRows(rows);
+  }, [rows]);
+
+  const handleSave = (id, newRoles) => {
+    setUpdatedRows((prevRows) =>
+      prevRows.map((row) => (row.id === id ? { ...row, Peran: newRoles.join(', ') } : row))
+    );
   };
 
   const columns = [
@@ -127,18 +158,29 @@ export default function DaftarPenggunaTabel() {
       headerName: 'Aksi',
       width: 130,
       renderCell: (params) => (
-        <ActionButton row={params.row} updateRowPeran={updateRowPeran} />
+        <ActionButton row={params.row} onSave={handleSave} />
       ),
     },
   ];
 
+  // Filter the rows based on selected filters and search term
+  const filteredRows = updatedRows.filter((row) => {
+    const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); 
+    const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); 
+    const peranMatch = !searchPeran || (row.Peran && row.Peran.toLowerCase().includes(searchPeran.toLowerCase())); 
+
+    return (!searchNama || namaMatch) 
+        && (!searchNippos || nipposMatch) 
+        && (!searchPeran || peranMatch);
+  });
+
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[5, 10, 100]}
       />
-    </div>
-  );
+    </div>
+  );
 }

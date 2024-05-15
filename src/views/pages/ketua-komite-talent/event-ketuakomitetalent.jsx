@@ -35,13 +35,13 @@ function CustomTabPanel(props) {
 CustomTabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
 };
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
   };
 }
 
@@ -131,12 +131,11 @@ useEffect(() => {
   const filteredEventsTab1 = filteredEvents.filter(event => event.evenstatus_id === 8);
   const paginatedEventsTab1 = filteredEventsTab1.slice(startIndexTab1, endIndexTab1);
 
-
   return (
     <>
       {/* <MainLayout /> */}
       
-      <MainCard title="Daftar Event"  secondary={
+      <MainCard title="Daftar Event" secondary={
           <Stack direction="row" spacing={2}>
               <CustomSearch 
                 field={uniqueNamaEvents} 
@@ -224,9 +223,20 @@ useEffect(() => {
                 </Box>
               ))}
             {paginatedEventsTab1.length === 0 ? (
-              <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
+              <Box 
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  padding: '24px', 
+                  marginBottom: '24px' 
+                  }}
+              >
                 <img src={notFoundImage} alt="Deskripsi gambar" />
-                <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                <Typography variant='h4' marginTop={3}>
+                  Tidak Ada Data
+                </Typography>
               </Box>
             ) : (
               <Stack spacing={2} direction="row" sx={{ marginTop: '24px' }}>
