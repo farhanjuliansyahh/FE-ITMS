@@ -186,7 +186,7 @@ const handleDecrease = (index, field) => {
                 <StyledTableCell>{row.competence}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Stack direction="column" alignItems="center">
-                      <IconButton onClick={() => handleIncrease(index, 'competence')} size="small" sx={{ fontSize: '2px'}}>
+                      <IconButton onClick={() => handleIncrease(index, 'competence')} size="small" sx={{ fontSize: '2px', marginBottom:'3px'}}>
                           <ExpandLess />
                       </IconButton>
                       <IconButton onClick={() => handleDecrease(index, 'competence')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
@@ -197,7 +197,7 @@ const handleDecrease = (index, field) => {
                 <StyledTableCell>{row.performance}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Stack direction="column" alignItems="center">
-                      <IconButton onClick={() => handleIncrease(index, 'performance')} size="small" sx={{ fontSize: '2px' }}>
+                      <IconButton onClick={() => handleIncrease(index, 'performance')} size="small" sx={{ fontSize: '2px', marginBottom:'3px'}}>
                           <ExpandLess />
                       </IconButton>
                       <IconButton onClick={() => handleDecrease(index, 'performance')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
@@ -208,7 +208,7 @@ const handleDecrease = (index, field) => {
                 <StyledTableCell>{row.akhlak}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Stack direction="column" alignItems="center">
-                      <IconButton onClick={() => handleIncrease(index, 'akhlak')} size="small" sx={{ fontSize: '2px' }}>
+                      <IconButton onClick={() => handleIncrease(index, 'akhlak')} size="small" sx={{ fontSize: '2px',marginBottom:'3px' }}>
                           <ExpandLess />
                       </IconButton>
                       <IconButton onClick={() => handleDecrease(index, 'akhlak')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
@@ -219,7 +219,7 @@ const handleDecrease = (index, field) => {
                 <StyledTableCell>{row.learningagility}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Stack direction="column" alignItems="center">
-                      <IconButton onClick={() => handleIncrease(index, 'learningagility')} size="small" sx={{ fontSize: '2px' }}>
+                      <IconButton onClick={() => handleIncrease(index, 'learningagility')} size="small" sx={{ fontSize: '2px', marginBottom:'3px'}}>
                           <ExpandLess />
                       </IconButton>
                       <IconButton onClick={() => handleDecrease(index, 'learningagility')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>

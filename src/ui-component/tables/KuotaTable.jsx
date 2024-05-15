@@ -185,7 +185,7 @@ const handleDecrease = (index, field) => {
                 <StyledTableCell>{row.kuota}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Stack direction="column" alignItems="flex-end">
-                      <IconButton onClick={() => handleIncrease(index, 'kuota')} size="small" sx={{ fontSize: '2px'}}>
+                      <IconButton onClick={() => handleIncrease(index, 'kuota')} size="small" sx={{ fontSize: '2px', marginBottom:'3px'}}>
                           <ExpandLess />
                       </IconButton>
                       <IconButton onClick={() => handleDecrease(index, 'kuota')} size="small" sx={{ fontSize: '2px', marginTop: '-20px' }}>
