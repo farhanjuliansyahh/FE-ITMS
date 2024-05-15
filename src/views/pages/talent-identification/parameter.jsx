@@ -19,7 +19,6 @@ import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AddQuestionModal from '../../../ui-component/modal/tambah-pertanyaan';
 import AlertSimpan from '../../../ui-component/modal/alert-simpan';
 import SimpanLogo from '../../../assets/images/ilustration/simpan.png';
-import * as XLSX from 'xlsx';
 
 import {
   AddCircleOutline, AssignmentOutlined, AssignmentTurnedInOutlined, CancelOutlined,
@@ -279,21 +278,39 @@ const ParameterTalent = () => {
     document.body.removeChild(link);
   };
 
-// Download Tabel Karyawan pada Button Unduh Data Parameter-Assesment
-const convertRowsToWorksheet = (rows) => {
-  const worksheet = XLSX.utils.json_to_sheet(rows);
-  return worksheet;
-};
-const downloadExcelFile = (worksheet, filename) => {
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-  XLSX.writeFile(workbook, filename);
-};
-const handleDownloadData = () => {
-  const worksheet = convertRowsToWorksheet(rows);
-  downloadExcelFile(worksheet, 'data_karyawan.xlsx');
-};
-
+  const handleDownloadCSV = () => {
+    let dataToDownload = [];
+    let filename = '';
+    
+    dataToDownload = rows;
+    filename = `nilai_assessment_karyawan.csv`;
+  
+    // Create a CSV header with column names
+    const headers = Object.keys(dataToDownload[0]);
+    const idIndex = headers.indexOf('id');
+    if (idIndex !== -1) {
+      headers.splice(idIndex, 1); // Remove 'id' from headers
+      headers.unshift('id'); // Insert 'id' at the beginning
+    }
+    const headerRow = headers.join(',');
+  
+    // Convert data to CSV format
+    const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+      dataToDownload.map(row => headers.map(header => row[header]).join(',')).join('\n');
+  
+    // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+  
+    // Trigger the download
+    link.click();
+  
+    // Clean up
+    document.body.removeChild(link);
+  };
 
   return (
     <>
@@ -438,7 +455,7 @@ const handleDownloadData = () => {
                 <div style={{ flex: '1' }}> </div>
                 <ButtonPrimary Color="#ffffff" icon={FileUploadOutlined} LabelName={'Unggah Data'} onClick={handleOpen}/>
                 <ButtonOptional icon={SimCardDownloadOutlined} LabelName={'Unduh Template'} onClick={handleDownload}/>
-                <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'} onClick={handleDownloadData}/>
+                <ButtonOptional icon={FileDownloadOutlined} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
             </FlexContainer>
 
 
