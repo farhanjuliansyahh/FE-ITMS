@@ -428,9 +428,13 @@ function AddEventModal({ open, handleClose }) {
                             label="Talent Pool Quota"
                             value={quota} // Set value from state
                             onChange={handlequotachange} // Handle input change
-                            onFocus={() => setIsQoutaTouched(true)}
-                            onBlur={()=>setQuotaError(false)}
-                            error={ isQuotaTouched && (quotaError || !quota)} // Display error state if invalid
+                            // onFocus={}
+                            onBlur={()=>{
+                                console.log("touched");
+                                setIsQoutaTouched(true)
+                                setQuotaError(false)
+                            }}
+                            error={ isQuotaTouched && quotaError || !quota} // Display error state if invalid
                             helperText={validateQuota()}
                             inputProps={{
                                 inputMode: 'numeric',
