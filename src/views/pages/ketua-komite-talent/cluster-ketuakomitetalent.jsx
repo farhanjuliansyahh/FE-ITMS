@@ -190,9 +190,9 @@ export default function ClusterKetuaKomiteTalent() {
       const totalRows = clusterRow.length;
 
       const halfLength = Math.ceil(totalRows * kuota / 100);
-
-      const isDiskresiDone = selected <= halfLength || evenstatus_id !== 6;
-
+      const isDiskresiDone = selected >= halfLength || evenstatus_id !== 6;
+      
+      console.log("eventid", isDiskresiDone);
     const listNama = [...new Set(clusterRow.map(row => row.nama))]
     const listNippos = [...new Set(clusterRow.map(row => row.nippos))];
     const listJobLevel = [...new Set(clusterRow.map(row => row['Job Level']))];
