@@ -163,6 +163,14 @@ export default function DaftarPenggunaTabel({
     },
   ];
 
+  //fungsi buat reset index:
+  const resetRowIndex = (filteredRows) => {
+    return filteredRows.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
   // Filter the rows based on selected filters and search term
   const filteredRows = updatedRows.filter((row) => {
     const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); 
@@ -170,14 +178,17 @@ export default function DaftarPenggunaTabel({
     const peranMatch = !searchPeran || (row.Peran && row.Peran.toLowerCase().includes(searchPeran.toLowerCase())); 
 
     return (!searchNama || namaMatch) 
-        && (!searchNippos || nipposMatch) 
-        && (!searchPeran || peranMatch);
+    && (!searchNippos || nipposMatch) 
+    && (!searchPeran || peranMatch);
   });
 
+  //buat constanta yang isinya hasil filter yang indexnya udah di reset:
+  const resetRows = resetRowIndex(filteredRows);
+  
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <DataGrid
-        rows={filteredRows}
+        rows={resetRows}
         columns={columns}
         pageSizeOptions={[5, 10, 100]}
       />

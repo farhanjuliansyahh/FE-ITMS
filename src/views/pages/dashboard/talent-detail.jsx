@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Grid, Stack } from '@mui/material';
 import { gridSpacing } from '../../../store/constant';
-import { RestartAltOutlined } from '@mui/icons-material';
+import { RestartAltOutlined, FileDownloadOutlined } from '@mui/icons-material';
 import Header from '../../../ui-component/header/header';
 import MainCard from '../../../ui-component/cards/MainCard';
 import DetailTalentTable from '../../../ui-component/tables/detail-talent-table';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
-
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 // ==============================|| DETAIL TALENT - DASHBOARD ||============================== //
 
 export default function TalentDetail() {
@@ -66,6 +66,24 @@ export default function TalentDetail() {
     resetKantorInput();
 
   };
+  //Unduh Button Action
+  const handleDownloadCSV = () => {
+    // Create a CSV header with column names
+    const headers = Object.keys(rows[0]);
+    const headerRow = headers.join(',');
+  
+    // Convert data to CSV format
+    const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(headerRow + '\n' +
+      rows.map(row => headers.map(header => row[header]).join(',')).join('\n'));
+  
+    // Create a temporary anchor element
+    const link = document.createElement('a');
+    link.setAttribute('href', csvContent);
+    link.setAttribute('download', 'Daftartalent_data.csv');
+  
+    // Trigger the download
+    link.click();
+  };
 
   return (
     <>
@@ -82,7 +100,9 @@ export default function TalentDetail() {
         
         <Grid item xs={12}>
         <MainCard style={{ padding: '24px 24px'}} >
-
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+              <ButtonPrimary Color="#ffffff" icon={FileDownloadOutlined} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
+            </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
               <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
                 <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
