@@ -173,10 +173,10 @@ const TalentProfile = ({eventid}) => {
     console.log("tab", value);
     // Determine which dataset to use based on the active tab
     if (value === 0) {
-      dataToDownload = rowsbelum;
+      dataToDownload = resetRowsFalse;
       filename = `Talent_Profile_TidakLengkap_${eventid}.csv`;
     } else if (value === 1) {
-      dataToDownload = rowslengkap;
+      dataToDownload = resetRowsTrue;
       filename = `Talent_Source_Lengkap_${eventid}.csv`;
     }
   
@@ -242,6 +242,27 @@ const TalentProfile = ({eventid}) => {
     resetKomiteUnitInputFalse();
   };
 
+  const filteredRowsFalse = rowsbelum.filter((row) => {
+    const namaMatchFalse = !selectedNamaFalse || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaFalse.toLowerCase())); // Add null check for row.nama
+    const nipposMatchFalse = !selectedNipposFalse || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposFalse.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchFalse = !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchFalse = !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase())); // Add null check for row.nippos
+
+    return (!selectedNamaFalse || namaMatchFalse) 
+    && (!selectedNipposFalse || nipposMatchFalse) 
+    && (!selectedJobLevelFalse || jobLevelMatchFalse) 
+    && (!selectedKomiteUnitFalse || komiteUnitMatchFalse);
+  });
+
+  const resetRowIndexFalse = (filteredRowsFalse) => {
+    return filteredRowsFalse.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRowsFalse = resetRowIndexFalse(filteredRowsFalse);
+
   // LENGKAP
   const listNamaTrue = [...new Set(rowslengkap.map(row => row.Nama))]
   const listNipposTrue = [...new Set(rowslengkap.map(row => row.Nippos))];
@@ -276,6 +297,28 @@ const TalentProfile = ({eventid}) => {
     resetKomiteUnitInputTrue();
   };
 
+  
+  const filteredRowsTrue = rowslengkap.filter((row) => {
+    const namaMatchTrue = !selectedNamaTrue || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); // Add null check for row.nama
+    const nipposMatchTrue = !selectedNipposTrue || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchTrue = !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
+
+    return (!selectedNamaTrue || namaMatchTrue) 
+    && (!selectedNipposTrue || nipposMatchTrue) 
+    && (!selectedJobLevelTrue || jobLevelMatchTrue) 
+    && (!selectedKomiteUnitTrue || komiteUnitMatchTrue);
+  });
+
+  const resetRowIndexTrue = (filteredRowsTrue) => {
+    return filteredRowsTrue.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
+
 
   return (
     <>
@@ -301,31 +344,6 @@ const TalentProfile = ({eventid}) => {
             <ButtonOptional icon={DoneAllOutlinedIcon} LabelName={'Submit Semua'} onClick={handleOpenSubmit} disabled={isDisabled}/>
             <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
           </FlexContainer>
-               
-          {/* <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-            <AdminSearchSectionGroup/>
-          </div> */}
-
-            {/* <div style={{ display: 'flex', justifyContent: 'flex-start', paddingBottom: '16px', width:'100%' }}>
-              <div style={{ marginRight: '12px', width:'100%'  }}>
-                    <EventDetailSearchSection filter={filterNama} setFilter={setFilterNama} PlaceHolder={'Nama'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterNippos} setFilter={setFilterNippos} PlaceHolder={'NIPPOS'} />
-              </div>
-              <div style={{ marginRight: '12px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterJob} setFilter={setFilterJob} PlaceHolder={'Job Level'} />
-              </div>
-              <div style={{ marginRight: '24px', width:'100%' }}>
-                  <EventDetailSearchSection filter={filterKomite} setFilter={setFilterKomite} PlaceHolder={'Komite Unit'} />
-              </div>
-              <div style={{ marginRight: '12px' }}>
-                  <SearchResetButton outlineColor="#1C2D5A" icon={SearchIcon} LabelName={'Cari'} />
-              </div>
-              <div style={{ marginRight: '0px' }}>
-                  <SearchResetButton outlineColor="#D32F2F" icon={RestartAltIcon} LabelName={'Reset'} />
-              </div>
-            </div> */}
          
             <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
               <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
@@ -341,11 +359,7 @@ const TalentProfile = ({eventid}) => {
               commitmentLetterValue={'Belum Submit'} 
               paktaIntegritasValue={'Belum Submit'}
               filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}
-              rows={rowsbelum}
-              searchNama={selectedNamaFalse} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-              searchNippos={selectedNipposFalse}
-              searchJobLevel={selectedJobLevelFalse}
-              searchKomiteUnit={selectedKomiteUnitFalse}
+              rows={resetRowsFalse}
             />
           </Box>
         </CustomTabPanel>
@@ -375,11 +389,7 @@ const TalentProfile = ({eventid}) => {
               commitmentLetterValue={'Sudah Submit'} 
               paktaIntegritasValue={'Sudah Submit'}
               filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}}
-              rows={rowslengkap}
-              searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-              searchNippos={selectedNipposTrue}
-              searchJobLevel={selectedJobLevelTrue}
-              searchKomiteUnit={selectedKomiteUnitTrue}
+              rows={resetRowsTrue}
             />
           </Box>          
         </CustomTabPanel>

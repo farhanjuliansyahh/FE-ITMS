@@ -153,9 +153,7 @@ const DaftarEvent = () => {
         title="Daftar Event"
         secondary={
           <Stack direction="row" spacing={2}>
-            <BoxContainer>
               <CustomSearch field={uniqueNamaEvents} label={'Cari Nama Event'} onSearch={setSelectedNamaEvent} value={selectedNamaEvent} />
-            </BoxContainer>
             <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen} />
           </Stack>
         }
@@ -276,9 +274,7 @@ const DaftarEvent = () => {
           )}
         </CustomTabPanel>
 
-          {open && 
-            <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />
-          }
+        {open && <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />}
       </MainCard>
     </>
   );

@@ -12,6 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua }) {
+  console.log("ketua", ketua);
     const [deadlinesource, setdeadlinesource] = useState('');
     const [activejoblevel, setactivejoblevel] = useState(['']);
     const [activejobfam, setactivejobfam]     = useState('');

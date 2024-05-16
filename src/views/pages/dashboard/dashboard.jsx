@@ -18,22 +18,17 @@ const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const [datarumpun, setDatarumpun] = useState([])
   const [datajoblevel, setJoblevel] = useState([])
+  const [rows, setrows] = useState([])
   useEffect(() => {
     setLoading(false);
   }, []);
 
-  const cards = [
-    { title: "Total Talent",
-    content: 512,
-    icon: GroupsIcon,
-    // navigateTo: '/dashboard/total-pegawai',
-    },
-    // { title: "Total IDP Aktif",
-    //   content: 1019,
-    //   icon: NotificationsActiveOutlinedIcon,
-    //   // navigateTo: '/dashboard/total-pegawai',
-    // },
-  ]
+  useEffect(() => {
+    fetch("http://localhost:4000/getdetailtalent")
+    .then(response => response.json())
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    .then(data => setrows(data))
+  },[])
 
   useEffect(() => {
     fetch("http://localhost:4000/getdatatalentrumpun")
@@ -50,6 +45,19 @@ const Dashboard = () => {
       console.error("error fetching data");
     })
   },[])
+  const cards = [
+    
+    { title: "Total Talent",
+      content: rows.length,
+      icon: GroupsIcon,
+      // navigateTo: '/dashboard/total-pegawai',
+      },
+      // { title: "Total IDP Aktif",
+      //   content: 1019,
+      //   icon: NotificationsActiveOutlinedIcon,
+      //   // navigateTo: '/dashboard/total-pegawai',
+      // },
+    ]
 
   useEffect(() => {
     fetch("http://localhost:4000/getdatatalentjoblevel")

@@ -58,7 +58,7 @@ const CustomSearch = ({
         }
         value={searchTerm}
         onChange={handleInputChange}
-        autoFocus // Ensure the input field is focused
+        // autoFocus // Ensure the input field is focused
       />
     </Box>
   );

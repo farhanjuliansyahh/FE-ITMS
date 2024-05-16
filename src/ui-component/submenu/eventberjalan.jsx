@@ -20,7 +20,19 @@ import EditEvent from '../modal/edit-event';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_komite_talent,kode_rumpun, nama_rumpun_jabatan,kuota, tanggal_selesai, tanggal_mulai, status }) {
+export default function EventBerjalan({
+  id,
+  nama_event,
+  ketua,
+  deskripsi,
+  tipe_komite_talent,
+  kode_rumpun,
+  nama_rumpun_jabatan,
+  kuota,
+  tanggal_selesai,
+  tanggal_mulai,
+  status
+}) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [daysLeft, setDaysLeft] = React.useState(null);
@@ -28,24 +40,24 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
   const nama = nama_event;
   const quotaawal = kuota;
   const kodefam = kode_rumpun;
+  const ketuakomite = ketua;
 
   let statusberjalan;
-  console.log(status);
   if (status === 1) {
-    statusberjalan = "Belum Mulai";
+    statusberjalan = 'Belum Mulai';
   } else if (status >= 2 && status <= 7) {
-    statusberjalan = "Berlangsung";
+    statusberjalan = 'Berlangsung';
   } else if (status === 8) {
-    statusberjalan = "Selesai";
+    statusberjalan = 'Selesai';
   } else {
     // Handle other status values if needed
-    statusberjalan = "Unknown Status";
+    statusberjalan = 'Unknown Status';
   }
 
   useEffect(() => {
-    setActiveStep(status-2)
+    setActiveStep(status - 2);
   }, []);
-  
+
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -62,7 +74,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     }
 
     //setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    
+
     setActiveStep(status);
     setSkipped(newSkipped);
   };
@@ -86,8 +98,8 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     });
   };
 
- const handleReset = () => {
-   setActiveStep(0);
+  const handleReset = () => {
+    setActiveStep(0);
   };
 
   const boxStyle = {
@@ -103,7 +115,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     display: 'flex',
     alignItems: 'center',
     gap: '16px', // Adjust the gap between elements as needed
-    paddingBottom: '24px',
+    paddingBottom: '24px'
   });
 
   const FlexTitle = styled('div')({
@@ -115,7 +127,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
 
   const BoxContainer = styled('div')({
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   });
 
   const BoxAvatar = styled(Avatar)({
@@ -126,14 +138,13 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     width: 48,
     height: 48,
     '& svg': {
-      fontSize: '2rem',
-    },
+      fontSize: '2rem'
+    }
   });
 
   const [open, setOpen] = useState(false);
   const [openHapus, setOpenHapus] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-
 
   const handleOpen = () => {
     setOpen(true);
@@ -157,7 +168,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
 
   const CalendarIcon = styled(EventIcon)({
     fontSize: '1rem',
-    color: '#1C2D5A',
+    color: '#1C2D5A'
   });
 
   const statusColors = {
@@ -179,7 +190,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     padding: '4px 8px',
     borderRadius: '16px',
     fontWeight: 600,
-    fontSize: '12px',
+    fontSize: '12px'
   }));
 
   const editButtonStyle = {
@@ -188,7 +199,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     borderRadius: '12px',
     paddingLeft: '12px',
     paddingRight: '12px'
-  }
+  };
 
   const deleteButtonStyle = {
     border: '1px solid #EF4123',
@@ -196,7 +207,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     borderRadius: '12px',
     paddingLeft: '12px',
     paddingRight: '12px'
-  }
+  };
 
   const mulaiButtonStyle = {
     backgroundColor: '#EF4123',
@@ -206,9 +217,9 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     paddingRight: '12px',
     ':hover': {
       backgroundColor: '#AB1D05',
-      color: '#fff',
+      color: '#fff'
     }
-  }
+  };
 
   const ButtonsContainer = styled('div')({
     display: 'flex',
@@ -217,40 +228,30 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
   });
 
   const editButton = (
-    <Button 
-      sx={editButtonStyle} 
-      endIcon={<EditIcon />}
-      onClick={handleOpenEdit}>
+    <Button sx={editButtonStyle} endIcon={<EditIcon />} onClick={handleOpenEdit}>
       Edit
     </Button>
   );
 
   const deleteButton = (
-    <Button
-      sx={deleteButtonStyle}
-      endIcon={<DeleteIcon />}
-      onClick={handleOpenHapus}>
+    <Button sx={deleteButtonStyle} endIcon={<DeleteIcon />} onClick={handleOpenHapus}>
       Hapus
     </Button>
   );
 
   const mulaiButton = (
-    <Button
-      variant="contained"
-      sx={mulaiButtonStyle}
-      endIcon={<ArrowForwardRoundedIcon />}
-      onClick={handleOpen}>
+    <Button variant="contained" sx={mulaiButtonStyle} endIcon={<ArrowForwardRoundedIcon />} onClick={handleOpen}>
       Mulai Event
     </Button>
   );
   const DividerContainer = styled('div')({
     width: '100%',
     textAlign: 'center',
-    marginBottom: '16px',
+    marginBottom: '16px'
   });
 
   const dividerStyle = {
-    margin: '0 auto',
+    margin: '0 auto'
   };
 
   useEffect(() => {
@@ -266,12 +267,10 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
-  console.log("active step",activeStep);
-
-
+  console.log('ini kuota ituloh', quotaawal);
 
   return (
-    <Box sx={boxStyle} style={{marginBottom: '24px'}}>
+    <Box sx={boxStyle} style={{ marginBottom: '24px' }}>
       <FlexContainer>
         <BoxAvatar variant="rounded">
           <EmojiEventsOutlinedIcon />
@@ -285,50 +284,56 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
           <FlexTitle style={{ paddingBottom: '8px' }}>
             {/* Wrap the Typography with Link */}
             {status !== 1 ? (
-    <Typography
-      style={{
-        fontSize: '16px',
-        fontWeight: 'bold',
-        textDecoration: 'none',
-        color: 'inherit',
-      }}
-    >
-      <Link
-        to={{
-          pathname: `/talent/detail-event/${id}`,
-        }}
-        style={{ color: 'inherit' }}
-      >
-        {nama_event}
-      </Link>
-    </Typography>
-  ) : (
-    <Typography
-      style={{
-        fontSize: '16px',
-        fontWeight: 'bold',
-        color: 'inherit',
-      }}
-    >
-      {nama_event}
-    </Typography>
-  )}
-            <StatusLabel backgroundColor={backgroundColor} color={color}>{statusberjalan}</StatusLabel>
+              <Typography
+                style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  textDecoration: 'none',
+                  color: 'inherit'
+                }}
+              >
+                <Link
+                  to={{
+                    pathname: `/talent/detail-event/${id}`
+                  }}
+                  style={{ color: 'inherit' }}
+                >
+                  {nama_event}
+                </Link>
+              </Typography>
+            ) : (
+              <Typography
+                style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  color: 'inherit'
+                }}
+              >
+                {nama_event}
+              </Typography>
+            )}
+            <StatusLabel backgroundColor={backgroundColor} color={color}>
+              {statusberjalan}
+            </StatusLabel>
           </FlexTitle>
 
           <FlexTitle>
             <CalendarIcon style={{ color: '#828282' }} />
-            <Typography style={{ color: '#828282' }}>{tanggal_mulai &&
-              new Date(tanggal_mulai).toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })} - {tanggal_selesai &&
+            <Typography style={{ color: '#828282' }}>
+              {tanggal_mulai &&
+                new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric'
+                })}{' '}
+              -{' '}
+              {tanggal_selesai &&
                 new Date(tanggal_selesai).toLocaleDateString('id-ID', {
                   day: 'numeric',
                   month: 'long',
-                  year: 'numeric',
-                })}</Typography>
+                  year: 'numeric'
+                })}
+            </Typography>
           </FlexTitle>
         </BoxContainer>
 
@@ -350,7 +355,8 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
         <Grid item xs={12} md={3}>
           <Typography>Deskripsi</Typography>
           <Typography style={{ fontWeight: 'bold', wordWrap: 'break-word', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {deskripsi}</Typography>
+            {deskripsi}
+          </Typography>
         </Grid>
 
         <Grid item xs={12} md={3}>
@@ -365,12 +371,14 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
 
         <Grid item xs={12} md={2}>
           <Typography>Batas Akhir Event</Typography>
-          <Typography style={{ fontWeight: 'bold' }}>{tanggal_selesai &&
-            new Date(tanggal_selesai).toLocaleDateString('id-ID', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>
+            {tanggal_selesai &&
+              new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              })}
+          </Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
@@ -399,10 +407,20 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
         })}
       </Stepper>
 
-
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun}  />
+      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite} />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
-      <EditEvent open={openEdit} handleClose={handleCloseEdit} eventid={id} nama={nama} jobfam={nama_rumpun_jabatan} koderumpun={kodefam} quotaawal={quotaawal} mulai={tanggal_mulai} selesai={tanggal_selesai} deskripsiawal={deskripsi}/>
+      <EditEvent
+        open={openEdit}
+        handleClose={handleCloseEdit}
+        eventid={id}
+        nama={nama}
+        jobfam={nama_rumpun_jabatan}
+        koderumpun={kodefam}
+        quotaawal={quotaawal}
+        mulai={tanggal_mulai}
+        selesai={tanggal_selesai}
+        deskripsiawal={deskripsi}
+      />
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>
   );

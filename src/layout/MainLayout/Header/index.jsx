@@ -100,7 +100,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
       });
   }, []);
 
-  console.log("lets see", notificationList);
 
   return (
     <>

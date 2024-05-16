@@ -16,13 +16,13 @@ export default function TalentDetail() {
     setLoading(false);
   }, []);
 
-  const [rows, selectedRows] = useState([])
+  const [rows, setrows] = useState([])
 
   useEffect(() => {
     fetch("http://localhost:4000/getdetailtalent")
     .then(response => response.json())
         // 4. Setting *dogImage* to the image url that we received from the response above
-    .then(data => selectedRows(data))
+    .then(data => setrows(data))
   },[])
 
   
