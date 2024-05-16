@@ -40,24 +40,8 @@ const columnKeys = {
 };
 
 export default function NilaiAssessmentTable({ 
-    rows,
-    searchNama, // Receive the search term as a prop
-    searchNippos,
-    searchJobLevel,
-    searchRumpunJabatan
+    filteredRows,
 }) {
-    // Filter the rows based on selected filters and search term
-    const filteredRows = rows.filter((row) => {
-        const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
-        const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
-        const jobLevelMatch = !searchJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
-        const rumpunJabatanMatch = !searchRumpunJabatan || (row.rumpunjabatan && row.rumpunjabatan.toLowerCase().includes(searchRumpunJabatan.toLowerCase())); // Add null check for row.nippos
-
-        return (!searchNama || namaMatch) 
-        && (!searchNippos || nipposMatch) 
-        && (!searchJobLevel || jobLevelMatch) 
-        && (!searchRumpunJabatan || rumpunJabatanMatch);
-    });
 
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5); // Default items per page
