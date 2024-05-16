@@ -57,6 +57,7 @@ function AddEventModal({ open, handleClose }) {
     };
 
     const handlequotachange = (event) => {
+        console.log("event",event.target.value);
         const value = event.target.value;
         // Check if the value is a valid number
         if (/^\d*$/.test(value)) {
@@ -66,6 +67,10 @@ function AddEventModal({ open, handleClose }) {
             setQuotaError(true);
         }
     };
+
+    useEffect(()=>{
+        console.log(isQuotaTouched, quotaError);
+    },[isQuotaTouched, quotaError])
 
     const handledeskripsichange = (event) => {
         setdeskripsi(event.target.value); // Update state with input value
@@ -428,13 +433,14 @@ function AddEventModal({ open, handleClose }) {
                             label="Talent Pool Quota"
                             value={quota} // Set value from state
                             onChange={handlequotachange} // Handle input change
-                            // onFocus={}
+                            onFocus={()=>{
+                            }}
                             onBlur={()=>{
-                                console.log("touched");
                                 setIsQoutaTouched(true)
+                                console.log("touched");
                                 setQuotaError(false)
                             }}
-                            error={ isQuotaTouched && quotaError || !quota} // Display error state if invalid
+                            error={ (isQuotaTouched && quotaError) || (isQuotaTouched && !quota) } // Display error state if invalid
                             helperText={validateQuota()}
                             inputProps={{
                                 inputMode: 'numeric',
@@ -445,14 +451,12 @@ function AddEventModal({ open, handleClose }) {
                                     const keyValue = String.fromCharCode(keyCode);
                                     const isValid = /\d/.test(keyValue);
                                     if (!isValid) {
+                                        setIsQoutaTouched(true)
+                                        setQuotaError(true)
                                         event.preventDefault();
                                     }
                                 },
                             }}
-                            // inputProps={{
-                            //     inputMode: 'numeric',
-                            //     pattern: '[0-9]*'
-                            // }}
                         />
 
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
