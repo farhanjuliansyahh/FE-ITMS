@@ -68,8 +68,7 @@ const TalentSource = ({eventid}) => {
 
   const eventidactive = eventid
 
-  useEffect(() => {
-    // Fetch data from API
+  const getkandidatfalse= () => {
     fetch(`http://localhost:4000/getkandidatfalse?eventtalentid=${eventid}`)
       .then(response => response.json())
       .then(datafalse => {
@@ -79,19 +78,23 @@ const TalentSource = ({eventid}) => {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []); // Empty dependency array to run effect only once
+  }
+
+  const getkandidattrue= () =>{
+    fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${eventid}`)
+    .then(response => response.json())
+    .then(datatrue => {
+      // Update state with API data
+      setRowstrue(datatrue.map((row, index) => ({ ...row, id: index + 1 })));
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }
 
   useEffect(() => {
-    // Fetch data from API
-    fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${eventid}`)
-      .then(response => response.json())
-      .then(datatrue => {
-        // Update state with API data
-        setRowstrue(datatrue.map((row, index) => ({ ...row, id: index + 1 })));
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+    getkandidatfalse();
+    getkandidattrue(); 
   }, []); // Empty dependency array to run effect only once
 
   const handleChange = (event, newValue) => {
@@ -314,6 +317,8 @@ const TalentSource = ({eventid}) => {
                 searchJobLevel={selectedJobLevelFalse}
                 searchKomiteUnit={selectedKomiteUnitFalse}
                 eventid={eventidactive} 
+                getkandidatfalse = {getkandidatfalse}
+                getkandidattrue  = {getkandidattrue}
             />
           </Box>
         </CustomTabPanel>

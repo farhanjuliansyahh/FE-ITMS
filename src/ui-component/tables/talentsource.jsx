@@ -16,7 +16,9 @@ const TalentSourceTable = ({eventid,
   searchNama, // Receive the search term as a prop
   searchNippos,
   searchJobLevel,
-  searchKomiteUnit
+  searchKomiteUnit,
+  getkandidatfalse,
+  getkandidattrue
 }) => {
   // Filter the rows based on selected filters and search term
   const filteredRows = rows.filter((row) => {
@@ -35,14 +37,7 @@ const TalentSourceTable = ({eventid,
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('')
   const [selectedKU, setSelectedKU]         = useState('')
-  const [refreshTable, setRefreshTable] = useState(false); // State to trigger table refresh
 
-  useEffect(() => {
-    if (refreshTable) {
-        // Fetch new data or update existing data
-        setRefreshTable(false); // Reset the flag after refreshing
-    }
-}, [refreshTable]);
 
   const activeEvent = eventid
 
@@ -73,7 +68,7 @@ const TalentSourceTable = ({eventid,
         });
 };
 
-const updatekomiterole = (nippos) => {
+const updatekomiterole = (eventid, nippos) => {
   return fetch(`http://localhost:4000/assignkomiteunibybutton`, {
         method: 'POST', // Specify the HTTP method (POST, GET, etc.)
         headers: {
@@ -81,6 +76,7 @@ const updatekomiterole = (nippos) => {
         },
         body: JSON.stringify({
             // Include any data you want to send in the request body
+            eventtalentid: eventid,
             nippos: nippos
         }) // Convert the bodyData object to a JSON string
       }) 
@@ -122,18 +118,24 @@ const updatekomiterole = (nippos) => {
 
   const handleConfirm = () => {
     console.log("Confirm button clicked");
-    updatekomiteunit(activeEvent,selectedNippos,selectedKU)
-        .then(() => {
-            // Trigger the callback function passed from the parent component to refresh the table data
-            updatekomiterole(selectedKU)
-            setRefreshTable(true);
-            setOpenSecondModal(false);
-        })
-        .catch(error => {
-            console.error('Error updating data:', error);
-            // Handle error if needed
-        });
-    };
+    updatekomiteunit(activeEvent, selectedNippos, selectedKU)
+      .then(() => {
+        // After updating komite unit, call updatekomiterole
+        return updatekomiterole(activeEvent, selectedKU);
+      })
+      .then(() => {
+        // Refetch data to refresh the table
+        return Promise.all([getkandidatfalse(), getkandidattrue()]);
+      })
+      .then(() => {
+        // Close the modal after successfully refreshing the data
+        setOpenSecondModal(false);
+      })
+      .catch(error => {
+        console.error('Error updating data:', error);
+        // Handle error if needed
+      });
+  };
 
   const columns = [
     { field: 'id', headerName: 'No', minWidth: 70 },
