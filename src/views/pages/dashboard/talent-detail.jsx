@@ -69,7 +69,7 @@ export default function TalentDetail() {
   //Unduh Button Action
   const handleDownloadCSV = () => {
     // Create a CSV header with column names
-    const headers = Object.keys(rows[0]);
+    const headers = Object.keys(resetRows[0]);
     const headerRow = headers.join(',');
   
     // Convert data to CSV format
@@ -79,11 +79,34 @@ export default function TalentDetail() {
     // Create a temporary anchor element
     const link = document.createElement('a');
     link.setAttribute('href', csvContent);
-    link.setAttribute('download', 'Daftartalent_data.csv');
+    link.setAttribute('download', 'daftar_talent.csv');
   
     // Trigger the download
     link.click();
   };
+
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !selectedNama || (row.nama && row.nama.toLowerCase().includes(selectedNama.toLowerCase())); 
+    const jobLevelMatch = !selectedJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(selectedJobLevel.toLowerCase())); 
+    const rumpunJabatanMatch = !selectedRumpunJabatan || (row.jobfam && row.jobfam.toLowerCase().includes(selectedRumpunJabatan.toLowerCase())); 
+    const kantorMatch = !selectedKantor || (row.nama_kantor && row.nama_kantor.toLowerCase().includes(selectedKantor.toLowerCase())); 
+
+    return (!selectedNama || namaMatch) 
+    && (!selectedJobLevel || jobLevelMatch) 
+    && (!selectedRumpunJabatan || rumpunJabatanMatch) 
+    && (!selectedKantor || kantorMatch);
+  });
+
+  //fungsi buat reset index:
+  const resetRowIndex = (filteredRows) => {
+    return filteredRows.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  //buat constanta yang isinya hasil filter yang indexnya udah di reset:
+  const resetRows = resetRowIndex(filteredRows);
 
   return (
     <>
@@ -115,11 +138,7 @@ export default function TalentDetail() {
 
             <Grid style={{marginBottom: '0.5%'}}>
                <DetailTalentTable 
-                rows={rows}
-                searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-                searchJobLevel={selectedJobLevel}
-                searchRumpunJabatan={selectedRumpunJabatan}
-                searchKantor={selectedKantor}
+                filteredRows={resetRows}
                />
             </Grid>
         </MainCard>
