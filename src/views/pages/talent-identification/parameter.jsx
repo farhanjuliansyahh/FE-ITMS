@@ -314,11 +314,36 @@ const ParameterTalent = () => {
     document.body.removeChild(link);
   };
 
+  //fungsi buat reset index:
+  const resetRowIndex = (filteredRows) => {
+    return filteredRows.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !selectedNama || (row.nama && row.nama.toLowerCase().includes(selectedNama.toLowerCase())); // Add null check for row.nama
+    const nipposMatch = !selectedNippos || (row.nippos && row.nippos.toLowerCase().includes(selectedNippos.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatch = !selectedJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(selectedJobLevel.toLowerCase())); // Add null check for row.nippos
+    const rumpunJabatanMatch = !selectedRumpunJabatan || (row.rumpunjabatan && row.rumpunjabatan.toLowerCase().includes(selectedRumpunJabatan.toLowerCase())); // Add null check for row.nippos
+
+    return (!selectedNama || namaMatch) 
+    && (!selectedNippos || nipposMatch) 
+    && (!selectedJobLevel || jobLevelMatch) 
+    && (!selectedRumpunJabatan || rumpunJabatanMatch);
+});
+
+  //buat constanta yang isinya hasil filter yang indexnya udah di reset:
+  const resetRows = resetRowIndex(filteredRows);
+  
+  console.log('sri: ', resetRows)
+
   const handleDownloadCSV = () => {
     let dataToDownload = [];
     let filename = '';
 
-    dataToDownload = rows;
+    dataToDownload = resetRows;
     filename = `nilai_assessment_karyawan.csv`;
 
     // Create a CSV header with column names
@@ -350,6 +375,8 @@ const ParameterTalent = () => {
     // Clean up
     document.body.removeChild(link);
   };
+
+
 
   return (
     <>
@@ -564,11 +591,7 @@ const ParameterTalent = () => {
             </div>
 
             <NilaiAssessmentTable
-              rows={rows}
-              searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-              searchNippos={selectedNippos}
-              searchJobLevel={selectedJobLevel}
-              searchRumpunJabatan={selectedRumpunJabatan}
+              filteredRows={resetRows}
             />
           </Box>
         </CustomTabPanel>
