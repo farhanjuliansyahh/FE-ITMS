@@ -28,9 +28,9 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
   const nama = nama_event;
   const quotaawal = kuota;
   const kodefam = kode_rumpun;
+  const ketuakomite = ketua;
 
   let statusberjalan;
-  console.log(status);
   if (status === 1) {
     statusberjalan = "Belum Mulai";
   } else if (status >= 2 && status <= 7) {
@@ -266,7 +266,6 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
-  console.log("active step",activeStep);
 
 
 
@@ -400,7 +399,7 @@ export default function EventBerjalan({ id, nama_event,ketua, deskripsi, tipe_ko
       </Stepper>
 
 
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun}  />
+      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite}  />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
       <EditEvent open={openEdit} handleClose={handleCloseEdit} eventid={id} nama={nama} jobfam={nama_rumpun_jabatan} koderumpun={kodefam} quotaawal={quotaawal} mulai={tanggal_mulai} selesai={tanggal_selesai} deskripsiawal={deskripsi}/>
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}

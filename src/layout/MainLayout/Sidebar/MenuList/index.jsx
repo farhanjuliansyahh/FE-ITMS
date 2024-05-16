@@ -14,7 +14,6 @@ const MenuList = () => {
   useEffect(() => {
     setMenuItems(getMenuItems(sessionStorage.getItem('role')));
   }, []);
-  console.log(menuItems);
   const navItems = menuItems.map((item) => {
     switch (item.type) {
       case 'group':
