@@ -57,7 +57,7 @@ const TalentClusterKetuaKomiteTalentTable = ({
     searchNama, 
     searchNippos,
     searchJobLevel,
-    searchKategoriMatrix
+    searchKategoriMatrix,
 }) => {
     const [openFirstModal, setOpenFirstModal] = useState(false);
     const [openSecondModal, setOpenSecondModal] = useState(false);
@@ -108,9 +108,9 @@ const TalentClusterKetuaKomiteTalentTable = ({
             setRefreshTable(true);
     };
 
-    const handleOpenFirstModal = (nippos, kategoriMatrixAkhir) => {
+    const handleOpenFirstModal = (nippos, kategoriMatrixAwal) => {
         setSelectedNippos(nippos); // Store the nippos when the button is clicked
-        setcurrentMatrix(kategoriMatrixAkhir)
+        setcurrentMatrix(kategoriMatrixAwal)
         setOpenFirstModal(true); 
     };
 
@@ -179,7 +179,7 @@ const TalentClusterKetuaKomiteTalentTable = ({
             headerName: 'Aksi',
             width: 180,
             renderCell: (params) => {
-                const { nippos, 'Matriks Kategori Akhir': kategoriMatrixAkhir } = params.row; // Get nippos value from row data
+                const { nippos, 'Matriks Kategori Awal': kategoriMatrixAwal } = params.row; // Get nippos value from row data
                 return (
                     <Button 
                         variant="contained" 
@@ -190,7 +190,7 @@ const TalentClusterKetuaKomiteTalentTable = ({
                             padding: '6px 16px'
                         }} 
                         endIcon={<CreateOutlined />}
-                        onClick={() => handleOpenFirstModal(nippos,kategoriMatrixAkhir)} // Pass nippos to handleOpenFirstModal
+                        onClick={() => handleOpenFirstModal(nippos,kategoriMatrixAwal)} // Pass nippos to handleOpenFirstModal
                         disabled={disabled}
                     >
                         Ubah Matrix

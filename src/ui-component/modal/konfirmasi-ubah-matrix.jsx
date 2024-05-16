@@ -9,7 +9,8 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
         color:'#fff',
         borderRadius: '12px',
         padding : '14px 24px',
-        transition: 'background-color 0.3s'
+        transition: 'background-color 0.3s',
+        cursor: 'pointer'
     };
 
     const batalkanButtonStyle = {
@@ -20,13 +21,22 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
         transition: 'background-color 0.3s',
         fontSize: '14px'
     };
-    
+
     const hoverYakinStyle = {
         backgroundColor: '#122350' // Darker shade for hover
     };
-    
+
     const hoverBatalkanStyle = {
         backgroundColor: '#B71C1C' // Darker shade for hover
+    };
+
+    const disabledButtonStyle = {
+        backgroundColor: '#9e9e9e',
+        color: '#ffffff',
+        borderRadius: '12px',
+        padding : '14px 24px',
+        transition: 'background-color 0.3s',
+        cursor: 'pointer'
     };
 
     const ButtonsContainer = styled('div')({
@@ -41,7 +51,7 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
     const [isHoveredYakin, setIsHoveredYakin] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
     const [reason, setReason] = useState(''); // State to store the reason entered in the TextField
-    
+
     const handleReasonChange = (event) => {
         setReason(event.target.value); // Update the reason state when the TextField value changes
     };
@@ -54,10 +64,11 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
     const YakinButton = (
         <Button
             endIcon={<CheckCircleOutlined />}
-            style={isHoveredYakin ? { ...YakinButtonStyle, ...hoverYakinStyle } : YakinButtonStyle}
+            style={reason ? (isHoveredYakin ? { ...YakinButtonStyle, ...hoverYakinStyle } : YakinButtonStyle) : disabledButtonStyle}
             onMouseEnter={() => setIsHoveredYakin(true)}
             onMouseLeave={() => setIsHoveredYakin(false)}
             onClick={handleConfirm}
+            disabled={!reason}
         >
             Yakin
         </Button>

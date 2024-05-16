@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import Matriks from '../../../src/ui-component/submenu/matriks';
 
 export default function MatrixNineBox({eventid, totalrows}) {
-    console.log("asd",totalrows);
     const activeStep = eventid
     const boxStyle = {
         // border: '1px solid #E0E0E0', 

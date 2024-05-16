@@ -16,13 +16,13 @@ export default function TalentDetail() {
     setLoading(false);
   }, []);
 
-  const [rows, selectedRows] = useState([])
+  const [rows, setrows] = useState([])
 
   useEffect(() => {
     fetch("http://localhost:4000/getdetailtalent")
     .then(response => response.json())
         // 4. Setting *dogImage* to the image url that we received from the response above
-    .then(data => selectedRows(data))
+    .then(data => setrows(data))
   },[])
 
   
@@ -69,44 +69,21 @@ export default function TalentDetail() {
   //Unduh Button Action
   const handleDownloadCSV = () => {
     // Create a CSV header with column names
-    const headers = Object.keys(resetRows[0]);
+    const headers = Object.keys(rows[0]);
     const headerRow = headers.join(',');
   
     // Convert data to CSV format
     const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(headerRow + '\n' +
-    resetRows.map(row => headers.map(header => row[header]).join(',')).join('\n'));
+      rows.map(row => headers.map(header => row[header]).join(',')).join('\n'));
   
     // Create a temporary anchor element
     const link = document.createElement('a');
     link.setAttribute('href', csvContent);
-    link.setAttribute('download', 'daftar_talent.csv');
+    link.setAttribute('download', 'Daftartalent_data.csv');
   
     // Trigger the download
     link.click();
   };
-
-  const filteredRows = rows.filter((row) => {
-    const namaMatch = !selectedNama || (row.nama && row.nama.toLowerCase().includes(selectedNama.toLowerCase())); 
-    const jobLevelMatch = !selectedJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(selectedJobLevel.toLowerCase())); 
-    const rumpunJabatanMatch = !selectedRumpunJabatan || (row.jobfam && row.jobfam.toLowerCase().includes(selectedRumpunJabatan.toLowerCase())); 
-    const kantorMatch = !selectedKantor || (row.nama_kantor && row.nama_kantor.toLowerCase().includes(selectedKantor.toLowerCase())); 
-
-    return (!selectedNama || namaMatch) 
-    && (!selectedJobLevel || jobLevelMatch) 
-    && (!selectedRumpunJabatan || rumpunJabatanMatch) 
-    && (!selectedKantor || kantorMatch);
-  });
-
-  //fungsi buat reset index:
-  const resetRowIndex = (filteredRows) => {
-    return filteredRows.map((row, index) => ({
-      ...row,
-      id: index + 1, // Adding 1 to start the index from 1 instead of 0
-    }));
-  };
-
-  //buat constanta yang isinya hasil filter yang indexnya udah di reset:
-  const resetRows = resetRowIndex(filteredRows);
 
   return (
     <>
@@ -138,7 +115,11 @@ export default function TalentDetail() {
 
             <Grid style={{marginBottom: '0.5%'}}>
                <DetailTalentTable 
-                filteredRows={resetRows}
+                rows={rows}
+                searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                searchJobLevel={selectedJobLevel}
+                searchRumpunJabatan={selectedRumpunJabatan}
+                searchKantor={selectedKantor}
                />
             </Grid>
         </MainCard>
