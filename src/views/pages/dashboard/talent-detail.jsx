@@ -74,7 +74,7 @@ export default function TalentDetail() {
   
     // Convert data to CSV format
     const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(headerRow + '\n' +
-      rows.map(row => headers.map(header => row[header]).join(',')).join('\n'));
+    resetRows.map(row => headers.map(header => row[header]).join(',')).join('\n'));
   
     // Create a temporary anchor element
     const link = document.createElement('a');
