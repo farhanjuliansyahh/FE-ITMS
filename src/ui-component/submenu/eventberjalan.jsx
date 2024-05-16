@@ -17,6 +17,7 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import KonfirmasiEvent from '../modal/konfirmasi-event';
 import HapusEvent from '../modal/hapusevent';
 import EditEvent from '../modal/edit-event';
+import { shadows } from '@mui/system';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -212,6 +213,7 @@ export default function EventBerjalan({
   const mulaiButtonStyle = {
     backgroundColor: '#EF4123',
     color: '#fff',
+    boxShadow: 'none',
     borderRadius: '12px',
     paddingLeft: '12px',
     paddingRight: '12px',

@@ -526,7 +526,7 @@ function AddEventModal({ open, handleClose }) {
                       helperText={isStartDateTouched && !startdate ? 'Tanggal Mulai harus diisi' : ''}
                     />
                   )}
-                                minDate={dayjs()} // Set minimum date to today
+                  minDate={dayjs()} // Set minimum date to today
                 />
               </DemoItem>
             </LocalizationProvider>
@@ -548,8 +548,8 @@ function AddEventModal({ open, handleClose }) {
                       helperText={isEndDateTouched && !enddate ? 'Tanggal Berakhir harus diisi' : ''}
                     />
                   )}
-                                    // minDate={dayjs(startdate).add(1, 'day')} // Set minimum end date to the day after the start date
-                                    minDate={dayjs(startdate).isValid() ? dayjs(startdate).add(1, 'day') : dayjs()} // Set minimum end date to the day after the start date or today if start date is invalid
+                  // minDate={dayjs(startdate).add(1, 'day')} // Set minimum end date to the day after the start date
+                  minDate={dayjs(startdate).isValid() ? dayjs(startdate).add(1, 'day') : dayjs()} // Set minimum end date to the day after the start date or today if start date is invalid
                 />
               </DemoItem>
             </LocalizationProvider>

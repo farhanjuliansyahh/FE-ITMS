@@ -19,6 +19,7 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quotaawal, mulai, selesai, deskripsiawal }) {
+  const [originalData, setOriginalData] = useState({}); // State to store original data
   const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [selectedJobFamily, setSelectedJobFamily] = useState(koderumpun);
@@ -30,15 +31,101 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
   const [deskripsi, setdeskripsi] = useState(deskripsiawal);
   const [isDeskripsiTouched, setIsDeskripsiTouched] = useState(false);
 
-  const quotas = 'abc';
+  const [isEventNameTouched, setIsEventNameTouched] = useState(false);
+  const [isJobFamilyTouched, setIsJobFamilyTouched] = useState(false);
+  const [quotaError, setQuotaError] = useState(false); // State to track quota error
+  const [isQuotaTouched, setIsQoutaTouched] = useState(false);
+
+  const [formChanged, setFormChanged] = useState(false); // State to track form changes
+  const [changesSaved, setChangesSaved] = useState(false); // State to track if changes have been saved
+
+  useEffect(() => {
+    // Save original data when dialog opens
+    setOriginalData({ 
+      eventName: nama, 
+      selectedJobFamily: koderumpun, 
+      quota: quotaawal, 
+      deskripsi: deskripsiawal, 
+      startdate: dayjs(mulai), 
+      enddate: dayjs(selesai) 
+    });
+  }, [open]);
+
+  const handlequotachange = (event) => {
+    console.log('event', event.target.value);
+    const value = event.target.value;
+    // Check if the value is a valid number
+    if (/^\d*$/.test(value)) {
+      setQuotaError(false);
+      setquota(event.target.value); // Update state with input value
+    } else {
+      setQuotaError(true);
+    }
+  };
+
+  useEffect(() => {
+    console.log(isQuotaTouched, quotaError);
+  }, [isQuotaTouched, quotaError]);
+
+    // Function to check if the form has changed
+    const checkFormChanges = () => {
+      if (
+        eventName !== nama ||
+        selectedJobFamily !== koderumpun ||
+        quota !== quotaawal ||
+        deskripsi !== deskripsiawal ||
+        !dayjs(startdate).isSame(mulai) ||
+        !dayjs(enddate).isSame(selesai)
+      ) {
+        setFormChanged(true);
+      } else {
+        setFormChanged(false);
+      }
+    };
+
+    useEffect(() => {
+      checkFormChanges(); // Check form changes when component mounts
+    }, []);
+  
+    useEffect(() => {
+      checkFormChanges(); // Check form changes whenever form data changes
+    }, [eventName, selectedJobFamily, quota, deskripsi, startdate, enddate]);
+
+  // Function to reset form to original data
+  const resetForm = () => {
+    setEventName(originalData.eventName);
+    setSelectedJobFamily(originalData.selectedJobFamily);
+    setquota(originalData.quota);
+    setdeskripsi(originalData.deskripsi);
+    setstartdate(originalData.startdate);
+    setenddate(originalData.enddate);
+    setIsDeskripsiTouched(false);
+    setIsEventNameTouched(false);
+    setIsJobFamilyTouched(false);
+    setIsQoutaTouched(false);
+    setQuotaError(false);
+    setFormChanged(false);
+  };
+
+  const validateQuota = () => {
+    if (isQuotaTouched) {
+      if (quotaError) {
+        return 'Talent Pool Quota harus berupa angka';
+      } else if (!quota) {
+        return 'Talent Pool Quota harus diisi';
+      }
+    } else {
+      return '';
+    }
+  };
 
   const handleEventNameChange = (event) => {
     setEventName(event.target.value); // Update state with input value
   };
 
-  const handlequotachange = (event) => {
-    setquota(event.target.value); // Update state with input value
-  };
+  // const handlequotachange = (event) => {
+  //   setquota(event.target.value); // Update state with input value
+  // };
 
   const handledeskripsichange = (event) => {
     setdeskripsi(event.target.value); // Update state with input value
@@ -109,8 +196,15 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
     }
   };
 
+
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog 
+      open={open}
+      onClose={() => {
+        resetForm(); // Reset form to original data
+        handleClose(); // Close the dialog
+      }} 
+    >
       <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', textAlign: 'center' }}>
         <Typography style={{ fontSize: '24px', fontWeight: 'bold' }}>Edit Detail Event</Typography>
       </DialogTitle>
@@ -134,9 +228,20 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
               value={eventName} // Set value from state
               onChange={handleEventNameChange} // Handle input change
               defaultValue={nama}
+              onBlur={() => setIsEventNameTouched(true)}
+              error={isEventNameTouched && !eventName}
+              helperText={isEventNameTouched && !eventName ? 'Nama Event harus diisi' : ''}
             />
 
-            <TextField select required id="outlined-required" value={selectedJobFamily} label="Job Family" onChange={handleJobFamilyChange}>
+            <TextField 
+              select required id="outlined-required" 
+              value={selectedJobFamily} 
+              label="Job Family" 
+              onChange={handleJobFamilyChange}
+              onBlur={() => setIsJobFamilyTouched(true)}
+              error={isJobFamilyTouched && !selectedJobFamily}
+              helperText={isJobFamilyTouched && !selectedJobFamily ? 'Job Family harus diisi' : ''}
+              >
               <MenuItem value="">Select an option</MenuItem> {/* Placeholder */}
               {jobFamilyOptions.map((jobFamily) => (
                 <MenuItem key={jobFamily.kode_rumpun_jabatan} value={jobFamily.kode_rumpun_jabatan}>
@@ -151,11 +256,30 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
               label="Talent Pool Quota"
               value={quota} // Set value from state
               onChange={handlequotachange} // Handle input change
+              defaultValue={quotaawal}
+              onFocus={() => {}}
+              onBlur={() => {
+                setIsQoutaTouched(true);
+                console.log('touched');
+                setQuotaError(false);
+              }}
+              error={(isQuotaTouched && quotaError) || (isQuotaTouched && !quota)} // Display error state if invalid
+              helperText={validateQuota()}
               inputProps={{
                 inputMode: 'numeric',
-                pattern: '[0-9]*'
+                pattern: '[0-9]*',
+                onKeyPress: (event) => {
+                  // Allow only numbers
+                  const keyCode = event.keyCode || event.which;
+                  const keyValue = String.fromCharCode(keyCode);
+                  const isValid = /\d/.test(keyValue);
+                  if (!isValid) {
+                    setIsQoutaTouched(true);
+                    setQuotaError(true);
+                    event.preventDefault();
+                  }
+                }
               }}
-              defaultValue={quotas}
             />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -168,6 +292,7 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
                   onChange={handleStartDateChange}
                   format="YYYY-MM-DD"
                   required
+                  minDate={dayjs()} // Set minimum date to today
                 />
               </DemoItem>
             </LocalizationProvider>
@@ -182,6 +307,7 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
                   onChange={handleEndDateChange}
                   format="YYYY-MM-DD"
                   required
+                  minDate={dayjs(startdate).isValid() ? dayjs(startdate).add(1, 'day') : dayjs()} // Set minimum end date to the day after the start date or today if start date is invalid
                 />
               </DemoItem>
             </LocalizationProvider>
@@ -194,6 +320,7 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
               value={deskripsi} // Set value from state
               onChange={handledeskripsichange} // Handle input change
               required // Tandai bahwa field ini harus diisi
+              onBlur={() => setIsDeskripsiTouched(true)}
               error={isDeskripsiTouched && !deskripsi} // Set error jika deskripsi kosong
               helperText={isDeskripsiTouched && !deskripsi && 'Deskripsi tidak boleh kosong'} // Tampilkan pesan error jika deskripsi kosong
             />
@@ -201,13 +328,23 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
         </Box>
       </DialogContent>
       <DialogActions sx={{ padding: '24px', justifyContent: 'space-between' }}>
-        <ButtonError Color="#ffffff" icon={CancelOutlined} LabelName={'Batalkan'} onClick={handleClose} />
+        <ButtonError 
+            Color="#ffffff" 
+            icon={CancelOutlined} 
+            LabelName={'Batalkan'} 
+            onClick={() => {
+              resetForm(); // Reset form to original data
+              handleClose(); // Close the dialog
+            }}  
+        />
         <ButtonPrimary
           Color="#ffffff"
           icon={SaveOutlinedIcon}
           LabelName={'Simpan Perubahan'}
+          disabled={!formChanged} // Disable button if no changes in form
           onClick={() => {
             updateData(); // Execute the postData function
+            setChangesSaved(true); // Set changes as saved
             handleClose(); // Close the dialog
           }}
         />
