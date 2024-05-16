@@ -14,6 +14,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CancelOutlined from '@mui/icons-material/CancelOutlined';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import ButtonError from '../../ui-component/button/ButtonError';
+import dayjs from 'dayjs'; // Import dayjs for date manipulation
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -173,12 +174,12 @@ function AddEventModal({ open, handleClose }) {
     };
 
     const handleStartDateChange = (date) => {
-        console.log(date); // Check the date value
+        // console.log(date); // Check the date value
         setstartdate(date); // Update the state with the selected date
     };
 
     const handleEndDateChange = (date) => {
-        console.log(date); // Check the date value
+        // console.log(date); // Check the date value
         setenddate(date); // Update the state with the selected date
     };
 
@@ -190,6 +191,10 @@ function AddEventModal({ open, handleClose }) {
         try {
             const arrayquestion = selectedquestion.map(selectedquestion => selectedquestion.id)
             const arraymember = selectedcomitteemember.map(selectedcomitteemember => selectedcomitteemember.nippos)
+
+            // Menambahkan 1 hari pada startdate dan enddate
+            const adjustedStartDate = dayjs(startdate).add(1, 'day');
+            const adjustedEndDate = dayjs(enddate).add(1, 'day');
 
             console.log(startdate);
             // Make the POST request to the API endpoint
@@ -206,8 +211,8 @@ function AddEventModal({ open, handleClose }) {
                     kode_rumpun_jabatan: selectedJobFamily,
                     kuota: quota,
                     deskripsi: deskripsi,
-                    tanggal_mulai: startdate,
-                    tanggal_selesai: enddate,
+                    tanggal_mulai: adjustedStartDate,
+                    tanggal_selesai: adjustedEndDate,
                     level_jabatan: selectedJobLevel,
                     id_pertanyaan: arrayquestion,
                     nippos_komite: arraymember
@@ -261,9 +266,9 @@ function AddEventModal({ open, handleClose }) {
     const validateQuota = () => {
         if (isQuotaTouched) {
             if (quotaError) {
-                return "Kuota harus berupa angka" 
+                return "Talent Pool Quota harus berupa angka" 
             } else if (!quota) {
-                return "Kuota harus diisi"
+                return "Talent Pool Quota harus diisi"
             } 
         } else {
             return ""
@@ -299,7 +304,7 @@ function AddEventModal({ open, handleClose }) {
                             onChange={handleEventNameChange} // Handle input change
                             onBlur={() => setIsEventNameTouched(true)}
                             error={isEventNameTouched && !eventName}
-                            helperText={isEventNameTouched && !eventName ? "Nama Event tidak boleh kosong" : ""}
+                            helperText={isEventNameTouched && !eventName ? "Nama Event harus diisi" : ""}
                             
                         />
                         <TextField
@@ -311,7 +316,7 @@ function AddEventModal({ open, handleClose }) {
                             onChange={handleCommitteeChange}
                             onBlur={() => setIsCommitteeTouched(true)}
                             error={isCommitteeTouched && !selectedCommittee}
-                            helperText={isCommitteeTouched && !selectedCommittee ? "Tipe Komite Talent tidak boleh kosong" : ""}
+                            helperText={isCommitteeTouched && !selectedCommittee ? "Tipe Committee Talent harus diisi" : ""}
                         >
                             <MenuItem value="1">Committee 1</MenuItem>
                             <MenuItem value="2">Committee 2</MenuItem>
@@ -346,7 +351,7 @@ function AddEventModal({ open, handleClose }) {
                                     console.log("params", params);
                                 }}
                                 error={isJobLevelTouched && !selectedJobLevel.length > 0}
-                                helperText={isJobLevelTouched && !selectedJobLevel.length > 0 ? "Job Level tidak boleh kosong" : ""}
+                                helperText={isJobLevelTouched && !selectedJobLevel.length > 0 ? "Job Level harus diisi" : ""}
                                 {...params}
                                 label="Job Level" placeholder="Job Level" />
                             )}
@@ -360,7 +365,7 @@ function AddEventModal({ open, handleClose }) {
                             onChange={handleJobFamilyChange}
                             onBlur={() => setIsJobFamilyTouched(true)}
                             error={isJobFamilyTouched && !selectedJobFamily}
-                            helperText={isJobFamilyTouched && !selectedJobFamily? "Job Family tidak boleh kosong" : ""}
+                            helperText={isJobFamilyTouched && !selectedJobFamily? "Job Family harus diisi" : ""}
                         >
                             {jobFamilyOptions.map((jobFamily) => (
                                 <MenuItem key={jobFamily.kode_rumpun_jabatan} value={jobFamily.kode_rumpun_jabatan}>
@@ -378,7 +383,7 @@ function AddEventModal({ open, handleClose }) {
                             InputLabelProps={{ shrink: isHeadOfCommitteeFetched }} // Ensure label is always shrunk if data is fetched
                             onBlur={() => setIsKetuaKomiteTouched(true)}
                             error={isKetuaKomiteTouched && !selectedketuakomite}
-                            helperText={isKetuaKomiteTouched && !selectedketuakomite? "Head of Committe tidak boleh kosong" : ""}
+                            helperText={isKetuaKomiteTouched && !selectedketuakomite? "Head of Committe harus diisi" : ""}
                         />
 
                         <Autocomplete
@@ -388,9 +393,18 @@ function AddEventModal({ open, handleClose }) {
                             getOptionLabel={(option) => option.nama}
                             value={selectedcomitteemember}
                             disableCloseOnSelect
-                            onChange={(event, newValue) => {
-                                setSelectedCommitteemember(newValue);
-                            }}
+                            onChange={(event, newValue) => setSelectedCommitteemember(newValue)}
+                            renderOption={(props, option, { selected }) => (
+                                <li {...props}>
+                                    <Checkbox
+                                        icon={icon}
+                                        checkedIcon={checkedIcon}
+                                        style={{ marginRight: 8 }}
+                                        checked={selected}
+                                    />
+                                    {option.nama}
+                                </li>
+                            )}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -399,7 +413,7 @@ function AddEventModal({ open, handleClose }) {
                                     required
                                     onBlur={() => setIsComitteeMemberTouched(true)}
                                     error={isComitteeMemberTouched && !selectedcomitteemember.length > 0}
-                                    helperText={isComitteeMemberTouched && !selectedcomitteemember.length > 0? "Committee tidak boleh kosong" : ""}
+                                    helperText={isComitteeMemberTouched && !selectedcomitteemember.length > 0? "Committee harus diisi" : ""}
                                 />
                             )}
                         />
@@ -411,9 +425,18 @@ function AddEventModal({ open, handleClose }) {
                             getOptionLabel={(option) => option.pertanyaan}
                             value={selectedquestion}
                             disableCloseOnSelect
-                            onChange={(event, newValue) => {
-                                setselectedquestion(newValue);
-                            }}
+                            onChange={(event, newValue) => setselectedquestion(newValue)}
+                            renderOption={(props, option, { selected }) => (
+                                <li {...props}>
+                                    <Checkbox
+                                        icon={icon}
+                                        checkedIcon={checkedIcon}
+                                        style={{ marginRight: 8 }}
+                                        checked={selected}
+                                    />
+                                    {option.pertanyaan}
+                                </li>
+                            )}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -422,7 +445,7 @@ function AddEventModal({ open, handleClose }) {
                                     required
                                     onBlur={() => setIsQuestionTouched(true)}
                                     error={isQuestionTouched && !selectedquestion.length > 0}
-                                    helperText={isQuestionTouched && !selectedquestion.length > 0? "Questions tidak boleh kosong" : ""}
+                                    helperText={isQuestionTouched && !selectedquestion.length > 0? "Questions harus diisi" : ""}
                                 />
                             )}
                         />
@@ -471,12 +494,13 @@ function AddEventModal({ open, handleClose }) {
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
-                                            onBlur={() => setIsStartDateTouched(true)}
+                                            // onBlur={() => setIsStartDateTouched(true)}
                                             error={isStartDateTouched && !startdate}
-                                            helperText={isStartDateTouched && !startdate ? "Tanggal Mulai tidak boleh kosong" : ""}
+                                            helperText={isStartDateTouched && !startdate ? "Tanggal Mulai harus diisi" : ""}
                                         />
                                     )
                                 }
+                                minDate={dayjs()} // Set minimum date to today
                                 />
                             </DemoItem>
                         </LocalizationProvider>
@@ -493,12 +517,14 @@ function AddEventModal({ open, handleClose }) {
                                     renderInput={(params) => (
                                             <TextField
                                                 {...params}
-                                                onBlur={() => setIsEndDateTouched(true)}
+                                                // onBlur={() => setIsEndDateTouched(true)}
                                                 error={isEndDateTouched && !enddate}
-                                                helperText={isEndDateTouched && !enddate ? "Tanggal Berakhir tidak boleh kosong" : ""}
+                                                helperText={isEndDateTouched && !enddate ? "Tanggal Berakhir harus diisi" : ""}
                                             />
                                         )
                                     }
+                                    // minDate={dayjs(startdate).add(1, 'day')} // Set minimum end date to the day after the start date
+                                    minDate={dayjs(startdate).isValid() ? dayjs(startdate).add(1, 'day') : dayjs()} // Set minimum end date to the day after the start date or today if start date is invalid
                                 />
                             </DemoItem>
                         </LocalizationProvider>
@@ -513,7 +539,7 @@ function AddEventModal({ open, handleClose }) {
                             required // Tandai bahwa field ini harus diisi
                             onBlur={() => setIsDeskripsiTouched(true)}
                             error={isDeskripsiTouched && !deskripsi} // Set error jika deskripsi kosong
-                            helperText={isDeskripsiTouched && !deskripsi && "Deskripsi tidak boleh kosong"} // Tampilkan pesan error jika deskripsi kosong
+                            helperText={isDeskripsiTouched && !deskripsi && "Deskripsi harus diisi"} // Tampilkan pesan error jika deskripsi kosong
                         />
                     </div>
                 </Box>
