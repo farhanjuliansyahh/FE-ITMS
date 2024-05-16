@@ -7,8 +7,6 @@ import { AddCircleOutline, GppGoodOutlined, PersonOffOutlined, RestartAlt, Resta
 import { IconFileDownload } from '@tabler/icons-react';
 
 import MainCard from '../cards/MainCard';
-import EventDetailSearchSection from '../button/EventDetailSearchSection';
-import SearchResetButton from '../button/SearchResetButton';
 import KomiteUnitListButton from '../button/KomiteUnitListButton';
 import ButtonPrimary from '../button/ButtonPrimary';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
@@ -108,10 +106,10 @@ const TalentSource = ({eventid}) => {
     console.log("tab", value);
     // Determine which dataset to use based on the active tab
     if (value === 0) {
-      dataToDownload = rowsfalse;
+      dataToDownload = resetRowsFalse;
       filename = `Talent_Source_TidakTerdaftar_${eventid}.csv`;
     } else if (value === 1) {
-      dataToDownload = rowstrue;
+      dataToDownload = resetRowsTrue;
       filename = `Talent_Source_Terdaftar_${eventid}.csv`;
     }
   
@@ -234,6 +232,27 @@ const TalentSource = ({eventid}) => {
     resetKomiteUnitInputFalse();
   };
 
+  const filteredRowsFalse = rowsfalse.filter((row) => {
+    const namaMatchFalse = !selectedNamaFalse || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaFalse.toLowerCase())); // Add null check for row.nama
+    const nipposMatchFalse = !selectedNipposFalse || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposFalse.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchFalse = !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchFalse = !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase())); // Add null check for row.nippos
+
+    return (!selectedNamaFalse || namaMatchFalse) 
+    && (!selectedNipposFalse || nipposMatchFalse) 
+    && (!selectedJobLevelFalse || jobLevelMatchFalse) 
+    && (!selectedKomiteUnitFalse || komiteUnitMatchFalse);
+  });
+
+  const resetRowIndexFalse = (filteredRowsFalse) => {
+    return filteredRowsFalse.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRowsFalse = resetRowIndexFalse(filteredRowsFalse);
+
   // TERDAFTAR
   const listNamaTrue = [...new Set(rowstrue.map(row => row.Nama))]
   const listNipposTrue = [...new Set(rowstrue.map(row => row.Nippos))];
@@ -267,6 +286,28 @@ const TalentSource = ({eventid}) => {
     resetJobLevelInputTrue();
     resetKomiteUnitInputTrue();
   };
+
+  const filteredRowsTrue = rowstrue.filter((row) => {
+    const namaMatchTrue = !selectedNamaTrue || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); // Add null check for row.nama
+    const nipposMatchTrue = !selectedNipposTrue || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchTrue = !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
+
+    return (!selectedNamaTrue || namaMatchTrue) 
+    && (!selectedNipposTrue || nipposMatchTrue) 
+    && (!selectedJobLevelTrue || jobLevelMatchTrue) 
+    && (!selectedKomiteUnitTrue || komiteUnitMatchTrue);
+  });
+
+  const resetRowIndexTrue = (filteredRowsTrue) => {
+    return filteredRowsTrue.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
+
 
   return (
     <>
@@ -309,13 +350,9 @@ const TalentSource = ({eventid}) => {
             <TalentSourceTable 
                 checkboxSelection={true} 
                 filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
-                rows={rowsfalse}
+                rows={resetRowsFalse}
                 selectedRows={selectedRows} 
                 onSelectedRowsChange={handleSelectedRowsChange}
-                searchNama={selectedNamaFalse} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-                searchNippos={selectedNipposFalse}
-                searchJobLevel={selectedJobLevelFalse}
-                searchKomiteUnit={selectedKomiteUnitFalse}
                 eventid={eventidactive} 
                 getkandidatfalse = {getkandidatfalse}
                 getkandidattrue  = {getkandidattrue}
@@ -350,12 +387,8 @@ const TalentSource = ({eventid}) => {
             <TalentSourceTable 
                 checkboxSelection={false} 
                 filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
-                rows ={rowstrue}
+                rows ={resetRowsTrue}
                 eventid={eventidactive} 
-                searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-                searchNippos={selectedNipposTrue}
-                searchJobLevel={selectedJobLevelTrue}
-                searchKomiteUnit={selectedKomiteUnitTrue}
             />
           </Box>
         </CustomTabPanel>
