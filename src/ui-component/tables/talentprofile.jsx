@@ -102,36 +102,12 @@ const columns = [
   { field: 'Komite Unit', headerName: 'Komite Unit', width: 180 },
 ];
 
-// const rows = [
-//   { id: 1, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengembangan Join Operation', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABD HAFID' },
-//   { id: 2, nama: 'Muhamad Arsyi', nippos: '998494379', posisi: 'Asisten Manajer Acquisition Biller', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDU SOMAD' },
-//   { id: 3, nama: 'Adinda', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Remittance LN', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDUL JAMIL' },
-//   { id: 4, nama: 'Niken Wijaya', nippos: '998494379', posisi: 'Asisten Manajer Penjualan dan Kemitraan Pospay', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ABDUL WAHAB' },
-//   { id: 5, nama: 'Sri Hartini', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ACEP RUDI SUPRIADI' },
-//   { id: 6, nama: 'Ayu Ning Sukarman', nippos: '998494379', posisi: 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', joblevel: 'D3', rumpunjabatan: 'Bisnis', commitmentletter: 'Belum Submit', paktaintegritas: 'Belum Submit', komiteunit: 'ACEP RUDI SUPRIADI' },
-// ];
-
 export default function TalentProfileTable({ 
   filter, 
   commitmentLetterValue, 
   paktaIntegritasValue, 
-  rows,
-  searchNama, // Receive the search term as a prop
-  searchNippos,
-  searchJobLevel,
-  searchKomiteUnit
+  rows
 }) {
-  const filteredRows = rows.filter((row) => {
-    const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
-    const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
-    const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
-    const komiteUnitMatch = !searchKomiteUnit || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(searchKomiteUnit.toLowerCase())); // Add null check for row.nippos
-
-    return (!searchNama || namaMatch) 
-    && (!searchNippos || nipposMatch) 
-    && (!searchJobLevel || jobLevelMatch) 
-    && (!searchKomiteUnit || komiteUnitMatch);
-  });
 
   const [filterModel, setFilterModel] = React.useState({
     items: [{ field: 'nama', operator: 'contains', value: '' }],
@@ -168,7 +144,7 @@ export default function TalentProfileTable({
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={filteredRows.map(row => ({
+        rows={rows.map(row => ({
           ...row,
           commitmentletter: commitmentLetterValue,
           paktaintegritas: paktaIntegritasValue
