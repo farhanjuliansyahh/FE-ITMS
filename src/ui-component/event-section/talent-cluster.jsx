@@ -5,10 +5,6 @@ import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
 import MainCard from '../../ui-component/cards/MainCard';
-import EventDetailSearchSection from '../../ui-component/button/EventDetailSearchSection';
-import SearchResetButton from '../../ui-component/button/SearchResetButton';
-import SearchIcon from '@mui/icons-material/Search';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { IconFileDownload } from '@tabler/icons-react';
 import { RestartAltOutlined } from '@mui/icons-material';
 
@@ -154,6 +150,62 @@ const TalentCluster = ({eventid}) => {
     resetKategoriMatrixInputTrue();
   };
 
+  
+  const filteredRowsTrue = clusterRow.filter((row) => {
+    const namaMatchTrue = !selectedNamaTrue || (row.nama && row.nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); // Add null check for row.nama
+    const nipposMatchTrue = !selectedNipposTrue || (row.nippos && row.nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); 
+    const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); 
+    const KategoriMatrixMatchTrue = !selectedKategoriMatrixTrue || (row['Matriks Kategori Akhir'] && row['Matriks Kategori Akhir'].toLowerCase().includes(selectedKategoriMatrixTrue.toLowerCase()));
+
+    return namaMatchTrue 
+        && nipposMatchTrue 
+        && jobLevelMatchTrue 
+        && KategoriMatrixMatchTrue;
+  });
+
+  const resetRowIndexTrue = (filteredRowsTrue) => {
+    return filteredRowsTrue.map((row, index) => ({
+      ...row,
+      id: index + 1, 
+    }));
+  };
+
+  const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
+
+  const handleDownloadCSV = () => {
+    let dataToDownload = [];
+    let filename = '';
+
+    dataToDownload = resetRowsTrue;
+    filename = `Talent_Cluster_Karyawan_${eventid}.csv`;
+
+    // Create a CSV header with column names
+    const headers = Object.keys(dataToDownload[0]);
+    const idIndex = headers.indexOf('id');
+    if (idIndex !== -1) {
+      headers.splice(idIndex, 1); // Remove 'id' from headers
+      headers.unshift('id'); // Insert 'id' at the beginning
+    }
+    const headerRow = headers.join(',');
+
+    // Convert data to CSV format
+    const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+      dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+
+    // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+
+    // Trigger the download
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -169,7 +221,7 @@ const TalentCluster = ({eventid}) => {
                 Tabel Karyawan
             </Typography>
             <div style={{ flex: '1' }}> </div>
-            <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+            <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
           </FlexContainer>
           
           <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
@@ -184,12 +236,8 @@ const TalentCluster = ({eventid}) => {
          
           <TalentClusterTable 
             filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}} 
-            rows={clusterRow} 
+            rows={resetRowsTrue} 
             counts={categoryCounts}
-            searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-            searchNippos={selectedNipposTrue}
-            searchJobLevel={selectedJobLevelTrue}
-            searchKategoriMatrix={selectedKategoriMatrixTrue}
           />
           </Box>
 

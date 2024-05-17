@@ -86,11 +86,6 @@ const TalentPool = ({eventid}) => {
     console.log(filterNama);
   },[filterNama])
 
-  // const handleButtonClick = () => {
-  //   // Logic for button click
-  //   console.log('Button clicked!');
-  // };
-
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -104,7 +99,7 @@ const TalentPool = ({eventid}) => {
   const FlexContainer = styled('div')({
     display: 'flex',
     alignItems: 'center',
-    gap: '16px', // Adjust the gap between elements as needed
+    gap: '16px', 
     paddingBottom: '24px',
   });
 
@@ -141,8 +136,63 @@ const TalentPool = ({eventid}) => {
     resetJobLevelInputTrue();
     resetStatusInputTrue();
   };
+
+  const filteredRowsTrue = poolrow.filter((row) => {
+    const namaMatchTrue = !selectedNamaTrue || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); 
+    const nipposMatchTrue = !selectedNipposTrue || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); 
+    const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); 
+    // const statusMatchTrue = !selectedStatusTrue || (row['Status'] && row['Status'].toLowerCase().includes(selectedStatusTrue.toLowerCase())); 
+
+    return namaMatchTrue 
+        && nipposMatchTrue 
+        && jobLevelMatchTrue 
+        // && statusMatchTrue;
+  });
+
+  const resetRowIndexTrue = (filteredRowsTrue) => {
+    return filteredRowsTrue.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
+
   const poolLength = poolrow.length
 
+  const handleDownloadCSV = () => {
+    let dataToDownload = [];
+    let filename = '';
+    
+    dataToDownload = resetRowsTrue;
+    filename = `Talent_Pool_${eventid}.csv`;
+
+    // Create a CSV header with column names
+    const headers = Object.keys(dataToDownload[0]);
+    const idIndex = headers.indexOf('id');
+    if (idIndex !== -1) {
+      headers.splice(idIndex, 1); // Remove 'id' from headers
+      headers.unshift('id'); // Insert 'id' at the beginning
+    }
+    const headerRow = headers.join(',');
+
+    // Convert data to CSV format
+    const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+      dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+
+    // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+
+    // Trigger the download
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+  };
 
   return (
     <>
@@ -162,7 +212,7 @@ const TalentPool = ({eventid}) => {
         
             <div style={{ flex: '1' }}> </div>
 
-            <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+            <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV} />
           </FlexContainer>
           
           <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
@@ -176,18 +226,11 @@ const TalentPool = ({eventid}) => {
             </div>
          
           <TalentPoolTable 
-              filter={{nama:filterNama, nippos:filterNippos, job:filterJob, status:filterStatus}} 
-              rows={poolrow}
-              searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-              searchNippos={selectedNipposTrue}
-              searchJobLevel={selectedJobLevelTrue}
-              searchStatus={selectedStatusTrue}
+              rows={resetRowsTrue}
             />
           </Box>
-
     
         <AddEventModal open={open} handleClose={handleClose} />
-
 
       </MainCard>
     </>

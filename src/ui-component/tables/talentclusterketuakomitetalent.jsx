@@ -193,7 +193,7 @@ const TalentClusterKetuaKomiteTalentTable = ({
                         onClick={() => handleOpenFirstModal(nippos,kategoriMatrixAwal)} // Pass nippos to handleOpenFirstModal
                         disabled={disabled}
                     >
-                        Ubah Matrix
+                        Ubah Kategori
                     </Button>
                 );
             },
