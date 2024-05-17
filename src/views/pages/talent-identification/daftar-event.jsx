@@ -153,11 +153,7 @@ const DaftarEvent = () => {
         title="Daftar Event"
         secondary={
           <Stack direction="row" spacing={2}>
-<<<<<<< Updated upstream
-              <CustomSearch field={uniqueNamaEvents} label={'Cari Nama Event'} onSearch={setSelectedNamaEvent} value={selectedNamaEvent} />
-=======
             <CustomSearch field={uniqueNamaEvents} label={'Cari Nama Event'} onSearch={setSelectedNamaEvent} value={selectedNamaEvent} />
->>>>>>> Stashed changes
             <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Event'} onClick={handleOpen} />
           </Stack>
         }

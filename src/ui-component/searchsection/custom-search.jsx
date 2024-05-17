@@ -58,10 +58,6 @@ const CustomSearch = ({
         }
         value={searchTerm}
         onChange={handleInputChange}
-<<<<<<< Updated upstream
-        // autoFocus // Ensure the input field is focused
-=======
->>>>>>> Stashed changes
       />
     </Box>
   );
