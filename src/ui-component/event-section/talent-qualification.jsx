@@ -8,11 +8,6 @@ import MainCard from '../../ui-component/cards/MainCard';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
 import { RestartAltOutlined } from '@mui/icons-material';
-
-import EventDetailSearchSection from '../../ui-component/button/EventDetailSearchSection';
-import SearchResetButton from '../../ui-component/button/SearchResetButton';
-import SearchIcon from '@mui/icons-material/Search';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { IconFileDownload } from '@tabler/icons-react';
 import ButtonPrimary from '../button/ButtonPrimary';
 import TalentQualificationTable from '../../ui-component/tables/talentqualification';
@@ -208,15 +203,16 @@ const TalentQualification = ({ eventid, kodekomite }) => {
     let dataToDownload = [];
     let filename = '';
 
-    console.log("tab", value);
     // Determine which dataset to use based on the active tab
     if (value === 0) {
-      dataToDownload = quallolosRow;
+      dataToDownload = resetRowsTrue;
       filename = `Talent_Qualification_Lulus_${eventid}.csv`;
     } else if (value === 1) {
-      dataToDownload = qualRow;
+      dataToDownload = resetRowsFalse;
       filename = `Talent_Qualification_TidakLulus_${eventid}.csv`;
     }
+
+
 
     // Create a CSV header with column names
     const headers = Object.keys(dataToDownload[0]);
@@ -279,6 +275,28 @@ const TalentQualification = ({ eventid, kodekomite }) => {
     resetKomiteUnitInputFalse();
   };
 
+  const filteredRowsFalse = qualRow.filter((row) => {
+  const namaMatchFalse = !selectedNamaFalse || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaFalse.toLowerCase())); 
+  const nipposMatchFalse = !selectedNipposFalse || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposFalse.toLowerCase())); 
+  const jobLevelMatchFalse = !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase())); 
+  const komiteUnitMatchFalse = !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase())); 
+
+  return namaMatchFalse 
+      && nipposMatchFalse 
+      && jobLevelMatchFalse 
+      && komiteUnitMatchFalse;
+});
+
+
+  const resetRowIndexFalse = (filteredRowsFalse) => {
+    return filteredRowsFalse.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRowsFalse = resetRowIndexFalse(filteredRowsFalse);
+
   // TERKUALIFIKASI
   const listNamaTrue = [...new Set(quallolosRow.map((row) => row.Nama))];
   const listNipposTrue = [...new Set(quallolosRow.map((row) => row.Nippos))];
@@ -312,6 +330,27 @@ const TalentQualification = ({ eventid, kodekomite }) => {
     resetJobLevelInputTrue();
     resetKomiteUnitInputTrue();
   };
+
+  const filteredRowsTrue = quallolosRow.filter((row) => {
+    const namaMatchTrue = !selectedNamaTrue || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); // Add null check for row.nama
+    const nipposMatchTrue = !selectedNipposTrue || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchTrue = !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
+
+    return namaMatchTrue 
+        && nipposMatchTrue 
+        && jobLevelMatchTrue 
+        && komiteUnitMatchTrue;
+  });
+
+  const resetRowIndexTrue = (filteredRowsTrue) => {
+    return filteredRowsTrue.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
 
   return (
     <>
@@ -352,11 +391,7 @@ const TalentQualification = ({ eventid, kodekomite }) => {
                 minimumPmsQualified={pmsminimal}
                 minimumAkhlakQualified={akhlakminimal}
                 minimumLearningAgilityQualified={laminimal}
-                rows={quallolosRow}
-                searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-                searchNippos={selectedNipposTrue}
-                searchJobLevel={selectedJobLevelTrue}
-                searchKomiteUnit={selectedKomiteUnitTrue}
+                rows={resetRowsTrue}
               />
             </Box>
           </CustomTabPanel>
@@ -386,11 +421,7 @@ const TalentQualification = ({ eventid, kodekomite }) => {
                 minimumPmsQualified={pmsminimal}
                 minimumAkhlakQualified={akhlakminimal}
                 minimumLearningAgilityQualified={laminimal}
-                rows={qualRow}
-                searchNama={selectedNamaFalse} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-                searchNippos={selectedNipposFalse}
-                searchJobLevel={selectedJobLevelFalse}
-                searchKomiteUnit={selectedKomiteUnitFalse}
+                rows={resetRowsFalse}
               />
             </Box>
           </CustomTabPanel>

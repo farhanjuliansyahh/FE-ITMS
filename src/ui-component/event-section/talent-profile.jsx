@@ -7,15 +7,10 @@ import PropTypes from 'prop-types';
 import MainCard from '../../ui-component/cards/MainCard';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
-import EventDetailSearchSection from '../../ui-component/button/EventDetailSearchSection';
-import SearchResetButton from '../../ui-component/button/SearchResetButton';
-import SearchIcon from '@mui/icons-material/Search';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { RestartAltOutlined } from '@mui/icons-material';
 
 import { IconFileDownload } from '@tabler/icons-react';
 import ButtonPrimary from '../button/ButtonPrimary';
-import AdminSearchSectionGroup from '../../ui-component/button/AdminSearchButtonGroup';
 import TalentProfileTable from '../../ui-component/tables/talentprofile';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import KonfirmasiSubmitTalentProfile from '../../ui-component/modal/konfirmasi-submit-talent-profile';
@@ -248,10 +243,10 @@ const TalentProfile = ({eventid}) => {
     const jobLevelMatchFalse = !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase())); // Add null check for row.nippos
     const komiteUnitMatchFalse = !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase())); // Add null check for row.nippos
 
-    return (!selectedNamaFalse || namaMatchFalse) 
-    && (!selectedNipposFalse || nipposMatchFalse) 
-    && (!selectedJobLevelFalse || jobLevelMatchFalse) 
-    && (!selectedKomiteUnitFalse || komiteUnitMatchFalse);
+    return namaMatchFalse 
+        && nipposMatchFalse 
+        && jobLevelMatchFalse 
+        && komiteUnitMatchFalse;
   });
 
   const resetRowIndexFalse = (filteredRowsFalse) => {
@@ -304,10 +299,10 @@ const TalentProfile = ({eventid}) => {
     const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
     const komiteUnitMatchTrue = !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
 
-    return (!selectedNamaTrue || namaMatchTrue) 
-    && (!selectedNipposTrue || nipposMatchTrue) 
-    && (!selectedJobLevelTrue || jobLevelMatchTrue) 
-    && (!selectedKomiteUnitTrue || komiteUnitMatchTrue);
+    return namaMatchTrue 
+        && nipposMatchTrue 
+        && jobLevelMatchTrue 
+        && komiteUnitMatchTrue;
   });
 
   const resetRowIndexTrue = (filteredRowsTrue) => {

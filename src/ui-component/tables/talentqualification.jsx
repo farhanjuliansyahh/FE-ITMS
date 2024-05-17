@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
-// const minimumCompetencyQualified = 3
-// const minimumPmsQualified = 60
-// const minimumAkhlakQualified = 3
-// const minimumLearningAgilityQualified = 3
-
 const getColorStyle = (value, minimumValueQualified) => {
     let color, backgroundColor;
     if (value < minimumValueQualified) {
@@ -19,19 +14,14 @@ const getColorStyle = (value, minimumValueQualified) => {
     return { color, backgroundColor };
 };
   
-
 export default function TalentQualificationTable({
   rows,
   minimumCompeten5cyQualified,
   minimumPmsQualified,
   minimumAkhlakQualified,
   minimumLearningAgilityQualified,
-  searchNama, // Receive the search term as a prop
-  searchNippos,
-  searchJobLevel,
-  searchKomiteUnit
 }) {
-  console.log(minimumCompeten5cyQualified,minimumPmsQualified,minimumAkhlakQualified,minimumLearningAgilityQualified);
+  // console.log(minimumCompeten5cyQualified,minimumPmsQualified,minimumAkhlakQualified,minimumLearningAgilityQualified);
   const columns = [
       { field: 'id', headerName: 'No', width: 70 },
       { field: 'Nama', headerName: 'Nama', width: 130 },
@@ -115,22 +105,10 @@ export default function TalentQualificationTable({
       },
     ];
 
-    const filteredRows = rows.filter((row) => {
-      const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
-      const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
-      const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
-      const komiteUnitMatch = !searchKomiteUnit || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(searchKomiteUnit.toLowerCase())); // Add null check for row.nippos
-  
-      return (!searchNama || namaMatch) 
-      && (!searchNippos || nipposMatch) 
-      && (!searchJobLevel || jobLevelMatch) 
-      && (!searchKomiteUnit || komiteUnitMatch);
-    });
-
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={filteredRows}
+        rows={rows}
         columns={columns}
         initialState={{
           pagination: {
