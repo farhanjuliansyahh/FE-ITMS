@@ -247,6 +247,61 @@ daysRow.forEach(item => {
     resetKomiteUnitInputTrue();
   };
 
+  const filteredRowsTrue = daysRow.filter((row) => {
+    const namaMatchTrue = !selectedNamaTrue || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); // Add null check for row.nama
+    const nipposMatchTrue = !selectedNipposTrue || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchTrue = !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
+
+    return namaMatchTrue 
+        && nipposMatchTrue 
+        && jobLevelMatchTrue 
+        && komiteUnitMatchTrue;
+  });
+
+  const resetRowIndexTrue = (filteredRowsTrue) => {
+    return filteredRowsTrue.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
+
+  const handleDownloadCSV = () => {
+    let dataToDownload = [];
+    let filename = '';
+    
+    dataToDownload = resetRowsTrue;
+    filename = `Talent_Days_Karyawan_${eventid}.csv`;
+
+    // Create a CSV header with column names
+    const headers = Object.keys(dataToDownload[0]);
+    const idIndex = headers.indexOf('id');
+    if (idIndex !== -1) {
+      headers.splice(idIndex, 1); // Remove 'id' from headers
+      headers.unshift('id'); // Insert 'id' at the beginning
+    }
+    const headerRow = headers.join(',');
+
+    // Convert data to CSV format
+    const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+      dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+
+    // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+
+    // Trigger the download
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -291,7 +346,8 @@ daysRow.forEach(item => {
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoItem>
                                 <DatePicker
-                                disableFuture
+                                disablePast
+                                format="DD-MM-YYYY"
                                 views={['year', 'month', 'day']}
                                 InputLabelProps={{ shrink: true }}
                                 label="Tanggal"
@@ -374,7 +430,7 @@ daysRow.forEach(item => {
 
               <div style={{ flex: '1' }}> </div>
               <ButtonOptional icon={DoneAllOutlinedIcon} LabelName={'Isi Semua Nilai'} onClick={handleOpenIsiSemuaNilai} disabled={isDisabled}/>
-              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
 
             </FlexContainer>
 
@@ -389,11 +445,7 @@ daysRow.forEach(item => {
             </div>
           
             <TalentDaysKaryawanTable 
-              rows={daysRow} 
-              searchNama={selectedNamaTrue} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
-              searchNippos={selectedNipposTrue}
-              searchJobLevel={selectedJobLevelTrue}
-              searchKomiteUnit={selectedKomiteUnitTrue}
+              rows={resetRowsTrue} 
             />
 
           </Box>          

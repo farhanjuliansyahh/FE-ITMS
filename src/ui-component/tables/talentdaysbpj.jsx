@@ -20,6 +20,15 @@ export default function TalentDaysBPJTable({
     && (!searchNippos || nipposMatch);
   });
 
+  const resetRowIndex = (filteredRows) => {
+    return filteredRows.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRows = resetRowIndex(filteredRows);
+
   const [HapusBPJOpen, setHapusBPJOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState(null); // State to store selected nippos
 
@@ -74,7 +83,7 @@ export default function TalentDaysBPJTable({
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={filteredRows}
+        rows={resetRows}
         columns={columns}
         initialState={{
           pagination: {
