@@ -6,21 +6,8 @@ const KaryawanKomiteUnit = ({
     rows,
     checkboxSelection, 
     selectedRows, 
-    onSelectedRowsChange,
-    searchNama, 
-    searchNippos,
-    searchJobLevel,
+    onSelectedRowsChange
 }) => {
-
-    const filteredRows = rows.filter((row) => {
-        const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); 
-        const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); 
-        const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); 
-
-        return (!searchNama || namaMatch) 
-        && (!searchNippos || nipposMatch) 
-        && (!searchJobLevel || jobLevelMatch) 
-    });
 
     const handleSelectionChange = (newSelection) => {
         onSelectedRowsChange(newSelection); // Pass the selectionModel directly
@@ -39,7 +26,7 @@ const KaryawanKomiteUnit = ({
     return (
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid
-                rows={filteredRows}
+                rows={rows}
                 columns={columns}
                 initialState={{
                     pagination: {
