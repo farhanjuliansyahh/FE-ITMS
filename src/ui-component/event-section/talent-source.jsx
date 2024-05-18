@@ -51,10 +51,6 @@ function a11yProps(index) {
 const TalentSource = ({eventid}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
-  const [filterNama, setFilterNama] = useState('');
-  const [filterNippos, setFilterNippos] = useState('');
-  const [filterJob, setFilterJob] = useState('');
-  const [filterKomite, setFilterKomite] = useState('');
   const [rowstrue, setRowstrue] = useState([]);
   const [rowsfalse, setRowsfalse] = useState([])
   const [selectedRows, setSelectedRows] = useState([]);
@@ -143,10 +139,6 @@ const TalentSource = ({eventid}) => {
   useEffect(() => {
     setLoading(false);
   }, []);
-
-  useEffect(()=>{
-    console.log(filterNama);
-  },[filterNama])
 
   const FlexContainer = styled('div')({
     display: 'flex',
@@ -349,7 +341,6 @@ const TalentSource = ({eventid}) => {
 
             <TalentSourceTable 
                 checkboxSelection={true} 
-                filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
                 rows={resetRowsFalse}
                 selectedRows={selectedRows} 
                 onSelectedRowsChange={handleSelectedRowsChange}
@@ -386,7 +377,6 @@ const TalentSource = ({eventid}) => {
 
             <TalentSourceTable 
                 checkboxSelection={false} 
-                filter={{nama:filterNama, nippos:filterNippos, job:filterJob, komite:filterKomite}} 
                 rows ={resetRowsTrue}
                 eventid={eventidactive} 
             />
