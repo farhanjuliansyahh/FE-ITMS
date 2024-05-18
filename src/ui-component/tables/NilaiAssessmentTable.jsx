@@ -11,7 +11,6 @@ const StyledTableCell = styled(TableCell)(() => ({
     color: '#1F1F1F',
     fontSize: 14,
     fontWeight: 600,
-    border: 0
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
@@ -130,7 +129,6 @@ function FilterButton({ itemsPerPage, setItemsPerPage }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleItemClick(3)}>3</MenuItem> 
         <MenuItem onClick={() => handleItemClick(5)}>5</MenuItem>
         <MenuItem onClick={() => handleItemClick(10)}>10</MenuItem>
       </Menu>

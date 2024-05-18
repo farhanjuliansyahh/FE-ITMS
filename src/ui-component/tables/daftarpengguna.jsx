@@ -132,6 +132,7 @@ export default function DaftarPenggunaTabel({
   searchNama, 
   searchNippos,
   searchPeran,
+  onFilteredData, // Receive the callback function
 }) {
   const [updatedRows, setUpdatedRows] = useState([]);
 
@@ -185,6 +186,10 @@ export default function DaftarPenggunaTabel({
   //buat constanta yang isinya hasil filter yang indexnya udah di reset:
   const resetRows = resetRowIndex(filteredRows);
   
+  useEffect(() => {
+    onFilteredData(resetRows);
+  }, [resetRows, onFilteredData]);
+
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <DataGrid

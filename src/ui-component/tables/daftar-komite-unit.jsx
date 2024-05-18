@@ -11,7 +11,6 @@ const StyledTableCell = styled(TableCell)(() => ({
     color: '#1F1F1F',
     fontSize: 14,
     fontWeight: 600,
-    border: 0
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
@@ -41,15 +40,24 @@ export default function TabelDaftarAnggotaKomiteUnit({
   rows
   }) {
 
-    const filteredRows = rows.filter((row) => {
-      const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
-      const jabatanMatch = !searchJabatan || (row.jabatan && row.jabatan.toLowerCase().includes(searchJabatan.toLowerCase())); // Add null check for row.nippos
-      const kantorMatch = !searchKantor || (row.kantor && row.kantor.toLowerCase().includes(searchKantor.toLowerCase())); // Add null check for row.nippos
-  
-      return (!searchNama || namaMatch) 
-      && (!searchJabatan || jabatanMatch) 
-      && (!searchKantor || kantorMatch);
-    });
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+    const jabatanMatch = !searchJabatan || (row.jabatan && row.jabatan.toLowerCase().includes(searchJabatan.toLowerCase())); // Add null check for row.nippos
+    const kantorMatch = !searchKantor || (row.kantor && row.kantor.toLowerCase().includes(searchKantor.toLowerCase())); // Add null check for row.nippos
+
+    return (!searchNama || namaMatch) 
+    && (!searchJabatan || jabatanMatch) 
+    && (!searchKantor || kantorMatch);
+  });
+
+  const resetRowIndex = (filteredRows) => {
+    return filteredRows.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRows = resetRowIndex(filteredRows);
 
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5); // Default items per page
@@ -82,7 +90,7 @@ export default function TabelDaftarAnggotaKomiteUnit({
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredRows.slice(startIndex, endIndex).map((row) => (
+              {resetRows.slice(startIndex, endIndex).map((row) => (
                 <TableRow key={row.id}>
                   <StyledTableCell>{row.id}</StyledTableCell>
                   <StyledTableCell>{row.nama}</StyledTableCell>
@@ -151,7 +159,6 @@ function FilterButton({ itemsPerPage, setItemsPerPage }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleItemClick(3)}>3</MenuItem> 
         <MenuItem onClick={() => handleItemClick(5)}>5</MenuItem>
         <MenuItem onClick={() => handleItemClick(10)}>10</MenuItem>
       </Menu>
