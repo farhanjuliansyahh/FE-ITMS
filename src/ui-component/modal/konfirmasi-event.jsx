@@ -12,7 +12,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua }) {
-  console.log("ketua", ketua);
     const [deadlinesource, setdeadlinesource] = useState('');
     const [activejoblevel, setactivejoblevel] = useState(['']);
     const [activejobfam, setactivejobfam]     = useState('');
@@ -65,6 +64,12 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
                 deadline_4: null,
                 deadline_5: null,
                 deadline_6: null,
+                startdate_1: new Date(),
+                startdate_2: null,
+                startdate_3: null,
+                startdate_4: null,
+                startdate_5: null,
+                startdate_6: null,
                 status:2
             }) // Convert the bodyData object to a JSON string
           }) 
