@@ -14,18 +14,18 @@ import { EditOutlined } from '@mui/icons-material';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.action.hover,
-    color: theme.palette.common.black,
+    color: theme.palette.common.black
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    padding: '12px 18px',
-  },
+    padding: '12px 18px'
+  }
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:last-child td, &:last-child th': {
-    border: 0,
-  },
+    border: 0
+  }
 }));
 
 const DaftarPertanyaanTable = ({ pertanyaan, handleSaveQuestion }) => {
@@ -60,13 +60,13 @@ const DaftarPertanyaanTable = ({ pertanyaan, handleSaveQuestion }) => {
   };
 
   return (
-    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px'}}>
+    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 300, tableLayout: 'fixed' }} aria-label="Daftar Pertanyaan Table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Pertanyaan Event</StyledTableCell>
-              <StyledTableCell align='right'>Aksi</StyledTableCell>
+              <StyledTableCell align="right">Aksi</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -100,7 +100,7 @@ const DaftarPertanyaanTable = ({ pertanyaan, handleSaveQuestion }) => {
 
 DaftarPertanyaanTable.propTypes = {
   pertanyaan: PropTypes.array.isRequired,
-  handleSaveQuestion: PropTypes.func.isRequired,
+  handleSaveQuestion: PropTypes.func.isRequired
 };
 
 export default DaftarPertanyaanTable;

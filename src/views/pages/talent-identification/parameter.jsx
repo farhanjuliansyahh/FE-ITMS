@@ -239,11 +239,26 @@ const ParameterTalent = () => {
     return nextId++;
   };
 
-  // Define the array of questions with auto-incrementing IDs
-  const [pertanyaan, setPertanyaan] = useState([
-    { id: generateId(), text: 'Motivasi' },
-    { id: generateId(), text: 'Rencana karir 5 tahun ke depan' }
-  ]);
+  // Ini fetch buat get all question
+  const [pertanyaan, setPertanyaan] = useState([]);
+  const getQuestions = () => {
+    fetch(`http://localhost:4000/getquestion`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with API data
+        setPertanyaan(data.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
+  useEffect(() => {
+    getQuestions();
+  }, []); // Empty dependency array to run effect only once
+
+  // console.log('pertanyaan: ', pertanyaan);
+
   const [openAddQuestionModal, setOpenAddQuestionModal] = useState(false);
 
   const handleOpenAddQuestionModal = () => {
@@ -262,14 +277,50 @@ const ParameterTalent = () => {
     setPertanyaan([...pertanyaan, newQuestion]);
   };
 
+  const updateQuestion = (pertanyaanChange) => {
+    return fetch('http://localhost:4000/updatequestion', {
+      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+      headers: {
+        'Content-Type': 'application/json' // Specify the content type
+      },
+      body: JSON.stringify({
+        updates: pertanyaanChange
+      }) // Convert the bodyData object to a JSON string
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
+
+  const [pertanyaanChange, setPertanyaanChange] = useState([]);
+
   //Save question automaticcaly per row
   const handleSaveQuestionAutomatic = (id, newText) => {
     const updatedPertanyaan = pertanyaan.map((question) => (question.id === id ? { ...question, text: newText } : question));
     setPertanyaan(updatedPertanyaan);
     setChangesMade(true);
+
+    // Create a new dictionary with id and newText
+    const newChange = { id, pertanyaan: newText };
+
+    // Update the pertanyaanChange array with the new dictionary
+    setPertanyaanChange((prevChanges) => [...prevChanges, newChange]);
   };
+
+  console.log('diubah: ', pertanyaanChange);
+
   useEffect(() => {
-    console.log('Rows:', pertanyaan);
+    // console.log('Rows:', pertanyaan);
   }, [pertanyaan]);
 
   // Save all the changes of questions using Simpan Button and show Success Modal
@@ -282,8 +333,16 @@ const ParameterTalent = () => {
   };
   const [changesMade, setChangesMade] = useState(false);
   const handleSaveAllChanges = () => {
-    setChangesMade(false);
-    setOpenAlertBerhasilSimpan(true);
+    updateQuestion(pertanyaanChange)
+      .then((data) => {
+        console.log('API response:', data);
+        setChangesMade(false);
+        setOpenAlertBerhasilSimpan(true);
+        setPertanyaanChange([]); // Clear the changes after successful update
+      })
+      .catch((error) => {
+        console.error('Failed to save changes:', error);
+      });
   };
 
   const handleDownload = () => {
@@ -318,7 +377,7 @@ const ParameterTalent = () => {
   const resetRowIndex = (filteredRows) => {
     return filteredRows.map((row, index) => ({
       ...row,
-      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+      id: index + 1 // Adding 1 to start the index from 1 instead of 0
     }));
   };
 
@@ -326,18 +385,21 @@ const ParameterTalent = () => {
     const namaMatch = !selectedNama || (row.nama && row.nama.toLowerCase().includes(selectedNama.toLowerCase())); // Add null check for row.nama
     const nipposMatch = !selectedNippos || (row.nippos && row.nippos.toLowerCase().includes(selectedNippos.toLowerCase())); // Add null check for row.nippos
     const jobLevelMatch = !selectedJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(selectedJobLevel.toLowerCase())); // Add null check for row.nippos
-    const rumpunJabatanMatch = !selectedRumpunJabatan || (row.rumpunjabatan && row.rumpunjabatan.toLowerCase().includes(selectedRumpunJabatan.toLowerCase())); // Add null check for row.nippos
+    const rumpunJabatanMatch =
+      !selectedRumpunJabatan || (row.rumpunjabatan && row.rumpunjabatan.toLowerCase().includes(selectedRumpunJabatan.toLowerCase())); // Add null check for row.nippos
 
-    return (!selectedNama || namaMatch) 
-    && (!selectedNippos || nipposMatch) 
-    && (!selectedJobLevel || jobLevelMatch) 
-    && (!selectedRumpunJabatan || rumpunJabatanMatch);
-});
+    return (
+      (!selectedNama || namaMatch) &&
+      (!selectedNippos || nipposMatch) &&
+      (!selectedJobLevel || jobLevelMatch) &&
+      (!selectedRumpunJabatan || rumpunJabatanMatch)
+    );
+  });
 
   //buat constanta yang isinya hasil filter yang indexnya udah di reset:
   const resetRows = resetRowIndex(filteredRows);
-  
-  console.log('sri: ', resetRows)
+
+  // console.log('sri: ', resetRows);
 
   const handleDownloadCSV = () => {
     let dataToDownload = [];
@@ -375,8 +437,6 @@ const ParameterTalent = () => {
     // Clean up
     document.body.removeChild(link);
   };
-
-
 
   return (
     <>
@@ -590,9 +650,7 @@ const ParameterTalent = () => {
               <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
             </div>
 
-            <NilaiAssessmentTable
-              filteredRows={resetRows}
-            />
+            <NilaiAssessmentTable filteredRows={resetRows} />
           </Box>
         </CustomTabPanel>
 
