@@ -141,12 +141,12 @@ const TalentPool = ({eventid}) => {
     const namaMatchTrue = !selectedNamaTrue || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); 
     const nipposMatchTrue = !selectedNipposTrue || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); 
     const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); 
-    // const statusMatchTrue = !selectedStatusTrue || (row['Status'] && row['Status'].toLowerCase().includes(selectedStatusTrue.toLowerCase())); 
+    const statusMatchTrue = !selectedStatusTrue || (row['Status'] && row['Status'].toLowerCase().includes(selectedStatusTrue.toLowerCase())); 
 
     return namaMatchTrue 
         && nipposMatchTrue 
         && jobLevelMatchTrue 
-        // && statusMatchTrue;
+        && statusMatchTrue;
   });
 
   const resetRowIndexTrue = (filteredRowsTrue) => {
