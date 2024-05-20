@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import { gridSpacing } from '../../../store/constant';
 import GroupsIcon from '@mui/icons-material/Groups';
 import Header from '../../../ui-component/header/header';
@@ -16,8 +16,14 @@ import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent';
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
-  const [datarumpun, setDatarumpun] = useState([])
-  const [datajoblevel, setJoblevel] = useState([])
+  const [datarumpun, setDatarumpun] = useState([]);
+  const [datajoblevel, setJoblevel] = useState([]);
+  const ListTahun = [2023, 2024];
+  const [selectedYear, setSelectedYear] = useState('all');
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
+
   const [rows, setrows] = useState([])
   useEffect(() => {
     setLoading(false);
@@ -86,8 +92,26 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-
         
+        <Grid item xs={12}>
+          <MainCard style={{ padding: '24px 24px',display: 'flex', justifyContent: 'flex-end' }} >
+          <FormControl variant="outlined" sx={{ width: '25%'}}>
+            <InputLabel>Tahun</InputLabel>
+            <Select
+              value={selectedYear}
+              onChange={handleYearChange}
+              label="Tahun"
+            >
+              <MenuItem value="all">All Years</MenuItem>
+              {ListTahun.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          </MainCard>
+        </Grid>
         <Grid container spacing={2} item xs={12}>
             {cards.map((card, index) => (
               // <Grid item xs={12}sm={6} md={6} key={index}>
@@ -102,14 +126,15 @@ const Dashboard = () => {
               </Grid>
             ))}
         </Grid>
+        
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
               {/* <JenisKelaminChart isLoading={isLoading} /> */}
-              <JenisKelaminTerbaru isLoading={isLoading}/>
+              <JenisKelaminTerbaru isLoading={isLoading} selectedYear={selectedYear}/>
             </Grid>
             <Grid item xs={12} md={6}>
-              <GenerasiTalent isLoading={isLoading}/>
+              <GenerasiTalent isLoading={isLoading} selectedYear={selectedYear}/>
               {/* <GenerasiChart isLoading={isLoading} /> */}
             </Grid>
           </Grid>
