@@ -4,6 +4,7 @@ import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, 
 import { tableCellClasses } from '@mui/material/TableCell';
 import { AddCircleOutlineOutlined, ExpandMore } from '@mui/icons-material';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
+import FilterButton from '../../ui-component/button/FilterButton'; // Adjust the path as necessary
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -11,7 +12,6 @@ const StyledTableCell = styled(TableCell)(() => ({
     color: '#1F1F1F',
     fontSize: 14,
     fontWeight: 600,
-    border: 0
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
@@ -21,18 +21,6 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-// function createData(id, nama, nippos, jabatan, kantor, aksi) {
-//   return { id, nama, nippos, jabatan, kantor, aksi };
-// }
-
-// const rows = [
-//   createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'KANTOR PUSAT BANDUNG'),
-//   createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'KANTOR PUSAT BANDUNG'),
-//   createData(3, 'Adinda', '998494379', 'Asisten Manajer Pengelolaan Remittance LN', 'KANTOR PUSAT BANDUNG'),
-//   createData(4, 'Niken Wijaya', '998494379', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'KANTOR PUSAT JAKARTA'),
-//   createData(5, 'Niken', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'KANTOR PUSAT JAKARTA'),
-// ];
-
 export default function TabelDaftarAnggotaKomiteUnit({ 
   onOpenSecondModalTable,
   searchNama, 
@@ -41,15 +29,24 @@ export default function TabelDaftarAnggotaKomiteUnit({
   rows
   }) {
 
-    const filteredRows = rows.filter((row) => {
-      const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
-      const jabatanMatch = !searchJabatan || (row.jabatan && row.jabatan.toLowerCase().includes(searchJabatan.toLowerCase())); // Add null check for row.nippos
-      const kantorMatch = !searchKantor || (row.kantor && row.kantor.toLowerCase().includes(searchKantor.toLowerCase())); // Add null check for row.nippos
-  
-      return (!searchNama || namaMatch) 
-      && (!searchJabatan || jabatanMatch) 
-      && (!searchKantor || kantorMatch);
-    });
+  const filteredRows = rows.filter((row) => {
+    const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
+    const jabatanMatch = !searchJabatan || (row.jabatan && row.jabatan.toLowerCase().includes(searchJabatan.toLowerCase())); // Add null check for row.nippos
+    const kantorMatch = !searchKantor || (row.kantor && row.kantor.toLowerCase().includes(searchKantor.toLowerCase())); // Add null check for row.nippos
+
+    return (!searchNama || namaMatch) 
+    && (!searchJabatan || jabatanMatch) 
+    && (!searchKantor || kantorMatch);
+  });
+
+  const resetRowIndex = (filteredRows) => {
+    return filteredRows.map((row, index) => ({
+      ...row,
+      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+    }));
+  };
+
+  const resetRows = resetRowIndex(filteredRows);
 
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5); // Default items per page
@@ -82,7 +79,7 @@ export default function TabelDaftarAnggotaKomiteUnit({
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredRows.slice(startIndex, endIndex).map((row) => (
+              {resetRows.slice(startIndex, endIndex).map((row) => (
                 <TableRow key={row.id}>
                   <StyledTableCell>{row.id}</StyledTableCell>
                   <StyledTableCell>{row.nama}</StyledTableCell>
@@ -112,49 +109,6 @@ export default function TabelDaftarAnggotaKomiteUnit({
         <div style={{ flex: '1' }}> </div>
         <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
       </Stack>
-    </div>
-  );
-}
-
-function FilterButton({ itemsPerPage, setItemsPerPage }) {
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleItemClick = (value) => {
-    setItemsPerPage(value);
-    handleClose();
-  };
-
-  return (
-    <div>
-      <ButtonPrimary
-        Color={'#1F1F1F'}
-        backgroundColor={'#FFFFFF'}
-        icon={ExpandMore}
-        LabelName={`${itemsPerPage} rows`}
-        padding={'6px 16px'}
-        onClick={handleClick}
-        hoverColor={'#1F1F1F'}
-        hoverBackgroundColor={'#F5F5F5'}
-      />
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={() => handleItemClick(3)}>3</MenuItem> 
-        <MenuItem onClick={() => handleItemClick(5)}>5</MenuItem>
-        <MenuItem onClick={() => handleItemClick(10)}>10</MenuItem>
-      </Menu>
     </div>
   );
 }

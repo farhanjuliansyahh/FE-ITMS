@@ -13,7 +13,7 @@ import CustomSearch from '../../../ui-component/searchsection/custom-search';
 
 // ==============================|| DETAIL KARYAWAN DARI KOMITE UNIT ||============================== //
 
-export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionForButton,id, rows, nippos, source_kuota, checkboxSelection,sudahdipilih}) {
+export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionForButton, id, rows, nippos, source_kuota, checkboxSelection,sudahdipilih}) {
     const [filterNama, setFilterNama] = useState('');
     const [filterNippos, setFilterNippos] = useState('');
     const [filterJob, setFilterJob] = useState('');
@@ -82,10 +82,10 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
     const handleDownloadCSV = () => {
         let dataToDownload = [];
         let filename = '';
-
-          dataToDownload = rows;
-          filename = `Talent_Source_Terdaftar.csv`;
-
+        
+        dataToDownload = resetRows;
+        filename = `Talent_Source_Terdaftar_${id}.csv`;
+  
         // Create a CSV header with column names
         const headers = Object.keys(dataToDownload[0]);
         const idIndex = headers.indexOf('id');
@@ -94,24 +94,24 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
           headers.unshift('id'); // Insert 'id' at the beginning
         }
         const headerRow = headers.join(',');
-      
+    
         // Convert data to CSV format
         const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
-          dataToDownload.map(row => headers.map(header => row[header]).join(',')).join('\n');
-      
+          dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+    
         // Create a temporary anchor element
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
         link.setAttribute("download", filename);
         document.body.appendChild(link);
-      
+    
         // Trigger the download
         link.click();
-      
+    
         // Clean up
         document.body.removeChild(link);
-    };
+      };
         
     // create list of Nama, Nippos, Job Level
     const listNama = [...new Set(tablerows.map(row => row.Nama))];
@@ -145,6 +145,23 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
         resetJobLevelInput();
     };
 
+    const filteredRows = tablerows.filter((row) => {
+        const namaMatch = !selectedNama || (row.Nama && row.Nama.toLowerCase().includes(selectedNama.toLowerCase())); 
+        const nipposMatch = !selectedNippos || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNippos.toLowerCase())); 
+        const jobLevelMatch = !selectedJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevel.toLowerCase())); 
+
+        return namaMatch && nipposMatch && jobLevelMatch
+    });
+
+    const resetRowIndex = (filteredRows) => {
+        return filteredRows.map((row, index) => ({
+          ...row,
+          id: index + 1, // Adding 1 to start the index from 1 instead of 0
+        }));
+      };
+    
+    const resetRows = resetRowIndex(filteredRows);    
+
     return (
         <MainCard>
             <Box paddingLeft={3} paddingRight={3} paddingBottom={3} marginTop={3}>
@@ -177,12 +194,9 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
 
                 <KaryawanKomiteUnit 
                     checkboxSelection={checkboxSelection} 
-                    rows={tablerows} 
+                    rows={resetRows} 
                     selectedRows={selectedRows} 
                     onSelectedRowsChange={handleSelectedRowsChange}
-                    searchNama={selectedNama}
-                    searchNippos={selectedNippos}
-                    searchJobLevel={selectedJobLevel}
                 />
 
                 {ActionForButton && <KonfirmasiTalentSource 

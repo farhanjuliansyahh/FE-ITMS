@@ -259,6 +259,7 @@ export default function DetailEventKomiteUnit() {
                     <DetailKaryawandiKomiteUnit Title={'Tabel Karyawan Terkualifikasi'} 
                     Icon={FileDownloadOutlined} 
                     Label={'Unduh Data'}
+                    id={id}
                     rows={rowstrue}
                     nippos={nippos}
                     source_kuota = {halfLength}

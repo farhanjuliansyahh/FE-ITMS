@@ -1,17 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
-const getStyledRenderCell = () => (params) => (
-  <div>
-    <span style={{ 
-      color: '#66BB6A', 
-      backgroundColor: params.value ? '#F5FFF5' : 'transparent', 
-      padding: '4px 8px', 
-      borderRadius: '24px' 
-    }}>{params.value}</span>
-  </div>
-);
-
 const getStatusStyle = (status) => {
   let color, backgroundColor;
   switch (status) {
@@ -45,7 +34,6 @@ const getKategoriMatrixStyle = () => (params) => (
   </div>
 );
   
-  // Define columns with the reusable renderCell function
 const columns = [
   { field: 'id', headerName: 'No', width: 70 },
   { field: 'nama', headerName: 'Nama', width: 130 },
@@ -55,11 +43,6 @@ const columns = [
   { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 130 },
   { field: 'Nama Kantor', headerName: 'Kantor', width: 130 },
   { field: 'Komite Unit', headerName: 'Komite Unit', width: 130 },
-  // { field: 'Competency/Psychotest', headerName: 'Competency/Psychotest', width: 200, renderCell: getStyledRenderCell() },
-  // { field: 'PMS', headerName: 'PMS', width: 130, renderCell: getStyledRenderCell() },
-  // { field: 'AKHLAK', headerName: 'AKHLAK', width: 130, renderCell: getStyledRenderCell() },
-  // { field: 'Learning Agility', headerName: 'Learning Agility', width: 180, renderCell: getStyledRenderCell() },
-  // { field: 'days', headerName: 'Nilai Avg Talent Days', width: 200, renderCell: getStyledRenderCell() },
   { field: 'Matriks Kategori Awal', headerName: 'Kategori Matrix Awal', width: 180, renderCell: getKategoriMatrixStyle() },
   { field: 'Matriks Kategori Akhir', headerName: 'Kategori Matrix Akhir', width: 180, renderCell: getKategoriMatrixStyle() },
   {
@@ -84,27 +67,12 @@ const columns = [
 
 
 export default function TalentClusterTable({
-  rows,
-  searchNama, // Receive the search term as a prop
-  searchNippos,
-  searchJobLevel,
-  searchKategoriMatrix
+  rows
 }) {
-  const filteredRows = rows.filter((row) => {
-    const namaMatch = !searchNama || (row.Nama && row.Nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
-    const nipposMatch = !searchNippos || (row.Nippos && row.Nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
-    const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
-    const KategoriMatrixMatch = !searchKategoriMatrix || (row['Matriks Kategori Akhir'] && row['Matriks Kategori Akhir'].toLowerCase().includes(searchKategoriMatrix.toLowerCase())); // Add null check for row.nippos
-
-    return (!searchNama || namaMatch) 
-    && (!searchNippos || nipposMatch) 
-    && (!searchJobLevel || jobLevelMatch) 
-    && (!searchKategoriMatrix || KategoriMatrixMatch);
-  });
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={filteredRows}
+        rows={rows}
         columns={columns}
         initialState={{
           pagination: {

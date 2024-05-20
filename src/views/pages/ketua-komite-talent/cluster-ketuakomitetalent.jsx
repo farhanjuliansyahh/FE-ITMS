@@ -19,17 +19,10 @@ export default function ClusterKetuaKomiteTalent() {
     const [value, setValue] = React.useState(0);
     const [eventaktif, seteventaktif] = useState([]);
     const [DaysLeft, setDaysLeft] = useState('');
-
-    const [filterNama, setFilterNama] = useState('');
-    const [filterNippos, setFilterNippos] = useState('');
-    const [filterJob, setFilterJob] = useState('');
-    const [filterKategoriMatrix, setFilterKategoriMatrix] = useState('');
     const [clusterRow, setclusterRow] = useState([])
     const [categoryCounts, setCategoryCounts] = useState({});
     const [refreshstate, setrefreshstate] = useState(false)
     const [kuota, setkuota] = useState('')
-
-
 
     const fetcheventdetail = () => {
         return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
@@ -78,9 +71,8 @@ export default function ClusterKetuaKomiteTalent() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
-      
-  
-      const eventidactive = eventid
+    
+    const eventidactive = eventid
 
     const boxStyle = {
         padding: '20px', 
@@ -226,6 +218,58 @@ export default function ClusterKetuaKomiteTalent() {
       resetKategoriMatrixInput();
     };
 
+    const filteredRows = clusterRow.filter((row) => {
+      const namaMatch = !selectedNama || (row.nama && row.nama.toLowerCase().includes(selectedNama.toLowerCase())); // Add null check for row.nama
+      const nipposMatch = !selectedNippos || (row.nippos && row.nippos.toLowerCase().includes(selectedNippos.toLowerCase())); // Add null check for row.nippos
+      const jobLevelMatch = !selectedJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevel.toLowerCase())); // Add null check for row.nippos
+      const KategoriMatrixMatch = !selectedKategoriMatrix || (row['Matriks Kategori Akhir'] && row['Matriks Kategori Akhir'].toLowerCase().includes(selectedKategoriMatrix.toLowerCase())); // Add null check for row.nippos
+  
+      return namaMatch && nipposMatch && jobLevelMatch && KategoriMatrixMatch;
+    });
+
+    const resetRowIndex = (filteredRows) => {
+      return filteredRows.map((row, index) => ({
+        ...row,
+        id: index + 1, // Adding 1 to start the index from 1 instead of 0
+      }));
+    };
+  
+    const resetRows = resetRowIndex(filteredRows);
+  
+    const handleDownloadCSV = () => {
+      let dataToDownload = [];
+      let filename = '';
+      
+      dataToDownload = resetRows;
+      filename = `Kandidat_Talent_${id}.csv`;
+  
+      // Create a CSV header with column names
+      const headers = Object.keys(dataToDownload[0]);
+      const idIndex = headers.indexOf('id');
+      if (idIndex !== -1) {
+        headers.splice(idIndex, 1); // Remove 'id' from headers
+        headers.unshift('id'); // Insert 'id' at the beginning
+      }
+      const headerRow = headers.join(',');
+  
+      // Convert data to CSV format
+      const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+        dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+  
+      // Create a temporary anchor element
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+  
+      // Trigger the download
+      link.click();
+  
+      // Clean up
+      document.body.removeChild(link);
+    };
+
     return (
         <MainCard>
             <Box sx={boxStyle}>
@@ -238,16 +282,17 @@ export default function ClusterKetuaKomiteTalent() {
                         <FlexTitle>
                             <CalendarIcon style={{color:'#828282'}}/>
                             <Typography style={{fontSize:'14px', color:'#828282'}}>{tanggal_mulai &&
-            new Date(tanggal_mulai).toLocaleDateString('id-ID', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })} - {tanggal_selesai &&
-              new Date(tanggal_selesai).toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}</Typography>
+                              new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                              })} - {tanggal_selesai &&
+                                new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric',
+                                })}
+                            </Typography>
                         </FlexTitle>
                     </BoxContainer>
 
@@ -275,7 +320,7 @@ export default function ClusterKetuaKomiteTalent() {
                         sudah dilakukan diskresi kepada {selected}/{halfLength} Karyawan
                     </Button>
                     <div style={{ flex: '1' }}> </div>
-                    <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'}/>
+                    <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV} />
                 </FlexContainer>
           
                 <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
@@ -290,14 +335,10 @@ export default function ClusterKetuaKomiteTalent() {
          
                 <TalentClusterKetuaKomiteTalentTable  
                   eventid={id} 
-                  rows={clusterRow} 
+                  rows={resetRows} 
                   counts={categoryCounts} 
                   onTableDataRefresh={handlerefresh} 
                   disabled={isDiskresiDone}
-                  searchNama={selectedNama} 
-                  searchNippos={selectedNippos}
-                  searchJobLevel={selectedJobLevel}
-                  searchKategoriMatrix={selectedKategoriMatrix}
                 />
             </Box>
 

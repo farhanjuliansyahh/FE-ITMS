@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { gridSpacing } from '../../../store/constant';
 import { Grid, Stack,Typography, Box} from '@mui/material';
 import { FileDownloadOutlined, RestartAltOutlined } from '@mui/icons-material';
@@ -66,6 +66,51 @@ const DaftarPengguna = () => {
       resetPeranInput();
     };
   
+    const [filteredData, setFilteredData] = useState([]); // State to hold the filtered data
+
+  // Memoize the function to prevent infinite loops
+  const handleFilteredData = useCallback((data) => {
+    setFilteredData(data);
+  }, []);
+
+  useEffect(() => {
+    // Initially set filteredData to rowsUser
+    setFilteredData(rowsUser);
+  }, [rowsUser]);
+
+  const handleDownloadCSV = () => {
+    let dataToDownload = [];
+    let filename = '';
+    
+    dataToDownload = filteredData;
+    filename = `Daftar_Pengguna.csv`;
+
+    // Create a CSV header with column names
+    const headers = Object.keys(dataToDownload[0]);
+    const idIndex = headers.indexOf('id');
+    if (idIndex !== -1) {
+      headers.splice(idIndex, 1); // Remove 'id' from headers
+      headers.unshift('id'); // Insert 'id' at the beginning
+    }
+    const headerRow = headers.join(',');
+  
+    // Convert data to CSV format
+    const csvContent = "data:text/csv;charset=utf-8," + headerRow + '\n' +
+      dataToDownload.map(row => headers.map(header => row[header]).join(',')).join('\n');
+  
+    // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+  
+    // Trigger the download
+    link.click();
+  
+    // Clean up
+    document.body.removeChild(link);
+  };
 
   return (
     <>
@@ -95,7 +140,7 @@ const DaftarPengguna = () => {
                   </Typography>
                   <Box sx={{ flexGrow: 1 }} /> {/* This will push the following elements to the right */}
                   <Stack direction="row" spacing={1}>
-                    <ButtonPrimary Color="#ffffff" icon={FileDownloadOutlined} LabelName={'Unduh Data'}/>
+                    <ButtonPrimary Color="#ffffff" icon={FileDownloadOutlined} LabelName={'Unduh Data'} onClick={handleDownloadCSV}/>
                   </Stack>
                 </Stack>
 
@@ -113,6 +158,7 @@ const DaftarPengguna = () => {
                   searchNama={selectedNama} 
                   searchNippos={selectedNippos}
                   searchPeran={selectedPeran}
+                  onFilteredData={handleFilteredData} // Pass the function to child component
                 />
               </Box>
               </Grid>
