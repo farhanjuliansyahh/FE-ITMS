@@ -88,6 +88,18 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
     fontSize: '16px'
   });
 
+  const CountdownStep = styled('div')({
+    // backgroundColor: '#F5FFF5', //success
+    // color: '#66BB6A', //success
+    
+    backgroundColor: '#FFEDED',
+    color: '#F44336',
+    padding: '4px 12px',
+    borderRadius: '16px',
+    fontWeight: 600,
+    fontSize: '12px'
+  });
+
   const DividerContainer = styled('div')({
     width: '100%',
     textAlign: 'center',
@@ -205,7 +217,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
 
           <div style={{ flex: '1' }}> </div>
 
-          <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari` : ''}</CountdownLabel>
+          <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari lagi` : ''}</CountdownLabel>
 
           <ButtonPrimary
             Color="#ffffff"
@@ -270,10 +282,17 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
             return (
               <Step key={label} {...stepProps}>
                 <StepLabel {...labelProps}>{label}</StepLabel>
+                
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                  <CountdownStep>{DaysLeft !== null ? `${DaysLeft} hari lagi` : ''}</CountdownStep>
+                </Box>
               </Step>
             );
           })}
         </Stepper>
+
+        
+
       </Box>
 
       {renderStepContent(activeStep)}
