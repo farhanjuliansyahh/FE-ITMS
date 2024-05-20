@@ -12,7 +12,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentstep, eventid, status }) {
+function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentstep, eventid, status, refresh }) {
     const [selectedDate, setSelectedDate] = useState(null);
 
     const currenteventstatus = status
@@ -27,28 +27,34 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
                     .then(() => updatedeadline(eventactive))
                     .then(() => notifikasikaryawan(eventactive))
                     .then(() => handleConfirmation(selectedDate))
-                    .then(() => rolekaryawan(eventactive));
+                    .then(() => rolekaryawan(eventactive))
+                    .then(() => refresh());
                 break;
             case 3:
                 posttalentqual()
                     .then(() => updatedeadline(eventactive))
-                    .then(() => handleConfirmation(selectedDate));
+                    .then(() => handleConfirmation(selectedDate))
+                    .then(() => refresh());
+
                 break;
             case 4:
                 posttalentdays()
                     .then(() => updatedeadline(eventactive))
-                    .then(() => handleConfirmation(selectedDate));
+                    .then(() => handleConfirmation(selectedDate))
+                    .then(() => refresh());
                 break;
             case 5:
                 posttalentcluster()
                     .then(() => updatedeadline(eventactive))
                     .then(() => mapcluster(eventactive))
-                    .then(() => handleConfirmation(selectedDate));
+                    .then(() => handleConfirmation(selectedDate))
+                    .then(() => refresh());
                 break;
             case 6:
                 posttalentpool()
                     .then(() => updatedeadline(eventactive))
-                    .then(() => handleConfirmation(selectedDate));
+                    .then(() => handleConfirmation(selectedDate))
+                    .then(() => refresh());
                 break;
             default:
                 // Handle default case
