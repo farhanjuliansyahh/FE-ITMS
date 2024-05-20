@@ -116,7 +116,7 @@ const GenerasiTalent= ({selectedYear}) => {
   const [aggregatedSeries, setAggregatedSeries] = useState(aggregateDataByName(filteredData));
 
   useEffect(() => {
-    if (selectedYear === 'all') {
+    if (selectedYear === '0') {
       setFilteredData(seriesData);
     } else {
       setFilteredData(seriesData.filter(item => item.year === parseInt(selectedYear, 10)));
