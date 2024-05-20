@@ -19,8 +19,9 @@ import { IconFileDownload } from '@tabler/icons-react';
 
 import TalentDaysBPJTable from '../tables/talentdaysbpj';
 import TalentDaysKaryawanTable from '../tables/talentdayskaryawan';
-import TambahBPJ from '../../ui-component/modal/tambah-bpj';
+import TambahBPJ from '../../ui-component/modal/tambah-anggota-bpj';
 import KonfirmasiDetailBPJ from '../../ui-component/modal/konfirmasi-detail-bpj';
+import KonfirmasiTambahBPJ from '../../ui-component/modal/konfirmasi-tambah-bpj';
 import ButtonOptional from '../../ui-component/button/ButtonOptional';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import KonfirmasiIsiSemuaNilaiTalent from '../../ui-component/modal/konfirmasi-isi-semua-nilai-talent';
@@ -73,6 +74,7 @@ const TalentDays = ({eventid}) => {
   const [filterNippos, setFilterNippos] = useState('');
   const [daysRow, setdaysRow] = useState([]);
   const [daysBpj, setdaysBpj] = useState([]);
+  const [selectedBPJ, setSelectedBPJ] = useState('')
   
 
   const eventidactive = eventid
@@ -302,6 +304,11 @@ daysRow.forEach(item => {
     document.body.removeChild(link);
   };
 
+  const handleOpenSecondModal = (nippos) => {
+    setDetailBPJOpen(true);
+    setSelectedBPJ(nippos)
+};
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -453,7 +460,8 @@ daysRow.forEach(item => {
 
         <TambahBPJ 
           open={tambahBPJOpen}
-          handleClose={() => settambahBPJOpen(false)}
+          onClose={handleClose}
+          onOpenSecondModal={handleOpenSecondModal}
         />
 
         <KonfirmasiDetailBPJ
