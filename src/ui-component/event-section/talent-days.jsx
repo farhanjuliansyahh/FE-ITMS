@@ -468,17 +468,13 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
           open={tambahBPJOpen}
           onClose={handleClose}
           onOpenSecondModal={handleOpenSecondModalKonfirmasi}
+          eventid={eventidactive}
+          onConfirm={fetchkaryawandays}
         />
 
         <KonfirmasiDetailBPJ
           open={openDetailBPJ}
           handleClose={() => setDetailBPJOpen(false)}
-          eventid = {eventidactive}
-        />
-
-        <KonfirmasiTambahBPJ
-          open={openKonfirmasiBPJ}
-          handleClose={() => setKonfirmasiBPJOpen(false)}
           eventid = {eventidactive}
         />
 
