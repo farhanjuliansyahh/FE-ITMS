@@ -4,13 +4,17 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import { AddCircleOutlineOutlined } from '@mui/icons-material';
 
 function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
 
+    const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
+    const [rows, setRows] = useState([])
+
     const eventactive = eventid
-    const notifikasikaryawan = (eventid) => {
+    const tambahdatabpj = (eventid) => {
         console.log("event active", eventactive);
-        return fetch('http://localhost:4000/notifbpj', {
+        return fetch('http://localhost:4000/asignasbpj', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
                 'Content-Type': 'application/json', // Specify the content type
@@ -35,7 +39,8 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
             });
     };
 
-    const KirimNotifikasiButtonStyle = {
+
+    const TambahDataButtonStyle = {
         backgroundColor: '#1C2D5A',
         color:'#fff',
         borderRadius: '12px',
@@ -52,7 +57,7 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
         fontSize: '14px'
     };
     
-    const hoverKirimNotifikasiStyle = {
+    const hoverTambahDataStyle = {
         backgroundColor: '#122350' // Darker shade for hover
     };
     
@@ -69,18 +74,18 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
         justifyContent: 'space-between'
     });
 
-    const [isHoveredKirimNotifikasi, setIsHoveredKirimNotifikasi] = useState(false);
+    const [isHoveredTambahData, setIsHoveredTambahData] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
-    const KirimNotifikasiButton = (
+    const TambahDataButton = (
         <Button
-            endIcon={<CheckCircleOutlineOutlinedIcon />}
-            style={isHoveredKirimNotifikasi ? { ...KirimNotifikasiButtonStyle, ...hoverKirimNotifikasiStyle } : KirimNotifikasiButtonStyle}
-            onMouseEnter={() => setIsHoveredKirimNotifikasi(true)}
-            onMouseLeave={() => setIsHoveredKirimNotifikasi(false)}
+            endIcon={<AddCircleOutlineOutlined />}
+            style={isHoveredTambahData ? { ...TambahDataButtonStyle, ...hoverTambahDataStyle } : TambahDataButtonStyle}
+            onMouseEnter={() => setIsHoveredTambahData(true)}
+            onMouseLeave={() => setIsHoveredTambahData(false)}
             onClick={async () => {
                 try {
-                    await notifikasikaryawan(eventactive);
+                    await tambahdatabpj(eventactive);
                     handleClose();
                 } catch (error) {
                     // Handle error if notifkasikaryawan() fails
@@ -89,7 +94,7 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
                 }
             }}
         >
-            Kirim Notifikasi
+            Tambah Data
         </Button>
     );
 
@@ -136,7 +141,7 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
             <DialogActions sx={{padding:'0 24px 24px 24px '}}>
                 <ButtonsContainer>
                     {batalkanButton}
-                    {KirimNotifikasiButton}
+                    {TambahDataButton}
                 </ButtonsContainer>
             </DialogActions>
         </Dialog>
