@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
-function KonfirmasiDetailBPJ({ open, handleClose, eventid }) {
+function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
 
     const eventactive = eventid
     const notifikasikaryawan = (eventid) => {
@@ -115,7 +115,7 @@ function KonfirmasiDetailBPJ({ open, handleClose, eventid }) {
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
                 <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
-                    Konfirmasi Detail BPJ
+                    Konfirmasi Tambah BPJ
                 </Typography>
             </DialogTitle>
             <DividerContainer>
@@ -125,10 +125,10 @@ function KonfirmasiDetailBPJ({ open, handleClose, eventid }) {
                 <Box>
                     <div>
                         <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
-                            Apakah anda yakin data tipe, tanggal, dan lokasi sudah sesuai? TESSSST
+                            Apakah anda yakin menambah Anggota BPJ yang sudah dipilih?
                         </Typography>
                         <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px', marginBottom: '24px'}}>
-                            Anda tidak dapat mengubah data di kemudian hari.
+                            Anda dapat mengubah data di kemudian hari.
                         </Typography>
                     </div>
                 </Box>
@@ -143,4 +143,4 @@ function KonfirmasiDetailBPJ({ open, handleClose, eventid }) {
     );
 }
 
-export default KonfirmasiDetailBPJ;
+export default KonfirmasiTambahBPJ;

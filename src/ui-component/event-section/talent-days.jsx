@@ -101,6 +101,7 @@ const TalentDays = ({eventid}) => {
   };
 
   const [openDetailBPJ, setDetailBPJOpen] = useState(false);
+  const [openKonfirmasiBPJ, setKonfirmasiBPJOpen] = useState(false);
 
   const handleOpenDetailBPJ = () => {
     setDetailBPJOpen(true);
@@ -309,6 +310,11 @@ daysRow.forEach(item => {
     setSelectedBPJ(nippos)
 };
 
+const handleOpenSecondModalKonfirmasi = (nippos) => {
+  setKonfirmasiBPJOpen(true);
+  setSelectedBPJ(nippos)
+};
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -461,12 +467,18 @@ daysRow.forEach(item => {
         <TambahBPJ 
           open={tambahBPJOpen}
           onClose={handleClose}
-          onOpenSecondModal={handleOpenSecondModal}
+          onOpenSecondModal={handleOpenSecondModalKonfirmasi}
         />
 
         <KonfirmasiDetailBPJ
           open={openDetailBPJ}
           handleClose={() => setDetailBPJOpen(false)}
+          eventid = {eventidactive}
+        />
+
+        <KonfirmasiTambahBPJ
+          open={openKonfirmasiBPJ}
+          handleClose={() => setKonfirmasiBPJOpen(false)}
           eventid = {eventidactive}
         />
 
