@@ -242,7 +242,7 @@ const ParameterTalent = () => {
   // Ini fetch buat get all question
   const [pertanyaan, setPertanyaan] = useState([]);
   const getQuestions = () => {
-    fetch(`http://localhost:4000/getquestion`)
+    fetch(`http://localhost:4000/getquest`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data
