@@ -1,28 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import ApexCharts from 'apexcharts';
 import MainCard from '../../ui-component/cards/MainCard';
-import { Grid, Typography} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { gridSpacing } from '../../store/constant';
 import PropTypes from 'prop-types'; 
-
-const seriesData = [
-  { name: 'Perempuan', value: 50, year: 2023 },
-  { name: 'Laki-laki', value: 88, year: 2023 },
-  { name: 'Perempuan', value: 55, year: 2024 },
-  { name: 'Laki-laki', value: 58, year: 2024 },
-];
-
-const aggregateDataByName = (data) => {
-  const categories = [...new Set(data.map(item => item.name))];
-  return categories.map(category => {
-    const categoryData = data.filter(item => item.name === category);
-    return {
-      name: category,
-      data: categoryData.map(item => item.value),
-      years: categoryData.map(item => item.year),
-    };
-  });
-};
 
 const chartOptions = {
   chart: {
@@ -91,46 +72,23 @@ const chartOptions = {
   },
 };
 
-const JenisKelaminTerbaru = ({selectedYear}) => {
+const JenisKelaminTerbaru = ({ data }) => {
   const chartRef = useRef(null);
-  const [filteredData, setFilteredData] = useState(seriesData);
-  const [aggregatedSeries, setAggregatedSeries] = useState(aggregateDataByName(filteredData));
 
   useEffect(() => {
-    if (selectedYear === '0') {
-      setFilteredData(seriesData);
-    } else {
-      setFilteredData(seriesData.filter(item => item.year === parseInt(selectedYear, 10)));
+    if (chartRef.current) {
+      const options = {
+        ...chartOptions,
+        labels: data.map(item => item.name),
+        series: data.map(item => parseInt(item.value, 10)),
+      };
+      const chart = new ApexCharts(chartRef.current, options);
+      chart.render();
+      return () => {
+        chart.destroy();
+      };
     }
-  }, [selectedYear]);
-
-  useEffect(() => {
-    setAggregatedSeries(aggregateDataByName(filteredData));
-  }, [filteredData]);
-
-  useEffect(() => {
-        if (chartRef.current) {
-          const updatedOptions = {
-            ...chartOptions,
-            labels: aggregatedSeries.map(item => item.name),
-            series: aggregatedSeries.map(item => item.data.reduce((acc, value) => acc + value, 0)),
-          };
-          ApexCharts.exec('jenisKelaminTerbaruChart', 'updateOptions', updatedOptions);
-        }
-      }, [aggregatedSeries]);
-    
-    useEffect(() => {
-        const options = {
-          ...chartOptions,
-          labels: aggregatedSeries.map(item => item.name),
-          series: aggregatedSeries.map(item => item.data.reduce((acc, value) => acc + value, 0)),
-        };
-        const chart = new ApexCharts(chartRef.current, options);
-        chart.render();
-    return () => {
-      chart.destroy();
-    };
-  }, [aggregatedSeries]);
+  }, [data]);
 
   return (
     <MainCard maxWidth="lg">
@@ -145,8 +103,12 @@ const JenisKelaminTerbaru = ({selectedYear}) => {
     </MainCard>
   );
 };
-JenisKelaminTerbaru.propTypes = {
-    selectedYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  };
-export default JenisKelaminTerbaru;
 
+JenisKelaminTerbaru.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
+};
+
+export default JenisKelaminTerbaru;

@@ -54,6 +54,11 @@ const Dashboard = () => {
     });
   }
 
+  const mappedGender = datagender.map(item => ({
+    name: item.name === 'F' ? 'Perempuan' : 'Laki-laki',
+    value: item.value
+}));
+
   const getrumpundata= (year) =>{
     fetch(`http://localhost:4000/getdatatalentrumpun?year=${year}`)
     .then(response => response.json())
@@ -151,7 +156,7 @@ const Dashboard = () => {
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
               {/* <JenisKelaminChart isLoading={isLoading} /> */}
-              <JenisKelaminTerbaru isLoading={isLoading} selectedYear={selectedYear} />
+              <JenisKelaminTerbaru isLoading={isLoading} data={mappedGender} />
             </Grid>
             <Grid item xs={12} md={6}>
               <GenerasiTalent isLoading={isLoading} selectedYear={selectedYear} />
