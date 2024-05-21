@@ -65,14 +65,14 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
         backgroundColor: '#B71C1C' // Darker shade for hover
     };
 
-    const ButtonsContainer = styled('div')({
-        display: 'flex',
-        alignItems: 'center',
-        width:'100%',
-        padding: '0px 8px',
-        gap:'16px',
-        justifyContent: 'space-between'
-    });
+  const ButtonsContainer = styled('div')({
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    padding: '0px 8px',
+    gap: '16px',
+    justifyContent: 'space-between'
+  });
 
     const [isHoveredTambahData, setIsHoveredTambahData] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
@@ -98,23 +98,23 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
         </Button>
     );
 
-    const batalkanButton = (
-        <Button
-            endIcon={<CancelOutlinedIcon />}
-            style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
-            onMouseEnter={() => setIsHoveredBatalkan(true)}
-            onMouseLeave={() => setIsHoveredBatalkan(false)}
-            onClick={handleClose}
-        >
-            Batalkan
-        </Button>
-    );
+  const batalkanButton = (
+    <Button
+      endIcon={<CancelOutlinedIcon />}
+      style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
+      onMouseEnter={() => setIsHoveredBatalkan(true)}
+      onMouseLeave={() => setIsHoveredBatalkan(false)}
+      onClick={handleClose}
+    >
+      Batalkan
+    </Button>
+  );
 
-    const DividerContainer = styled('div')({
-        width: '100%',
-        textAlign: 'center',
-        backgroundColor: '#E0E0E0'
-    });
+  const DividerContainer = styled('div')({
+    width: '100%',
+    textAlign: 'center',
+    backgroundColor: '#E0E0E0'
+  });
 
     return (
         <Dialog open={open} onClose={handleClose}>

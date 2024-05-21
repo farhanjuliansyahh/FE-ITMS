@@ -32,7 +32,9 @@ export default function EventBerjalan({
   kuota,
   tanggal_selesai,
   tanggal_mulai,
-  status
+  status,
+  showHitungMundur,
+  jobleve
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -269,7 +271,10 @@ export default function EventBerjalan({
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
+  const jobleveString = jobleve.map(item => item.level_jabatan).join(", ");
+
   console.log('ini kuota ituloh', quotaawal);
+  console.log("ini job:",jobleve);
 
   return (
     <Box sx={boxStyle} style={{ marginBottom: '24px' }}>
@@ -363,7 +368,7 @@ export default function EventBerjalan({
 
         <Grid item xs={12} md={3}>
           <Typography>Tipe</Typography>
-          <Typography style={{ fontWeight: 'bold' }}>{tipe_komite_talent}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>{tipe_komite_talent}<br/>{jobleveString}</Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
@@ -383,10 +388,12 @@ export default function EventBerjalan({
           </Typography>
         </Grid>
 
-        <Grid item xs={12} md={2}>
-          <Typography>Hitung Mundur</Typography>
-          <Typography style={{ fontWeight: 'bold', color: '#F44336' }}>{daysLeft !== null ? `${daysLeft} hari` : ''}</Typography>
-        </Grid>
+        {showHitungMundur && (
+          <Grid item xs={12} md={2}>
+            <Typography>Hitung Mundur</Typography>
+            <Typography style={{ fontWeight: 'bold', color: '#F44336' }}>{daysLeft !== null ? `${daysLeft} hari` : ''}</Typography>
+          </Grid>
+        )}
       </Grid>
 
       <Stepper activeStep={activeStep} alternativeLabel>

@@ -196,51 +196,56 @@ function AddEventModal({ open, handleClose }) {
     console.log('enddate', enddate);
   }, [enddate]);
 
-  const postData = async () => {
+ const postData = async () => {
     try {
-      const arrayquestion = selectedquestion.map((selectedquestion) => selectedquestion.id);
-      const arraymember = selectedcomitteemember.map((selectedcomitteemember) => selectedcomitteemember.nippos);
+        const arrayquestion = selectedquestion.map((selectedquestion) => selectedquestion.id);
+        const arraymember = selectedcomitteemember.map((selectedcomitteemember) => selectedcomitteemember.nippos);
 
-            // Menambahkan 1 hari pada startdate dan enddate
-            const adjustedStartDate = dayjs(startdate).add(1, 'day');
-            const adjustedEndDate = dayjs(enddate).add(1, 'day');
+        // Menambahkan 1 hari pada startdate dan enddate
+        const adjustedStartDate = dayjs(startdate).add(1, 'day');
+        const adjustedEndDate = dayjs(enddate).add(1, 'day');
 
-      console.log(startdate);
-      // Make the POST request to the API endpoint
-      const response = await fetch('http://localhost:4000/addevent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          // Include any data you want to send in the request body
-          nama_event: eventName,
-          tipe_komite: selectedCommittee,
-          nippos_ketua: selectedketuakomite.nippos,
-          kode_rumpun_jabatan: selectedJobFamily,
-          kuota: quota,
-          deskripsi: deskripsi,
-          tanggal_mulai: adjustedStartDate,
-          tanggal_selesai: adjustedEndDate,
-          level_jabatan: selectedJobLevel,
-          id_pertanyaan: arrayquestion,
-          nippos_komite: arraymember
-        })
-      });
+        console.log(startdate);
+        // Make the POST request to the API endpoint
+        const response = await fetch('http://localhost:4000/addevent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                nama_event: eventName,
+                tipe_komite: selectedCommittee,
+                nippos_ketua: selectedketuakomite.nippos,
+                kode_rumpun_jabatan: selectedJobFamily,
+                kuota: quota,
+                deskripsi: deskripsi,
+                tanggal_mulai: adjustedStartDate,
+                tanggal_selesai: adjustedEndDate,
+                level_jabatan: selectedJobLevel,
+                id_pertanyaan: arrayquestion,
+                nippos_komite: arraymember
+            })
+        });
 
-      // Check if the request was successful
-      if (!response.ok) {
-        throw new Error('Failed to post data');
-      }
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error('Failed to post data');
+        }
 
-      // If successful, handle the response data (if needed)
-      const responseData = await response.json();
-      console.log('Response data:', responseData);
+        // If successful, handle the response data (if needed)
+        const responseData = await response.json();
+        console.log('Response data:', responseData);
+
+        // Refresh the page upon successful response
+        window.location.reload();
+
     } catch (error) {
-      // Handle any errors that occur during the API call
-      console.error('Error posting data:', error.message);
+        // Handle any errors that occur during the API call
+        console.error('Error posting data:', error.message);
     }
-  };
+};
+
 
   const CloseDialog = () => {
     setSelectedCommittee('');
@@ -414,69 +419,59 @@ function AddEventModal({ open, handleClose }) {
               helperText={isKetuaKomiteTouched && !selectedketuakomite ? 'Head of Committe harus diisi' : ''}
             />
 
-                        <Autocomplete
-                            multiple
-                            id="checkboxes-tags-demo"
-                            options={committeememberOptions}
-                            getOptionLabel={(option) => option.nama}
-                            value={selectedcomitteemember}
-                            disableCloseOnSelect
-                            onChange={(event, newValue) => setSelectedCommitteemember(newValue)}
-                            renderOption={(props, option, { selected }) => (
-                                <li {...props}>
-                                    <Checkbox
-                                        icon={icon}
-                                        checkedIcon={checkedIcon}
-                                        style={{ marginRight: 8 }}
-                                        checked={selected}
-                                    />
-                                    {option.nama}
-                                </li>
-                            )}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Committee"
-                                    variant="outlined"
-                                    required
-                                    onBlur={() => setIsComitteeMemberTouched(true)}
-                                    error={isComitteeMemberTouched && !selectedcomitteemember.length > 0}
-                                    helperText={isComitteeMemberTouched && !selectedcomitteemember.length > 0? "Committee harus diisi" : ""}
-                                />
-                            )}
-                        />
+            <Autocomplete
+              multiple
+              id="checkboxes-tags-demo"
+              options={committeememberOptions}
+              getOptionLabel={(option) => option.nama}
+              value={selectedcomitteemember}
+              disableCloseOnSelect
+              onChange={(event, newValue) => setSelectedCommitteemember(newValue)}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+                  {option.nama}
+                </li>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Committee"
+                  variant="outlined"
+                  required
+                  onBlur={() => setIsComitteeMemberTouched(true)}
+                  error={isComitteeMemberTouched && !selectedcomitteemember.length > 0}
+                  helperText={isComitteeMemberTouched && !selectedcomitteemember.length > 0 ? 'Committee harus diisi' : ''}
+                />
+              )}
+            />
 
-                        <Autocomplete
-                            multiple
-                            id="checkboxes-tags-demo"
-                            options={questionOption}
-                            getOptionLabel={(option) => option.pertanyaan}
-                            value={selectedquestion}
-                            disableCloseOnSelect
-                            onChange={(event, newValue) => setselectedquestion(newValue)}
-                            renderOption={(props, option, { selected }) => (
-                                <li {...props}>
-                                    <Checkbox
-                                        icon={icon}
-                                        checkedIcon={checkedIcon}
-                                        style={{ marginRight: 8 }}
-                                        checked={selected}
-                                    />
-                                    {option.pertanyaan}
-                                </li>
-                            )}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Questions"
-                                    variant="outlined"
-                                    required
-                                    onBlur={() => setIsQuestionTouched(true)}
-                                    error={isQuestionTouched && !selectedquestion.length > 0}
-                                    helperText={isQuestionTouched && !selectedquestion.length > 0? "Questions harus diisi" : ""}
-                                />
-                            )}
-                        />
+            <Autocomplete
+              multiple
+              id="checkboxes-tags-demo"
+              options={questionOption}
+              getOptionLabel={(option) => option.pertanyaan}
+              value={selectedquestion}
+              disableCloseOnSelect
+              onChange={(event, newValue) => setselectedquestion(newValue)}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+                  {option.pertanyaan}
+                </li>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Questions"
+                  variant="outlined"
+                  required
+                  onBlur={() => setIsQuestionTouched(true)}
+                  error={isQuestionTouched && !selectedquestion.length > 0}
+                  helperText={isQuestionTouched && !selectedquestion.length > 0 ? 'Questions harus diisi' : ''}
+                />
+              )}
+            />
 
             <TextField
               required
