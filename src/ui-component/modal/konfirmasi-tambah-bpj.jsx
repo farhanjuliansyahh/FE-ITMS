@@ -36,30 +36,30 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid, nippos, onConfirm }) 
     };
 
 
-    const TambahDataButtonStyle = {
-        backgroundColor: '#1C2D5A',
-        color:'#fff',
-        borderRadius: '12px',
-        padding : '14px 24px',
-        transition: 'background-color 0.3s'
-    };
+  const TambahDataButtonStyle = {
+    backgroundColor: '#1C2D5A',
+    color: '#fff',
+    borderRadius: '12px',
+    padding: '14px 24px',
+    transition: 'background-color 0.3s'
+  };
 
-    const batalkanButtonStyle = {
-        backgroundColor: '#D32F2F',
-        color:'#fff',
-        borderRadius: '12px',
-        padding : '14px 24px',
-        transition: 'background-color 0.3s',
-        fontSize: '14px'
-    };
-    
-    const hoverTambahDataStyle = {
-        backgroundColor: '#122350' // Darker shade for hover
-    };
-    
-    const hoverBatalkanStyle = {
-        backgroundColor: '#B71C1C' // Darker shade for hover
-    };
+  const batalkanButtonStyle = {
+    backgroundColor: '#D32F2F',
+    color: '#fff',
+    borderRadius: '12px',
+    padding: '14px 24px',
+    transition: 'background-color 0.3s',
+    fontSize: '14px'
+  };
+
+  const hoverTambahDataStyle = {
+    backgroundColor: '#122350' // Darker shade for hover
+  };
+
+  const hoverBatalkanStyle = {
+    backgroundColor: '#B71C1C' // Darker shade for hover
+  };
 
   const ButtonsContainer = styled('div')({
     display: 'flex',
@@ -70,8 +70,8 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid, nippos, onConfirm }) 
     justifyContent: 'space-between'
   });
 
-    const [isHoveredTambahData, setIsHoveredTambahData] = useState(false);
-    const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
+  const [isHoveredTambahData, setIsHoveredTambahData] = useState(false);
+  const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
     const TambahDataButton = (
         <Button
@@ -113,36 +113,36 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid, nippos, onConfirm }) 
     backgroundColor: '#E0E0E0'
   });
 
-    return (
-        <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>
-                <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
-                    Konfirmasi Tambah BPJ
-                </Typography>
-            </DialogTitle>
-            <DividerContainer>
-                <Divider orientation="horizontal" flexItem /> 
-            </DividerContainer>
-            <DialogContent>
-                <Box>
-                    <div>
-                        <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
-                            Apakah anda yakin menambah Anggota BPJ yang sudah dipilih?
-                        </Typography>
-                        <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px', marginBottom: '24px'}}>
-                            Anda dapat mengubah data di kemudian hari.
-                        </Typography>
-                    </div>
-                </Box>
-            </DialogContent>
-            <DialogActions sx={{padding:'0 24px 24px 24px '}}>
-                <ButtonsContainer>
-                    {batalkanButton}
-                    {TambahDataButton}
-                </ButtonsContainer>
-            </DialogActions>
-        </Dialog>
-    );
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>
+        <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
+          Konfirmasi Tambah BPJ
+        </Typography>
+      </DialogTitle>
+      <DividerContainer>
+        <Divider orientation="horizontal" flexItem />
+      </DividerContainer>
+      <DialogContent>
+        <Box>
+          <div>
+            <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
+              Apakah anda yakin menambah Anggota BPJ yang sudah dipilih?
+            </Typography>
+            <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px', marginBottom: '24px' }}>
+              Anda dapat mengubah data di kemudian hari.
+            </Typography>
+          </div>
+        </Box>
+      </DialogContent>
+      <DialogActions sx={{ padding: '0 24px 24px 24px ' }}>
+        <ButtonsContainer>
+          {batalkanButton}
+          {TambahDataButton}
+        </ButtonsContainer>
+      </DialogActions>
+    </Dialog>
+  );
 }
 
 export default KonfirmasiTambahBPJ;
