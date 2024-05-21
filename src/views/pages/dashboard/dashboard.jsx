@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const [datarumpun, setDatarumpun] = useState([]);
   const [datajoblevel, setJoblevel] = useState([]);
+  const [datagender, setdatagender] = useState([])
   const [ListTahun, setlisttahun] = useState([]);
   const [selectedYear, setSelectedYear] = useState('0');
   const handleYearChange = (event) => {
@@ -40,6 +41,18 @@ const Dashboard = () => {
     const distinctYears = [...new Set(rows.map(item => item.year))];
     setlisttahun(distinctYears);
   }, [rows]);
+
+  const getgenderdata= (year) =>{
+    fetch(`http://localhost:4000/getdatagender?year=${year}`)
+    .then(response => response.json())
+    .then(data => {
+      // Update state with API data
+      setdatagender(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }
 
   const getrumpundata= (year) =>{
     fetch(`http://localhost:4000/getdatatalentrumpun?year=${year}`)
@@ -68,6 +81,7 @@ const Dashboard = () => {
   useEffect(() => {
     getrumpundata(selectedYear);
     getjobleveldata(selectedYear);
+    getgenderdata(selectedYear)
   }, [selectedYear]);
 
   console.log(datarumpun);
