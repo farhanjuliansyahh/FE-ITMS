@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -26,21 +25,34 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-export default function InputNilaiTalentDays({ open, handleClose }) {
+export default function InputNilaiTalentDays({ open, handleClose, questionList, nippos, eventid, refetchkaryawan}) {
+    const [sortedQuestionList, setSortedQuestionList] = useState([]);
     const [nilaiInput, setNilaiInput] = useState([]);
 
-    // Sample data for the table
-    const rows = [
-        { no: 1, pertanyaan: 'Pertanyaan 1', nilai: '' },
-        { no: 2, pertanyaan: 'Pertanyaan 2', nilai: '' },
-        { no: 3, pertanyaan: 'Pertanyaan 3', nilai: '' },
-        // Add more rows as needed
-    ];
+    // Initialize state to hold id_pertanyaan and nilaiInput
+    const [nilaiArray, setNilaiArray] = useState([]);
+
+    useEffect(() => {
+        // Sort questionList by id_pertanyaan
+        const sortedList = [...questionList].sort((a, b) => a.id - b.id);
+        setSortedQuestionList(sortedList);
+
+        // Initialize nilaiInput array with empty strings based on sortedList length
+        setNilaiInput(Array(sortedList.length).fill(''));
+
+        // Initialize nilaiArray with empty objects based on sortedList length
+        setNilaiArray(Array(sortedList.length).fill({ id_pertanyaan: null, nilaiInput: '' }));
+    }, [questionList]);
 
     const handleInputChange = (index, event) => {
         const values = [...nilaiInput];
         values[index] = event.target.value;
         setNilaiInput(values);
+
+        // Update nilaiArray with id_pertanyaan and nilaiInput
+        const updatedArray = [...nilaiArray];
+        updatedArray[index] = { id_pertanyaan: sortedQuestionList[index].id, nilaiInput: event.target.value };
+        setNilaiArray(updatedArray);
     };
 
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
@@ -59,6 +71,36 @@ export default function InputNilaiTalentDays({ open, handleClose }) {
         fontSize: '14px'
     };
 
+    const updatenilaidays = (eventid, nippos, nilaiArray) => {
+        return fetch('http://localhost:4000/updatenilaibutton', {
+          method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+          headers: {
+            'Content-Type': 'application/json' // Specify the content type
+          },
+          body: JSON.stringify({
+            // Include any data you want to send in the request body
+            eventid: eventid,
+            nippos: nippos,
+            data: nilaiArray
+          }) // Convert the bodyData object to a JSON string
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            handleClose();
+            refetchkaryawan() // Close the dialog on successful update
+            return data; // Return the parsed JSON data
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+            throw error; // Rethrow the error to handle it elsewhere
+          });
+      };
+
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
@@ -72,16 +114,16 @@ export default function InputNilaiTalentDays({ open, handleClose }) {
                         <Table sx={{ minWidth: 500 }}>
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell>No</StyledTableCell>
+                                    <StyledTableCell>ID</StyledTableCell>
                                     <StyledTableCell>Pertanyaan</StyledTableCell>
                                     <StyledTableCell>Nilai</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row, index) => (
-                                    <TableRow key={index}>
-                                        <StyledTableCell>{row.no}</StyledTableCell>
-                                        <StyledTableCell>{row.pertanyaan}</StyledTableCell>
+                                {sortedQuestionList.map((question, index) => (
+                                    <TableRow key={question.id}>
+                                        <StyledTableCell>{question.id}</StyledTableCell>
+                                        <StyledTableCell>{question.idpertanyaan.pertanyaan}</StyledTableCell>
                                         <StyledTableCell>
                                             <TextField
                                                 value={nilaiInput[index] || ''}
@@ -98,30 +140,29 @@ export default function InputNilaiTalentDays({ open, handleClose }) {
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button 
-                    variant="contained" 
-                    sx={{
-                        backgroundColor:'#1a2b5a', 
-                        borderRadius:'12px', 
-                        // marginRight: '8px',
-                        padding: '14px 24px',
-                        // transition: 'background-color 0.3s',
-                        fontSize: '14px'
-                    }} 
-                    endIcon={<SaveOutlined />}
-                    onClick={() => console.log(nilaiInput)}
-                >
-                    Simpan
-                </Button>
+            <Button 
+    variant="contained" 
+    sx={{
+        backgroundColor:'#1a2b5a', 
+        borderRadius:'12px', 
+        padding: '14px 24px',
+        fontSize: '14px'
+    }} 
+    endIcon={<SaveOutlined />}
+    onClick={() => updatenilaidays(eventid, nippos, nilaiArray)}
+>
+    Simpan
+</Button>
                 <Button
                     endIcon={<CancelOutlined />}
                     style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
                     onMouseEnter={() => setIsHoveredBatalkan(true)}
                     onMouseLeave={() => setIsHoveredBatalkan(false)}
-                    onClick={handleClose}                >
+                    onClick={handleClose}
+                >
                     Batalkan
                 </Button>
             </DialogActions>
         </Dialog>
     );
-};
+}

@@ -39,7 +39,7 @@ export default function TimelineDetailEvent({
   const [selectedDate, setSelectedDate] = useState(null);
   const [DaysLeft, setDaysLeft] = useState('');
   const [deadline, setDeadline] = useState([]);
-  const [DaysLeftStep, setDaysLeftStep] = useState([]);
+  const [DaysLeftStep, setDaysLeftStep] = useState('');
   const [startdate, setStartdate] = useState(null);
   const [enddate, setEnddate] = useState(null);
 
@@ -73,35 +73,27 @@ export default function TimelineDetailEvent({
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
-  function calculateDaysLeft(tanggal_mulai, tanggal_selesai) {
-    const endDate = new Date(tanggal_selesai);
-    const currentDate = new Date(tanggal_mulai);
-    const timeDifference = endDate.getTime() - currentDate.getTime();
+  function calculateDaysLeft(startDate, endDate) {
+    const end = new Date(endDate);
+    const start = new Date(startDate);
+    const timeDifference = end.getTime() - start.getTime();
     const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)) + 1;
     return daysDifference;
   }
 
   useEffect(() => {
-    // Check if deadline is not empty and eventstatus_id is within the valid range
     if (deadline.length > 0 && eventstatus_id >= 2 && eventstatus_id <= 7) {
-      // Construct property names based on eventstatus_id
       const startdateProperty = `startdate_${eventstatus_id - 1}`;
       const deadlineProperty = `deadline_${eventstatus_id - 1}`;
 
-      // Access startdate and deadline from the deadline object
       const startdate = deadline[0][startdateProperty];
-      const deadlineDate = new Date(deadline[0][deadlineProperty]); // Convert to Date object
+      const deadlineDate = new Date(deadline[0][deadlineProperty]);
 
-      // Calculate days left based on the extracted startdate and deadline
       const daysLeftStep = calculateDaysLeft(startdate, deadlineDate);
 
-      // Add one day to the deadline
       deadlineDate.setDate(deadlineDate.getDate() + 1);
 
-      // Set daysLeftStep state
       setDaysLeftStep(daysLeftStep);
-
-      // Set startdate and enddate states
       setStartdate(startdate);
       setEnddate(deadlineDate);
     }
@@ -156,9 +148,6 @@ export default function TimelineDetailEvent({
   });
 
   const CountdownStep = styled('div')({
-    // backgroundColor: '#F5FFF5', //success
-    // color: '#66BB6A', //success
-
     backgroundColor: '#FFEDED',
     color: '#F44336',
     padding: '4px 12px',
@@ -332,21 +321,20 @@ export default function TimelineDetailEvent({
           <FlexTitle style={{ paddingBottom: '24px', justifyContent: 'center' }}>
             <CalendarIcon style={{ color: '#828282' }} />
             <Typography style={{ color: '#828282' }}>
-              {deadline.length > 0 && eventstatus_id >= 0 && eventstatus_id <= 5 && (
+              {deadline.length > 0 && eventstatus_id >= 2 && eventstatus_id <= 7 && (
                 <>
                   {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric'
-                  })}{' '}
-                  -
+                    year: 'numeric',
+                  })} - 
                   {(() => {
                     const endDate = new Date(deadline[0][`deadline_${activeStep + 1}`]);
                     endDate.setDate(endDate.getDate() + 1); // Add one day
                     return endDate.toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'long',
-                      year: 'numeric'
+                      year: 'numeric',
                     });
                   })()}
                 </>
@@ -373,6 +361,7 @@ export default function TimelineDetailEvent({
             );
           })}
         </Stepper>
+
       </Box>
 
       {renderStepContent(activeStep)}
