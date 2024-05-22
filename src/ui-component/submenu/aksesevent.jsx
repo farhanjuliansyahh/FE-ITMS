@@ -12,15 +12,30 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
 const EventLabel = styled('div')({
-  backgroundColor: '#FFF6E9', 
+  backgroundColor: '#FFF6E9',
   color: '#FFA726',
   padding: '4px 8px',
   borderRadius: '16px',
   fontWeight: 400,
-  fontSize:'12px'
+  fontSize: '12px'
 });
 
-export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_talent,kode_rumpun, nama_rumpun_jabatan,kuota, tanggal_selesai, tanggal_mulai,status_event, status, ButtonName, pathDetailEvent } ) {
+export default function AksesEvent({
+  id,
+  nama_event,
+  deskripsi,
+  tipe_komite_talent,
+  kode_rumpun,
+  nama_rumpun_jabatan,
+  kuota,
+  tanggal_selesai,
+  tanggal_mulai,
+  status_event,
+  status,
+  ButtonName,
+  pathDetailEvent,
+  showHitungMundur
+}) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [daysLeft, setDaysLeft] = React.useState(null);
@@ -66,10 +81,10 @@ export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_tale
   };
 
   const boxStyle = {
-    border: '1px solid #E0E0E0', 
-    padding: '20px', 
+    border: '1px solid #E0E0E0',
+    padding: '20px',
     width: '100%',
-    borderRadius:'12px'
+    borderRadius: '12px'
   };
 
   const theme = useTheme();
@@ -77,22 +92,22 @@ export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_tale
   const FlexContainer = styled('div')({
     display: 'flex',
     alignItems: 'center',
-    gap: '16px', 
-    paddingBottom: '24px',
+    gap: '16px',
+    paddingBottom: '24px'
   });
 
   const FlexTitle = styled('div')({
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    paddingBottom:0
+    paddingBottom: 0
   });
-  
+
   const BoxContainer = styled('div')({
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   });
-  
+
   const BoxAvatar = styled(Avatar)({
     ...theme.typography.commonAvatar,
     ...theme.typography.largeAvatar,
@@ -101,30 +116,29 @@ export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_tale
     width: 48,
     height: 48,
     '& svg': {
-      fontSize: '2rem',
-    },
-  }); 
+      fontSize: '2rem'
+    }
+  });
 
-  const [open, setOpen] = useState(false);  
+  const [open, setOpen] = useState(false);
   const [openHapus, setOpenHapus] = useState(false);
-
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
-  setOpen(false);
+    setOpen(false);
   };
   const handleOpenHapus = () => {
     setOpenHapus(true);
   };
   const handleCloseHapus = () => {
-  setOpenHapus(false);
+    setOpenHapus(false);
   };
 
   const CalendarIcon = styled(EventIcon)({
     fontSize: '1rem',
-    color: '#1C2D5A',
+    color: '#1C2D5A'
   });
 
   const akseseventButtonStyle = {
@@ -133,24 +147,21 @@ export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_tale
     borderRadius: '12px',
     paddingLeft: '12px',
     paddingRight: '12px',
-    ':hover':{
+    ':hover': {
       backgroundColor: '#AB1D05',
-      color: '#fff',
+      color: '#fff'
     }
-  }
+  };
 
   const ButtonsContainer = styled('div')({
     display: 'flex',
     alignItems: 'center',
-    gap:'16px'
+    gap: '16px'
   });
 
   const akseseventButton = (
     <Link to={pathDetailEvent} style={{ textDecoration: 'none' }}>
-      <Button 
-        sx={akseseventButtonStyle} 
-        endIcon={<ArrowForwardRoundedIcon />}
-      >
+      <Button sx={akseseventButtonStyle} endIcon={<ArrowForwardRoundedIcon />}>
         {ButtonName}
       </Button>
     </Link>
@@ -159,23 +170,23 @@ export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_tale
   const DividerContainer = styled('div')({
     width: '100%',
     textAlign: 'center',
-    marginBottom: '16px',
+    marginBottom: '16px'
   });
-  
+
   const dividerStyle = {
-    margin: '0 auto', 
+    margin: '0 auto'
   };
 
   let statusberjalan;
   if (status === 1) {
-    statusberjalan = "Belum Mulai";
+    statusberjalan = 'Belum Mulai';
   } else if (status >= 2 && status <= 7) {
-    statusberjalan = "Berlangsung";
+    statusberjalan = 'Berlangsung';
   } else if (status === 8) {
-    statusberjalan = "Selesai";
+    statusberjalan = 'Selesai';
   } else {
     // Handle other status values if needed
-    statusberjalan = "Unknown Status";
+    statusberjalan = 'Unknown Status';
   }
 
   const statusColors = {
@@ -197,7 +208,7 @@ export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_tale
     padding: '4px 8px',
     borderRadius: '16px',
     fontWeight: 400,
-    fontSize: '12px',
+    fontSize: '12px'
   }));
 
   useEffect(() => {
@@ -212,7 +223,6 @@ export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_tale
     // Set the number of days left
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
-  
 
   return (
     <Box sx={boxStyle}>
@@ -221,88 +231,95 @@ export default function AksesEvent( {id, nama_event, deskripsi, tipe_komite_tale
           <EmojiEventsOutlinedIcon />
         </BoxAvatar>
 
-        <BoxContainer> 
+        <BoxContainer>
           <FlexTitle style={{ paddingBottom: '8px' }}>
-          <Typography
-            style={{
-              fontSize: '16px',
-              fontWeight: 'bold',
-              textDecoration: 'none', 
-              color: 'inherit', 
-            }}
-          >
-              {nama_event}
-          </Typography >
-            <StatusLabel backgroundColor={backgroundColor} color={color}>{statusberjalan}</StatusLabel>
-            
             <Typography
-            style={{
-              fontSize: '16px',
-              fontWeight: 'bold',
-              textDecoration: 'none', 
-              color: 'inherit', 
-            }}
-          >
-          </Typography >
-          <EventLabel >{status_event} </EventLabel>
+              style={{
+                fontSize: '16px',
+                fontWeight: 'bold',
+                textDecoration: 'none',
+                color: 'inherit'
+              }}
+            >
+              {nama_event}
+            </Typography>
+            <StatusLabel backgroundColor={backgroundColor} color={color}>
+              {statusberjalan}
+            </StatusLabel>
+
+            <Typography
+              style={{
+                fontSize: '16px',
+                fontWeight: 'bold',
+                textDecoration: 'none',
+                color: 'inherit'
+              }}
+            ></Typography>
+            <EventLabel>{status_event} </EventLabel>
           </FlexTitle>
 
           <FlexTitle>
-            <CalendarIcon style={{color:'#828282'}}/>
-            <Typography style={{color:'#828282'}}>{tanggal_mulai &&
-              new Date(tanggal_mulai).toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })} - {tanggal_selesai &&
+            <CalendarIcon style={{ color: '#828282' }} />
+            <Typography style={{ color: '#828282' }}>
+              {tanggal_mulai &&
+                new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric'
+                })}{' '}
+              -{' '}
+              {tanggal_selesai &&
                 new Date(tanggal_selesai).toLocaleDateString('id-ID', {
                   day: 'numeric',
                   month: 'long',
-                  year: 'numeric',
-                })}</Typography>
+                  year: 'numeric'
+                })}
+            </Typography>
           </FlexTitle>
         </BoxContainer>
 
         <div style={{ flex: '1' }}> </div>
-        <ButtonsContainer>
-          {akseseventButton}
-        </ButtonsContainer>
+        <ButtonsContainer>{akseseventButton}</ButtonsContainer>
       </FlexContainer>
 
       <DividerContainer>
-        <Divider orientation="horizontal" flexItem sx={dividerStyle} /> 
+        <Divider orientation="horizontal" flexItem sx={dividerStyle} />
       </DividerContainer>
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography>deskripsi</Typography>
-          <Typography style={{fontWeight:'bold'}}>{deskripsi}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>{deskripsi}</Typography>
         </Grid>
 
         <Grid item xs={12} md={3}>
           <Typography>Tipe Komite</Typography>
-          <Typography style={{fontWeight:'bold'}}>{tipe_komite_talent}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>{tipe_komite_talent}</Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
           <Typography>Job Family</Typography>
-          <Typography style={{fontWeight:'bold'}}>{nama_rumpun_jabatan}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>{nama_rumpun_jabatan}</Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
           <Typography>Batas Akhir Event</Typography>
-          <Typography style={{fontWeight:'bold'}}>{tanggal_selesai &&
-            new Date(tanggal_selesai).toLocaleDateString('id-ID', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>
+            {tanggal_selesai &&
+              new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+              })}
+          </Typography>
         </Grid>
 
-        <Grid item xs={12} md={2}>
-          <Typography>Hitung Mundur</Typography>
-          <Typography style={{fontWeight:'bold', color:'#F44336'}}>{daysLeft !== null ? `${daysLeft} hari` : ''}</Typography>
-        </Grid>
+        {showHitungMundur && (
+          <Grid item xs={12} md={2}>
+            <Typography>Hitung Mundur</Typography>
+            <Typography style={{ fontWeight: 'bold', color: '#F44336' }}>{daysLeft !== null ? `${daysLeft} hari` : ''}</Typography>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );
