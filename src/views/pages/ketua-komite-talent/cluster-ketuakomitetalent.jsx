@@ -373,6 +373,8 @@ export default function ClusterKetuaKomiteTalent() {
           counts={categoryCounts}
           onTableDataRefresh={handlerefresh}
           disabled={isDiskresiDone}
+          terpilih = {selected}
+          kuota     = {halfLength}
         />
       </Box>
     </MainCard>
