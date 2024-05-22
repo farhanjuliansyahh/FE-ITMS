@@ -9,6 +9,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Divider from '@mui/material/Divider';
 import ButtonPrimary from '../button/ButtonPrimary';
+import ButtonSecondary from '../button/ButtonOptional';
 
 import TalentSource from '../../ui-component/event-section/talent-source';
 import TalentProfile from '../../ui-component/event-section/talent-profile';
@@ -31,6 +32,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
   const [DaysLeftStep, setDaysLeftStep] = useState([])
   const [startdate, setStartdate] = useState(null);
  const [enddate, setEnddate] = useState(null);
+ 
 
   useEffect(() => {
     setActiveStep(eventstatus_id - 2);
@@ -277,8 +279,8 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
 
           <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari lagi` : ''}</CountdownLabel>
 
-          <ButtonPrimary
-            Color="#ffffff"
+          <ButtonSecondary
+            Color="#1C2D5A"
             icon={ArrowBackOutlined}
             LabelName={'Lihat Tahap Sebelumnya'}
             onClick={handleBack}
@@ -342,26 +344,35 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
         </BoxContainer>
 
         <Stepper activeStep={eventstatus_id-2} alternativeLabel>
-          {steps.map((label, index) => {
-            const stepProps = {};
-            const labelProps = {};
+        {steps.map((label, index) => {
+          const stepProps = {};
+          const labelProps = {};
 
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-                
-                {index === eventstatus_id - 2 && (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
-                    <CountdownStep>{DaysLeftStep !== null ? `${DaysLeftStep} hari lagi` : ''}</CountdownStep>
-                  </Box>
-                )}
-              </Step>
-            );
-          })}
-        </Stepper>
-
-        
-
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+              
+              {index < eventstatus_id-2 && 
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
+              </Box>
+              }
+              
+              {index === eventstatus_id - 2 && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                  {DaysLeftStep !== null ? (
+                    DaysLeftStep > 0 ? (
+                      <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
+                    ) : (
+                      <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
+                    )
+                  ) : ''}
+                </Box>
+              )}
+            </Step>
+          );
+        })}
+      </Stepper>
       </Box>
 
       {renderStepContent(activeStep)}
@@ -375,8 +386,6 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
         eventid={eventid}
         refresh={geteventdeadline}
         eventStartDate={tanggal_mulai} // Tambahkan properti eventStartDate
-
-
       />
 
       <KonfirmasiTalentPool

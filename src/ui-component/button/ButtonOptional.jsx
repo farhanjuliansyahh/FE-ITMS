@@ -16,9 +16,14 @@ export default function ButtonOptional({ Color, backgroundColor, borderColor, ic
         padding: '14px 24px', 
         boxShadow: 'none',
         '&:hover': {
-            backgroundColor: '#1C2D5A',
-            color: '#FFFFFF', 
-          },
+            backgroundColor: '#F5F8FF',
+            color: '#0F1C3E', 
+        },
+        '&:disabled': {
+            backgroundColor: '#FFFFFF',
+            color: '#E0E0E0',
+            border: (borderColor || '1px solid #E0E0E0'),
+        },
       }} 
       endIcon={<IconComponent />} 
       onClick={onClick}

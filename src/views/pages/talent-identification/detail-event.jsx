@@ -46,7 +46,7 @@ export default function DetailEvent() {
       });
   }, []);
   console.log("noticeme",eventaktif);
-  const { eventid, nama_event, deskripsi,tipe_komite_talent, tipekomite, kode_rumpun,nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
+  const { eventid, nama_event, deskripsi,tipe_komite_talent, tipekomite, kode_rumpun, nama_rumpun, tanggal_mulai, tanggal_selesai, evenstatus_id } = eventaktif;
 
   console.log("namaid",id);
     return (
