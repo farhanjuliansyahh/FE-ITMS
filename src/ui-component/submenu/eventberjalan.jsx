@@ -37,6 +37,7 @@ export default function EventBerjalan({
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [daysLeft, setDaysLeft] = React.useState(null);
+  const [isBeforeStart, setIsBeforeStart] = React.useState(false);
 
   const nama = nama_event;
   const quotaawal = kuota;
@@ -58,6 +59,16 @@ export default function EventBerjalan({
   useEffect(() => {
     setActiveStep(status - 2);
   }, []);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const startDate = new Date(tanggal_mulai);
+    if (currentDate < startDate) {
+      setIsBeforeStart(true);
+    } else {
+      setIsBeforeStart(false);
+    }
+  }, [tanggal_mulai]);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -242,7 +253,7 @@ export default function EventBerjalan({
   );
 
   const mulaiButton = (
-    <Button variant="contained" sx={mulaiButtonStyle} endIcon={<ArrowForwardRoundedIcon />} onClick={handleOpen}>
+    <Button variant="contained" sx={mulaiButtonStyle} endIcon={<ArrowForwardRoundedIcon />} onClick={handleOpen} disabled={isBeforeStart}>
       Mulai Event
     </Button>
   );
@@ -279,10 +290,6 @@ export default function EventBerjalan({
         </BoxAvatar>
 
         <BoxContainer>
-          {/* <FlexTitle style={{paddingBottom:'8px'}}>
-            <Typography style={{fontSize:'16px', fontWeight:'bold'}}>TRIAL EVENT_ E1-D3_BISNIS</Typography>
-            <StatusLabel>Berlangsung</StatusLabel>
-          </FlexTitle> */}
           <FlexTitle style={{ paddingBottom: '8px' }}>
             {/* Wrap the Typography with Link */}
             {status !== 1 ? (
@@ -409,7 +416,7 @@ export default function EventBerjalan({
         })}
       </Stepper>
 
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite} />
+      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite} mulai={tanggal_mulai}/>
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
       <EditEvent
         open={openEdit}

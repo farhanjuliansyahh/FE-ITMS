@@ -10,14 +10,14 @@ import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs'; // Import dayjs for date manipulation
 
-function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua }) {
+function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua, mulai }) {
     const [deadlinesource, setdeadlinesource] = useState('');
     const [activejoblevel, setactivejoblevel] = useState(['']);
     const [activejobfam, setactivejobfam]     = useState('');
     const [isLoading, setLoading] = useState(true);
-
-
+  
     const handleDateChange = (date) => {
         console.log(date); // Check the date value
         setdeadlinesource(date); // Update the state with the selected date
@@ -334,6 +334,9 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
                                     onChange={handleDateChange} // Add onChange handler
                                     format='YYYY-MM-DD'
                                     required
+                                    disablePast
+                                    minDate={dayjs(mulai)} // Set minDate to the start date of the event
+                                    
                                 />
                             </DemoItem>
                         </LocalizationProvider>

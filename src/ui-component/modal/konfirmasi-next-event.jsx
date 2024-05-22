@@ -9,10 +9,11 @@ import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs'; // Import dayjs for date manipulation
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentstep, eventid, status, refresh }) {
+function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentstep, eventid, status, refresh, eventStartDate }) {
     const [selectedDate, setSelectedDate] = useState(null);
 
     const currenteventstatus = status
@@ -392,6 +393,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
                             <DemoItem>
                                 <DatePicker
                                     disablePast
+                                    minDate={dayjs(eventStartDate)}// Set minDate menggunakan properti eventStartDate
                                     views={['year', 'month', 'day']}
                                     InputLabelProps={{ shrink: true }}
                                     label={`Tanggal Berakhir ${steps[currentstep + 1]} *`}

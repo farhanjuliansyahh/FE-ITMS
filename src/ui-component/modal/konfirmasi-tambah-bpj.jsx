@@ -6,13 +6,14 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 
-function KonfirmasiTambahBPJ({ open, handleClose, eventid }) {
+function KonfirmasiTambahBPJ({ open, handleClose, eventid, Nippos }) {
 
     const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
     const [rows, setRows] = useState([])
 
     const eventactive = eventid
-    const tambahdatabpj = (eventid) => {
+
+    const tambahdatabpj = (eventid, nippos) => {
         console.log("event active", eventactive);
         return fetch('http://localhost:4000/asignasbpj', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)

@@ -374,6 +374,9 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
         status={eventstatus_id}
         eventid={eventid}
         refresh={geteventdeadline}
+        eventStartDate={tanggal_mulai} // Tambahkan properti eventStartDate
+
+
       />
 
       <KonfirmasiTalentPool
