@@ -80,6 +80,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
         return response.json();
       })
       .then((data) => {
+        window.location.reload()
         return data; // Return the parsed JSON data
       })
       .catch((error) => {

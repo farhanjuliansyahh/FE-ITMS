@@ -189,6 +189,7 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
 
       // If successful, handle the response data (if needed)
       const responseData = await response.json();
+      window.location.reload()
       console.log('Response data:', responseData);
     } catch (error) {
       // Handle any errors that occur during the API call
