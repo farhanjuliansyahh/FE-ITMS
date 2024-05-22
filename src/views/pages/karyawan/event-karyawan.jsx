@@ -216,7 +216,7 @@ useEffect(() => {
                   tanggal_mulai={event.tanggal_mulai}
                   tanggal_selesai={event.tanggal_selesai}
                   status={event.evenstatus_id}
-                  pathDetailEvent={`./talent-cluster/${event.id}`}
+                  pathDetailEvent={`./talent-profile/${event.id}`}
                 />
               </Box>
             ))}

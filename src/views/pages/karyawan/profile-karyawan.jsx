@@ -260,7 +260,7 @@ export default function ProfileKaryawan() {
 
           <div style={{ flex: '1' }}> </div>
 
-          <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari` : ''}</CountdownLabel>
+          {evenstatus_id !== 8 && <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari lagi` : ''}</CountdownLabel>}
         </FlexContainer>
       </Box>
 
