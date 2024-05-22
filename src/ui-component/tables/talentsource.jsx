@@ -121,13 +121,13 @@ const updatekomiterole = (eventid, nippos) => {
   };
 
   const columns = [
-    { field: 'id', headerName: 'No', minWidth: 70 },
-    { field: 'Nama', headerName: 'Nama', minWidth: 130 },
+    { field: 'id', headerName: 'No', minWidth: 60 },
+    { field: 'Nama', headerName: 'Nama', minWidth: 200 },
     { field: 'Nippos', headerName: 'Nippos', minWidth: 130 },
-    { field: 'Posisi', headerName: 'Posisi', minWidth: 130 },
+    { field: 'Posisi', headerName: 'Posisi', minWidth: 300 },
     { field: 'Job Family', headerName: 'Job Family', minWidth: 130 },
     { field: 'Job Level', headerName: 'Job Level', minWidth: 130 },
-    { field: 'Nama Kantor', headerName: 'Kantor', minWidth: 130 },
+    { field: 'Nama Kantor', headerName: 'Kantor', minWidth: 200 },
     { field: 'Komite Unit', headerName: 'Komite Unit', minWidth: 230, renderCell: (params) => {
       if (params.value === null) {
         return (
@@ -149,13 +149,29 @@ const updatekomiterole = (eventid, nippos) => {
   };
 
   return (
-      <div style={{ height: 400, width: '100%' }}>
+      <div style={{ height: 400, width: '100%', overflow: 'hidden' }}>
         <DataGrid
           rows={rows}
           columns={columns}
           checkboxSelection={checkboxSelection}
           onRowSelectionModelChange={handleSelectionChange} // Handle checkbox selection
           rowSelectionModel={selectedRows}
+          sx={{
+            borderRadius: '12px', // Apply border radius to the DataGrid itself
+            '& .MuiDataGrid-main': {
+              borderRadius: '12px', // Apply border radius to the main container
+            },
+            '& .MuiDataGrid-columnHeader': {
+              backgroundColor: '#F5F5F5', // Apply background color to each header cell
+              padding: '0 24px', // Apply horizontal padding to each header cell
+            },
+            '& .MuiDataGrid-cell': {
+              padding: '0 24px', // Apply horizontal padding to each header cell
+            },
+            '& .MuiDataGrid-columnHeaderCheckbox, .MuiDataGrid-cellCheckbox': {
+              padding: '0 0px', // Adjust padding for the checkbox cells
+            },
+          }}
         />
 
         <TambahKomiteUnit 

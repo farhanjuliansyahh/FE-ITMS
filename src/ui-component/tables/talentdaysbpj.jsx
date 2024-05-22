@@ -81,7 +81,7 @@ export default function TalentDaysBPJTable({
   ];
 
   return (
-    <div style={{ height: 400, width: '100%', borderRadius: '12px', overflow: 'hidden' }}>
+    <div style={{ height: 400, width: '100%', overflow: 'hidden' }}>
       <DataGrid
         rows={resetRows}
         columns={columns}

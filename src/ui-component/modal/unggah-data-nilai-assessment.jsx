@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import { CancelOutlined, FileUploadOutlined, UploadFileOutlined, AttachFileOutlined } from '@mui/icons-material';
 import { Box } from '@mui/system';
 import Papa from 'papaparse';
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 
 function UnggahDataNilaiAssessment({ open, handleClose }) {    
     const unggahDataButtonStyle = {
@@ -44,18 +45,6 @@ function UnggahDataNilaiAssessment({ open, handleClose }) {
         gap: '128px',
         justifyContent: 'space-between'
     });
-
-    const batalkanButton = (
-        <Button
-            endIcon={<CancelOutlined />}
-            style={{ ...isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle }}
-            onMouseEnter={() => setIsHoveredBatalkan(true)}
-            onMouseLeave={() => setIsHoveredBatalkan(false)}
-            onClick={handleClose}
-        >
-            Batalkan
-        </Button>
-    );
 
     const DividerContainer = styled('div')({
         width: '100%',
@@ -98,7 +87,7 @@ function UnggahDataNilaiAssessment({ open, handleClose }) {
     });
 
     // ini untuk record selected value di radio button
-    const [selectedValue, setSelectedValue] = useState('kompetensiBUMN');
+    const [selectedValue, setSelectedValue] = useState('1');
     const handleChange = (event) => {
         const newValue = event.target.value;
         setSelectedValue(newValue);
@@ -149,57 +138,110 @@ function UnggahDataNilaiAssessment({ open, handleClose }) {
     const uploadskor = () => {
         // Map the data based on selectedValue
         let modifiedData;
-        if (selectedValue === "AKHLAK") {
+        if (selectedValue === "6" || selectedValue === "5" ) { 
             modifiedData = parsedData.map(item => ({
                 Berlaku_Mulai: item['START DATE'],
                 Berlaku_Hingga: item['END DATE'],
                 nippos: item['NIPPOS'],
                 skor: item['VALUE']
             }));
+        } else if (selectedValue === "1" || selectedValue === "4") { 
+            modifiedData = parsedData.map(item => ({
+                Berlaku_Mulai: item['START DATE'],
+                Berlaku_Hingga: item['END DATE'],
+                nippos: item['NIPPOS'],
+                skor: item['ASSESSMENT VALUE']
+            }));
+        } else if (selectedValue === "2") { 
+            modifiedData = parsedData.map(item => ({
+                Berlaku_Mulai: item['START DATE'],
+                Berlaku_Hingga: item['END DATE'],
+                nippos: item['NIPPOS'],
+                skor: item['ASSESSMENT VALUE'],
+                kodeassessment: item['ASSESSMENT CODE']
+            }));
         } else {
             modifiedData = parsedData;
         }
+    
+        console.log('sri: ', modifiedData);
+    
+        const chunkSize = 700; // Define the size of each chunk
+        const chunks = [];
+    
+        for (let i = 0; i < modifiedData.length; i += chunkSize) {
+            chunks.push(modifiedData.slice(i, i + chunkSize));
+        }
+    
+        const uploadChunk = (chunkIndex) => {
+            if (chunkIndex >= chunks.length) {
+                console.log('All chunks uploaded successfully');
+                handleResetAndClose(); // Close the dialog after successful upload
+                window.location.reload();
+                return;
+            }
+    
+            fetch('http://localhost:4000/addskor', {
+                method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+                headers: {
+                    'Content-Type': 'application/json', // Specify the content type
+                },
+                body: JSON.stringify({
+                    data: chunks[chunkIndex],
+                    kategori: selectedValue
+                }) 
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(`Chunk ${chunkIndex + 1} upload successful:`, data);
+                    uploadChunk(chunkIndex + 1); // Upload the next chunk
+                })
+                .catch(error => {
+                    console.error('Error uploading chunk:', error);
+                    // Optionally, you can handle the error by showing a message to the user or retrying
+                });
+        };
+    
+        uploadChunk(0); // Start uploading the first chunk
+    };
+    
 
-        return fetch('http://localhost:4000/addskorakhlak', {
-            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
-            headers: {
-                'Content-Type': 'application/json', // Specify the content type
-            },
-            body: JSON.stringify({
-                data: modifiedData
-            }) 
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Upload successful:', data);
-                handleClose(); // Close the dialog after successful upload
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                // Optionally, you can handle the error by showing a message to the user
-            });
+    // Custom handleClose function to reset states and close the dialog
+    const handleResetAndClose = () => {
+        setParsedData([]);
+        setNamaFile('');
+        handleClose();
     };
 
-    const unggahDataButton = (
+    const batalkanButton = (
         <Button
-            endIcon={<FileUploadOutlined />}
-            style={IsHoverUnggahData ? { ...unggahDataButtonStyle, ...hoverUnggahDataButtonStyle } : unggahDataButtonStyle}
-            onMouseEnter={() => setIsHoverUnggahData(true)}
-            onMouseLeave={() => setIsHoverUnggahData(false)}
-            onClick={uploadskor}
+            endIcon={<CancelOutlined />}
+            style={{ ...isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle }}
+            onMouseEnter={() => setIsHoveredBatalkan(true)}
+            onMouseLeave={() => setIsHoveredBatalkan(false)}
+            onClick={handleResetAndClose}
         >
-            Unggah Data
+            Batalkan
         </Button>
     );
 
-    
+    const unggahDataButton = (
+        <ButtonPrimary
+            Color="#ffffff"
+            icon={FileUploadOutlined}
+            LabelName={'Unggah Data'}
+            disabled={parsedData.length === 0}
+            onClick={uploadskor}
+        />
+    );
+
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleResetAndClose}>
             <DialogTitle>
                 <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
                     Unggah Data Nilai Assesment
@@ -263,14 +305,14 @@ function UnggahDataNilaiAssessment({ open, handleClose }) {
                             onChange={handleChange}
                         >
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <FormControlLabel value="kompetensiBUMN" control={<Radio />} label="Kompetensi BUMN" />
-                                <FormControlLabel value="kompetensiLeadership" control={<Radio />} label="Kompetensi Leadership" />
-                                <FormControlLabel value="kompetensiTeknis" control={<Radio />} label="Kompetensi Teknis" />
+                                <FormControlLabel value="1" control={<Radio />} label="Kompetensi BUMN" />
+                                <FormControlLabel value="2" control={<Radio />} label="Kompetensi Leadership" />
+                                <FormControlLabel value="3" control={<Radio />} label="Kompetensi Teknis" />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <FormControlLabel value="Potensi" control={<Radio />} label="Potensi" />
-                                <FormControlLabel value="AKHLAK" control={<Radio />} label="AKHLAK" />
-                                <FormControlLabel value="learningAgility" control={<Radio />} label="Learning Agility" />
+                                <FormControlLabel value="4" control={<Radio />} label="Potensi" />
+                                <FormControlLabel value="5" control={<Radio />} label="AKHLAK" />
+                                <FormControlLabel value="6" control={<Radio />} label="Learning Agility" />
                             </div>   
                         </RadioGroup>
                     </FormControl>

@@ -52,7 +52,7 @@ export default function DetailEvent() {
     deskripsi,
     tipe_komite_talent,
     tipekomite,
-    kode_rumpun,
+    kode_rumpun, 
     nama_rumpun,
     tanggal_mulai,
     tanggal_selesai,

@@ -43,7 +43,7 @@ export default function TalentDaysBPJTable({
   };
 
   const columns = [
-    { field: 'id', headerName: 'No', width: 50 },
+    { field: 'id', headerName: 'No', width: 60 },
     { field: 'Nama', headerName: 'Nama', width: 200 },
     { field: 'Nippos', headerName: 'Nippos', width: 130 },
     { field: 'Posisi', headerName: 'Posisi', width: 400 },
@@ -94,7 +94,7 @@ export default function TalentDaysBPJTable({
   ];
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400, width: '100%', overflow: 'hidden' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -104,6 +104,19 @@ export default function TalentDaysBPJTable({
           },
         }}
         pageSizeOptions={[5, 10]}
+        sx={{
+          borderRadius: '12px', // Apply border radius to the DataGrid itself
+          '& .MuiDataGrid-main': {
+            borderRadius: '12px', // Apply border radius to the main container
+          },
+          '& .MuiDataGrid-columnHeader': {
+            backgroundColor: '#F5F5F5', // Apply background color to each header cell
+            padding: '0 24px', // Apply horizontal padding to each header cell
+          },
+          '& .MuiDataGrid-cell': {
+            padding: '0 24px', // Apply horizontal padding to each header cell
+          },
+        }}
       />
 
       <InputNilaiTalentDays

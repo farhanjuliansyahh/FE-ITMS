@@ -3,7 +3,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, Typogra
 import { styled } from '@mui/material/styles';
 import { CancelOutlined, CheckCircleOutlined } from '@mui/icons-material';
 
-function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {    
+function KonfirmasiUbahMatrix({ open, onClose, onConfirm, terpilih, kuota }) {    
     const YakinButtonStyle = {
         backgroundColor: '#1C2D5A',
         color:'#fff',
@@ -115,9 +115,32 @@ function KonfirmasiUbahMatrix({ open, onClose, onConfirm }) {
                             onChange={handleReasonChange} // Handle changes in the TextField value
                             sx={{ width: '100%', marginBottom: '16px' }}
                         />
-                        <Typography variant="subtitle1" sx={{fontFamily: 'Roboto', fontSize: '14px', fontWeight: 600, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>
-                            Apakah anda yakin mengubah kategori matrix data karyawan yang dipilih?
-                        </Typography>
+                      <Typography 
+    variant="subtitle1" 
+    sx={{
+      fontFamily: 'Roboto',
+      fontSize: '14px',
+      fontWeight: 600,
+      lineHeight: '20px',
+      letterSpacing: '0.5px',
+      textAlign: 'center'
+    }}
+  >
+    Apakah anda yakin mengubah kategori matrix data karyawan yang dipilih?
+  </Typography>
+  <Typography
+    variant="subtitle1" 
+    sx={{
+      fontFamily: 'Roboto',
+      fontSize: '14px',
+      fontWeight: 600,
+      lineHeight: '20px',
+      letterSpacing: '0.5px',
+      textAlign: 'center'
+    }}
+  >
+    Kuota Diskresi Anda <span style={{color: '#F44336' }}>{terpilih}</span> dari <span style={{color: '#F44336' }}>{kuota}</span> karyawan
+  </Typography>
                         <Typography variant="body1" sx={{ width: '90%', margin: 'auto', marginTop: '16px', marginBottom: '16px', fontFamily: 'Roboto', fontSize: '14px', fontWeight: 400, lineHeight: '20px', letterSpacing: '0.5px', textAlign: 'center' }}>
                             Anda tidak dapat membatalkan perubahan dan mengubah kategori matrix hanya diizinkan 1 kali saja.
                         </Typography>

@@ -98,12 +98,19 @@ const ParameterTalent = () => {
   const handleClose = () => {
     setopenUnggahData(false);
   };
+
+  // untuk membuat dia kembali ke last tab yang dibuka user sebelum di-refresh
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    localStorage.setItem('tabValue', newValue);
     setRefetchstate(true);
   };
 
   useEffect(() => {
+    const savedTabValue = localStorage.getItem('tabValue');
+    if (savedTabValue !== null) {
+      setValue(parseInt(savedTabValue, 10));
+    }
     setLoading(false);
   }, []);
 
@@ -265,7 +272,7 @@ const ParameterTalent = () => {
     setPertanyaanChange((prevChanges) => [...prevChanges, newChange]);
   };
 
-  console.log('diubah: ', pertanyaanChange);
+  // console.log('diubah: ', pertanyaanChange);
 
   useEffect(() => {
     // console.log('Rows:', pertanyaan);
@@ -605,7 +612,7 @@ const ParameterTalent = () => {
           </Box>
         </CustomTabPanel>
 
-        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={() => setopenUnggahData(false)} />
+        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} />
         <AddQuestionModal open={openAddQuestionModal} handleClose={handleCloseAddQuestionModal} handleAddQuestion={handleAddQuestion} />
         <AlertSimpan
           open={openAlertBerhasilSimpan}
