@@ -75,6 +75,7 @@ const TalentDays = ({eventid}) => {
   const [daysRow, setdaysRow] = useState([]);
   const [daysBpj, setdaysBpj] = useState([]);
   const [selectedBPJ, setSelectedBPJ] = useState('')
+  const [questionList, setQuestionList] = useState([])
   
 
   const eventidactive = eventid
@@ -182,9 +183,25 @@ const TalentDays = ({eventid}) => {
       });
 };
 
+const fetchquestionevent = () => {
+  // Fetch data from API
+  fetch(`http://localhost:4000/getquestionevent?eventtalentid=${eventidactive}`)
+    .then(response => response.json())
+    .then(data => {
+      // Update state with API data
+      setQuestionList(data.map((row, index) => ({ ...row, id: index + 1 })));
+      setLoading(false); // Set loading to false once data is fetched
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+};
+
+
 useEffect(() => {
   fetchbpjdays(),
   fetchkaryawandays()
+  fetchquestionevent()
 }, []);
 
 let sudahdipilihcount = 0;
@@ -459,6 +476,9 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
           
             <TalentDaysKaryawanTable 
               rows={resetRowsTrue} 
+              question = {questionList}
+              eventid={eventidactive}
+              refetchkaryawan = {fetchkaryawandays}
             />
 
           </Box>          
