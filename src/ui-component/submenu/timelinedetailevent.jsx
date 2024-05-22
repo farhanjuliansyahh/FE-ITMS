@@ -22,22 +22,32 @@ import TalentCluster from '../../ui-component/event-section/talent-cluster';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
-export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, kodekomite, tipekomite, rumpun, tanggal_mulai, tanggal_selesai, eventstatus_id, handleActiveStepChange }) {
+export default function TimelineDetailEvent({
+  eventid,
+  nama_event,
+  deskripsi,
+  kodekomite,
+  tipekomite,
+  rumpun,
+  tanggal_mulai,
+  tanggal_selesai,
+  eventstatus_id,
+  handleActiveStepChange
+}) {
   const [activeStep, setActiveStep] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [talentPoolDialogOpen, setTalentPoolDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [DaysLeft, setDaysLeft] = useState('');
-  const [deadline, setDeadline] = useState([])
-  const [DaysLeftStep, setDaysLeftStep] = useState([])
+  const [deadline, setDeadline] = useState([]);
+  const [DaysLeftStep, setDaysLeftStep] = useState('');
   const [startdate, setStartdate] = useState(null);
- const [enddate, setEnddate] = useState(null);
+  const [enddate, setEnddate] = useState(null);
  
 
   useEffect(() => {
     setActiveStep(eventstatus_id - 2);
   }, [eventstatus_id]);
-
 
   const geteventdeadline = () => {
     return fetch(`http://localhost:4000/geteventdeadline?eventtalentid=${eventid}`) // endpoint
@@ -55,50 +65,41 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
         throw error; // Rethrow the error to handle it elsewhere
       });
   };
-    
+
   useEffect(() => {
-    geteventdeadline()
+    geteventdeadline();
     const endDate = new Date(tanggal_selesai);
     const currentDate = new Date();
     const timeDifference = endDate.getTime() - currentDate.getTime();
     const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
-  
-  function calculateDaysLeft(tanggal_mulai, tanggal_selesai) {
-    const endDate = new Date(tanggal_selesai);
-    const currentDate = new Date(tanggal_mulai);
-    const timeDifference = endDate.getTime() - currentDate.getTime();
+
+  function calculateDaysLeft(startDate, endDate) {
+    const end = new Date(endDate);
+    const start = new Date(startDate);
+    const timeDifference = end.getTime() - start.getTime();
     const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)) + 1;
     return daysDifference;
   }
 
   useEffect(() => {
-    // Check if deadline is not empty and eventstatus_id is within the valid range
     if (deadline.length > 0 && eventstatus_id >= 2 && eventstatus_id <= 7) {
-      // Construct property names based on eventstatus_id
       const startdateProperty = `startdate_${eventstatus_id - 1}`;
       const deadlineProperty = `deadline_${eventstatus_id - 1}`;
-  
-      // Access startdate and deadline from the deadline object
+
       const startdate = deadline[0][startdateProperty];
-      const deadlineDate = new Date(deadline[0][deadlineProperty]); // Convert to Date object
-    
-      // Calculate days left based on the extracted startdate and deadline
+      const deadlineDate = new Date(deadline[0][deadlineProperty]);
+
       const daysLeftStep = calculateDaysLeft(startdate, deadlineDate);
-    
-      // Add one day to the deadline
+
       deadlineDate.setDate(deadlineDate.getDate() + 1);
-  
-      // Set daysLeftStep state
+
       setDaysLeftStep(daysLeftStep);
-  
-      // Set startdate and enddate states
       setStartdate(startdate);
       setEnddate(deadlineDate);
     }
   }, [deadline, eventstatus_id]);
-
 
   const boxStyle = {
     padding: '0px',
@@ -110,7 +111,7 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
-    paddingBottom: '24px',
+    paddingBottom: '24px'
   });
 
   const FlexTitle = styled('div')({
@@ -122,12 +123,12 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
 
   const BoxContainer = styled('div')({
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   });
 
   const CalendarIcon = styled(CalendarMonthOutlined)({
     fontSize: '1rem',
-    color: '#1C2D5A',
+    color: '#1C2D5A'
   });
 
   const CurrentEventLabel = styled('div')({
@@ -149,9 +150,6 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
   });
 
   const CountdownStep = styled('div')({
-    // backgroundColor: '#F5FFF5', //success
-    // color: '#66BB6A', //success
-    
     backgroundColor: '#FFEDED',
     color: '#F44336',
     padding: '4px 12px',
@@ -163,11 +161,11 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
   const DividerContainer = styled('div')({
     width: '100%',
     textAlign: 'center',
-    marginBottom: '16px',
+    marginBottom: '16px'
   });
 
   const dividerStyle = {
-    margin: '0 auto',
+    margin: '0 auto'
   };
 
   const handleNext = () => {
@@ -262,22 +260,27 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
             <FlexTitle>
               <CalendarIcon style={{ color: '#828282' }} />
               <Typography style={{ fontSize: '14px', color: '#828282' }}>
-                {tanggal_mulai && new Date(tanggal_mulai).toLocaleDateString('id-ID', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })} - {tanggal_selesai && new Date(tanggal_selesai).toLocaleDateString('id-ID', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })}
+                {tanggal_mulai &&
+                  new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}{' '}
+                -{' '}
+                {tanggal_selesai &&
+                  new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}
               </Typography>
             </FlexTitle>
           </BoxContainer>
 
           <div style={{ flex: '1' }}> </div>
 
-          <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari lagi` : ''}</CountdownLabel>
+          {eventstatus_id !== 8 && <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari lagi` : ''}</CountdownLabel>}
+
 
           <ButtonSecondary
             Color="#1C2D5A"
@@ -290,9 +293,9 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
           {activeStep === eventstatus_id - 2 ? (
             <ButtonPrimary
               Color="#ffffff"
-              backgroundColor={activeStep === steps.length ? "#E0E0E0" : "#1C2D5A"}
+              backgroundColor={activeStep === steps.length ? '#E0E0E0' : '#1C2D5A'}
               icon={activeStep >= steps.length - 1 ? CheckCircleOutlined : ArrowForwardOutlined}
-              LabelName={activeStep >= steps.length - 1 ? "Selesaikan Event" : "Mulai Tahap Selanjutnya"}
+              LabelName={activeStep >= steps.length - 1 ? 'Selesaikan Event' : 'Mulai Tahap Selanjutnya'}
               onClick={handleNext}
               disabled={activeStep === steps.length}
             />
@@ -306,7 +309,6 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
               disabled={activeStep >= steps.length - 1}
             />
           )}
-
         </FlexContainer>
 
         <DividerContainer>
@@ -319,31 +321,31 @@ export default function TimelineDetailEvent({ eventid, nama_event, deskripsi, ko
           </FlexTitle>
 
           <FlexTitle style={{ paddingBottom: '24px', justifyContent: 'center' }}>
-  <CalendarIcon style={{ color: '#828282' }} />
-  <Typography style={{ color: '#828282' }}> 
-    {deadline.length > 0 && eventstatus_id >= 0 && eventstatus_id <= 5 && (
-      <>
-        {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        })} - 
-         {(() => {
-          const endDate = new Date(deadline[0][`deadline_${activeStep + 1}`]);
-          endDate.setDate(endDate.getDate() + 1); // Add one day
-          return endDate.toLocaleDateString('id-ID', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          });
-        })()}
-      </>
-    )}
-  </Typography>
-</FlexTitle>
+            <CalendarIcon style={{ color: '#828282' }} />
+            <Typography style={{ color: '#828282' }}>
+              {deadline.length > 0 && eventstatus_id >= 2 && eventstatus_id <= 7 && (
+                <>
+                  {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })} - 
+                  {(() => {
+                    const endDate = new Date(deadline[0][`deadline_${activeStep + 1}`]);
+                    endDate.setDate(endDate.getDate() + 1); // Add one day
+                    return endDate.toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    });
+                  })()}
+                </>
+              )}
+            </Typography>
+          </FlexTitle>
         </BoxContainer>
 
-        <Stepper activeStep={eventstatus_id-2} alternativeLabel>
+        <Stepper activeStep={eventstatus_id - 2} alternativeLabel>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};

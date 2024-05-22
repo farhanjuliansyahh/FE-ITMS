@@ -18,7 +18,8 @@ const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const [datarumpun, setDatarumpun] = useState([]);
   const [datajoblevel, setJoblevel] = useState([]);
-  const [datagender, setdatagender] = useState([])
+  const [datagender, setdatagender] = useState([]);
+  const [datagen, setdatagen] = useState([]);
   const [ListTahun, setlisttahun] = useState([]);
   const [selectedYear, setSelectedYear] = useState('0');
   const handleYearChange = (event) => {
@@ -48,6 +49,18 @@ const Dashboard = () => {
     .then(data => {
       // Update state with API data
       setdatagender(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }
+
+  const getgendata= (year) =>{
+    fetch(`http://localhost:4000/getgendistribution?year=${year}`)
+    .then(response => response.json())
+    .then(data => {
+      // Update state with API data
+      setdatagen(data);
     })
     .catch(error => {
       console.error('Error fetching data:', error);
@@ -86,7 +99,8 @@ const Dashboard = () => {
   useEffect(() => {
     getrumpundata(selectedYear);
     getjobleveldata(selectedYear);
-    getgenderdata(selectedYear)
+    getgenderdata(selectedYear);
+    getgendata(selectedYear);
   }, [selectedYear]);
 
   console.log(datarumpun);
@@ -105,6 +119,8 @@ const Dashboard = () => {
     //   // navigateTo: '/dashboard/total-pegawai',
     // },
   ]
+
+  console.log("datagen", datagen);
 
   return (
     <>
@@ -159,7 +175,7 @@ const Dashboard = () => {
               <JenisKelaminTerbaru isLoading={isLoading} data={mappedGender} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <GenerasiTalent isLoading={isLoading} selectedYear={selectedYear} />
+              <GenerasiTalent isLoading={isLoading} data={datagen} />
               {/* <GenerasiChart isLoading={isLoading} /> */}
             </Grid>
           </Grid>

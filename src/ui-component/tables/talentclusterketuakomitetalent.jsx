@@ -58,6 +58,8 @@ const TalentClusterKetuaKomiteTalentTable = ({
     searchNippos,
     searchJobLevel,
     searchKategoriMatrix,
+    terpilih,
+    kuota
 }) => {
     const [openFirstModal, setOpenFirstModal] = useState(false);
     const [openSecondModal, setOpenSecondModal] = useState(false);
@@ -235,7 +237,9 @@ const TalentClusterKetuaKomiteTalentTable = ({
             <KonfirmasiUbahMatrix 
                 open={openSecondModal} 
                 onClose={handlebatalkansecondmodal} 
-                onConfirm={handleCloseSecondModal} />
+                onConfirm={handleCloseSecondModal}
+                terpilih={terpilih}
+                kuota={kuota} />
 
         </div>
     );

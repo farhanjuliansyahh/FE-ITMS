@@ -15,6 +15,8 @@ const filterMenuItems = (role) => {
       return [EventKaryawan];
     case 'Komite Unit':
       return [EventKomiteUnit];
+    case 'HCBP':
+      return [dashboard];
     default:
       return [EventKetuaKomiteTalent];
   }

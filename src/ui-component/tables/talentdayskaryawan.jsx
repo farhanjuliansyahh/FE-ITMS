@@ -24,11 +24,17 @@ const getStatusStyle = (status) => {
   };
 
 export default function TalentDaysBPJTable({
-  rows
+  rows,
+  question,
+  eventid,
+  refetchkaryawan
 }) {
   const [nilaiOpen, setNilaiOpen] = useState(false);
+  const [selectedNippos, setSelectedNippos] = useState('');
 
-  const handleOpen = () => {
+  const handleOpen = (nippos) => {
+    console.log(nippos);
+    setSelectedNippos(nippos)
     setNilaiOpen(true);
   };
 
@@ -78,7 +84,7 @@ export default function TalentDaysBPJTable({
               padding: '6px 16px'
             }} 
             endIcon={<AssignmentOutlinedIcon />}
-            onClick={handleOpen}
+            onClick={() => handleOpen(params.row.Nippos)}
           >
             Nilai
           </Button>
@@ -116,6 +122,10 @@ export default function TalentDaysBPJTable({
       <InputNilaiTalentDays
         open={nilaiOpen}
         handleClose={() => setNilaiOpen(false)}
+        questionList = {question}
+        nippos    = {selectedNippos}
+        eventid = {eventid}
+        refetchkaryawan = {refetchkaryawan}
       />
       
     </div>

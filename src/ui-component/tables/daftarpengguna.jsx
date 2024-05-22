@@ -5,7 +5,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 
-const peranOptions = ['Admin Talent', 'Karyawan', 'Ketua Komite Talent', 'Komite Unit', 'Super Admin'];
+const peranOptions = ['Admin Talent', 'Karyawan', 'Ketua Komite Talent', 'Komite Unit', 'Super Admin', 'HCBP'];
 
 const ActionButton = ({ row, onSave }) => {
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ const ActionButton = ({ row, onSave }) => {
 
   useEffect(() => {
     if (open) {
-      setSelectedOptions(row.Peran ? row.Peran.split(', ').map(role => role.trim()) : []);
+      setSelectedOptions(row.Peran ? row.Peran.split(', ').map((role) => role.trim()) : []);
     }
   }, [open, row.Peran]);
 
@@ -38,12 +38,12 @@ const ActionButton = ({ row, onSave }) => {
       const response = await fetch(`http://localhost:4000/updaterolemanagement`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           nippos: nippos,
-          updatedRoles: selectedRole,
-        }),
+          updatedRoles: selectedRole
+        })
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -65,17 +65,14 @@ const ActionButton = ({ row, onSave }) => {
 
   return (
     <>
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        onClick={handleButtonClick}
-      >
+      <Button variant="contained" color="primary" size="small" onClick={handleButtonClick}>
         Ubah Akses
       </Button>
       <Dialog open={open} onClose={handleModalClose}>
         <Stack direction="row" alignItems="center" marginTop="10px">
-          <h2 style={{ paddingLeft: '20px', color: '#1F1F1F' }} justifyContent="start">Daftar Peran Pengguna</h2>
+          <h2 style={{ paddingLeft: '20px', color: '#1F1F1F' }} justifyContent="start">
+            Daftar Peran Pengguna
+          </h2>
           <Button onClick={handleModalClose} color="primary" justifyContent="end" style={{ color: '#D32F2F', marginLeft: '100px' }}>
             <CloseIcon />
           </Button>
@@ -91,7 +88,8 @@ const ActionButton = ({ row, onSave }) => {
           ))}
         </DialogContent>
         <DialogActions style={{ paddingBottom: '12px', paddingRight: '12px' }}>
-          <Button onClick={handleSavePeran}
+          <Button
+            onClick={handleSavePeran}
             variant="contained"
             endIcon={<SaveOutlinedIcon />}
             sx={{
@@ -102,11 +100,13 @@ const ActionButton = ({ row, onSave }) => {
               padding: '8px 18px',
               boxShadow: 'none',
               width: '110px',
-              height: '40px',
-            }} >
+              height: '40px'
+            }}
+          >
             Save
           </Button>
-          <Button onClick={handleModalClose}
+          <Button
+            onClick={handleModalClose}
             endIcon={<HighlightOffOutlinedIcon />}
             sx={{
               color: '#D32F2F',
@@ -118,7 +118,8 @@ const ActionButton = ({ row, onSave }) => {
               width: '110px',
               height: '40px',
               border: '1.5px solid #D32F2F'
-            }} >
+            }}
+          >
             Batalkan
           </Button>
         </DialogActions>
@@ -127,12 +128,12 @@ const ActionButton = ({ row, onSave }) => {
   );
 };
 
-export default function DaftarPenggunaTabel({ 
+export default function DaftarPenggunaTabel({
   rows,
-  searchNama, 
+  searchNama,
   searchNippos,
   searchPeran,
-  onFilteredData, // Receive the callback function
+  onFilteredData // Receive the callback function
 }) {
   const [updatedRows, setUpdatedRows] = useState([]);
 
@@ -141,16 +142,11 @@ export default function DaftarPenggunaTabel({
   }, [rows]);
 
   const handleSave = (id, newRoles) => {
-    setUpdatedRows((prevRows) =>
-      prevRows.map((row) => (row.id === id ? { ...row, Peran: newRoles.join(', ') } : row))
-    );
+    setUpdatedRows((prevRows) => prevRows.map((row) => (row.id === id ? { ...row, Peran: newRoles.join(', ') } : row)));
   };
 
   const calculateColumnWidth = (data, accessor, headerText) => {
-    const maxLength = Math.max(
-      ...data.map(item => (item[accessor] ? item[accessor].toString().length : 0)),
-      headerText.length
-    );
+    const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
     return maxLength * 11; // Adjust multiplier as needed
   };
 
@@ -166,34 +162,30 @@ export default function DaftarPenggunaTabel({
       field: 'Aksi',
       headerName: 'Aksi',
       width: 150,
-      renderCell: (params) => (
-        <ActionButton row={params.row} onSave={handleSave} />
-      ),
-    },
+      renderCell: (params) => <ActionButton row={params.row} onSave={handleSave} />
+    }
   ];
 
   //fungsi buat reset index:
   const resetRowIndex = (filteredRows) => {
     return filteredRows.map((row, index) => ({
       ...row,
-      id: index + 1, // Adding 1 to start the index from 1 instead of 0
+      id: index + 1 // Adding 1 to start the index from 1 instead of 0
     }));
   };
 
   // Filter the rows based on selected filters and search term
   const filteredRows = updatedRows.filter((row) => {
-    const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); 
-    const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); 
-    const peranMatch = !searchPeran || (row.Peran && row.Peran.toLowerCase().includes(searchPeran.toLowerCase())); 
+    const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase()));
+    const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase()));
+    const peranMatch = !searchPeran || (row.Peran && row.Peran.toLowerCase().includes(searchPeran.toLowerCase()));
 
-    return (!searchNama || namaMatch) 
-    && (!searchNippos || nipposMatch) 
-    && (!searchPeran || peranMatch);
+    return (!searchNama || namaMatch) && (!searchNippos || nipposMatch) && (!searchPeran || peranMatch);
   });
 
   //buat constanta yang isinya hasil filter yang indexnya udah di reset:
   const resetRows = resetRowIndex(filteredRows);
-  
+
   useEffect(() => {
     onFilteredData(resetRows);
   }, [resetRows, onFilteredData]);
@@ -206,8 +198,8 @@ export default function DaftarPenggunaTabel({
         pageSizeOptions={[5, 10]}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 5, page: 0 }, // Setting the default page size to 5
-          },
+            paginationModel: { pageSize: 5, page: 0 } // Setting the default page size to 5
+          }
         }}
       />
     </div>

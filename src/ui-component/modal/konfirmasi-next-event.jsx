@@ -69,7 +69,6 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
     }
   };
 
-
   const eventactive = parseInt(eventid);
 
   const updatedeadline = (eventid) => {
@@ -379,52 +378,46 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
     backgroundColor: '#E0E0E0'
   });
 
-
-    return (
-        <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>
-                <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                    Konfirmasi {steps[currentstep]}
-                </Typography>
-            </DialogTitle>
-            <DividerContainer>
-                <Divider orientation="horizontal" flexItem />
-            </DividerContainer>
-            <DialogContent>
-                <Box
-                    component="form"
-                    sx={{ '& .MuiTextField-root': { m: 1, width: '500px' } }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <div>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoItem>
-                                <DatePicker
-                                    disablePast
-                                    views={['year', 'month', 'day']}
-                                    InputLabelProps={{ shrink: true }}
-                                    label={`Tanggal Berakhir ${steps[currentstep + 1]} *`}
-                                    required
-                                    format='YYYY-MM-DD'
-                                    onChange={handleDateChange}
-                                />
-                            </DemoItem>
-                        </LocalizationProvider>
-                        <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px', marginBottom: '24px' }}>
-                            Anda tidak dapat kembali ke tahap sebelumnya jika melanjutkan.
-                        </Typography>
-                    </div>
-                </Box>
-            </DialogContent>
-            <DialogActions sx={{ padding: '0 24px 24px 24px ' }}>
-                <ButtonsContainer>
-                    {batalkanButton}
-                    {lanjutkanButton}
-                </ButtonsContainer>
-            </DialogActions>
-        </Dialog>
-    );
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>
+        <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
+          Konfirmasi {steps[currentstep]}
+        </Typography>
+      </DialogTitle>
+      <DividerContainer>
+        <Divider orientation="horizontal" flexItem />
+      </DividerContainer>
+      <DialogContent>
+        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '500px' } }} noValidate autoComplete="off">
+          <div>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoItem>
+                <DatePicker
+                  disablePast
+                  views={['year', 'month', 'day']}
+                  InputLabelProps={{ shrink: true }}
+                  label={`Tanggal Berakhir ${steps[currentstep + 1]} *`}
+                  required
+                  format="YYYY-MM-DD"
+                  onChange={handleDateChange}
+                />
+              </DemoItem>
+            </LocalizationProvider>
+            <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px', marginBottom: '24px' }}>
+              Anda tidak dapat kembali ke tahap sebelumnya jika melanjutkan.
+            </Typography>
+          </div>
+        </Box>
+      </DialogContent>
+      <DialogActions sx={{ padding: '0 24px 24px 24px ' }}>
+        <ButtonsContainer>
+          {batalkanButton}
+          {lanjutkanButton}
+        </ButtonsContainer>
+      </DialogActions>
+    </Dialog>
+  );
 }
 
 export default KonfirmasiNextEvent;
