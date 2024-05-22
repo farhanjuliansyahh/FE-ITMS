@@ -4,46 +4,44 @@ import { Box, Dialog, Grid, IconButton, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import { CloseOutlined, RestartAltOutlined } from '@mui/icons-material';
 import TabelDaftarAnggotaBPJ from '../../ui-component/tables/daftar-anggota-bpj';
-import KonfirmasiTambahAnggotaBPJ from './konfirmasi-tambah-anggota-bpj';
+import KonfirmasiTambahAnggotaBPJ from './konfirmasi-tambah-bpj';
 import CustomSearch from '../searchsection/custom-search';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
 
-
-export default function TambahAnggotaBPJ({ open, onClose, onConfirm, onOpenSecondModal }) {
+export default function TambahAnggotaBPJ({ open, onClose, onConfirm, eventid }) {
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         setLoading(false);
     }, []);
     
     const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
-    const [rows, setRows] = useState([])
+    const [rows, setRows] = useState([]);
+    const [selectedNippos, setSelectedNippos] = useState('');
 
     useEffect(() => {
-        // Fetch data from API
         fetch(`http://localhost:4000/getkomiteunitcandidate`)
           .then(response => response.json())
           .then(data => {
-            // Update state with API data
             setRows(data.map((row, index) => ({ ...row, id: index + 1 })));
           })
           .catch(error => {
             console.error('Error fetching data:', error);
           });
-      }, []); // Empty dependency array to run effect only once
+      }, []);
 
     const handleCloseKonfirmasiModal = () => {
         setOpenKonfirmasiModal(false);
     };
 
     const handleTambahAnggotaBPJButtonClick = (nippos) => {
-        // event.stopPropagation(); // Stop event propagation here
-        onClose(); // Close the first modal
-        onOpenSecondModal(nippos); // Open the second modal
+        setSelectedNippos(nippos);
+        setOpenKonfirmasiModal(true); // Open the second modal first; // Close the first modal afterwards
     };
 
     const HandleKonfirmasiModal = () => {
-        onConfirm()
-    }
+        onclose()
+        onConfirm();
+    };
 
     const boxStyle = {
         padding: '20px',
@@ -58,10 +56,9 @@ export default function TambahAnggotaBPJ({ open, onClose, onConfirm, onOpenSecon
         paddingBottom: '24px',
     });
     
-    // DAFTAR KOMITE UNIT
-    const listNama = [...new Set(rows.map(row => row.nama))]
+    const listNama = [...new Set(rows.map(row => row.nama))];
     const listJabatan = [...new Set(rows.map(row => row.jabatan))];
-    const listKantor = [...new Set(rows.map(row => row.kantor))]
+    const listKantor = [...new Set(rows.map(row => row.kantor))];
 
     const [selectedNama, setSelectedNama] = useState(null);
     const [selectedJabatan, setSelectedJabatan] = useState(null);
@@ -109,8 +106,8 @@ export default function TambahAnggotaBPJ({ open, onClose, onConfirm, onOpenSecon
 
                 <TabelDaftarAnggotaBPJ 
                     onOpenSecondModalTable={handleTambahAnggotaBPJButtonClick}
-                    rows = {rows}
-                    searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                    rows={rows}
+                    searchNama={selectedNama}
                     searchJabatan={selectedJabatan}
                     searchKantor={selectedKantor}
                 />
@@ -118,9 +115,11 @@ export default function TambahAnggotaBPJ({ open, onClose, onConfirm, onOpenSecon
 
             <KonfirmasiTambahAnggotaBPJ
                 open={openKonfirmasiModal} 
-                onClose={handleCloseKonfirmasiModal} 
+                handleClose={handleCloseKonfirmasiModal}
+                eventid={eventid}
+                nippos={selectedNippos}
+                onConfirm={HandleKonfirmasiModal}
             />
         </Dialog>
-
     );
 }

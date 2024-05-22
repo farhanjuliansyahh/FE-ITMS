@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const [datarumpun, setDatarumpun] = useState([]);
   const [datajoblevel, setJoblevel] = useState([]);
+  const [datagender, setdatagender] = useState([])
   const [ListTahun, setlisttahun] = useState([]);
   const [selectedYear, setSelectedYear] = useState('0');
   const handleYearChange = (event) => {
@@ -40,6 +41,23 @@ const Dashboard = () => {
     const distinctYears = [...new Set(rows.map(item => item.year))];
     setlisttahun(distinctYears);
   }, [rows]);
+
+  const getgenderdata= (year) =>{
+    fetch(`http://localhost:4000/getdatagender?year=${year}`)
+    .then(response => response.json())
+    .then(data => {
+      // Update state with API data
+      setdatagender(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }
+
+  const mappedGender = datagender.map(item => ({
+    name: item.name === 'F' ? 'Perempuan' : 'Laki-laki',
+    value: item.value
+}));
 
   const getrumpundata= (year) =>{
     fetch(`http://localhost:4000/getdatatalentrumpun?year=${year}`)
@@ -68,6 +86,7 @@ const Dashboard = () => {
   useEffect(() => {
     getrumpundata(selectedYear);
     getjobleveldata(selectedYear);
+    getgenderdata(selectedYear)
   }, [selectedYear]);
 
   console.log(datarumpun);
@@ -137,7 +156,7 @@ const Dashboard = () => {
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
               {/* <JenisKelaminChart isLoading={isLoading} /> */}
-              <JenisKelaminTerbaru isLoading={isLoading} selectedYear={selectedYear} />
+              <JenisKelaminTerbaru isLoading={isLoading} data={mappedGender} />
             </Grid>
             <Grid item xs={12} md={6}>
               <GenerasiTalent isLoading={isLoading} selectedYear={selectedYear} />

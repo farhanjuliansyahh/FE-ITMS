@@ -58,25 +58,34 @@ const TalentPool = ({eventid}) => {
   const [filterJob, setFilterJob] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
   const [poolrow, setpool] = useState([])
+  const [refreshstate, setrefreshstate] = useState([false])
 
   const eventidactive = eventid
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const gettalentpool= () =>{
+    fetch(`http://localhost:4000/gettalentpool?eventtalentid=${eventidactive}`)
+    .then(response => response.json())
+    .then(data => {
+      // Update state with API data
+      setpool(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }
+
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/gettalentpool?eventtalentid=${eventidactive}`)
-      .then(response => response.json())
-      .then(datapool => {
-        // Update state with API data
-        setpool(datapool.map((row, index) => ({ ...row, id: index + 1 })));
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+   gettalentpool();
+   setrefreshstate(true)
   }, []);
 
+  const handlerefresh = () => {
+    gettalentpool();
+  };
 
   useEffect(() => {
     setLoading(false);
@@ -156,7 +165,7 @@ const TalentPool = ({eventid}) => {
     }));
   };
 
-  const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
+  const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue)
 
   const poolLength = poolrow.length
 
@@ -227,6 +236,8 @@ const TalentPool = ({eventid}) => {
          
           <TalentPoolTable 
               rows={resetRowsTrue}
+              eventid={eventidactive}
+              updaterows={handlerefresh}
             />
           </Box>
     

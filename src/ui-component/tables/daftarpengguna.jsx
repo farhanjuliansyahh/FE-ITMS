@@ -146,18 +146,26 @@ export default function DaftarPenggunaTabel({
     );
   };
 
+  const calculateColumnWidth = (data, accessor, headerText) => {
+    const maxLength = Math.max(
+      ...data.map(item => (item[accessor] ? item[accessor].toString().length : 0)),
+      headerText.length
+    );
+    return maxLength * 11; // Adjust multiplier as needed
+  };
+
   const columns = [
-    { field: 'id', headerName: 'No', width: 70 },
-    { field: 'nama', headerName: 'Nama', width: 130 },
-    { field: 'nippos', headerName: 'Nippos', width: 130 },
-    { field: 'posisi', headerName: 'Posisi', width: 130 },
-    { field: 'jobfam', headerName: 'Job Family', width: 130 },
-    { field: 'joblevel', headerName: 'Job Level', width: 130 },
-    { field: 'Peran', headerName: 'Peran', width: 200 },
+    { field: 'id', headerName: 'No', width: calculateColumnWidth(rows, 'id', 'No') },
+    { field: 'nama', headerName: 'Nama', width: calculateColumnWidth(rows, 'nama', 'Nama') },
+    { field: 'nippos', headerName: 'Nippos', width: calculateColumnWidth(rows, 'nippos', 'Nippos') },
+    { field: 'posisi', headerName: 'Posisi', width: calculateColumnWidth(rows, 'posisi', 'Posisi') },
+    { field: 'jobfam', headerName: 'Job Family', width: calculateColumnWidth(rows, 'jobfam', 'Job Family') },
+    { field: 'joblevel', headerName: 'Job Level', width: calculateColumnWidth(rows, 'joblevel', 'Job Level') },
+    { field: 'Peran', headerName: 'Peran', width: calculateColumnWidth(rows, 'Peran', 'Peran') },
     {
       field: 'Aksi',
       headerName: 'Aksi',
-      width: 130,
+      width: 150,
       renderCell: (params) => (
         <ActionButton row={params.row} onSave={handleSave} />
       ),
@@ -195,7 +203,12 @@ export default function DaftarPenggunaTabel({
       <DataGrid
         rows={resetRows}
         columns={columns}
-        pageSizeOptions={[5, 10, 100]}
+        pageSizeOptions={[5, 10]}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5, page: 0 }, // Setting the default page size to 5
+          },
+        }}
       />
     </div>
   );

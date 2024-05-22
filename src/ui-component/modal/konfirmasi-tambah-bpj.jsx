@@ -6,23 +6,19 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 
-function KonfirmasiTambahBPJ({ open, handleClose, eventid, Nippos }) {
+function KonfirmasiTambahBPJ({ open, handleClose, eventid, Nippos, nippos, onConfirm }) {
 
-    const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
-    const [rows, setRows] = useState([])
 
-    const eventactive = eventid
-
-    const tambahdatabpj = (eventid, nippos) => {
-        console.log("event active", eventactive);
-        return fetch('http://localhost:4000/asignasbpj', {
+    const tambahdatabpj = (eventid, nippos, nippos) => {
+        return fetch('http://localhost:4000/assignasbpj', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
                 'Content-Type': 'application/json', // Specify the content type
             },
             body: JSON.stringify({
                 // Include any data you want to send in the request body
-                eventtalentid: eventid
+                eventtalentid: eventid,
+                nippos: nippos
             }) // Convert the bodyData object to a JSON string
         })
             .then(response => {
@@ -86,8 +82,9 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid, Nippos }) {
             onMouseLeave={() => setIsHoveredTambahData(false)}
             onClick={async () => {
                 try {
-                    await tambahdatabpj(eventactive);
+                    await tambahdatabpj(eventid,nippos);
                     handleClose();
+                    onConfirm();
                 } catch (error) {
                     // Handle error if notifkasikaryawan() fails
                     console.error("Error:", error);

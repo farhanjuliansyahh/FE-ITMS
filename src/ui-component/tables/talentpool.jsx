@@ -5,7 +5,7 @@ import { CreateOutlined } from '@mui/icons-material/';
 import ButtonPrimary from '../button/ButtonPrimary';
 import UbahStatusTalent from '../modal/ubah-status-talent';
 
-export default function TalentPool({ rows }) {
+export default function TalentPool({ rows, eventid, updaterows }) {
   const [ubahStatusOpen, setUbahStatusOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState(null); 
 
@@ -63,8 +63,10 @@ export default function TalentPool({ rows }) {
           // confirm()
           setUbahStatusOpen(false);
           setSelectedNippos(null); // Reset selected nippos when closing modal
+          updaterows()
         }}
         nippos={selectedNippos} // Pass selected nippos as prop
+        eventid={eventid}
       />
     </div>
   );

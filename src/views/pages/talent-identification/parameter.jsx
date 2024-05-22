@@ -121,76 +121,24 @@ const ParameterTalent = () => {
     paddingBottom: '24px'
   });
 
-  function createData(
-    id,
-    nama,
-    nippos,
-    posisi,
-    joblevel,
-    rumpunjabatan,
-    kantor,
-    komiteunit,
-    kompbumn,
-    komplead,
-    kompteknis,
-    potensi,
-    akhlak,
-    learningagility,
-    performance
-  ) {
-    return {
-      id,
-      nama,
-      nippos,
-      posisi,
-      joblevel,
-      rumpunjabatan,
-      kantor,
-      komiteunit,
-      kompbumn,
-      komplead,
-      kompteknis,
-      potensi,
-      akhlak,
-      learningagility,
-      performance
-    };
-  }
+  const [rows, setAsessmentRow] = useState([]);
 
-  const rows = [
-    createData(
-      1,
-      'Sri Hartini',
-      '998494379',
-      'Asisten Manajer Pengembangan Join Operation',
-      'E3',
-      'Bisnis',
-      'KANTOR PUSAT BANDUNG',
-      'ABD HAFID'
-    ),
-    createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'D2', 'Bisnis', 'KANTOR PUSAT BANDUNG', 'ABDU SOMAD'),
-    createData(3, 'Adinda', '998495379', 'Asisten Manajer Pengelolaan Remittance LN', 'D1', 'SDM', 'KANTOR PUSAT BANDUNG', 'ABDUL JAMIL'),
-    createData(
-      4,
-      'Niken Wijaya',
-      '998494389',
-      'Asisten Manajer Penjualan dan Kemitraan Pospay',
-      'E3',
-      'Bisnis',
-      'KANTOR PUSAT JAKARTA',
-      'ABDUL WAHAB'
-    ),
-    createData(
-      5,
-      'Abang',
-      '998494379',
-      'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding',
-      'E2',
-      'Bisnis',
-      'KANTOR PUSAT JAKARTA',
-      'ACEP RUDI SUPRIADI'
-    )
-  ];
+  const fetchData = () => {
+    fetch(`http://localhost:4000/getnilaiassessment`)
+      .then(response => response.json())
+      .then(data => {
+        setAsessmentRow(data.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // console.log(rows);
 
   // create list of Nama, Nippos, Job Level, Rumpun Jabatan
   const listNama = [...new Set(rows.map((row) => row.nama))];
@@ -273,7 +221,7 @@ const ParameterTalent = () => {
       id: generateId(),
       text: newQuestionText
     };
-    console.log('Adding new question:', newQuestion);
+    // console.log('Adding new question:', newQuestion);
     setPertanyaan([...pertanyaan, newQuestion]);
   };
 
@@ -320,6 +268,7 @@ const ParameterTalent = () => {
   console.log('diubah: ', pertanyaanChange);
 
   useEffect(() => {
+    // console.log('Rows:', pertanyaan);
     // console.log('Rows:', pertanyaan);
   }, [pertanyaan]);
 
@@ -398,6 +347,8 @@ const ParameterTalent = () => {
 
   //buat constanta yang isinya hasil filter yang indexnya udah di reset:
   const resetRows = resetRowIndex(filteredRows);
+  
+  // console.log('sri: ', resetRows)
 
   // console.log('sri: ', resetRows);
 

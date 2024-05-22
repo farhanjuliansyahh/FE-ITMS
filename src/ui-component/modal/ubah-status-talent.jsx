@@ -4,7 +4,46 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { CreateOutlined } from '@mui/icons-material';
 
-function UbahStatusTalent({ open, handleClose }) {
+function UbahStatusTalent({ open, nippos, eventid, handleClose }) {
+    const [selectedStatus, setselectedStatus] = useState('')
+
+    const handleStatusChange = (event) => {
+        setselectedStatus(event.target.value); // Update the selected status state
+    };
+
+    const updatestatus = (eventid, nippos, status) => {
+        return fetch(`http://localhost:4000/updatestatuspool`, {
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventtalentid: eventid,
+                nippos : nippos,
+                status : status                
+            }) // Convert the bodyData object to a JSON string
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data; // Return the parsed JSON data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+    };
+
+    const handleUbah = () => {
+        updatestatus(eventid, nippos, selectedStatus); // Update the selected status state
+        handleClose();
+    };
+
     const UbahButtonStyle = {
         backgroundColor: '#1C2D5A',
         color: '#fff',
@@ -49,6 +88,7 @@ function UbahStatusTalent({ open, handleClose }) {
             style={IsHoverUbah ? { ...UbahButtonStyle, ...hoverUbahStyle } : UbahButtonStyle}
             onMouseEnter={() => setIsHoverUbah(true)}
             onMouseLeave={() => setIsHoverUbah(false)}
+            onClick={handleUbah}
         >
             Ubah
         </Button>
@@ -88,11 +128,13 @@ function UbahStatusTalent({ open, handleClose }) {
                         select
                         required
                         id="status-talent"
-                        label="Status Talent" // ini bisa diisi dengan current status dari talentnya ga ya?
+                        label="Status Talent"
+                        value={selectedStatus} // Bind the selected status state to the TextField value
+                        onChange={handleStatusChange} // Call the handleStatusChange function on selection change
                         sx={{ width: '100%', marginBottom: '16px',  }}
                     >
-                        <MenuItem value="1">Talent</MenuItem>
-                        <MenuItem value="2">Non Talent</MenuItem>
+                        <MenuItem value='1'>Talent</MenuItem>
+                        <MenuItem value='0'>Non Talent</MenuItem>
                     </TextField>
                     <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px', marginBottom: '24px' }}>
                         Anda dapat kembali mengubah status selama masa Talent Pool aktif.

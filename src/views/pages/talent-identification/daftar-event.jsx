@@ -45,6 +45,7 @@ const DaftarEvent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [eventData, setEventData] = useState([]);
+  const [refreshFetch, setRefreshFetch] = useState(false)
 
   const fetchDataFromDatabase = () => {
     return fetch('http://localhost:4000/getallevent') // endpoint
@@ -188,6 +189,8 @@ const DaftarEvent = () => {
                   tanggal_mulai={event.tanggal_mulai}
                   tanggal_selesai={event.tanggal_selesai}
                   status={event.evenstatus_id}
+                  showHitungMundur={true}
+                  jobleve={event.jobleve}
                 />
               ))}
               {paginatedEventsTab0.length === 0 ? (
@@ -240,6 +243,8 @@ const DaftarEvent = () => {
                   tanggal_mulai={event.tanggal_mulai}
                   tanggal_selesai={event.tanggal_selesai}
                   status={event.evenstatus_id}
+                  statusHitungMundur={false}
+                  jobleve={event.jobleve}
                 />
               ))}
               {paginatedEventsTab1.length === 0 ? (
