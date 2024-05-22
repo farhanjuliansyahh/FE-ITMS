@@ -375,7 +375,7 @@ export default function EventBerjalan({
 
         <Grid item xs={12} md={3}>
           <Typography>Tipe</Typography>
-          <Typography style={{ fontWeight: 'bold' }}>{tipe_komite_talent}<br/>{jobleveString}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>{tipe_komite_talent} ({jobleveString})</Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
