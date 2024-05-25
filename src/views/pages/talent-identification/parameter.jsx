@@ -354,7 +354,7 @@ const ParameterTalent = () => {
 
   //buat constanta yang isinya hasil filter yang indexnya udah di reset:
   const resetRows = resetRowIndex(filteredRows);
-  
+
   // console.log('sri: ', resetRows)
 
   // console.log('sri: ', resetRows);
@@ -552,19 +552,19 @@ const ParameterTalent = () => {
               title={'Komite Talent 1'}
               subtitle={'Direktur Utama - Faizal Rochmad Djoemadi'}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent />}
+              content={<DaftarKomiteTalent komiteTalentId={1}/>}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 2'}
               subtitle={'Direktur HCM - Tonggo Marbun'}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent />}
+              content={<DaftarKomiteTalent komiteTalentId={2}/>}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 3'}
               subtitle={'Senior Vice President HCSBP - Chandra Dewi'}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent />}
+              content={<DaftarKomiteTalent komiteTalentId={3}/>}
             />
           </Box>
         </CustomTabPanel>
@@ -612,7 +612,7 @@ const ParameterTalent = () => {
           </Box>
         </CustomTabPanel>
 
-        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} />
+        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} onConfirm={() => fetchData()}/>
         <AddQuestionModal open={openAddQuestionModal} handleClose={handleCloseAddQuestionModal} handleAddQuestion={handleAddQuestion} />
         <AlertSimpan
           open={openAlertBerhasilSimpan}
