@@ -23,7 +23,7 @@ const App = () => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themes(customization)}>
-        <ToastContainer />
+        <ToastContainer position="top-center" autoClose={3000}/>
         <CssBaseline />
         <NavigationScroll>
           <Routes />

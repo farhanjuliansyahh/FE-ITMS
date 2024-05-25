@@ -612,7 +612,7 @@ const ParameterTalent = () => {
           </Box>
         </CustomTabPanel>
 
-        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} />
+        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} onConfirm={() => fetchData()}/>
         <AddQuestionModal open={openAddQuestionModal} handleClose={handleCloseAddQuestionModal} handleAddQuestion={handleAddQuestion} />
         <AlertSimpan
           open={openAlertBerhasilSimpan}
