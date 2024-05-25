@@ -1,109 +1,132 @@
-import React, { useEffect, useState } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, MenuItem, TextField, Typography, Divider } from '@mui/material';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { Box, Dialog, Grid, IconButton, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import { AddCircleOutlineOutlined } from '@mui/icons-material';
+import { CloseOutlined, RestartAltOutlined } from '@mui/icons-material';
+import TabelDaftarAnggotaBPJ from '../../ui-component/tables/daftar-anggota-bpj';
+import KonfirmasiTambahKomiteTalent from './konfirmasi-tambah-komite-talent';
+import CustomSearch from '../searchsection/custom-search';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
 
-function TambahKomiteTalent({ open, handleClose }) {
-    const TambahKomiteTalentButtonStyle = {
-        backgroundColor: '#1C2D5A',
-        color: '#fff',
-        borderRadius: '12px',
-        padding: '14px 24px',
-        transition: 'background-color 0.3s',
-        fontSize: '14px'
+export default function TambahKomiteTalent({ open, onClose, onConfirm, komiteTalentId }) {
+    const [isLoading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+    
+    const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
+    const [rows, setRows] = useState([]);
+    const [selectedNippos, setSelectedNippos] = useState('');
+    const [namaSelectedKomiteTalent, setNamaKomiteTalent] = useState('');
+
+    useEffect(() => {
+        fetch(`http://localhost:4000/getkomiteunitcandidate`)
+          .then(response => response.json())
+          .then(data => {
+            setRows(data.map((row, index) => ({ ...row, id: index + 1 })));
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    const handleCloseKonfirmasiModal = () => {
+        setOpenKonfirmasiModal(false);
     };
 
-    const batalkanButtonStyle = {
-        backgroundColor: '#D32F2F',
-        color: '#fff',
-        borderRadius: '12px',
-        padding: '14px 24px',
-        transition: 'background-color 0.3s',
-        fontSize: '14px'
+    const handleTambahAnggotaBPJButtonClick = (nippos, nama) => {
+        setSelectedNippos(nippos);
+        setNamaKomiteTalent(nama)
+        setOpenKonfirmasiModal(true); // Open the second modal first; // Close the first modal afterwards
     };
 
-    const hoverTambahKomiteTalentStyle = {
-        backgroundColor: '#122350' // Darker shade for hover
+    // console.log('selected nippos: ', selectedNippos, namaSelectedKomiteTalent);
+
+    const HandleKonfirmasiModal = () => {
+        onClose();
+        if (onConfirm) {
+            onConfirm();
+        }
     };
 
-    const hoverBatalkanStyle = {
-        backgroundColor: '#B71C1C' // Darker shade for hover
+    const boxStyle = {
+        padding: '20px',
+        width: '100%',
+        borderRadius: '12px'
     };
 
-    const ButtonsContainer = styled('div')({
+    const FlexContainer = styled('div')({
         display: 'flex',
         alignItems: 'center',
-        width: '100%',
-        padding: '0px 8px',
-        gap: '128px',
-        justifyContent: 'space-between'
+        gap: '16px', 
+        paddingBottom: '24px',
     });
+    
+    const listNama = [...new Set(rows.map(row => row.nama))];
+    const listJabatan = [...new Set(rows.map(row => row.jabatan))];
+    const listKantor = [...new Set(rows.map(row => row.kantor))];
 
-    const [IsHoverTambahKomiteTalent, setIsHoverTambahKomiteTalent] = useState(false);
-    const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
+    const [selectedNama, setSelectedNama] = useState(null);
+    const [selectedJabatan, setSelectedJabatan] = useState(null);
+    const [selectedKantor, setSelectedKantor] = useState(null);
+    
+    const resetNamaInput = () => {
+        setSelectedNama('');
+    };
 
-    const TambahKomiteTalentButton = (
-        <Button
-            endIcon={<AddCircleOutlineOutlined />}
-            style={IsHoverTambahKomiteTalent ? { ...TambahKomiteTalentButtonStyle, ...hoverTambahKomiteTalentStyle } : TambahKomiteTalentButtonStyle}
-            onMouseEnter={() => setIsHoverTambahKomiteTalent(true)}
-            onMouseLeave={() => setIsHoverTambahKomiteTalent(false)}
-        >
-            Tambah Komite Talent
-        </Button>
-    );
+    const resetJabatanInput = () => {
+        setSelectedJabatan('');
+    };
 
-    const batalkanButton = (
-        <Button
-            endIcon={<CancelOutlinedIcon />}
-            style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
-            onMouseEnter={() => setIsHoveredBatalkan(true)}
-            onMouseLeave={() => setIsHoveredBatalkan(false)}
-            onClick={handleClose}
-        >
-            Batalkan
-        </Button>
-    );
+    const resetKantorInput = () => {
+        setSelectedKantor('');
+    };
 
-    const DividerContainer = styled('div')({
-        width: '100%',
-        textAlign: 'center',
-        backgroundColor: '#E0E0E0'
-    });
+    const handleResetSearch = () => {
+        resetNamaInput();
+        resetJabatanInput();
+        resetKantorInput();
+    };
 
     return (
-        <Dialog open={open} onClose={handleClose} >
-            <DialogTitle>
-                <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                    Tambah Anggota Komite Talent
-                </Typography>
-            </DialogTitle>
-            <DividerContainer>
-                <Divider orientation="horizontal" flexItem />
-            </DividerContainer>
-            <DialogContent>
-                <Box>
-                    <TextField
-                        select
-                        required
-                        id="nippos-bpj"
-                        label="NIPPOS Komite Talent"
-                        sx={{ width: '100%', marginBottom: '16px' }}
-                    >
-                        <MenuItem value="1">Nama - NIPPOS - Jabatan</MenuItem>
-                        {/* Add more options if needed */}
-                    </TextField>
-                </Box>
-            </DialogContent>
-            <DialogActions sx={{ padding: '0 24px 24px 24px ' }}>
-                <ButtonsContainer>
-                    {batalkanButton}
-                    {TambahKomiteTalentButton}
-                </ButtonsContainer>
-            </DialogActions>
+        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth >
+            <Box sx={boxStyle}>
+                <FlexContainer>
+                    <Typography style={{fontSize:'24px', fontWeight:'700'}}>
+                        Daftar Karyawan
+                    </Typography>
+                    <div style={{ flex: '1' }}> </div>
+                    <IconButton onClick={onClose} sx={{ color: '#F44336' }}>
+                        <CloseOutlined />
+                    </IconButton>
+                </FlexContainer>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width:'100%' }}>
+                    <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                        <CustomSearch field={listNama} label={'Nama'} onSearch={setSelectedNama} value={selectedNama} resetInput={resetNamaInput} />
+                        <CustomSearch field={listJabatan} label={'Jabatan'} onSearch={setSelectedJabatan} value={selectedJabatan} resetInput={resetJabatanInput} />
+                        <CustomSearch field={listKantor} label={'Kantor'} onSearch={setSelectedKantor} value={selectedKantor} resetInput={resetKantorInput} />
+                    </Stack>
+                    <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'}/>
+                </div>
+
+                <TabelDaftarAnggotaBPJ 
+                    onOpenSecondModalTable={handleTambahAnggotaBPJButtonClick}
+                    rows={rows}
+                    searchNama={selectedNama}
+                    searchJabatan={selectedJabatan}
+                    searchKantor={selectedKantor}
+                />
+            </Box>
+
+            <KonfirmasiTambahKomiteTalent
+                open={openKonfirmasiModal} 
+                handleClose={handleCloseKonfirmasiModal}
+                komiteTalentId={komiteTalentId}
+                nippos={selectedNippos}
+                nama={namaSelectedKomiteTalent}
+                onConfirm={HandleKonfirmasiModal}
+            />
         </Dialog>
     );
 }
-
-export default TambahKomiteTalent;

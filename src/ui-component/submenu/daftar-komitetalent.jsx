@@ -7,28 +7,23 @@ import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import TabelDaftarAnggotaKomiteTalent from '../../ui-component/tables/anggota-komite-talent';
 import TambahKomiteTalent from '../../ui-component/modal/tambah-anggota-komite-talent';
 
-function createData(id, nama, nippos, posisi, joblevel, bagian, kantor, aksi) {
-  return { id, nama, nippos, posisi, joblevel, bagian, kantor, aksi };
-}
-
-const rows = [
-  createData(1, 'Sri Hartini', '998494379', 'Asisten Manajer Pengembangan Join Operation', 'D3', 'Bisnis', 'Kantor Pusat Bandung'),
-  createData(2, 'Muhamad Arsyi', '998494379', 'Asisten Manajer Acquisition Biller', 'D3', 'Bisnis', 'Kantor Pusat Bandung'),
-  createData(3, 'Adinda', '998494379', 'Asisten Manajer Pengelolaan Remittance LN', 'D3', 'Bisnis', 'Kantor Pusat Bandung'),
-  createData(4, 'Niken Wijaya', '998494379', 'Asisten Manajer Penjualan dan Kemitraan Pospay', 'D3', 'Bisnis', 'Kantor Pusat Bandung'),
-  createData(5, 'Niken Wijaya', '998494379', 'Asisten Manajer Pengelolaan Administrasi dan Kinerja Bidding', 'D3', 'Bisnis', 'Kantor Pusat Bandung'),
-];
-
-export default function DaftarKomiteTalent() {
+export default function DaftarKomiteTalent({ komiteTalentId }) {
     const [tambahKomiteTalentOpen, setTambahKomiteTalentOpen] = useState(false);
+    const [openKonfirmasiKomiteTalent, setKonfirmasiKomiteTalentOpen] = useState(false);
+    const [selectedKomiteTalent, setSelectedKomiteTalent] = useState('')
 
     const handleOpen = () => {
         setTambahKomiteTalentOpen(true);
-      };
-    
-      const handleClose = () => {
+    };
+
+    const handleClose = () => {
         setTambahKomiteTalentOpen(false);
-      };
+    };
+
+    const handleOpenSecondModalKonfirmasi = (nippos, nama) => {
+        setKonfirmasiKomiteTalentOpen(true);
+        setSelectedKomiteTalent(nippos, nama)
+    };
 
     const boxStyle = {
         padding: '20px',
@@ -39,31 +34,51 @@ export default function DaftarKomiteTalent() {
     const FlexContainer = styled('div')({
         display: 'flex',
         alignItems: 'center',
-        gap: '16px', 
+        gap: '16px',
         paddingBottom: '24px',
     });
+
+    const [anggotaKomiteTalent, setAnggotaKomiteTalent] = useState([]);
+
+    const fetchKomiteTalentData = (komiteTalentId) => {
+        fetch(`http://localhost:4000/getanggotakomitetalent?komitetalentid=${komiteTalentId}`)
+            .then(response => response.json())
+            .then(data => {
+                setAnggotaKomiteTalent(data.map((row, index) => ({ ...row, id: index + 1 })));
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    };
+
+    useEffect(() => {
+        fetchKomiteTalentData(komiteTalentId);
+    }, []);
 
     return (
         <Box sx={boxStyle}>
             <FlexContainer>
-                <Typography style={{fontSize:'22px', fontWeight:'600'}}>
+                <Typography style={{ fontSize: '22px', fontWeight: '600' }}>
                     Tabel Anggota Komite Talent
                 </Typography>
                 <Button
                     variant="contained"
                     style={{ fontSize: '16px', color: '#2196F3', borderRadius: '15px', borderColor: '#EAF8FF', backgroundColor: '#EAF8FF', boxShadow: 'none' }}
                 >
-                    5 Orang
+                    {anggotaKomiteTalent.length} Orang
                 </Button>
                 <div style={{ flex: '1' }}> </div>
-                <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Anggota'} onClick={handleOpen}/>
+                <ButtonPrimary Color="#ffffff" icon={AddCircleOutline} LabelName={'Tambah Anggota'} onClick={handleOpen} />
             </FlexContainer>
 
-            <TabelDaftarAnggotaKomiteTalent rows={rows} />
+            <TabelDaftarAnggotaKomiteTalent rows={anggotaKomiteTalent} />
 
             <TambahKomiteTalent
                 open={tambahKomiteTalentOpen}
-                handleClose={() => setTambahKomiteTalentOpen(false)}
+                onClose={handleClose}
+                onOpenSecondModal={handleOpenSecondModalKonfirmasi}
+                komiteTalentId={komiteTalentId}
+                onConfirm={() => fetchKomiteTalentData(komiteTalentId)}
             />
         </Box>
     );

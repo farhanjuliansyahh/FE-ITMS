@@ -91,7 +91,7 @@ export default function TabelDaftarAnggotaKomiteUnit({
                       icon={AddCircleOutlineOutlined}
                       LabelName={'Tambah'}
                       padding={'6px 16px'}
-                      onClick={() => onOpenSecondModalTable(row.nippos)}
+                      onClick={() => onOpenSecondModalTable(row.nippos, row.nama)}
                     />
                   </StyledTableCell>
                 </TableRow>
