@@ -73,11 +73,11 @@ export default function DetailEventKomiteUnit() {
     fetcheventdetail()
       .then((data) => {
         seteventaktif(data.event);
-        setLoading(false); // Move this line to the end of the .then block
+        // setLoading(false); // Move this line to the end of the .then block
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        setLoading(false);
+        // setLoading(false);
       });
   }, []);
 
