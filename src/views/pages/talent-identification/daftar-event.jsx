@@ -1,17 +1,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { Box, Menu, MenuItem, Pagination, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Menu, MenuItem, Pagination, Stack, Snackbar, Tab, Tabs, Typography } from '@mui/material';
 import { AddCircleOutline, DownloadDone, ExpandMore, RotateRight } from '@mui/icons-material';
 import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-
+import LinearProgress from '@mui/material/LinearProgress';
+import MuiAlert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
-
 import MainCard from '../../../ui-component/cards/MainCard';
 import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
+
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
 function CustomTabPanel(props) {
@@ -46,6 +47,7 @@ const DaftarEvent = () => {
   const [value, setValue] = React.useState(0);
   const [eventData, setEventData] = useState([]);
   const [refreshFetch, setRefreshFetch] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const fetchDataFromDatabase = () => {
     return fetch('http://localhost:4000/getallevent') // endpoint
@@ -69,12 +71,17 @@ const DaftarEvent = () => {
       .then((data) => {
         setEventData(data.event);
         setLoading(false); // Move this line to the end of the .then block
+        setOpenSnackbar(true); // Show snackbar on event added
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
         setLoading(false);
       });
   }, []);
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -172,7 +179,9 @@ const DaftarEvent = () => {
 
         <CustomTabPanel value={value} index={0} style={{ paddingLeft: '24px', paddingRight: '24px', marginBottom: '24px' }}>
           {isLoading ? (
-            <Typography>Loading...</Typography>
+            <Box sx={{ width: '100%' }}>
+              <LinearProgress />
+            </Box>
           ) : (
             <Box>
               {paginatedEventsTab0.map((event) => (
@@ -281,6 +290,12 @@ const DaftarEvent = () => {
 
         {open && <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />}
       </MainCard>
+
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <MuiAlert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+          Event successfully created!
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 };
