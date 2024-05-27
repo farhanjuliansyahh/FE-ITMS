@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -23,12 +24,12 @@ export const useAuth = () => {
     sessionStorage.setItem('token', response.token);
 
     if (response.token) {
-      alert(response.message);
+      toast.success(response.message);
       setTimeout(function () {
         navigate('/dashboard');
       }, 1000); // 1000 milliseconds = 1 second
     } else {
-      alert('Salah NIPPOS atau Kata Sandi!');
+      toast.error('Salah NIPPOS atau Kata Sandi!');
     }
   };
 
