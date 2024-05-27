@@ -9,6 +9,8 @@ const KaryawanKomiteUnit = ({
     onSelectedRowsChange
 }) => {
 
+    const currentYear = new Date().getFullYear();
+
     const handleSelectionChange = (newSelection) => {
         onSelectedRowsChange(newSelection); // Pass the selectionModel directly
         console.log(newSelection);
@@ -22,7 +24,9 @@ const KaryawanKomiteUnit = ({
         { field: 'Job Level', headerName: 'Job Level', width: 130 },
         { field: 'Job Family', headerName: 'Rumpun Jabatan', width: 180 },
         { field: 'Competency/Psychotest', headerName: 'Competency/Psychotest', width: 200 },
-        { field: 'PMS', headerName: 'PMS', width: 180 },
+        { field: 'PMS2yearsago', headerName: `PMS ${currentYear - 2}`, width: 180 },
+        { field: 'PMS1yearago', headerName: `PMS ${currentYear - 1}`, width: 180 },
+        { field: 'PMSthisyear', headerName: `PMS ${currentYear}`, width: 180 },
         { field: 'AKHLAK', headerName: 'AKHLAK', width: 180 },
         { field: 'Learning Agility', headerName: 'Learning Agility', width: 180 },
         { field: 'Status Hukdis', headerName: 'Sedang Menjalani Hukdis?', width: 200 },

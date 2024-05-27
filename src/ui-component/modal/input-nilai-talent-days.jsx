@@ -11,21 +11,21 @@ import Paper from '@mui/material/Paper';
 import { SaveOutlined, CancelOutlined } from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(() => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#E0E0E0',
-    color: '#1F1F1F',
-    fontSize: 14,
-    fontWeight: 600,
-    border: 0
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-    fontWeight: 400,
-    minHeight: 40,
-  },
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: '#E0E0E0',
+        color: '#1F1F1F',
+        fontSize: 14,
+        fontWeight: 600,
+        border: 0
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+        fontWeight: 400,
+        minHeight: 40,
+    },
 }));
 
-export default function InputNilaiTalentDays({ open, handleClose, questionList, nippos, eventid, refetchkaryawan}) {
+export default function InputNilaiTalentDays({ open, handleClose, questionList, nippos, eventid, refetchkaryawan }) {
     const [sortedQuestionList, setSortedQuestionList] = useState([]);
     const [nilaiInput, setNilaiInput] = useState([]);
 
@@ -73,33 +73,33 @@ export default function InputNilaiTalentDays({ open, handleClose, questionList, 
 
     const updatenilaidays = (eventid, nippos, nilaiArray) => {
         return fetch('http://localhost:4000/updatenilaibutton', {
-          method: 'POST', // Specify the HTTP method (POST, GET, etc.)
-          headers: {
-            'Content-Type': 'application/json' // Specify the content type
-          },
-          body: JSON.stringify({
-            // Include any data you want to send in the request body
-            eventid: eventid,
-            nippos: nippos,
-            data: nilaiArray
-          }) // Convert the bodyData object to a JSON string
+            method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+            headers: {
+                'Content-Type': 'application/json' // Specify the content type
+            },
+            body: JSON.stringify({
+                // Include any data you want to send in the request body
+                eventid: eventid,
+                nippos: nippos,
+                data: nilaiArray
+            }) // Convert the bodyData object to a JSON string
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then((data) => {
-            handleClose();
-            refetchkaryawan() // Close the dialog on successful update
-            return data; // Return the parsed JSON data
-          })
-          .catch((error) => {
-            console.error('Error fetching data:', error);
-            throw error; // Rethrow the error to handle it elsewhere
-          });
-      };
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                handleClose();
+                refetchkaryawan() // Close the dialog on successful update
+                return data; // Return the parsed JSON data
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+                throw error; // Rethrow the error to handle it elsewhere
+            });
+    };
 
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -109,7 +109,7 @@ export default function InputNilaiTalentDays({ open, handleClose, questionList, 
                 </Typography>
             </DialogTitle>
             <DialogContent>
-                <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '16px'}}>
+                <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '16px' }}>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 500 }}>
                             <TableHead>
@@ -140,25 +140,33 @@ export default function InputNilaiTalentDays({ open, handleClose, questionList, 
                 </div>
             </DialogContent>
             <DialogActions>
-            <Button 
-    variant="contained" 
-    sx={{
-        backgroundColor:'#1a2b5a', 
-        borderRadius:'12px', 
-        padding: '14px 24px',
-        fontSize: '14px'
-    }} 
-    endIcon={<SaveOutlined />}
-    onClick={() => updatenilaidays(eventid, nippos, nilaiArray)}
->
-    Simpan
-</Button>
+                <Button
+                    variant="contained"
+                    sx={{
+                        backgroundColor: '#1a2b5a',
+                        borderRadius: '12px',
+                        padding: '14px 24px',
+                        fontSize: '14px'
+                    }}
+                    endIcon={<SaveOutlined />}
+                    onClick={() => {
+                        updatenilaidays(eventid, nippos, nilaiArray);
+                        setNilaiInput([]);
+                        setNilaiArray([]);
+                    }}
+                >
+                    Simpan
+                </Button>
                 <Button
                     endIcon={<CancelOutlined />}
                     style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
                     onMouseEnter={() => setIsHoveredBatalkan(true)}
                     onMouseLeave={() => setIsHoveredBatalkan(false)}
-                    onClick={handleClose}
+                    onClick={() => {
+                        handleClose();
+                        setNilaiInput([]);
+                        setNilaiArray([]);
+                    }}
                 >
                     Batalkan
                 </Button>

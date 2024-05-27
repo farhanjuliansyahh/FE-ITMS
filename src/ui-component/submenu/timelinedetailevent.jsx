@@ -43,7 +43,7 @@ export default function TimelineDetailEvent({
   const [DaysLeftStep, setDaysLeftStep] = useState('');
   const [startdate, setStartdate] = useState(null);
   const [enddate, setEnddate] = useState(null);
- 
+
 
   useEffect(() => {
     setActiveStep(eventstatus_id - 2);
@@ -329,7 +329,7 @@ export default function TimelineDetailEvent({
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric',
-                  })} - 
+                  })} -
                   {(() => {
                     const endDate = new Date(deadline[0][`deadline_${activeStep + 1}`]);
                     endDate.setDate(endDate.getDate() + 1); // Add one day
@@ -346,35 +346,39 @@ export default function TimelineDetailEvent({
         </BoxContainer>
 
         <Stepper activeStep={eventstatus_id - 2} alternativeLabel>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
+          {steps.map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
 
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-              
-              {index < eventstatus_id-2 && 
-                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
-                <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
-              </Box>
-              }
-              
-              {index === eventstatus_id - 2 && (
-                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
-                  {DaysLeftStep !== null ? (
-                    DaysLeftStep > 0 ? (
-                      <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+
+                {index < eventstatus_id - 2 &&
+                  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                    <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
+                  </Box>
+                }
+
+                {index === eventstatus_id - 2 && (
+                  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                    {DaysLeftStep !== null ? (
+                      DaysLeftStep > 0 ? (
+                        <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
+                      ) : DaysLeftStep === 0 ? (
+                        <CountdownStep>Hari ini</CountdownStep>
+                      ) : (
+                        <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
+                      )
                     ) : (
-                      <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
-                    )
-                  ) : ''}
-                </Box>
-              )}
-            </Step>
-          );
-        })}
-      </Stepper>
+                      ''
+                    )}
+                  </Box>
+                )}
+              </Step>
+            );
+          })}
+        </Stepper>
       </Box>
 
       {renderStepContent(activeStep)}
