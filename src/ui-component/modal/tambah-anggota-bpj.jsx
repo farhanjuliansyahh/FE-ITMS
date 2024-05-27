@@ -39,7 +39,7 @@ export default function TambahAnggotaBPJ({ open, onClose, onConfirm, eventid }) 
     };
 
     const HandleKonfirmasiModal = () => {
-        onclose()
+        onClose()
         onConfirm();
     };
 
