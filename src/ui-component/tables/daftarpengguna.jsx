@@ -4,8 +4,10 @@ import { Button, Dialog, Stack, DialogTitle, DialogContent, DialogActions, Check
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
+import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
 
-const peranOptions = ['Admin Talent', 'Karyawan', 'Ketua Komite Talent', 'Komite Unit', 'Super Admin', 'HCBP'];
+const peranOptions = ['Admin Talent', 'Karyawan', 'Ketua Komite Talent', 'Komite Unit', 'Super Admin', 'Admin HCBP'];
 
 const ActionButton = ({ row, onSave }) => {
   const [open, setOpen] = useState(false);
@@ -69,26 +71,45 @@ const ActionButton = ({ row, onSave }) => {
         Ubah Akses
       </Button>
       <Dialog open={open} onClose={handleModalClose}>
-        <Stack direction="row" alignItems="center" marginTop="10px">
-          <h2 style={{ paddingLeft: '20px', color: '#1F1F1F' }} justifyContent="start">
+        <Stack direction="row" alignItems="center" marginTop="12px" marginLeft='10px'>
+          <h2 style={{ paddingLeft: '24px', color: '#1F1F1F' }} justifyContent="start">
             Daftar Peran Pengguna
           </h2>
-          <Button onClick={handleModalClose} color="primary" justifyContent="end" style={{ color: '#D32F2F', marginLeft: '100px' }}>
+          <Button onClick={handleModalClose} color="primary" justifyContent="end" style={{ color: '#D32F2F', marginLeft: '95px' }}>
             <CloseIcon />
           </Button>
         </Stack>
 
         <DialogContent style={{ width: '400px', maxHeight: '300px', overflowY: 'auto' }}>
+        <div style={{
+            marginLeft:'35px',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr', // Creates 2 columns
+            columnGap: '8px', // Adds space between columns
+            gap: '4px' // Optional: Adds space between grid items
+          }}>
           {peranOptions.map((option, index) => (
             <FormControlLabel
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-start', // Corrected to camelCase
+              width: '100%' // Corrected to use string value
+            }}
               key={index}
               control={<Checkbox checked={selectedOptions.includes(option)} onChange={handleCheckboxChange(option)} />}
               label={option}
             />
           ))}
+          </div>
         </DialogContent>
-        <DialogActions style={{ paddingBottom: '12px', paddingRight: '12px' }}>
-          <Button
+        <DialogActions style={{ paddingBottom: '24px', paddingRight: '24px', }}>
+          <ButtonPrimary
+              onClick={handleSavePeran}
+              Color="#ffffff"
+              icon={SaveOutlinedIcon}
+              LabelName={'Simpan'}
+            />
+          {/* <Button
             onClick={handleSavePeran}
             variant="contained"
             endIcon={<SaveOutlinedIcon />}
@@ -103,9 +124,14 @@ const ActionButton = ({ row, onSave }) => {
               height: '40px'
             }}
           >
-            Save
-          </Button>
-          <Button
+            Simpan
+          </Button> */}
+          <ButtonErrorOutlined  
+          onClick={handleModalClose} 
+          Color="#D32F2F" 
+          icon={HighlightOffOutlinedIcon} 
+          LabelName={'Batalkan'} />
+          {/* <Button
             onClick={handleModalClose}
             endIcon={<HighlightOffOutlinedIcon />}
             sx={{
@@ -121,7 +147,7 @@ const ActionButton = ({ row, onSave }) => {
             }}
           >
             Batalkan
-          </Button>
+          </Button> */}
         </DialogActions>
       </Dialog>
     </>

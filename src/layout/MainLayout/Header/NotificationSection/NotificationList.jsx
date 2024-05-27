@@ -82,7 +82,7 @@ const NotificationList = ({ notiflist, onToggleReadStatus }) => {
           maxWidth: 300
         },
         '& .MuiListItemSecondaryAction-root': {
-          top: 22
+          top: 8,
         },
         '& .MuiDivider-root': {
           my: 0
@@ -99,16 +99,35 @@ const NotificationList = ({ notiflist, onToggleReadStatus }) => {
               <ListItemAvatar>
                 <Avatar alt="Notification" src={User1} />
               </ListItemAvatar>
-              <ListItemText primary={notif.keterangan} />
-              <ListItemSecondaryAction>
+              <Grid container >
+                <Grid item>
+                  <Typography variant="caption" display="block" gutterBottom style={{ marginTop: '4px' }}> 
+                    {/* {new Date(notif.dibuat_pada).toLocaleTimeString()} */}
+                    {new Date(notif.dibuat_pada).toLocaleString('id-ID', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true,
+                      timeZone: 'Asia/Jakarta'
+                    }).replace('pukul', ',')}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <ListItemText primary={notif.keterangan} style={{ marginBottom: '8px',textAlign: 'justify' }}/>
+                </Grid>
+              </Grid>
+              {/* <ListItemText primary={notif.keterangan} /> */}
+              {/* <ListItemSecondaryAction>
                 <Grid container justifyContent="flex-end">
-                  <Grid item xs={12}>
+                  <Grid item xs={15}>
                     <Typography variant="caption" display="block" gutterBottom>
                       {new Date(notif.dibuat_pada).toLocaleTimeString()}
                     </Typography>
                   </Grid>
                 </Grid>
-              </ListItemSecondaryAction>
+              </ListItemSecondaryAction> */}
             </ListItem>
             <Grid container direction="column" className="list-container">
               <Grid item xs={12} sx={{ pb: 2 }}>
