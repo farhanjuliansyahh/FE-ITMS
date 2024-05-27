@@ -102,13 +102,13 @@ const ProfileSection = () => {
         setResultProfile(user);
 
         // Store the nippos in session storage
-        sessionStorage.setItem('nippos', user.nippos);
+        // sessionStorage.setItem('nippos', user.nippos);
 
         // Extract nama_role values
-        const namaRoles = user.nipposrole.map((role) => role.roleid.nama_role);
+        // const namaRoles = user.nipposrole.map((role) => role.roleid.nama_role);
 
         // Store the nama_roles in session storage
-        sessionStorage.setItem('role', JSON.stringify(namaRoles));
+        // sessionStorage.setItem('role', JSON.stringify(namaRoles));
       } catch (error) {
         console.error('Error fetching profile:', error);
       }
