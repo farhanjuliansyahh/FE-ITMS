@@ -83,9 +83,9 @@ const TalentDays = ({eventid}) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, []);
 
   useEffect(()=>{
     console.log(filterNama);
