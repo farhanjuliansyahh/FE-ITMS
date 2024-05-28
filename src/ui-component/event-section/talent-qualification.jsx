@@ -52,10 +52,6 @@ function a11yProps(index) {
 const TalentQualification = ({ eventid, kodekomite }) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
-  const [filterNama, setFilterNama] = useState('');
-  const [filterNippos, setFilterNippos] = useState('');
-  const [filterJob, setFilterJob] = useState('');
-  const [filterKomite, setFilterKomite] = useState('');
   const [qualRow, setqualRow] = useState([]);
   const [quallolosRow, setquallolosRow] = useState([]);
   const [kkm, setkkm] = useState([]);
@@ -66,10 +62,6 @@ const TalentQualification = ({ eventid, kodekomite }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  useEffect(() => {
-    console.log(filterNama);
-  }, [filterNama]);
 
   const fetchupdateskor = (eventid) => {
     return fetch('http://localhost:4000/updateskor', {
@@ -159,16 +151,6 @@ const TalentQualification = ({ eventid, kodekomite }) => {
         setLoading(false); // Set loading to false if there's an error
       });
   }, []);
-
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const FlexContainer = styled('div')({
     display: 'flex',
