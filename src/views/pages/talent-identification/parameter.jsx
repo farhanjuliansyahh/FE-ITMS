@@ -17,7 +17,7 @@ import NilaiAssessmentTable from '../../../ui-component/tables/NilaiAssessmentTa
 import UnggahDataNilaiAssessment from '../../../ui-component/modal/unggah-data-nilai-assessment';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AddQuestionModal from '../../../ui-component/modal/tambah-pertanyaan';
-import AlertSimpan from '../../../ui-component/modal/alert-simpan';
+import AlertSimpan from '../../../ui-component/modal/alert-berhasil';
 import SimpanLogo from '../../../assets/images/ilustration/simpan.png';
 import { toast } from 'react-toastify';
 

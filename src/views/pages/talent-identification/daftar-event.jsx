@@ -12,8 +12,8 @@ import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
-import AlertSimpan from '../../../ui-component/modal/alert-simpan';
-import SimpanLogo from '../../../assets/images/ilustration/simpan.png';
+import AlertBerhasil from '../../../ui-component/modal/alert-berhasil';
+import IlustrasiBerhasil from '../../../assets/images/ilustration/berhasil.png';
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -52,12 +52,12 @@ const DaftarEvent = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
     // Save all the changes of questions using Simpan Button and show Success Modal
-    const [openAlertBerhasilSimpan, setOpenAlertBerhasilSimpan] = useState(false);
-    const handleCloseAlertBerhasilSimpan = (event, reason) => {
+    const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
+    const handleCloseAlertBerhasil = (event, reason) => {
       if (reason === 'clickaway') {
         return;
       }
-      setOpenAlertBerhasilSimpan(false);
+      setOpenAlertBerhasil(false);
     };
 
   const fetchDataFromDatabase = () => {
@@ -83,8 +83,8 @@ const DaftarEvent = () => {
       .then((data) => {
         setEventData(data.event);
         setLoading(false); // Move this line to the end of the .then block
-        setOpenSnackbar(true); // Show snackbar on event added
-        // setOpenAlertBerhasilSimpan(true);
+        // setOpenSnackbar(true); // Show snackbar on event added
+        // setOpenAlertBerhasil(true);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -311,11 +311,10 @@ const DaftarEvent = () => {
         </MuiAlert>
       </Snackbar>
 
-        <AlertSimpan
-          open={openAlertBerhasilSimpan}
-          handleClose={handleCloseAlertBerhasilSimpan}
-          Severity={'success'}
-          Logo={SimpanLogo}
+        <AlertBerhasil
+          open={openAlertBerhasil}
+          handleClose={handleCloseAlertBerhasil}
+          Logo={IlustrasiBerhasil}
           Keterangan={'Berhasil'}
         />
 
