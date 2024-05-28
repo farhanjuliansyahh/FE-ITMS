@@ -400,34 +400,17 @@ const ParameterTalent = () => {
   };
 
   const [komiteTalents, setKomiteTalents] = useState({
-    ketuaKT1: '',
-    ketuaKT2: '',
-    ketuaKT3: ''
-  });
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/getNamaKetuaKomiteTalent');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setKomiteTalents({
-          ketuaKT1: data.ketuaKT1,
-          ketuaKT2: data.ketuaKT2,
-          ketuaKT3: data.ketuaKT3
-        });
-      } catch (error) {
-        console.error('Error fetching komite talent names:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    ketuaKT1: [],
+    ketuaKT2: [],
+    ketuaKT3: []
+  })
 
   const getInitialsIfLong = (nama_bagian) => {
+    // Check if nama_bagian is null or undefined
+    if (!nama_bagian) {
+      return ''; // Return an empty string if nama_bagian is null or undefined
+    }
+  
     const words = nama_bagian.split(' ');
     if (words.length > 4) {
       // Words to preserve intact
@@ -440,7 +423,27 @@ const ParameterTalent = () => {
       }).join('');
     }
     return nama_bagian;
-  };  
+  };
+  
+
+  const getKetuaKomiteTalent = () => {
+    fetch(`http://localhost:4000/getNamaKetuaKomiteTalent`)
+      .then((response) => response.json())
+      .then((data) => {
+        setKomiteTalents({
+          ketuaKT1: data.ketuaKT1,
+          ketuaKT2: data.ketuaKT2,
+          ketuaKT3: data.ketuaKT3
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
+  useEffect(() => {
+    getKetuaKomiteTalent();
+  }, []);
 
   return (
     <>
@@ -602,12 +605,14 @@ const ParameterTalent = () => {
             />
             <AccordionKomiteTalent
               title={'Komite Talent 2'}
-              subtitle={`${komiteTalents.ketuaKT2.jabatan} ${komiteTalents.ketuaKT2.nama_bagian} - ${komiteTalents.ketuaKT2.namaketua}`}              icon={GroupsOutlined}
+              subtitle={`${komiteTalents.ketuaKT2.jabatan} ${komiteTalents.ketuaKT2.nama_bagian} - ${komiteTalents.ketuaKT2.namaketua}`}
+              icon={GroupsOutlined}
               content={<DaftarKomiteTalent komiteTalentId={2} />}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 3'}
-              subtitle={`${komiteTalents.ketuaKT3.jabatan} ${getInitialsIfLong(komiteTalents.ketuaKT3.nama_bagian)} - ${komiteTalents.ketuaKT3.namaketua}`}              icon={GroupsOutlined}
+              subtitle={`${komiteTalents.ketuaKT3.jabatan} ${getInitialsIfLong(komiteTalents.ketuaKT3.nama_bagian)} - ${komiteTalents.ketuaKT3.namaketua}`}
+              icon={GroupsOutlined}
               content={<DaftarKomiteTalent komiteTalentId={3} />}
             />
           </Box>
