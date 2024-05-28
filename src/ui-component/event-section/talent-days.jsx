@@ -83,10 +83,6 @@ const TalentDays = ({eventid}) => {
     setValue(newValue);
   };
 
-  // useEffect(() => {
-  //   setLoading(false);
-  // }, []);
-
   useEffect(()=>{
     console.log(filterNama);
   },[filterNama])
@@ -176,7 +172,7 @@ const TalentDays = ({eventid}) => {
       .then(datadays => {
         // Update state with API data
         setdaysBpj(datadays.map((row, index) => ({ ...row, id: index + 1 })));
-        // setLoading(false); // Set loading to false once data is fetched
+        setLoading(false); // Set loading to false once data is fetched
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -202,7 +198,7 @@ useEffect(() => {
   fetchbpjdays(),
   fetchkaryawandays()
   fetchquestionevent()
-}, []);
+}, [isLoading]);
 
 let sudahdipilihcount = 0;
 let totalkaryawan = daysRow.length;
@@ -331,6 +327,10 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
   setKonfirmasiBPJOpen(true);
   setSelectedBPJ(nippos)
 };
+
+useEffect(() => {
+  setLoading(false);
+}, []);
 
   return (
     <>
