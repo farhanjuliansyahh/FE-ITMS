@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import { Typography, IconButton } from '@mui/material';
+import { Typography, IconButton, LinearProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const AlertBerhasil = ({ open, handleClose, Logo, Keterangan }) => {
+  const [progressValue, setProgressValue] = useState(0);
+
+  useEffect(() => {
+    let progressTimer;
+    if (open) {
+      // Update progress value every 100 milliseconds
+      progressTimer = setInterval(() => {
+        // Calculate progress value
+        const increment = 100 / 30; // 30 steps for 3 seconds
+        setProgressValue((prevValue) => prevValue + increment);
+
+        // Clear interval when progress reaches 100%
+        if (progressValue >= 100) {
+          clearInterval(progressTimer);
+        }
+      }, 100);
+    }
+
+    return () => clearInterval(progressTimer); // Cleanup function
+  }, [open, progressValue]);
+
   return (
     <>
       {/* Full screen background */}
@@ -74,6 +95,8 @@ const AlertBerhasil = ({ open, handleClose, Logo, Keterangan }) => {
             {Keterangan}
           </Typography>
           
+          <LinearProgress variant="determinate" value={progressValue} style={{ width: '100%', height: '10px', marginTop: '24px', borderRadius: '24px' }} />
+
         </div>
       </Snackbar>
     </>
