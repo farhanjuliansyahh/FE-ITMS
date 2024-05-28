@@ -347,6 +347,7 @@ const TalentSource = ({eventid}) => {
                 eventid={eventidactive} 
                 getkandidatfalse = {getkandidatfalse}
                 getkandidattrue  = {getkandidattrue}
+                showButton={true}
             />
           </Box>
         </CustomTabPanel>
@@ -379,6 +380,7 @@ const TalentSource = ({eventid}) => {
                 checkboxSelection={false} 
                 rows ={resetRowsTrue}
                 eventid={eventidactive} 
+                showButton={false}
             />
           </Box>
         </CustomTabPanel>
