@@ -101,11 +101,12 @@ function KonfirmasiTambahKomiteTalent({ open, handleClose, nippos, nama, onConfi
             onClick={async () => {
                 try {
                     await tambahdatakomitetalent(komiteTalentId, nippos);
+                    toast.success('Data berhasil dimasukkan.');
                     handleClose();
                     onConfirm();
                 } catch (error) {
                     if (error.message === "Network response was not ok") {
-                        toast.error('The data already exists.');
+                        toast.error('Data sudah ada.');
                         handleClose();
                     } else {
                         console.error("Error:", error);

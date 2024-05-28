@@ -616,7 +616,7 @@ const ParameterTalent = () => {
         <AddQuestionModal open={openAddQuestionModal} handleClose={handleCloseAddQuestionModal} handleAddQuestion={handleAddQuestion} />
         <AlertSimpan
           open={openAlertBerhasilSimpan}
-          handleClose={handleCloseAlertBerhasilSimpan}
+          onClose={handleCloseAlertBerhasilSimpan}
           Severity={'success'}
           Logo={SimpanLogo}
           Keterangan={'Berhasil Simpan'}

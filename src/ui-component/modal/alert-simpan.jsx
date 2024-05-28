@@ -24,7 +24,8 @@ const AlertSimpan = ({ open, handleClose, Severity, Logo, Keterangan }) => {
           height: '230px',
           position: 'relative',
           borderRadius:'12px',
-          backgroundColor:"#FFFFFF"
+          backgroundColor:"#FFFFFF",
+          boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)', // Penambahan drop shadow di sini
         }}
       >
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
