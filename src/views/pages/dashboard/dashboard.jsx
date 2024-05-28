@@ -132,17 +132,19 @@ const Dashboard = () => {
   return (
     <>
       {/* <MainLayout/> */}
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
+      {/* <Grid container spacing={gridSpacing}> */}
+      {/* <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
               <Header title={'Dashboard'} />
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
 
+      <Grid container spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard style={{ padding: '24px 24px', display: 'flex', justifyContent: 'flex-end' }}>
+          <MainCard style={{ padding: '14px 14px', display: 'flex', justifyContent: 'flex-end' }}>
+            <Header title={'Dashboard'} />
             <FormControl variant="outlined" sx={{ width: '25%' }}>
               <InputLabel>Tahun</InputLabel>
               <Select value={selectedYear} onChange={handleYearChange} label="Tahun">
@@ -160,6 +162,7 @@ const Dashboard = () => {
           {cards.map((card, index) => (
             // <Grid item xs={12}sm={6} md={6} key={index}>
             <Grid item xs={12} key={index}>
+              ;
               <DashboardCard
                 isLoading={isLoading}
                 title={card.title}
