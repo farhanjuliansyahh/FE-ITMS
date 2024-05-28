@@ -30,7 +30,7 @@ export const useAuth = () => {
       setTimeout(function () {
         navigate('/dashboard');
       }, 1000); // 1000 milliseconds = 1 second
-      alert(response.message);
+      // alert(response.message);
 
       try {
         const responseProfile = await fetch('http://localhost:4000/getkaryawan', {

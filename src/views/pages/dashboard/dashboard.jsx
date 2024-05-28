@@ -10,7 +10,7 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import RumpunJabatanTerbaru from '../../../ui-component/charts/RumpunJabatanChartTerbaru';
 import JenisKelaminTerbaru from '../../../ui-component/charts/JenisKelaminTerbaru';
 import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent';
-
+import Tooltip from '@mui/material/Tooltip';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
@@ -22,79 +22,87 @@ const Dashboard = () => {
   const [datagen, setdatagen] = useState([]);
   const [ListTahun, setlisttahun] = useState([]);
   const [selectedYear, setSelectedYear] = useState('0');
+  const [totalTalent, setTotalTalent] = useState('');
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
 
-  const [rows, setrows] = useState([])
+  const [rows, setrows] = useState([]);
   useEffect(() => {
     setLoading(false);
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:4000/getdetailtalent")
-      .then(response => response.json())
+    fetch('http://localhost:4000/getdetailtalent')
+      .then((response) => response.json())
       // 4. Setting *dogImage* to the image url that we received from the response above
-      .then(data => setrows(data))
-  }, [])
+      .then((data) => setrows(data));
+  }, []);
 
   useEffect(() => {
-    const distinctYears = [...new Set(rows.map(item => item.year))];
+    fetch('http://localhost:4000/getpopulasi')
+      .then((response) => response.json())
+      .then((data) => setTotalTalent(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  useEffect(() => {
+    const distinctYears = [...new Set(rows.map((item) => item.year))];
     setlisttahun(distinctYears);
   }, [rows]);
 
-  const getgenderdata= (year) =>{
+  const getgenderdata = (year) => {
     fetch(`http://localhost:4000/getdatagender?year=${year}`)
-    .then(response => response.json())
-    .then(data => {
-      // Update state with API data
-      setdatagender(data);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-  }
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with API data
+        setdatagender(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
 
-  const getgendata= (year) =>{
+  const getgendata = (year) => {
     fetch(`http://localhost:4000/getgendistribution?year=${year}`)
-    .then(response => response.json())
-    .then(data => {
-      // Update state with API data
-      setdatagen(data);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-  }
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with API data
+        setdatagen(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
 
-  const mappedGender = datagender.map(item => ({
+  const mappedGender = datagender.map((item) => ({
     name: item.name === 'F' ? 'Perempuan' : 'Laki-laki',
     value: item.value
-}));
+  }));
 
-  const getrumpundata= (year) =>{
+  const getrumpundata = (year) => {
     fetch(`http://localhost:4000/getdatatalentrumpun?year=${year}`)
-    .then(response => response.json())
-    .then(data => {
-      // Update state with API data
-      setDatarumpun(data);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-  }
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with API data
+        setDatarumpun(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
 
-  const getjobleveldata= (year) =>{
+  const getjobleveldata = (year) => {
     fetch(`http://localhost:4000/getdatatalentjoblevel?year=${year}`)
-    .then(response => response.json())
-    .then(data => {
-      // Update state with API data
-      setJoblevel(data);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-  }
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with API data
+        setJoblevel(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
 
   useEffect(() => {
     getrumpundata(selectedYear);
@@ -106,21 +114,20 @@ const Dashboard = () => {
   console.log(datarumpun);
 
   const cards = [
-
     {
-      title: "Total Talent",
-      content: rows.length,
-      icon: GroupsIcon,
+      title: 'Total Talent',
+      content: totalTalent,
+      icon: GroupsIcon
       // navigateTo: '/dashboard/total-pegawai',
-    },
+    }
     // { title: "Total IDP Aktif",
     //   content: 1019,
     //   icon: NotificationsActiveOutlinedIcon,
     //   // navigateTo: '/dashboard/total-pegawai',
     // },
-  ]
+  ];
 
-  console.log("datagen", datagen);
+  console.log('datagen', datagen);
 
   return (
     <>
@@ -135,14 +142,10 @@ const Dashboard = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <MainCard style={{ padding: '24px 24px', display: 'flex', justifyContent: 'flex-end' }} >
+          <MainCard style={{ padding: '24px 24px', display: 'flex', justifyContent: 'flex-end' }}>
             <FormControl variant="outlined" sx={{ width: '25%' }}>
               <InputLabel>Tahun</InputLabel>
-              <Select
-                value={selectedYear}
-                onChange={handleYearChange}
-                label="Tahun"
-              >
+              <Select value={selectedYear} onChange={handleYearChange} label="Tahun">
                 <MenuItem value="0">All Years</MenuItem>
                 {ListTahun.map((year) => (
                   <MenuItem key={year} value={year}>
@@ -156,13 +159,17 @@ const Dashboard = () => {
         <Grid container spacing={2} item xs={12}>
           {cards.map((card, index) => (
             // <Grid item xs={12}sm={6} md={6} key={index}>
-            <Grid item xs={12}>
+            <Grid item xs={12} key={index}>
               <DashboardCard
                 isLoading={isLoading}
                 title={card.title}
                 content={card.content}
-                icon={<card.icon />}
-                PathLink={"/dashboard/detail-talent"}
+                icon={
+                  <Tooltip title="Total talent dari total karyawan dengan job level (E1-A2)">
+                    <card.icon />
+                  </Tooltip>
+                }
+                PathLink={'/dashboard/detail-talent'}
               />
             </Grid>
           ))}
@@ -186,7 +193,6 @@ const Dashboard = () => {
             <Grid item xs={12} md={6}>
               {/* <RumpunJabatanChart isLoading={isLoading} /> */}
               <RumpunJabatanTerbaru isLoading={isLoading} data={datarumpun} />
-
             </Grid>
             <Grid item xs={12} md={6}>
               <LevelJabatanChart isLoading={isLoading} data={datajoblevel} />
@@ -195,9 +201,11 @@ const Dashboard = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <MainCard style={{ padding: '24px 24px' }} >
+          <MainCard style={{ padding: '24px 24px' }}>
             <Grid item xs={12} md={12}>
-              <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '6px' }}>Keterangan</Typography>
+              <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '6px' }}>
+                Keterangan
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2} justifyContent="start">
@@ -210,7 +218,7 @@ const Dashboard = () => {
                 <Grid item xs={4}>
                   <ButtonChart buttonText="OP" detail="Operasi" />
                 </Grid>
-                <Grid item xs={3} >
+                <Grid item xs={3}>
                   <ButtonChart buttonText="MR" detail="Manajemen Risiko dan Kepatuhan" />
                 </Grid>
                 <Grid item xs={2.5}>
@@ -229,7 +237,6 @@ const Dashboard = () => {
             </Grid>
           </MainCard>
         </Grid>
-
       </Grid>
     </>
   );
