@@ -80,12 +80,12 @@ const ParameterTalent = () => {
 
   const handleClickKKM = () => {
     setUpdatekkmstate(true);
-    toast.success('Perubahan berhasil disimpan.'); 
+    toast.success('Perubahan berhasil disimpan.');
   };
 
   const handleClickKuota = () => {
     setUpdatekuotastate(true);
-    toast.success('Perubahan berhasil disimpan.'); 
+    toast.success('Perubahan berhasil disimpan.');
   };
 
   const handleBatalkanKKM = () => {
@@ -399,6 +399,49 @@ const ParameterTalent = () => {
     document.body.removeChild(link);
   };
 
+  const [komiteTalents, setKomiteTalents] = useState({
+    ketuaKT1: '',
+    ketuaKT2: '',
+    ketuaKT3: ''
+  });
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/getNamaKetuaKomiteTalent');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setKomiteTalents({
+          ketuaKT1: data.ketuaKT1,
+          ketuaKT2: data.ketuaKT2,
+          ketuaKT3: data.ketuaKT3
+        });
+      } catch (error) {
+        console.error('Error fetching komite talent names:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const getInitialsIfLong = (nama_bagian) => {
+    const words = nama_bagian.split(' ');
+    if (words.length > 4) {
+      // Words to preserve intact
+      const preservedWords = ['and'];
+      return words.map((word, index) => {
+        if (preservedWords.includes(word.toLowerCase())) {
+          return '';
+        }
+        return word[0].toUpperCase();
+      }).join('');
+    }
+    return nama_bagian;
+  };  
+
   return (
     <>
       <MainCard>
@@ -553,21 +596,19 @@ const ParameterTalent = () => {
           <Box display="block" width="100%" flexDirection="column" alignItems="center" padding={'12px 24px'} marginTop={-5}>
             <AccordionKomiteTalent
               title={'Komite Talent 1'}
-              subtitle={'Direktur Utama - Faizal Rochmad Djoemadi'}
+              subtitle={`${komiteTalents.ketuaKT1.jabatan} ${komiteTalents.ketuaKT1.nama_bagian} - ${komiteTalents.ketuaKT1.namaketua}`}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent komiteTalentId={1}/>}
+              content={<DaftarKomiteTalent komiteTalentId={1} />}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 2'}
-              subtitle={'Direktur HCM - Tonggo Marbun'}
-              icon={GroupsOutlined}
-              content={<DaftarKomiteTalent komiteTalentId={2}/>}
+              subtitle={`${komiteTalents.ketuaKT2.jabatan} ${komiteTalents.ketuaKT2.nama_bagian} - ${komiteTalents.ketuaKT2.namaketua}`}              icon={GroupsOutlined}
+              content={<DaftarKomiteTalent komiteTalentId={2} />}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 3'}
-              subtitle={'Senior Vice President HCSBP - Chandra Dewi'}
-              icon={GroupsOutlined}
-              content={<DaftarKomiteTalent komiteTalentId={3}/>}
+              subtitle={`${komiteTalents.ketuaKT3.jabatan} ${getInitialsIfLong(komiteTalents.ketuaKT3.nama_bagian)} - ${komiteTalents.ketuaKT3.namaketua}`}              icon={GroupsOutlined}
+              content={<DaftarKomiteTalent komiteTalentId={3} />}
             />
           </Box>
         </CustomTabPanel>
@@ -615,7 +656,7 @@ const ParameterTalent = () => {
           </Box>
         </CustomTabPanel>
 
-        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} onConfirm={() => fetchData()}/>
+        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} onConfirm={() => fetchData()} />
         <AddQuestionModal open={openAddQuestionModal} handleClose={handleCloseAddQuestionModal} handleAddQuestion={handleAddQuestion} />
         <AlertSimpan
           open={openAlertBerhasilSimpan}
