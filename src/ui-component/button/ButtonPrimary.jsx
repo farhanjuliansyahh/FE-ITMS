@@ -17,6 +17,7 @@ export default function ButtonPrimary({ Color, backgroundColor, hoverColor, hove
         '&:hover': {
           color: hoverColor || '#ffffff', // Hover color
           backgroundColor: hoverBackgroundColor || '#122350', // Hover background color
+          boxShadow: 15
         }
       }} 
       endIcon={<IconComponent />} // Dynamically setting the icon size using relative units

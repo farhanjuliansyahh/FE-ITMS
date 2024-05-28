@@ -83,9 +83,9 @@ const TalentDays = ({eventid}) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, []);
 
   useEffect(()=>{
     console.log(filterNama);
@@ -176,7 +176,7 @@ const TalentDays = ({eventid}) => {
       .then(datadays => {
         // Update state with API data
         setdaysBpj(datadays.map((row, index) => ({ ...row, id: index + 1 })));
-        setLoading(false); // Set loading to false once data is fetched
+        // setLoading(false); // Set loading to false once data is fetched
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -489,7 +489,7 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
           onClose={handleClose}
           onOpenSecondModal={handleOpenSecondModalKonfirmasi}
           eventid={eventidactive}
-          onConfirm={fetchkaryawandays}
+          onConfirm={fetchbpjdays}
         />
 
         <KonfirmasiDetailBPJ

@@ -222,6 +222,8 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 })
                 .catch(error => {
                     console.error('Error uploading chunk:', error);
+                    setUploadInProgressToastId(null)
+                    toast.dismiss(progressToastId); 
                     toast.error('Error uploading chunk of data:', error)
                     // Optionally, you can handle the error by showing a message to the user or retrying
                 });

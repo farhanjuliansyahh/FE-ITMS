@@ -19,6 +19,7 @@ import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AddQuestionModal from '../../../ui-component/modal/tambah-pertanyaan';
 import AlertSimpan from '../../../ui-component/modal/alert-simpan';
 import SimpanLogo from '../../../assets/images/ilustration/simpan.png';
+import { toast } from 'react-toastify';
 
 import {
   AddCircleOutline,
@@ -79,10 +80,12 @@ const ParameterTalent = () => {
 
   const handleClickKKM = () => {
     setUpdatekkmstate(true);
+    toast.success('Perubahan berhasil disimpan.'); 
   };
 
   const handleClickKuota = () => {
     setUpdatekuotastate(true);
+    toast.success('Perubahan berhasil disimpan.'); 
   };
 
   const handleBatalkanKKM = () => {

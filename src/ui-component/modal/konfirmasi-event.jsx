@@ -15,12 +15,13 @@ import dayjs from 'dayjs'; // Import dayjs for date manipulation
 function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua, mulai }) {
   const [deadlinesource, setdeadlinesource] = useState('');
   const [activejoblevel, setactivejoblevel] = useState(['']);
-  const [activejobfam, setactivejobfam] = useState('');
+  const [isDateSelected, setIsDateSelected] = useState(false); // New state to track if date is selected
   const [isLoading, setLoading] = useState(true);
 
   const handleDateChange = (date) => {
     console.log(date); // Check the date value
     setdeadlinesource(date); // Update the state with the selected date
+    setIsDateSelected(!!date); // Update isDateSelected based on whether a date is selected
   };
 
   const ketuakomiterole = (nippos) => {
@@ -80,7 +81,6 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
         return response.json();
       })
       .then((data) => {
-        window.location.reload()
         return data; // Return the parsed JSON data
       })
       .catch((error) => {
@@ -262,9 +262,13 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   const mulaiButton = (
     <Button
       endIcon={<ArrowForwardRoundedIcon />}
-      style={isHoveredmulai ? { ...mulaiButtonStyle, ...hovermulaiStyle } : mulaiButtonStyle}
+      style={{
+        ...mulaiButtonStyle,
+        ...(isDateSelected ? (isHoveredmulai ? hovermulaiStyle : null) : { backgroundColor: '#CCCCCC', cursor: 'not-allowed' })
+      }}
       onMouseEnter={() => setIsHoveredmulai(true)}
       onMouseLeave={() => setIsHoveredmulai(false)}
+      disabled={!isDateSelected} // Disable button if date is not selected
       onClick={async () => {
         try {
           await postdeadlinesource(); // Call the function to post deadline source
@@ -316,11 +320,6 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
       <DialogContent>
         <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '500px' } }} noValidate autoComplete="off">
           <div>
-            {/* <TextField
-                            required
-                            id="outlined-required"
-                            label="Tanggal Berakhir Talent Profile"
-                        /> */}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoItem>
                 <DatePicker
