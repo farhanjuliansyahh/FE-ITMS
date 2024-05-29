@@ -79,7 +79,7 @@ const TalentDays = ({eventid}) => {
 
   const [selectedTipe, setSelectedTipe] = useState('')
   const [selectedDate, setSelectedDate] = useState('')
-  
+  const [selectedLokasi, setSelectedLokasi] = useState('')
 
   const eventidactive = eventid
   const handleChange = (event, newValue) => {
@@ -334,7 +334,7 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
   setKonfirmasiBPJOpen(true);
   setSelectedBPJ(nippos)
 };
-const isFormValid = () => tipe && tanggal && lokasi;
+const isFormValid = () => selectedTipe && selectedDate && selectedLokasi;
 useEffect(() => {
   setLoading(false);
 }, []);
@@ -401,8 +401,8 @@ useEffect(() => {
                             <TextField sx={{ width: '100%' }}
                                 select
                                 label="Lokasi"
-                                value={lokasi}
-                                onChange={(e) => setLokasi(e.target.value)}
+                                value={selectedLokasi}
+                                onChange={(e) => setSelectedLokasi(e.target.value)}
                             >
                                 {LokasiOptions.map((option) => (
                                   <MenuItem key={option.id} value={option.id}>
