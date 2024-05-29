@@ -19,7 +19,7 @@ export default function TalentQualificationTable({
   minimumCompeten5cyQualified,
   minimumPmsQualified,
   minimumAkhlakQualified,
-  minimumLearningAgilityQualified,
+  minimumLearningAgilityQualified
 }) {
   // console.log(minimumCompeten5cyQualified,minimumPmsQualified,minimumAkhlakQualified,minimumLearningAgilityQualified);
   const columns = [
@@ -39,15 +39,19 @@ export default function TalentQualificationTable({
         const { color, backgroundColor } = getColorStyle(params.value, minimumCompeten5cyQualified);
         return (
           <div>
-            <span style={{
-              color,
-              backgroundColor,
-              padding: '4px 8px',
-              borderRadius: '24px'
-            }}>{params.value}</span>
+            <span
+              style={{
+                color,
+                backgroundColor,
+                padding: '4px 8px',
+                borderRadius: '24px'
+              }}
+            >
+              {params.value}
+            </span>
           </div>
         );
-      },
+      }
     },
     {
       field: 'PMS',
@@ -57,15 +61,19 @@ export default function TalentQualificationTable({
         const { color, backgroundColor } = getColorStyle(params.value, minimumPmsQualified);
         return (
           <div>
-            <span style={{
-              color,
-              backgroundColor,
-              padding: '4px 8px',
-              borderRadius: '24px'
-            }}>{params.value}</span>
+            <span
+              style={{
+                color,
+                backgroundColor,
+                padding: '4px 8px',
+                borderRadius: '24px'
+              }}
+            >
+              {params.value}
+            </span>
           </div>
         );
-      },
+      }
     },
     {
       field: 'AKHLAK',
@@ -75,15 +83,19 @@ export default function TalentQualificationTable({
         const { color, backgroundColor } = getColorStyle(params.value, minimumAkhlakQualified);
         return (
           <div>
-            <span style={{
-              color,
-              backgroundColor,
-              padding: '4px 8px',
-              borderRadius: '24px'
-            }}>{params.value}</span>
+            <span
+              style={{
+                color,
+                backgroundColor,
+                padding: '4px 8px',
+                borderRadius: '24px'
+              }}
+            >
+              {params.value}
+            </span>
           </div>
         );
-      },
+      }
     },
     {
       field: 'Learning Agility',
@@ -93,16 +105,20 @@ export default function TalentQualificationTable({
         const { color, backgroundColor } = getColorStyle(params.value, minimumLearningAgilityQualified);
         return (
           <div>
-            <span style={{
-              color,
-              backgroundColor,
-              padding: '4px 8px',
-              borderRadius: '24px'
-            }}>{params.value}</span>
+            <span
+              style={{
+                color,
+                backgroundColor,
+                padding: '4px 8px',
+                borderRadius: '24px'
+              }}
+            >
+              {params.value}
+            </span>
           </div>
         );
-      },
-    },
+      }
+    }
   ];
 
   return (
@@ -112,25 +128,25 @@ export default function TalentQualificationTable({
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
+            paginationModel: { page: 0, pageSize: 5 }
+          }
         }}
         pageSizeOptions={[5, 10]}
         sx={{
           borderRadius: '12px', // Apply border radius to the DataGrid itself
           '& .MuiDataGrid-main': {
-            borderRadius: '12px', // Apply border radius to the main container
+            borderRadius: '12px' // Apply border radius to the main container
           },
           '& .MuiDataGrid-columnHeader': {
             backgroundColor: '#F5F5F5', // Apply background color to each header cell
-            padding: '0 24px', // Apply horizontal padding to each header cell
+            padding: '0 24px' // Apply horizontal padding to each header cell
           },
           '& .MuiDataGrid-cell': {
-            padding: '0 24px', // Apply horizontal padding to each header cell
+            padding: '0 24px' // Apply horizontal padding to each header cell
           },
           '& .MuiDataGrid-columnHeaderCheckbox, .MuiDataGrid-cellCheckbox': {
-            padding: '0 0px', // Adjust padding for the checkbox cells
-          },
+            padding: '0 0px' // Adjust padding for the checkbox cells
+          }
         }}
       />
     </div>

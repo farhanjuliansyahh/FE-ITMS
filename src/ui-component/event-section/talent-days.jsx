@@ -80,6 +80,7 @@ const TalentDays = ({eventid}) => {
   const [selectedTipe, setSelectedTipe] = useState('')
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedLokasi, setSelectedLokasi] = useState('')
+  const [disableInputs, setDisableInputs] = useState(false);
 
   const eventidactive = eventid
   const handleChange = (event, newValue) => {
@@ -338,7 +339,14 @@ const isFormValid = () => selectedTipe && selectedDate && selectedLokasi;
 useEffect(() => {
   setLoading(false);
 }, []);
-
+const handleCloseKirimNotifikasi =()=>{
+  setDetailBPJOpen(false);
+  setDisableInputs(true);
+};
+const handleCloseBatalKirimNotifikasi =()=>{
+  setDetailBPJOpen(false);
+};
+//setDisableInputs(true)
   return (
     <>
       {/* <MainLayout /> */}
@@ -377,6 +385,7 @@ useEffect(() => {
                                 label="Tipe"
                                 value={selectedTipe}
                                 onChange={(event) => setSelectedTipe(event.target.value)}
+                                disabled={disableInputs}
                             >
                                 <MenuItem value="1">Sidang Jabatan</MenuItem>
                                 <MenuItem value="2">Wawancara</MenuItem>
@@ -392,19 +401,21 @@ useEffect(() => {
                                 InputLabelProps={{ shrink: true }}
                                 label="Tanggal"
                                 onChange={(date) => setSelectedDate(date)}
+                                disabled={disableInputs}
                                 fullWidth // Set fullWidth to occupy the entire width of its container
                                 />
                             </DemoItem>
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={4}>
-    <TextField
-        sx={{ width: '100%' }}
-        label="Lokasi"
-        value={selectedLokasi}
-        onChange={(e) => setSelectedLokasi(e.target.value)}
-    />
-</Grid>
+                        <TextField
+                            sx={{ width: '100%' }}
+                            label="Lokasi"
+                            value={selectedLokasi}
+                            onChange={(e) => setSelectedLokasi(e.target.value)}
+                            disabled={disableInputs}
+                        />
+                    </Grid>
                         {/* <Grid item xs={4}>
                             <EventDetailSearchSection filter={filterLokasi} setFilter={setFilterLokasi} PlaceHolder={'Lokasi'} />
                         </Grid> */}
@@ -513,7 +524,9 @@ useEffect(() => {
 
         <KonfirmasiDetailBPJ
           open={openDetailBPJ}
-          handleClose={() => setDetailBPJOpen(false)}
+          // handleClose={() => setDetailBPJOpen(false)}
+          handleCloseBatalkan={handleCloseBatalKirimNotifikasi}
+          handleClose = {handleCloseKirimNotifikasi}
           eventid = {eventidactive}
           selectedTipe = {selectedTipe}
           selectedDate = {selectedDate}
