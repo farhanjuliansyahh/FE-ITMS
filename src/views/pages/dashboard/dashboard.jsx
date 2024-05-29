@@ -162,16 +162,11 @@ const Dashboard = () => {
           {cards.map((card, index) => (
             // <Grid item xs={12}sm={6} md={6} key={index}>
             <Grid item xs={12} key={index}>
-              ;
               <DashboardCard
                 isLoading={isLoading}
                 title={card.title}
-                content={card.content}
-                icon={
-                  <Tooltip title="Total talent dari total karyawan dengan job level (E1-A2)">
-                    <card.icon />
-                  </Tooltip>
-                }
+                content={<Tooltip title="Total talent dari total karyawan dengan job level (E1-A2)">{card.content}</Tooltip>}
+                icon={<card.icon/>}
                 PathLink={'/dashboard/detail-talent'}
               />
             </Grid>

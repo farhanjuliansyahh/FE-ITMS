@@ -205,7 +205,7 @@ function AddEventModal({ open, handleClose }) {
     if (reason === 'clickaway') {
       return;
     }
-      setOpenAlertBerhasil(false);
+    setOpenAlertBerhasil(true);
   };
 
   const postData = async () => {
@@ -246,21 +246,19 @@ function AddEventModal({ open, handleClose }) {
       }
 
       // If successful, handle the response data (if needed)
-      
+
       const responseData = await response.json();
       console.log('Response data:', responseData);
 
       // Show success toast notification
-        // toast.success('Event berhasil dibuat.');
-        setOpenAlertBerhasil(true);
+      // toast.success('Event berhasil dibuat.');
+      setOpenAlertBerhasil(true);
 
       // Reload halaman setelah 2 detik agar data event diperbarui secara visual
       setTimeout(() => {
         setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
         window.location.reload();
       }, 3000);
-      
-
     } catch (error) {
       // Handle any errors that occur during the API call
       console.error('Error posting data:', error.message);
@@ -337,275 +335,270 @@ function AddEventModal({ open, handleClose }) {
 
   return (
     <>
-    <AlertBerhasil
-      open={openAlertBerhasil}
-      onClose={handleCloseAlertBerhasil}
-      Logo={IlustrasiBerhasil}
-      Keterangan={'Berhasil'}
-    />
-    <Dialog open={open} onClose={CloseDialog}>
-      <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', textAlign: 'center' }}>
-        <Typography style={{ fontSize: '24px', fontWeight: 'bold' }}>Tambah Event</Typography>
-      </DialogTitle>
-      <DialogContent>
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '500px' },
-            paddingTop: '32px',
-            paddingLeft: '12px',
-            paddingBottom: '12px'
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            <TextField
-              required
-              id="outlined-required"
-              label="Nama Event"
-              value={eventName} // Set value from state
-              onChange={handleEventNameChange} // Handle input change
-              onBlur={() => setIsEventNameTouched(true)}
-              error={isEventNameTouched && !eventName}
-              helperText={isEventNameTouched && !eventName ? 'Nama Event harus diisi' : ''}
-            />
-            <TextField
-              select
-              required
-              id="outlined-required"
-              label="Tipe Committee Talent"
-              value={selectedCommittee}
-              onChange={handleCommitteeChange}
-              onBlur={() => setIsCommitteeTouched(true)}
-              error={isCommitteeTouched && !selectedCommittee}
-              helperText={isCommitteeTouched && !selectedCommittee ? 'Tipe Committee Talent harus diisi' : ''}
-            >
-              <MenuItem value="1">Committee 1</MenuItem>
-              <MenuItem value="2">Committee 2</MenuItem>
-              <MenuItem value="3">Committee 3</MenuItem>
-            </TextField>
+      <AlertBerhasil open={openAlertBerhasil} onClose={handleCloseAlertBerhasil} Logo={IlustrasiBerhasil} Keterangan={'Berhasil'} />
+      <Dialog open={open} onClose={CloseDialog}>
+        <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', textAlign: 'center' }}>
+          <Typography style={{ fontSize: '24px', fontWeight: 'bold' }}>Tambah Event</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '500px' },
+              paddingTop: '32px',
+              paddingLeft: '12px',
+              paddingBottom: '12px'
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <TextField
+                required
+                id="outlined-required"
+                label="Nama Event"
+                value={eventName} // Set value from state
+                onChange={handleEventNameChange} // Handle input change
+                onBlur={() => setIsEventNameTouched(true)}
+                error={isEventNameTouched && !eventName}
+                helperText={isEventNameTouched && !eventName ? 'Nama Event harus diisi' : ''}
+              />
+              <TextField
+                select
+                required
+                id="outlined-required"
+                label="Tipe Committee Talent"
+                value={selectedCommittee}
+                onChange={handleCommitteeChange}
+                onBlur={() => setIsCommitteeTouched(true)}
+                error={isCommitteeTouched && !selectedCommittee}
+                helperText={isCommitteeTouched && !selectedCommittee ? 'Tipe Committee Talent harus diisi' : ''}
+              >
+                <MenuItem value="1">Committee 1</MenuItem>
+                <MenuItem value="2">Committee 2</MenuItem>
+                <MenuItem value="3">Committee 3</MenuItem>
+              </TextField>
 
-            <Autocomplete
-              multiple
-              id="checkboxes-tags-demo"
-              options={jobLevelOptions}
-              value={selectedJobLevel} // Ubah value menjadi selectedJobLevel
-              onChange={handleJobLevelChange}
-              disableCloseOnSelect
-              getOptionLabel={(option) => option}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-                  {option}
-                </li>
-              )}
-              style={{ width: 500 }}
-              renderInput={(params) => (
-                <TextField
-                  required
-                  onBlur={() => {
-                    setIsJobLevelTouched(true);
-                    console.log('params', params);
-                  }}
-                  error={isJobLevelTouched && !selectedJobLevel.length > 0}
-                  helperText={isJobLevelTouched && !selectedJobLevel.length > 0 ? 'Job Level harus diisi' : ''}
-                  {...params}
-                  label="Job Level"
-                  placeholder="Job Level"
-                />
-              )}
-            />
+              <Autocomplete
+                multiple
+                id="checkboxes-tags-demo"
+                options={jobLevelOptions}
+                value={selectedJobLevel} // Ubah value menjadi selectedJobLevel
+                onChange={handleJobLevelChange}
+                disableCloseOnSelect
+                getOptionLabel={(option) => option}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+                    {option}
+                  </li>
+                )}
+                style={{ width: 500 }}
+                renderInput={(params) => (
+                  <TextField
+                    required
+                    onBlur={() => {
+                      setIsJobLevelTouched(true);
+                      console.log('params', params);
+                    }}
+                    error={isJobLevelTouched && !selectedJobLevel.length > 0}
+                    helperText={isJobLevelTouched && !selectedJobLevel.length > 0 ? 'Job Level harus diisi' : ''}
+                    {...params}
+                    label="Job Level"
+                    placeholder="Job Level"
+                  />
+                )}
+              />
 
-            <TextField
-              select
-              required
-              id="outlined-required"
-              label="Job Family"
-              onChange={handleJobFamilyChange}
-              onBlur={() => setIsJobFamilyTouched(true)}
-              error={isJobFamilyTouched && !selectedJobFamily}
-              helperText={isJobFamilyTouched && !selectedJobFamily ? 'Job Family harus diisi' : ''}
-            >
-              {jobFamilyOptions.map((jobFamily) => (
-                <MenuItem key={jobFamily.kode_rumpun_jabatan} value={jobFamily.kode_rumpun_jabatan}>
-                  {jobFamily.nama_rumpun_jabatan}
-                </MenuItem>
-              ))}
-            </TextField>
+              <TextField
+                select
+                required
+                id="outlined-required"
+                label="Job Family"
+                onChange={handleJobFamilyChange}
+                onBlur={() => setIsJobFamilyTouched(true)}
+                error={isJobFamilyTouched && !selectedJobFamily}
+                helperText={isJobFamilyTouched && !selectedJobFamily ? 'Job Family harus diisi' : ''}
+              >
+                {jobFamilyOptions.map((jobFamily) => (
+                  <MenuItem key={jobFamily.kode_rumpun_jabatan} value={jobFamily.kode_rumpun_jabatan}>
+                    {jobFamily.nama_rumpun_jabatan}
+                  </MenuItem>
+                ))}
+              </TextField>
 
-            <TextField
-              required
-              id="outlined-required"
-              label="Head of Committee"
-              value={selectedketuakomite.nama || ''}
-              onChange={handleHeadOfCommitteeChange}
-              InputLabelProps={{ shrink: isHeadOfCommitteeFetched }} // Ensure label is always shrunk if data is fetched
-              onBlur={() => setIsKetuaKomiteTouched(true)}
-              error={isKetuaKomiteTouched && !selectedketuakomite}
-              helperText={isKetuaKomiteTouched && !selectedketuakomite ? 'Head of Committe harus diisi' : ''}
-            />
+              <TextField
+                required
+                id="outlined-required"
+                label="Head of Committee"
+                value={selectedketuakomite.nama || ''}
+                onChange={handleHeadOfCommitteeChange}
+                InputLabelProps={{ shrink: isHeadOfCommitteeFetched }} // Ensure label is always shrunk if data is fetched
+                onBlur={() => setIsKetuaKomiteTouched(true)}
+                error={isKetuaKomiteTouched && !selectedketuakomite}
+                helperText={isKetuaKomiteTouched && !selectedketuakomite ? 'Head of Committe harus diisi' : ''}
+              />
 
-            <Autocomplete
-              multiple
-              id="checkboxes-tags-demo"
-              options={committeememberOptions}
-              getOptionLabel={(option) => option.nama}
-              value={selectedcomitteemember}
-              disableCloseOnSelect
-              onChange={(event, newValue) => setSelectedCommitteemember(newValue)}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-                  {option.nama}
-                </li>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Committee"
-                  variant="outlined"
-                  required
-                  onBlur={() => setIsComitteeMemberTouched(true)}
-                  error={isComitteeMemberTouched && !selectedcomitteemember.length > 0}
-                  helperText={isComitteeMemberTouched && !selectedcomitteemember.length > 0 ? 'Committee harus diisi' : ''}
-                />
-              )}
-            />
+              <Autocomplete
+                multiple
+                id="checkboxes-tags-demo"
+                options={committeememberOptions}
+                getOptionLabel={(option) => option.nama}
+                value={selectedcomitteemember}
+                disableCloseOnSelect
+                onChange={(event, newValue) => setSelectedCommitteemember(newValue)}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+                    {option.nama}
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Committee"
+                    variant="outlined"
+                    required
+                    onBlur={() => setIsComitteeMemberTouched(true)}
+                    error={isComitteeMemberTouched && !selectedcomitteemember.length > 0}
+                    helperText={isComitteeMemberTouched && !selectedcomitteemember.length > 0 ? 'Committee harus diisi' : ''}
+                  />
+                )}
+              />
 
-            <Autocomplete
-              multiple
-              id="checkboxes-tags-demo"
-              options={questionOption}
-              getOptionLabel={(option) => option.pertanyaan}
-              value={selectedquestion}
-              disableCloseOnSelect
-              onChange={(event, newValue) => setselectedquestion(newValue)}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-                  {option.pertanyaan}
-                </li>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Questions"
-                  variant="outlined"
-                  required
-                  onBlur={() => setIsQuestionTouched(true)}
-                  error={isQuestionTouched && !selectedquestion.length > 0}
-                  helperText={isQuestionTouched && !selectedquestion.length > 0 ? 'Questions harus diisi' : ''}
-                />
-              )}
-            />
+              <Autocomplete
+                multiple
+                id="checkboxes-tags-demo"
+                options={questionOption}
+                getOptionLabel={(option) => option.pertanyaan}
+                value={selectedquestion}
+                disableCloseOnSelect
+                onChange={(event, newValue) => setselectedquestion(newValue)}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+                    {option.pertanyaan}
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Questions"
+                    variant="outlined"
+                    required
+                    onBlur={() => setIsQuestionTouched(true)}
+                    error={isQuestionTouched && !selectedquestion.length > 0}
+                    helperText={isQuestionTouched && !selectedquestion.length > 0 ? 'Questions harus diisi' : ''}
+                  />
+                )}
+              />
 
-            <TextField
-              required
-              id="outlined-required"
-              label="Talent Pool Quota"
-              value={quota} // Set value from state
-              onChange={handlequotachange} // Handle input change
-              onFocus={() => {}}
-              onBlur={() => {
-                setIsQoutaTouched(true);
-                console.log('touched');
-                setQuotaError(false);
-              }}
-              error={(isQuotaTouched && quotaError) || (isQuotaTouched && !quota)} // Display error state if invalid
-              helperText={validateQuota()}
-              inputProps={{
-                inputMode: 'numeric',
-                pattern: '[0-9]*',
-                onKeyPress: (event) => {
-                  // Allow only numbers
-                  const keyCode = event.keyCode || event.which;
-                  const keyValue = String.fromCharCode(keyCode);
-                  const isValid = /\d/.test(keyValue);
-                  if (!isValid) {
-                    setIsQoutaTouched(true);
-                    setQuotaError(true);
-                    event.preventDefault();
+              <TextField
+                required
+                id="outlined-required"
+                label="Talent Pool Quota"
+                value={quota} // Set value from state
+                onChange={handlequotachange} // Handle input change
+                onFocus={() => {}}
+                onBlur={() => {
+                  setIsQoutaTouched(true);
+                  console.log('touched');
+                  setQuotaError(false);
+                }}
+                error={(isQuotaTouched && quotaError) || (isQuotaTouched && !quota)} // Display error state if invalid
+                helperText={validateQuota()}
+                inputProps={{
+                  inputMode: 'numeric',
+                  pattern: '[0-9]*',
+                  onKeyPress: (event) => {
+                    // Allow only numbers
+                    const keyCode = event.keyCode || event.which;
+                    const keyValue = String.fromCharCode(keyCode);
+                    const isValid = /\d/.test(keyValue);
+                    if (!isValid) {
+                      setIsQoutaTouched(true);
+                      setQuotaError(true);
+                      event.preventDefault();
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
 
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoItem>
-                <DatePicker
-                  views={['year', 'month', 'day']}
-                  InputLabelProps={{ shrink: true }}
-                  label="Tanggal Mulai Event *"
-                  onChange={handleStartDateChange}
-                  format="YYYY-MM-DD"
-                  required
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      // onBlur={() => setIsStartDateTouched(true)}
-                      error={isStartDateTouched && !startdate}
-                      helperText={isStartDateTouched && !startdate ? 'Tanggal Mulai harus diisi' : ''}
-                    />
-                  )}
-                  minDate={dayjs()} // Set minimum date to today
-                />
-              </DemoItem>
-            </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoItem>
+                  <DatePicker
+                    views={['year', 'month', 'day']}
+                    InputLabelProps={{ shrink: true }}
+                    label="Tanggal Mulai Event *"
+                    onChange={handleStartDateChange}
+                    format="YYYY-MM-DD"
+                    required
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        // onBlur={() => setIsStartDateTouched(true)}
+                        error={isStartDateTouched && !startdate}
+                        helperText={isStartDateTouched && !startdate ? 'Tanggal Mulai harus diisi' : ''}
+                      />
+                    )}
+                    minDate={dayjs()} // Set minimum date to today
+                  />
+                </DemoItem>
+              </LocalizationProvider>
 
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoItem>
-                <DatePicker
-                  views={['year', 'month', 'day']}
-                  InputLabelProps={{ shrink: true }}
-                  label="Tanggal Berakhir Event *"
-                  onChange={handleEndDateChange}
-                  format="YYYY-MM-DD"
-                  required
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      // onBlur={() => setIsEndDateTouched(true)}
-                      error={isEndDateTouched && !enddate}
-                      helperText={isEndDateTouched && !enddate ? 'Tanggal Berakhir harus diisi' : ''}
-                    />
-                  )}
-                  // minDate={dayjs(startdate).add(1, 'day')} // Set minimum end date to the day after the start date
-                  minDate={dayjs(startdate).isValid() ? dayjs(startdate).add(1, 'day') : dayjs()} // Set minimum end date to the day after the start date or today if start date is invalid
-                />
-              </DemoItem>
-            </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoItem>
+                  <DatePicker
+                    views={['year', 'month', 'day']}
+                    InputLabelProps={{ shrink: true }}
+                    label="Tanggal Berakhir Event *"
+                    onChange={handleEndDateChange}
+                    format="YYYY-MM-DD"
+                    required
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        // onBlur={() => setIsEndDateTouched(true)}
+                        error={isEndDateTouched && !enddate}
+                        helperText={isEndDateTouched && !enddate ? 'Tanggal Berakhir harus diisi' : ''}
+                      />
+                    )}
+                    // minDate={dayjs(startdate).add(1, 'day')} // Set minimum end date to the day after the start date
+                    minDate={dayjs(startdate).isValid() ? dayjs(startdate).add(1, 'day') : dayjs()} // Set minimum end date to the day after the start date or today if start date is invalid
+                  />
+                </DemoItem>
+              </LocalizationProvider>
 
-            <TextField
-              id="outlined-required"
-              label="Deskripsi"
-              multiline
-              rows={4}
-              value={deskripsi} // Set value from state
-              onChange={handledeskripsichange} // Handle input change
-              required // Tandai bahwa field ini harus diisi
-              onBlur={() => setIsDeskripsiTouched(true)}
-              error={isDeskripsiTouched && !deskripsi} // Set error jika deskripsi kosong
-              helperText={isDeskripsiTouched && !deskripsi && 'Deskripsi harus diisi'} // Tampilkan pesan error jika deskripsi kosong
-            />
-          </div>
-        </Box>
-      </DialogContent>
-      <DialogActions sx={{ padding: '24px', justifyContent: 'space-between' }}>
-        <ButtonError Color="#ffffff" icon={CancelOutlined} LabelName={'Batalkan'} onClick={CloseDialog} />
-        <ButtonPrimary
-          Color="#ffffff"
-          icon={AddCircleOutlineIcon}
-          LabelName={'Buat Event'}
-          disabled={!isFormValid}
-          onClick={() => {
-            CloseDialog(); // Close the dialog
-            postData(); // Execute the postData function
-          }}
-        />
-      </DialogActions>
-    </Dialog>
-  </>
+              <TextField
+                id="outlined-required"
+                label="Deskripsi"
+                multiline
+                rows={4}
+                value={deskripsi} // Set value from state
+                onChange={handledeskripsichange} // Handle input change
+                required // Tandai bahwa field ini harus diisi
+                onBlur={() => setIsDeskripsiTouched(true)}
+                error={isDeskripsiTouched && !deskripsi} // Set error jika deskripsi kosong
+                helperText={isDeskripsiTouched && !deskripsi && 'Deskripsi harus diisi'} // Tampilkan pesan error jika deskripsi kosong
+              />
+            </div>
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ padding: '24px', justifyContent: 'space-between' }}>
+          <ButtonError Color="#ffffff" icon={CancelOutlined} LabelName={'Batalkan'} onClick={CloseDialog} />
+          <ButtonPrimary
+            Color="#ffffff"
+            icon={AddCircleOutlineIcon}
+            LabelName={'Buat Event'}
+            disabled={!isFormValid}
+            onClick={() => {
+              CloseDialog(); // Close the dialog
+              postData(); // Execute the postData function
+            }}
+          />
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }
 

@@ -11,7 +11,6 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import AlertBerhasil from './alert-berhasil';
 import IlustrasiBerhasil from '../../assets/images/ilustration/berhasil.png';
 
-
 function HapusEvent({ open, handleClose, eventid }) {
   const [selectedCommittee, setSelectedCommittee] = useState('');
   const [selectedJobLevel, setSelectedJobLevel] = useState([]);
@@ -40,13 +39,12 @@ function HapusEvent({ open, handleClose, eventid }) {
         // console.log('Data deleted successfully');
 
         setOpenAlertBerhasil(true);
-        
-      // Reload halaman setelah 2 detik agar data event diperbarui secara visual
-      setTimeout(() => {
-        setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
-        window.location.reload();
-      }, 3000);
-      
+
+        // Reload halaman setelah 2 detik agar data event diperbarui secara visual
+        setTimeout(() => {
+          setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
+          window.location.reload();
+        }, 3000);
       } else {
         // If not successful, throw an error or handle the error response
         throw new Error('Failed to delete data');
@@ -56,8 +54,6 @@ function HapusEvent({ open, handleClose, eventid }) {
       console.error('Error deleting data:', error.message);
     }
   };
-
-  
 
   const handleCommitteeChange = (event) => {
     setSelectedCommittee(event.target.value);
@@ -146,53 +142,47 @@ function HapusEvent({ open, handleClose, eventid }) {
 
   return (
     <>
-    <AlertBerhasil
-      open={openAlertBerhasil}
-      handleClose={handleCloseAlertBerhasil}
-      Logo={IlustrasiBerhasil}
-      Keterangan={'Berhasil'}
-    />
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
-        <Typography style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>Hapus Data</Typography>
-      </DialogTitle>
-      <DialogContent>
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '500px' }
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            {/* <TextField
+      <AlertBerhasil open={openAlertBerhasil} handleClose={handleCloseAlertBerhasil} Logo={IlustrasiBerhasil} Keterangan={'Berhasil'} />
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>
+          <Typography style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>Hapus Data</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '500px' }
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              {/* <TextField
                             required
                             id="outlined-required"
                             label="Nama Event"
                         /> */}
-            <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
-              Apakah anda yakin menghapus Event ini?
-            </Typography>
-            <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px' }}>
-              Anda tidak dapat mengembalikan data yang sudah dihapus
-            </Typography>
-          </div>
-        </Box>
-      </DialogContent>
-      <DialogActions sx={{ padding: '0 24px 24px 24px ' }}>
-        {/* <Button onClick={handleClose}>Batalkan</Button>
+              <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
+                Apakah anda yakin menghapus Event ini?
+              </Typography>
+              <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px' }}>
+                Anda tidak dapat mengembalikan data yang sudah dihapus
+              </Typography>
+            </div>
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ padding: '0 24px 24px 24px ' }}>
+          {/* <Button onClick={handleClose}>Batalkan</Button>
                 <Button onClick={handleClose} variant="contained" sx={{ backgroundColor: '#1a2b5a', color: 'white' }}>
                     Add
                 </Button> */}
 
-        <ButtonsContainer>
-          {batalkanButton}
-          {mulaiButton}
-        </ButtonsContainer>
-
-      </DialogActions>
-    </Dialog>
+          <ButtonsContainer>
+            {batalkanButton}
+            {mulaiButton}
+          </ButtonsContainer>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
