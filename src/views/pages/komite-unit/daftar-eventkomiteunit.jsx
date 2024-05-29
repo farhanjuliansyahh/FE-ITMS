@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AddCircleOutlineRounded, CalendarMonthOutlined, FileDownloadOutlined, PersonPinOutlined, TaskOutlined } from '@mui/icons-material';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-
+import notFoundImage from '../../../../public/assets/images/ilustration/notfound.png';
 import MainCard from '../../../ui-component/cards/MainCard';
 import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert';
 import DetailKaryawandiKomiteUnit from './detail-karyawandikomiteunit';
