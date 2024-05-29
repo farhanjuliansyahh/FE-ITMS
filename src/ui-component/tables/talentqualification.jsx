@@ -22,8 +22,6 @@ export default function TalentQualificationTable({
   minimumLearningAgilityQualified,
 }) {
   // console.log(minimumCompeten5cyQualified,minimumPmsQualified,minimumAkhlakQualified,minimumLearningAgilityQualified);
-  const currentYear = new Date().getFullYear();
-  
   const columns = [
     { field: 'id', headerName: 'No', width: 70 },
     { field: 'Nama', headerName: 'Nama', width: 130 },
@@ -52,44 +50,8 @@ export default function TalentQualificationTable({
       },
     },
     {
-      field: 'PMS2yearsago',
-      headerName: `PMS ${currentYear - 2}`,
-      width: 180,
-      renderCell: (params) => {
-        const { color, backgroundColor } = getColorStyle(params.value, minimumPmsQualified);
-        return (
-          <div>
-            <span style={{
-              color,
-              backgroundColor,
-              padding: '4px 8px',
-              borderRadius: '24px'
-            }}>{params.value}</span>
-          </div>
-        );
-      },
-    },
-    {
-      field: 'PMS1yearago',
-      headerName: `PMS ${currentYear - 1}`,
-      width: 180,
-      renderCell: (params) => {
-        const { color, backgroundColor } = getColorStyle(params.value, minimumPmsQualified);
-        return (
-          <div>
-            <span style={{
-              color,
-              backgroundColor,
-              padding: '4px 8px',
-              borderRadius: '24px'
-            }}>{params.value}</span>
-          </div>
-        );
-      },
-    },
-    {
-      field: 'PMSthisyear',
-      headerName: `PMS ${currentYear}`,
+      field: 'PMS',
+      headerName: 'PMS',
       width: 180,
       renderCell: (params) => {
         const { color, backgroundColor } = getColorStyle(params.value, minimumPmsQualified);
