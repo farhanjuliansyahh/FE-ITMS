@@ -5,7 +5,7 @@ import { CreateOutlined } from '@mui/icons-material/';
 import ButtonPrimary from '../button/ButtonPrimary';
 import UbahStatusTalent from '../modal/ubah-status-talent';
 
-export default function TalentPool({ rows, eventid, updaterows }) {
+export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }) {
   const [ubahStatusOpen, setUbahStatusOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState(null); 
 
@@ -37,6 +37,7 @@ export default function TalentPool({ rows, eventid, updaterows }) {
               LabelName={'Ubah Status'}
               padding={'6px 16px'}
               onClick={() => handleUbahStatusOpen(params.row.Nippos)}
+              disabled={eventstatus_id !== 7}
             />
         </>
       );

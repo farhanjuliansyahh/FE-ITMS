@@ -201,7 +201,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentSource eventid={eventid} />
+              <TalentSource eventid={eventid} eventstatus_id={eventstatus_id} />
             </Box>
           </MainCard>
         );
@@ -209,7 +209,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentProfile eventid={eventid} />
+              <TalentProfile eventid={eventid} eventstatus_id={eventstatus_id}/>
             </Box>
           </MainCard>
         );
@@ -217,7 +217,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentQualification eventid={eventid} kodekomite={kodekomite} />
+              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id}/>
             </Box>
           </MainCard>
         );
@@ -225,7 +225,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentDays eventid={eventid} />
+              <TalentDays eventid={eventid} eventstatus_id={eventstatus_id}/>
             </Box>
           </MainCard>
         );
@@ -233,7 +233,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentCluster eventid={eventid} />
+              <TalentCluster eventid={eventid} eventstatus_id={eventstatus_id}/>
             </Box>
           </MainCard>
         );
@@ -241,12 +241,14 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentPool eventid={eventid} />
+              <TalentPool eventid={eventid} eventstatus_id={eventstatus_id}/>
             </Box>
           </MainCard>
         );
     }
   };
+
+  console.log("status nyaaaa:", eventstatus_id);
 
   return (
     <Box sx={boxStyle}>

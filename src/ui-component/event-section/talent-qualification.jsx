@@ -13,7 +13,6 @@ import ButtonPrimary from '../button/ButtonPrimary';
 import TalentQualificationTable from '../../ui-component/tables/talentqualification';
 import CustomSearch from '../../ui-component/searchsection/custom-search';
 import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
-import TalentSource from './talent-source';
 
 // ==============================|| DETAIL TALENT QUALIFICATION PAGE ||============================== //
 
@@ -444,8 +443,6 @@ const TalentQualification = ({ eventid, kodekomite }) => {
               />
             </Box>
           </CustomTabPanel>
-
-          <TalentSource/>
         </MainCard>
       )}
     </>
