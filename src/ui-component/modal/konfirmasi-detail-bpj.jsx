@@ -5,11 +5,10 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
-function KonfirmasiDetailBPJ({ open, handleClose, eventid, selectedTipe, selectedDate, selectedLokasi }) {
-    console.log("selected", selectedTipe, selectedDate);
+function KonfirmasiDetailBPJ({ open, handleClose, handleCloseBatalkan, eventid }) {
 
     const eventactive = eventid
-    const notifikasikaryawan = (eventid, selectedTipe, selectedDate, selectedLokasi) => {
+    const notifikasikaryawan = (eventid) => {
         console.log("event active", eventactive);
         return fetch('http://localhost:4000/notifbpj', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
@@ -18,10 +17,7 @@ function KonfirmasiDetailBPJ({ open, handleClose, eventid, selectedTipe, selecte
             },
             body: JSON.stringify({
                 // Include any data you want to send in the request body
-                eventtalentid: eventid,
-                jenis_bpj: selectedTipe,
-                tanggal_bpj: selectedDate,
-                lokasi_bpj: selectedLokasi
+                eventtalentid: eventid
             }) // Convert the bodyData object to a JSON string
         })
             .then(response => {
@@ -84,7 +80,7 @@ function KonfirmasiDetailBPJ({ open, handleClose, eventid, selectedTipe, selecte
             onMouseLeave={() => setIsHoveredKirimNotifikasi(false)}
             onClick={async () => {
                 try {
-                    await notifikasikaryawan(eventactive, selectedTipe, selectedDate,selectedLokasi);
+                    await notifikasikaryawan(eventactive);
                     handleClose();
                 } catch (error) {
                     // Handle error if notifkasikaryawan() fails
@@ -103,7 +99,7 @@ function KonfirmasiDetailBPJ({ open, handleClose, eventid, selectedTipe, selecte
             style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
             onMouseEnter={() => setIsHoveredBatalkan(true)}
             onMouseLeave={() => setIsHoveredBatalkan(false)}
-            onClick={handleClose}
+            onClick={handleCloseBatalkan}
         >
             Batalkan
         </Button>
@@ -116,7 +112,7 @@ function KonfirmasiDetailBPJ({ open, handleClose, eventid, selectedTipe, selecte
     });
 
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleCloseBatalkan}>
             <DialogTitle>
                 <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
                     Konfirmasi Detail BPJ
