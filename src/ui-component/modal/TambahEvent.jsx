@@ -27,6 +27,8 @@ import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import ButtonError from '../../ui-component/button/ButtonError';
 import dayjs from 'dayjs'; // Import dayjs for date manipulation
 import { toast } from 'react-toastify';
+import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
+import IlustrasiBerhasil from '../../assets/images/ilustration/berhasil.png';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -197,6 +199,15 @@ function AddEventModal({ open, handleClose }) {
     console.log('enddate', enddate);
   }, [enddate]);
 
+  // Save all the changes of questions using Simpan Button and show Success Modal
+  const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
+  const handleCloseAlertBerhasil = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+      setOpenAlertBerhasil(false);
+  };
+
   const postData = async () => {
     try {
       const arrayquestion = selectedquestion.map((selectedquestion) => selectedquestion.id);
@@ -235,16 +246,20 @@ function AddEventModal({ open, handleClose }) {
       }
 
       // If successful, handle the response data (if needed)
+      
       const responseData = await response.json();
       console.log('Response data:', responseData);
 
       // Show success toast notification
-        toast.success('Event berhasil dibuat.');
+        // toast.success('Event berhasil dibuat.');
+        setOpenAlertBerhasil(true);
 
       // Reload halaman setelah 2 detik agar data event diperbarui secara visual
       setTimeout(() => {
+        setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
         window.location.reload();
       }, 3000);
+      
 
     } catch (error) {
       // Handle any errors that occur during the API call
@@ -321,6 +336,13 @@ function AddEventModal({ open, handleClose }) {
   };
 
   return (
+    <>
+    <AlertBerhasil
+      open={openAlertBerhasil}
+      onClose={handleCloseAlertBerhasil}
+      Logo={IlustrasiBerhasil}
+      Keterangan={'Berhasil'}
+    />
     <Dialog open={open} onClose={CloseDialog}>
       <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', textAlign: 'center' }}>
         <Typography style={{ fontSize: '24px', fontWeight: 'bold' }}>Tambah Event</Typography>
@@ -583,6 +605,7 @@ function AddEventModal({ open, handleClose }) {
         />
       </DialogActions>
     </Dialog>
+  </>
   );
 }
 

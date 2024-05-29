@@ -41,10 +41,12 @@ function HapusEvent({ open, handleClose, eventid }) {
 
         setOpenAlertBerhasil(true);
         
-        setTimeout(() => {
-          setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
-          window.location.reload();
-        }, 3000); // Menunda reload selama 10 detik
+      // Reload halaman setelah 2 detik agar data event diperbarui secara visual
+      setTimeout(() => {
+        setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
+        window.location.reload();
+      }, 3000);
+      
       } else {
         // If not successful, throw an error or handle the error response
         throw new Error('Failed to delete data');
