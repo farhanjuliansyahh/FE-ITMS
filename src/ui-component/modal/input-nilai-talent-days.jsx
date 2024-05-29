@@ -27,36 +27,43 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 export default function InputNilaiTalentDays({ nilai, open, handleClose, questionList, nippos, eventid, refetchkaryawan }) {
   const [sortedQuestionList, setSortedQuestionList] = useState([]);
-  const [nilaiInput, setNilaiInput] = useState(nilai || []);
-
-  useEffect(() => {
-    setNilaiInput(nilai);
-  }, [nilai]);
-
-  // Initialize state to hold id_pertanyaan and nilaiInput
+  const [nilaiInput, setNilaiInput] = useState([]);
   const [nilaiArray, setNilaiArray] = useState([]);
 
   useEffect(() => {
-    // Sort questionList by id_pertanyaan
-    const sortedList = [...questionList].sort((a, b) => a.id - b.id);
+    const sortedList = [...questionList].sort((a, b) => a.id_pertanyaan - b.id_pertanyaan);
     setSortedQuestionList(sortedList);
 
-    // Initialize nilaiInput array with empty strings based on sortedList length
-    setNilaiInput(Array(sortedList.length).fill(''));
+    const initialNilai = sortedList.map((question, index) => {
+      const existingNilai = nilai && nilai.length > index ? nilai[index] : '';
+      return existingNilai;
+    });
 
-    // Initialize nilaiArray with empty objects based on sortedList length
-    setNilaiArray(Array(sortedList.length).fill({ id_pertanyaan: null, nilaiInput: '' }));
-  }, [questionList]);
+    setNilaiInput(initialNilai);
+
+    const initialNilaiArray = sortedList.map((question, index) => ({
+      id_pertanyaan: question.id_pertanyaan,
+      nilaiInput: initialNilai[index]
+    }));
+    setNilaiArray(initialNilaiArray);
+  }, [questionList, nilai]);
 
   const handleInputChange = (index, event) => {
-    const values = [...nilaiInput];
-    values[index] = event.target.value;
-    setNilaiInput(values);
+    let value = event.target.value;
+    // Ensure the value is within the range defined by inputProps
+    if (value > 5) {
+      value = 5;
+    } else if (value < -5) {
+      value = -5;
+    }
 
-    // Update nilaiArray with id_pertanyaan and nilaiInput
-    const updatedArray = [...nilaiArray];
-    updatedArray[index] = { id_pertanyaan: sortedQuestionList[index].id, nilaiInput: event.target.value };
-    setNilaiArray(updatedArray);
+   const values = [...nilaiInput];
+  values[index] = value;
+  setNilaiInput(values);
+
+  const updatedArray = [...nilaiArray];
+  updatedArray[index].nilaiInput = value;
+  setNilaiArray(updatedArray);
   };
 
   const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
@@ -77,16 +84,15 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
 
   const updatenilaidays = (eventid, nippos, nilaiArray) => {
     return fetch('http://localhost:4000/updatenilaibutton', {
-      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json' // Specify the content type
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        // Include any data you want to send in the request body
         eventid: eventid,
         nippos: nippos,
         data: nilaiArray
-      }) // Convert the bodyData object to a JSON string
+      })
     })
       .then((response) => {
         if (!response.ok) {
@@ -96,12 +102,12 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
       })
       .then((data) => {
         handleClose();
-        refetchkaryawan(); // Close the dialog on successful update
-        return data; // Return the parsed JSON data
+        refetchkaryawan();
+        return data;
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        throw error; // Rethrow the error to handle it elsewhere
+        throw error;
       });
   };
 
@@ -128,7 +134,6 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
             <Table sx={{ minWidth: 500 }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>ID</StyledTableCell>
                   <StyledTableCell>Pertanyaan</StyledTableCell>
                   <StyledTableCell>Nilai (-5 s/d 5)</StyledTableCell>
                 </TableRow>
@@ -136,17 +141,16 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
               <TableBody>
                 {sortedQuestionList.map((question, index) => (
                   <TableRow key={question.id}>
-                    <StyledTableCell>{question.id}</StyledTableCell>
                     <StyledTableCell>{question.idpertanyaan.pertanyaan}</StyledTableCell>
                     <StyledTableCell>
-                    <TextField
-                    value={nilaiInput[index]}
-                    onChange={(event) => handleInputChange(index, event)}
-                    fullWidth
-                    variant="outlined"
-                    type="number"
-                    inputProps={{ min: -5, max: 5 }}
-                  />
+                      <TextField
+                        value={nilaiInput[index]}
+                        onChange={(event) => handleInputChange(index, event)}
+                        fullWidth
+                        variant="outlined"
+                        type="number"
+                        inputProps={{ min: -5, max: 5 }}
+                      />
                     </StyledTableCell>
                   </TableRow>
                 ))}
