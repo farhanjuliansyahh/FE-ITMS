@@ -76,7 +76,10 @@ const TalentDays = ({eventid}) => {
   const [daysBpj, setdaysBpj] = useState([]);
   const [selectedBPJ, setSelectedBPJ] = useState('')
   const [questionList, setQuestionList] = useState([])
-  
+  //tambahan
+  const [tipe, setTipe] = useState('');
+  const [tanggal, setTanggal] = useState(null);
+  const [lokasi, setLokasi] = useState('');
 
   const eventidactive = eventid
   const handleChange = (event, newValue) => {
@@ -129,7 +132,11 @@ const TalentDays = ({eventid}) => {
     gap: '16px', 
     paddingBottom: '24px',
   });
-
+  const LokasiOptions = [
+    { id: '1', lokasi: 'Pos Graha Jalan Banda Lantai 8 Ruang La Tulip' },
+    { id: '2', lokasi: 'Ruang Investasi Kantor Pos Pusat Jalan Cilaki Bandung' },
+    // Add more options as needed
+  ];
   useEffect(() => {
     // Define the request body
     const requestBody = {
@@ -331,7 +338,7 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
   setKonfirmasiBPJOpen(true);
   setSelectedBPJ(nippos)
 };
-
+const isFormValid = () => tipe && tanggal && lokasi;
   return (
     <>
       {/* <MainLayout /> */}
@@ -358,7 +365,8 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
                         <Button variant="contained" 
                             sx={{backgroundColor:'#1C2D5A', borderRadius:'12px', padding: '14px 24px'}} 
                             endIcon={<NotificationsNoneOutlined />}
-                            onClick={handleOpenDetailBPJ}>
+                            onClick={handleOpenDetailBPJ}
+                            disabled={!isFormValid()}>
                                 Kirim Notifikasi
                         </Button>
                     </Stack>
@@ -367,6 +375,8 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
                             <TextField sx={{ width: '100%' }}
                                 select
                                 label="Tipe"
+                                value={tipe}
+                                onChange={(e) => setTipe(e.target.value)}
                             >
                                 <MenuItem value="1">Sidang Jabatan</MenuItem>
                                 <MenuItem value="2">Wawancara</MenuItem>
@@ -381,14 +391,31 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
                                 views={['year', 'month', 'day']}
                                 InputLabelProps={{ shrink: true }}
                                 label="Tanggal"
+                                value={tanggal}
+                                onChange={(newValue) => setTanggal(newValue)}
+                                renderInput={(params) => <TextField {...params} fullWidth />}
                                 fullWidth // Set fullWidth to occupy the entire width of its container
                                 />
                             </DemoItem>
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={4}>
-                            <EventDetailSearchSection filter={filterLokasi} setFilter={setFilterLokasi} PlaceHolder={'Lokasi'} />
+                            <TextField sx={{ width: '100%' }}
+                                select
+                                label="Lokasi"
+                                value={lokasi}
+                                onChange={(e) => setLokasi(e.target.value)}
+                            >
+                                {LokasiOptions.map((option) => (
+                                  <MenuItem key={option.id} value={option.id}>
+                                    {option.lokasi}
+                                  </MenuItem>
+                                ))}
+                            </TextField>
                         </Grid>
+                        {/* <Grid item xs={4}>
+                            <EventDetailSearchSection filter={filterLokasi} setFilter={setFilterLokasi} PlaceHolder={'Lokasi'} />
+                        </Grid> */}
                     </Grid>
                 </Grid>
 
