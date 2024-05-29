@@ -130,7 +130,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
                 <TableRow>
                   <StyledTableCell>ID</StyledTableCell>
                   <StyledTableCell>Pertanyaan</StyledTableCell>
-                  <StyledTableCell>Nilai</StyledTableCell>
+                  <StyledTableCell>Nilai (-5 s/d 5)</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -139,12 +139,14 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
                     <StyledTableCell>{question.id}</StyledTableCell>
                     <StyledTableCell>{question.idpertanyaan.pertanyaan}</StyledTableCell>
                     <StyledTableCell>
-                      <TextField
-                        value={nilaiInput[index]}
-                        onChange={(event) => handleInputChange(index, event)}
-                        fullWidth
-                        variant="outlined"
-                      />
+                    <TextField
+                    value={nilaiInput[index]}
+                    onChange={(event) => handleInputChange(index, event)}
+                    fullWidth
+                    variant="outlined"
+                    type="number"
+                    inputProps={{ min: -5, max: 5 }}
+                  />
                     </StyledTableCell>
                   </TableRow>
                 ))}
