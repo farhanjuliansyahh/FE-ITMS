@@ -18,7 +18,7 @@ import UnggahDataNilaiAssessment from '../../../ui-component/modal/unggah-data-n
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AddQuestionModal from '../../../ui-component/modal/tambah-pertanyaan';
 import AlertSimpan from '../../../ui-component/modal/alert-berhasil';
-import SimpanLogo from '../../../assets/images/ilustration/simpan.png';
+import SimpanLogo from '../../../assets/images/ilustration/berhasil.png';
 import { toast } from 'react-toastify';
 
 import {
@@ -665,10 +665,10 @@ const ParameterTalent = () => {
         <AddQuestionModal open={openAddQuestionModal} handleClose={handleCloseAddQuestionModal} handleAddQuestion={handleAddQuestion} />
         <AlertSimpan
           open={openAlertBerhasilSimpan}
-          onClose={handleCloseAlertBerhasilSimpan}
+          handleClose={handleCloseAlertBerhasilSimpan}
           Severity={'success'}
           Logo={SimpanLogo}
-          Keterangan={'Berhasil Simpan'}
+          Keterangan={'Berhasil'}
         />
       </MainCard>
     </>

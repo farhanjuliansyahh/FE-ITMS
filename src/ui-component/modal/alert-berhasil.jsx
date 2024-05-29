@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import { Typography, IconButton, LinearProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/system';
+
+const CustomLinearProgress = styled(LinearProgress)({
+  width: '100%',
+  height: '10px',
+  marginTop: '24px',
+  borderRadius: '24px',
+  backgroundColor: '#C3FAC5',
+  '& .MuiLinearProgress-bar': {
+    backgroundColor: '#66BB6A',
+  },
+});
 
 const AlertBerhasil = ({ open, handleClose, Logo, Keterangan }) => {
   const [progressValue, setProgressValue] = useState(0);
@@ -9,21 +21,24 @@ const AlertBerhasil = ({ open, handleClose, Logo, Keterangan }) => {
   useEffect(() => {
     let progressTimer;
     if (open) {
+      setProgressValue(0); // Reset progressValue to 0 when Snackbar opens
       // Update progress value every 100 milliseconds
       progressTimer = setInterval(() => {
         // Calculate progress value
         const increment = 100 / 30; // 30 steps for 3 seconds
-        setProgressValue((prevValue) => prevValue + increment);
-
-        // Clear interval when progress reaches 100%
-        if (progressValue >= 100) {
-          clearInterval(progressTimer);
-        }
+        setProgressValue((prevValue) => {
+          const newValue = prevValue + increment;
+          if (newValue >= 100) {
+            clearInterval(progressTimer);
+            return 100;
+          }
+          return newValue;
+        });
       }, 100);
     }
 
     return () => clearInterval(progressTimer); // Cleanup function
-  }, [open, progressValue]);
+  }, [open]);
 
   return (
     <>
@@ -87,15 +102,15 @@ const AlertBerhasil = ({ open, handleClose, Logo, Keterangan }) => {
 
           <Typography 
             style={{ 
-              color:'#1C2D5A', 
+              color:'#66BB6A', 
               fontSize:'18px', 
-              fontWeight:550 
+              fontWeight:440 
             }}
           >
             {Keterangan}
           </Typography>
           
-          <LinearProgress variant="determinate" value={progressValue} style={{ width: '100%', height: '10px', marginTop: '24px', borderRadius: '24px' }} />
+          <CustomLinearProgress variant="determinate" value={progressValue} />
 
         </div>
       </Snackbar>
