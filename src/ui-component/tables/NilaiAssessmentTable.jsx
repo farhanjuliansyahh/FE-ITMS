@@ -2,6 +2,8 @@
 import React from 'react';
 import MainTable from './table';
 
+const currentYear = new Date().getFullYear();
+
 const columnKeys = {
   // field : nama kolom
   'id': 'No',
@@ -18,7 +20,9 @@ const columnKeys = {
   'potensi': 'Potensi',
   'akhlak': 'AKHLAK',
   'learningagility': 'Learning Agility',
-  'performance': 'Performance'
+  'PMS2yearsago': `PMS ${currentYear - 2}`,
+  'PMS1yearago': `PMS ${currentYear - 1}`,
+  'PMSthisyear': `PMS ${currentYear}`
 };
 
 export default function NilaiAssessmentTable({ filteredRows }) {

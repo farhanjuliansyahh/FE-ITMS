@@ -14,7 +14,8 @@ const TalentSourceTable = ({eventid,
   selectedRows, 
   onSelectedRowsChange,
   getkandidatfalse,
-  getkandidattrue
+  getkandidattrue,
+  showButton
 }) => {
 
   const [openFirstModal, setOpenFirstModal] = useState(false);
@@ -129,7 +130,7 @@ const updatekomiterole = (eventid, nippos) => {
     { field: 'Job Level', headerName: 'Job Level', minWidth: 130 },
     { field: 'Nama Kantor', headerName: 'Kantor', minWidth: 200 },
     { field: 'Komite Unit', headerName: 'Komite Unit', minWidth: 230, renderCell: (params) => {
-      if (params.value === null) {
+      if (params.value === null && showButton) {
         return (
           <ButtonPrimary
             icon={AddCircleOutline}

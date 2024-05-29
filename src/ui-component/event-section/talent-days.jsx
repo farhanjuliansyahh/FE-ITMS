@@ -76,19 +76,15 @@ const TalentDays = ({eventid}) => {
   const [daysBpj, setdaysBpj] = useState([]);
   const [selectedBPJ, setSelectedBPJ] = useState('')
   const [questionList, setQuestionList] = useState([])
-  //tambahan
-  const [tipe, setTipe] = useState('');
-  const [tanggal, setTanggal] = useState(null);
-  const [lokasi, setLokasi] = useState('');
+
+  const [selectedTipe, setSelectedTipe] = useState('')
+  const [selectedDate, setSelectedDate] = useState('')
+  
 
   const eventidactive = eventid
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   useEffect(()=>{
     console.log(filterNama);
@@ -183,7 +179,7 @@ const TalentDays = ({eventid}) => {
       .then(datadays => {
         // Update state with API data
         setdaysBpj(datadays.map((row, index) => ({ ...row, id: index + 1 })));
-        // setLoading(false); // Set loading to false once data is fetched
+        setLoading(false); // Set loading to false once data is fetched
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -209,7 +205,7 @@ useEffect(() => {
   fetchbpjdays(),
   fetchkaryawandays()
   fetchquestionevent()
-}, []);
+}, [isLoading]);
 
 let sudahdipilihcount = 0;
 let totalkaryawan = daysRow.length;
@@ -339,6 +335,10 @@ const handleOpenSecondModalKonfirmasi = (nippos) => {
   setSelectedBPJ(nippos)
 };
 const isFormValid = () => tipe && tanggal && lokasi;
+useEffect(() => {
+  setLoading(false);
+}, []);
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -375,8 +375,8 @@ const isFormValid = () => tipe && tanggal && lokasi;
                             <TextField sx={{ width: '100%' }}
                                 select
                                 label="Tipe"
-                                value={tipe}
-                                onChange={(e) => setTipe(e.target.value)}
+                                value={selectedTipe}
+                                onChange={(event) => setSelectedTipe(event.target.value)}
                             >
                                 <MenuItem value="1">Sidang Jabatan</MenuItem>
                                 <MenuItem value="2">Wawancara</MenuItem>
@@ -391,9 +391,7 @@ const isFormValid = () => tipe && tanggal && lokasi;
                                 views={['year', 'month', 'day']}
                                 InputLabelProps={{ shrink: true }}
                                 label="Tanggal"
-                                value={tanggal}
-                                onChange={(newValue) => setTanggal(newValue)}
-                                renderInput={(params) => <TextField {...params} fullWidth />}
+                                onChange={(date) => setSelectedDate(date)}
                                 fullWidth // Set fullWidth to occupy the entire width of its container
                                 />
                             </DemoItem>
@@ -523,6 +521,8 @@ const isFormValid = () => tipe && tanggal && lokasi;
           open={openDetailBPJ}
           handleClose={() => setDetailBPJOpen(false)}
           eventid = {eventidactive}
+          selectedTipe = {selectedTipe}
+          selectedDate = {selectedDate}
         />
 
         <KonfirmasiIsiSemuaNilaiTalent

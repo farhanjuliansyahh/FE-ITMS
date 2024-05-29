@@ -71,6 +71,30 @@ const NotificationList = ({ notiflist, onToggleReadStatus }) => {
     height: 28
   };
 
+  const replacePlaceholders = (message, notif) => {
+    const TipeBPJ = {
+      1: "Wawancara",
+      2: "Sidang Jabatan"
+    };
+  
+    const formattedDate = notif.tanggal_bpj
+      ? new Date(notif.tanggal_bpj).toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        })
+      : '';
+  
+    const BPJtipe = TipeBPJ[parseInt(notif.jenis_bpj)]
+    return message
+      .replace('{nama_event}', notif.nama_event)
+      .replace('{jenisbpj}', BPJtipe)
+      .replace('{tanggalbpj}', formattedDate)
+      .replace('{lokasibpj}', notif.lokasi_bpj);
+  };
+  
+  
+
   return (
     <List
       sx={{
@@ -139,7 +163,7 @@ const NotificationList = ({ notiflist, onToggleReadStatus }) => {
                 style={{ color: 'inherit' }}
                 onClick={() => onToggleReadStatus(index, notif)}
               >
-              {notif.pesan}
+                    {replacePlaceholders(notif.pesan, notif)}
               </Link>
               </Typography>
               </Grid>

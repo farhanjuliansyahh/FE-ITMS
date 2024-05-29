@@ -8,7 +8,7 @@ import EventKetuaKomiteTalent from './event-ketuakomitetalent';
 const filterMenuItems = (role) => {
   switch (role) {
     case 'Super Admin':
-      return [dashboard, TalentIdentification, ManajemenPengguna, EventKomiteUnit, EventKetuaKomiteTalent, ManajemenPengguna];
+      return [dashboard, TalentIdentification, ManajemenPengguna, ManajemenPengguna];
     case 'Admin Talent':
       return [dashboard, TalentIdentification];
     case 'Karyawan':

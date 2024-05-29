@@ -6,36 +6,58 @@ import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import InputNilaiTalentDays from '../../ui-component/modal/input-nilai-talent-days';
 
 const getStatusStyle = (status) => {
-    let color, backgroundColor;
-    switch (status) {
-      case 'Belum Diisi':
-        color = '#F44336';
-        backgroundColor = '#FFEDED';
-        break;
-      case 'Sudah Diisi':
-        color = '#66BB6A';
-        backgroundColor = '#F5FFF5';
-        break;
-      default:
-        color = '#000000';
-        backgroundColor = 'transparent';
-    }
-    return { color, backgroundColor };
-  };
+  let color, backgroundColor;
+  switch (status) {
+    case 'Belum Diisi':
+      color = '#F44336';
+      backgroundColor = '#FFEDED';
+      break;
+    case 'Sudah Diisi':
+      color = '#66BB6A';
+      backgroundColor = '#F5FFF5';
+      break;
+    default:
+      color = '#000000';
+      backgroundColor = 'transparent';
+  }
+  return { color, backgroundColor };
+};
 
-export default function TalentDaysBPJTable({
-  rows,
-  question,
-  eventid,
-  refetchkaryawan
-}) {
+export default function TalentDaysBPJTable({ rows, question, eventid, refetchkaryawan }) {
   const [nilaiOpen, setNilaiOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('');
+  const [nilai, setNilai] = useState([]);
+
+  const getnilai = (eventid, nippos) => {
+    return fetch('http://localhost:4000/getnilaidays', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nippos: nippos,
+        eventtalentid: eventid
+      })
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setNilai(data.nilai.map((item) => item.skor));
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error;
+      });
+  };
 
   const handleOpen = (nippos) => {
-    console.log(nippos);
-    setSelectedNippos(nippos)
+    setSelectedNippos(nippos);
     setNilaiOpen(true);
+    getnilai(eventid, nippos);
   };
 
   const handleClose = () => {
@@ -56,18 +78,22 @@ export default function TalentDaysBPJTable({
       headerName: 'Status',
       width: 130,
       renderCell: (params) => {
-          const { color, backgroundColor } = getStatusStyle(params.value);
-          return (
+        const { color, backgroundColor } = getStatusStyle(params.value);
+        return (
           <div>
-              <span style={{ 
-              color,
-              backgroundColor,
-              padding: '4px 8px',
-              borderRadius: '24px' 
-              }}>{params.value}</span>
+            <span
+              style={{
+                color,
+                backgroundColor,
+                padding: '4px 8px',
+                borderRadius: '24px'
+              }}
+            >
+              {params.value}
+            </span>
           </div>
-          );
-      },
+        );
+      }
     },
     {
       field: 'aksi',
@@ -75,22 +101,22 @@ export default function TalentDaysBPJTable({
       width: 150,
       renderCell: (params) => {
         return (
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             sx={{
-              backgroundColor:'#1C2D5A', 
+              backgroundColor: '#1C2D5A',
               color: '#FFFFFF',
-              borderRadius:'12px', 
+              borderRadius: '12px',
               padding: '6px 16px'
-            }} 
+            }}
             endIcon={<AssignmentOutlinedIcon />}
             onClick={() => handleOpen(params.row.Nippos)}
           >
             Nilai
           </Button>
         );
-      },
-    },
+      }
+    }
   ];
 
   return (
@@ -100,34 +126,34 @@ export default function TalentDaysBPJTable({
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
+            paginationModel: { page: 0, pageSize: 5 }
+          }
         }}
         pageSizeOptions={[5, 10]}
         sx={{
           borderRadius: '12px', // Apply border radius to the DataGrid itself
           '& .MuiDataGrid-main': {
-            borderRadius: '12px', // Apply border radius to the main container
+            borderRadius: '12px' // Apply border radius to the main container
           },
           '& .MuiDataGrid-columnHeader': {
             backgroundColor: '#F5F5F5', // Apply background color to each header cell
-            padding: '0 24px', // Apply horizontal padding to each header cell
+            padding: '0 24px' // Apply horizontal padding to each header cell
           },
           '& .MuiDataGrid-cell': {
-            padding: '0 24px', // Apply horizontal padding to each header cell
-          },
+            padding: '0 24px' // Apply horizontal padding to each header cell
+          }
         }}
       />
 
       <InputNilaiTalentDays
         open={nilaiOpen}
         handleClose={() => setNilaiOpen(false)}
-        questionList = {question}
-        nippos    = {selectedNippos}
-        eventid = {eventid}
-        refetchkaryawan = {refetchkaryawan}
+        questionList={question}
+        nippos={selectedNippos}
+        eventid={eventid}
+        refetchkaryawan={refetchkaryawan}
+        nilai={nilai}
       />
-      
     </div>
   );
 }

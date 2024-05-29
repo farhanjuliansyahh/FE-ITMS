@@ -10,6 +10,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs'; // Import dayjs for date manipulation
+import { toast } from 'react-toastify';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -36,32 +37,62 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => notifikasikaryawan(eventactive))
           .then(() => handleConfirmation(selectedDate))
           .then(() => rolekaryawan(eventactive))
-          .then(() => refresh());
+          .then(() => {
+            refresh();
+            toast.success('Talent Profile berhasil diposting!');
+          })
+          .catch(() => {
+            toast.error('Gagal memposting Talent Profile.');
+          });
         break;
       case 3:
         posttalentqual()
           .then(() => updatedeadline(eventactive))
           .then(() => handleConfirmation(selectedDate))
-          .then(() => refresh());
+          .then(() => {
+            refresh();
+            toast.success('Talent Qualification berhasil diposting!');
+          })
+          .catch(() => {
+            toast.error('Gagal memposting Talent Qualification.');
+          });
         break;
       case 4:
         posttalentdays()
           .then(() => updatedeadline(eventactive))
           .then(() => handleConfirmation(selectedDate))
-          .then(() => refresh());
+          .then(() => {
+            refresh();
+            toast.success('Talent Days berhasil diposting!');
+          })
+          .catch(() => {
+            toast.error('Gagal memposting Talent Days.');
+          });
         break;
       case 5:
         posttalentcluster()
           .then(() => updatedeadline(eventactive))
           .then(() => mapcluster(eventactive))
           .then(() => handleConfirmation(selectedDate))
-          .then(() => refresh());
+          .then(() => {
+            refresh();
+            toast.success('Talent Cluster berhasil diposting!');
+          })
+          .catch(() => {
+            toast.error('Gagal memposting Talent Cluster.');
+          });
         break;
       case 6:
         posttalentpool()
           .then(() => updatedeadline(eventactive))
           .then(() => handleConfirmation(selectedDate))
-          .then(() => refresh());
+          .then(() => {
+            refresh();
+            toast.success('Talent Pool berhasil diposting!');
+          })
+          .catch(() => {
+            toast.error('Gagal memposting Talent Pool.');
+          });
         break;
       default:
         // Handle default case

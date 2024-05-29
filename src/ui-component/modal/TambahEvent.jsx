@@ -26,6 +26,7 @@ import CancelOutlined from '@mui/icons-material/CancelOutlined';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import ButtonError from '../../ui-component/button/ButtonError';
 import dayjs from 'dayjs'; // Import dayjs for date manipulation
+import { toast } from 'react-toastify';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -237,8 +238,14 @@ function AddEventModal({ open, handleClose }) {
       const responseData = await response.json();
       console.log('Response data:', responseData);
 
-      // Refresh the page upon successful response
-      window.location.reload();
+      // Show success toast notification
+        toast.success('Event berhasil dibuat.');
+
+      // Reload halaman setelah 2 detik agar data event diperbarui secara visual
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+
     } catch (error) {
       // Handle any errors that occur during the API call
       console.error('Error posting data:', error.message);

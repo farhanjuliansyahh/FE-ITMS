@@ -12,6 +12,8 @@ import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
 import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
+import AlertBerhasil from '../../../ui-component/modal/alert-berhasil';
+import IlustrasiBerhasil from '../../../assets/images/ilustration/berhasil.png';
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -49,6 +51,15 @@ const DaftarEvent = () => {
   const [refreshFetch, setRefreshFetch] = useState(false)
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
+    // Save all the changes of questions using Simpan Button and show Success Modal
+    const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
+    const handleCloseAlertBerhasil = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpenAlertBerhasil(false);
+    };
+
   const fetchDataFromDatabase = () => {
     return fetch('http://localhost:4000/getallevent') // endpoint
       .then((response) => {
@@ -66,18 +77,22 @@ const DaftarEvent = () => {
       });
   };
 
+
   useEffect(() => {
     fetchDataFromDatabase()
       .then((data) => {
         setEventData(data.event);
         setLoading(false); // Move this line to the end of the .then block
-        setOpenSnackbar(true); // Show snackbar on event added
+        // setOpenSnackbar(true); // Show snackbar on event added
+        // setOpenAlertBerhasil(true);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
         setLoading(false);
       });
   }, []);
+
+  
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
@@ -289,13 +304,23 @@ const DaftarEvent = () => {
         </CustomTabPanel>
 
         {open && <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />}
-      </MainCard>
 
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'center', horizontal: 'center' }}>
         <MuiAlert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
           Event successfully created!
         </MuiAlert>
       </Snackbar>
+
+        <AlertBerhasil
+          open={openAlertBerhasil}
+          handleClose={handleCloseAlertBerhasil}
+          Logo={IlustrasiBerhasil}
+          Keterangan={'Berhasil'}
+        />
+
+      </MainCard>
+
+
     </>
   );
 };

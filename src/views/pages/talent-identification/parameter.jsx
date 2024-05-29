@@ -17,7 +17,7 @@ import NilaiAssessmentTable from '../../../ui-component/tables/NilaiAssessmentTa
 import UnggahDataNilaiAssessment from '../../../ui-component/modal/unggah-data-nilai-assessment';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AddQuestionModal from '../../../ui-component/modal/tambah-pertanyaan';
-import AlertSimpan from '../../../ui-component/modal/alert-simpan';
+import AlertSimpan from '../../../ui-component/modal/alert-berhasil';
 import SimpanLogo from '../../../assets/images/ilustration/simpan.png';
 import { toast } from 'react-toastify';
 
@@ -80,12 +80,12 @@ const ParameterTalent = () => {
 
   const handleClickKKM = () => {
     setUpdatekkmstate(true);
-    toast.success('Perubahan berhasil disimpan.'); 
+    toast.success('Perubahan berhasil disimpan.');
   };
 
   const handleClickKuota = () => {
     setUpdatekuotastate(true);
-    toast.success('Perubahan berhasil disimpan.'); 
+    toast.success('Perubahan berhasil disimpan.');
   };
 
   const handleBatalkanKKM = () => {
@@ -399,6 +399,52 @@ const ParameterTalent = () => {
     document.body.removeChild(link);
   };
 
+  const [komiteTalents, setKomiteTalents] = useState({
+    ketuaKT1: [],
+    ketuaKT2: [],
+    ketuaKT3: []
+  })
+
+  const getInitialsIfLong = (nama_bagian) => {
+    // Check if nama_bagian is null or undefined
+    if (!nama_bagian) {
+      return ''; // Return an empty string if nama_bagian is null or undefined
+    }
+  
+    const words = nama_bagian.split(' ');
+    if (words.length > 4) {
+      // Words to preserve intact
+      const preservedWords = ['and'];
+      return words.map((word, index) => {
+        if (preservedWords.includes(word.toLowerCase())) {
+          return '';
+        }
+        return word[0].toUpperCase();
+      }).join('');
+    }
+    return nama_bagian;
+  };
+  
+
+  const getKetuaKomiteTalent = () => {
+    fetch(`http://localhost:4000/getNamaKetuaKomiteTalent`)
+      .then((response) => response.json())
+      .then((data) => {
+        setKomiteTalents({
+          ketuaKT1: data.ketuaKT1,
+          ketuaKT2: data.ketuaKT2,
+          ketuaKT3: data.ketuaKT3
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
+  useEffect(() => {
+    getKetuaKomiteTalent();
+  }, []);
+
   return (
     <>
       <MainCard>
@@ -553,21 +599,21 @@ const ParameterTalent = () => {
           <Box display="block" width="100%" flexDirection="column" alignItems="center" padding={'12px 24px'} marginTop={-5}>
             <AccordionKomiteTalent
               title={'Komite Talent 1'}
-              subtitle={'Direktur Utama - Faizal Rochmad Djoemadi'}
+              subtitle={`${komiteTalents.ketuaKT1.jabatan} ${komiteTalents.ketuaKT1.nama_bagian} - ${komiteTalents.ketuaKT1.namaketua}`}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent komiteTalentId={1}/>}
+              content={<DaftarKomiteTalent komiteTalentId={1} />}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 2'}
-              subtitle={'Direktur HCM - Tonggo Marbun'}
+              subtitle={`${komiteTalents.ketuaKT2.jabatan} ${komiteTalents.ketuaKT2.nama_bagian} - ${komiteTalents.ketuaKT2.namaketua}`}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent komiteTalentId={2}/>}
+              content={<DaftarKomiteTalent komiteTalentId={2} />}
             />
             <AccordionKomiteTalent
               title={'Komite Talent 3'}
-              subtitle={'Senior Vice President HCSBP - Chandra Dewi'}
+              subtitle={`${komiteTalents.ketuaKT3.jabatan} ${getInitialsIfLong(komiteTalents.ketuaKT3.nama_bagian)} - ${komiteTalents.ketuaKT3.namaketua}`}
               icon={GroupsOutlined}
-              content={<DaftarKomiteTalent komiteTalentId={3}/>}
+              content={<DaftarKomiteTalent komiteTalentId={3} />}
             />
           </Box>
         </CustomTabPanel>
@@ -615,11 +661,11 @@ const ParameterTalent = () => {
           </Box>
         </CustomTabPanel>
 
-        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} onConfirm={() => fetchData()}/>
+        <UnggahDataNilaiAssessment open={openUnggahData} handleClose={handleClose} onConfirm={() => fetchData()} />
         <AddQuestionModal open={openAddQuestionModal} handleClose={handleCloseAddQuestionModal} handleAddQuestion={handleAddQuestion} />
         <AlertSimpan
           open={openAlertBerhasilSimpan}
-          handleClose={handleCloseAlertBerhasilSimpan}
+          onClose={handleCloseAlertBerhasilSimpan}
           Severity={'success'}
           Logo={SimpanLogo}
           Keterangan={'Berhasil Simpan'}

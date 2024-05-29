@@ -1,26 +1,16 @@
 import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, MenuItem } from '@mui/material';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Autocomplete from '@mui/material/Autocomplete';
-import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import PropTypes from 'prop-types';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 import { styled, useTheme } from '@mui/material/styles';
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import AlertBerhasil from './alert-berhasil';
+import IlustrasiBerhasil from '../../assets/images/ilustration/berhasil.png';
 
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import DatePicker from '@mui/lab/DatePicker';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function HapusEvent({ open, handleClose, eventid }) {
   const [selectedCommittee, setSelectedCommittee] = useState('');
@@ -47,8 +37,14 @@ function HapusEvent({ open, handleClose, eventid }) {
       // Check if the request was successful (status code 200-299)
       if (response.ok) {
         // If successful, handle the response or perform any necessary actions
-        console.log('Data deleted successfully');
-        window.location.reload();
+        // console.log('Data deleted successfully');
+
+        setOpenAlertBerhasil(true);
+        
+        setTimeout(() => {
+          setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
+          window.location.reload();
+        }, 3000); // Menunda reload selama 10 detik
       } else {
         // If not successful, throw an error or handle the error response
         throw new Error('Failed to delete data');
@@ -58,6 +54,8 @@ function HapusEvent({ open, handleClose, eventid }) {
       console.error('Error deleting data:', error.message);
     }
   };
+
+  
 
   const handleCommitteeChange = (event) => {
     setSelectedCommittee(event.target.value);
@@ -108,6 +106,15 @@ function HapusEvent({ open, handleClose, eventid }) {
   const [isHoveredMulai, setIsHoveredMulai] = useState(false);
   const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
+  // Save all the changes of questions using Simpan Button and show Success Modal
+  const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
+  const handleCloseAlertBerhasil = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlertBerhasil(false);
+  };
+
   const mulaiButton = (
     <Button
       endIcon={<DeleteOutlineRoundedIcon />}
@@ -136,6 +143,13 @@ function HapusEvent({ open, handleClose, eventid }) {
   );
 
   return (
+    <>
+    <AlertBerhasil
+      open={openAlertBerhasil}
+      handleClose={handleCloseAlertBerhasil}
+      Logo={IlustrasiBerhasil}
+      Keterangan={'Berhasil'}
+    />
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>
         <Typography style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>Hapus Data</Typography>
@@ -174,8 +188,10 @@ function HapusEvent({ open, handleClose, eventid }) {
           {batalkanButton}
           {mulaiButton}
         </ButtonsContainer>
+
       </DialogActions>
     </Dialog>
+    </>
   );
 }
 
