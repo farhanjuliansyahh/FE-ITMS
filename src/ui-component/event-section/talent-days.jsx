@@ -76,6 +76,9 @@ const TalentDays = ({eventid}) => {
   const [daysBpj, setdaysBpj] = useState([]);
   const [selectedBPJ, setSelectedBPJ] = useState('')
   const [questionList, setQuestionList] = useState([])
+
+  const [selectedTipe, setSelectedTipe] = useState('')
+  const [selectedDate, setSelectedDate] = useState('')
   
 
   const eventidactive = eventid
@@ -367,6 +370,8 @@ useEffect(() => {
                             <TextField sx={{ width: '100%' }}
                                 select
                                 label="Tipe"
+                                value={selectedTipe}
+                                onChange={(event) => setSelectedTipe(event.target.value)}
                             >
                                 <MenuItem value="1">Sidang Jabatan</MenuItem>
                                 <MenuItem value="2">Wawancara</MenuItem>
@@ -381,6 +386,7 @@ useEffect(() => {
                                 views={['year', 'month', 'day']}
                                 InputLabelProps={{ shrink: true }}
                                 label="Tanggal"
+                                onChange={(date) => setSelectedDate(date)}
                                 fullWidth // Set fullWidth to occupy the entire width of its container
                                 />
                             </DemoItem>
@@ -496,6 +502,8 @@ useEffect(() => {
           open={openDetailBPJ}
           handleClose={() => setDetailBPJOpen(false)}
           eventid = {eventidactive}
+          selectedTipe = {selectedTipe}
+          selectedDate = {selectedDate}
         />
 
         <KonfirmasiIsiSemuaNilaiTalent
