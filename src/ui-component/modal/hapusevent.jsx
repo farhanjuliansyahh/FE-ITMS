@@ -8,11 +8,11 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 import { styled, useTheme } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
-import AlertBerhasil from './alert-berhasil';
-import IlustrasiBerhasil from '../../assets/images/ilustration/berhasil.png';
+import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
+import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 
 
-function HapusEvent({ open, handleClose, eventid }) {
+function HapusEvent({ open, handleClose, eventid, setrefresh }) {
   const [selectedCommittee, setSelectedCommittee] = useState('');
   const [selectedJobLevel, setSelectedJobLevel] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -37,15 +37,16 @@ function HapusEvent({ open, handleClose, eventid }) {
       // Check if the request was successful (status code 200-299)
       if (response.ok) {
         // If successful, handle the response or perform any necessary actions
-        // console.log('Data deleted successfully');
 
         setOpenAlertBerhasil(true);
+
+        setrefresh(true);
         
       // Reload halaman setelah 2 detik agar data event diperbarui secara visual
-      setTimeout(() => {
-        setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
-        window.location.reload();
-      }, 3000);
+      // setTimeout(() => {
+      //   setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
+      //   window.location.reload();
+      // }, 3000);
       
       } else {
         // If not successful, throw an error or handle the error response

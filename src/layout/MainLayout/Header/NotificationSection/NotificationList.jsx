@@ -17,7 +17,7 @@ import {
   Typography
 } from '@mui/material';
 import { IconBrandTelegram, IconBuildingStore, IconMailbox, IconPhoto } from '@tabler/icons-react';
-import User1 from '../../../../assets/images/users/user-round.svg';
+import User1 from '../../../../../public/assets/images/users/user-round.svg';
 
 // styles
 const ListItemWrapper = styled('div')(({ theme }) => ({

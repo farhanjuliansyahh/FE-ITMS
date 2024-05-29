@@ -11,6 +11,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs'; // Import dayjs for date manipulation
+import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
+import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 
 function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua, mulai }) {
   const [deadlinesource, setdeadlinesource] = useState('');
@@ -258,6 +260,15 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
 
   const [isHoveredmulai, setIsHoveredmulai] = useState(false);
   const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
+  const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
+
+      // Save all the changes of questions using Simpan Button and show Success Modal
+      const handleCloseAlertBerhasil = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+          setOpenAlertBerhasil(false);
+      };
 
   const mulaiButton = (
     <Button
@@ -277,6 +288,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
           await notifikasikomiteunit();
           await rolekomiteunit();
           await ketuakomiterole(ketua);
+          setOpenAlertBerhasil(true);
           window.location.href = `http://localhost:3000/talent/detail-event/${eventid}`;
           handleClose(); // Close the popup after all operations are finished
         } catch (error) {
@@ -308,6 +320,13 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   });
 
   return (
+    <>
+    <AlertBerhasil
+      open={openAlertBerhasil}
+      handleClose={handleCloseAlertBerhasil}
+      Logo={IlustrasiBerhasil}
+      Keterangan={'Berhasil'}
+    />
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>
         <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
@@ -350,6 +369,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
         </ButtonsContainer>
       </DialogActions>
     </Dialog>
+    </>
   );
 }
 

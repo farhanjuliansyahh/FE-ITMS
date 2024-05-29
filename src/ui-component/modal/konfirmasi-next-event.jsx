@@ -39,10 +39,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => rolekaryawan(eventactive))
           .then(() => {
             refresh();
-            toast.success('Talent Profile berhasil diposting!');
+            toast.success('Talent Profile telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Profile.');
+            toast.error('Gagal menyelesaikan Talent Profile.');
           });
         break;
       case 3:
@@ -51,10 +51,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => handleConfirmation(selectedDate))
           .then(() => {
             refresh();
-            toast.success('Talent Qualification berhasil diposting!');
+            toast.success('Talent Qualification telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Qualification.');
+            toast.error('Gagal menyelesaikan Talent Qualification.');
           });
         break;
       case 4:
@@ -63,10 +63,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => handleConfirmation(selectedDate))
           .then(() => {
             refresh();
-            toast.success('Talent Days berhasil diposting!');
+            toast.success('Talent Days telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Days.');
+            toast.error('Gagal menyelesaikan Talent Days.');
           });
         break;
       case 5:
@@ -76,10 +76,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => handleConfirmation(selectedDate))
           .then(() => {
             refresh();
-            toast.success('Talent Cluster berhasil diposting!');
+            toast.success('Talent Cluster telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Cluster.');
+            toast.error('Gagal menyelesaikan Talent Cluster.');
           });
         break;
       case 6:
@@ -88,10 +88,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => handleConfirmation(selectedDate))
           .then(() => {
             refresh();
-            toast.success('Talent Pool berhasil diposting!');
+            toast.success('Talent Pool telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Pool.');
+            toast.error('Gagal menyelesaikan Talent Pool.');
           });
         break;
       default:

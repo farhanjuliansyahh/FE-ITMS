@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Box, Menu, MenuItem, Pagination, Stack, Snackbar, Tab, Tabs, Typography } from '@mui/material';
 import { AddCircleOutline, DownloadDone, ExpandMore, RotateRight } from '@mui/icons-material';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
+import notFoundImage from '../../../../public/assets/images/ilustration/notfound.png';
 import LinearProgress from '@mui/material/LinearProgress';
 import MuiAlert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
@@ -13,7 +13,7 @@ import AddEventModal from '../../../ui-component/modal/TambahEvent';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AlertBerhasil from '../../../ui-component/modal/alert-berhasil';
-import IlustrasiBerhasil from '../../../assets/images/ilustration/berhasil.png';
+import IlustrasiBerhasil from '../../../../public/assets/images/ilustration/berhasil.png';
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -48,7 +48,6 @@ const DaftarEvent = () => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [eventData, setEventData] = useState([]);
-  const [refreshFetch, setRefreshFetch] = useState(false)
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
     // Save all the changes of questions using Simpan Button and show Success Modal
@@ -59,6 +58,26 @@ const DaftarEvent = () => {
       }
       setOpenAlertBerhasil(false);
     };
+
+  const [refresh, setrefresh] = useState(false);
+  useEffect(() => {
+    if (refresh){
+      fetchDataFromDatabase()
+      .then((data) => {
+        setEventData(data.event);
+        setLoading(false); // Move this line to the end of the .then block
+        // setOpenSnackbar(true); // Show snackbar on event added
+        // setOpenAlertBerhasil(true);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+      setrefresh(false);
+      setPageTab0(1);
+    }
+    
+  }, [refresh]);
 
   const fetchDataFromDatabase = () => {
     return fetch('http://localhost:4000/getallevent') // endpoint
@@ -215,6 +234,7 @@ const DaftarEvent = () => {
                   status={event.evenstatus_id}
                   showHitungMundur={true}
                   jobleve={event.jobleve}
+                  setrefresh={setrefresh}
                 />
               ))}
               {paginatedEventsTab0.length === 0 ? (
@@ -303,7 +323,9 @@ const DaftarEvent = () => {
           )}
         </CustomTabPanel>
 
-        {open && <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} />}
+        <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} setrefresh={setrefresh}/>
+        {/* {open && 
+        } */}
 
         <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'center', horizontal: 'center' }}>
         <MuiAlert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
