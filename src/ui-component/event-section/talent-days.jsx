@@ -398,19 +398,13 @@ useEffect(() => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={4}>
-                            <TextField sx={{ width: '100%' }}
-                                select
-                                label="Lokasi"
-                                value={selectedLokasi}
-                                onChange={(e) => setSelectedLokasi(e.target.value)}
-                            >
-                                {LokasiOptions.map((option) => (
-                                  <MenuItem key={option.id} value={option.id}>
-                                    {option.lokasi}
-                                  </MenuItem>
-                                ))}
-                            </TextField>
-                        </Grid>
+    <TextField
+        sx={{ width: '100%' }}
+        label="Lokasi"
+        value={selectedLokasi}
+        onChange={(e) => setSelectedLokasi(e.target.value)}
+    />
+</Grid>
                         {/* <Grid item xs={4}>
                             <EventDetailSearchSection filter={filterLokasi} setFilter={setFilterLokasi} PlaceHolder={'Lokasi'} />
                         </Grid> */}
@@ -523,6 +517,7 @@ useEffect(() => {
           eventid = {eventidactive}
           selectedTipe = {selectedTipe}
           selectedDate = {selectedDate}
+          selectedLokasi = {selectedLokasi}
         />
 
         <KonfirmasiIsiSemuaNilaiTalent

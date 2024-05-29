@@ -73,8 +73,8 @@ const NotificationList = ({ notiflist, onToggleReadStatus }) => {
 
   const replacePlaceholders = (message, notif) => {
     const TipeBPJ = {
-      1: "Wawancara",
-      2: "Sidang Jabatan"
+      1: "Sidang Jabatan",
+      2: "Wawancara"
     };
   
     const formattedDate = notif.tanggal_bpj
