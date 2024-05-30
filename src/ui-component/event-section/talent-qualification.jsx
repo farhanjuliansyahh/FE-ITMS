@@ -44,7 +44,7 @@ function a11yProps(index) {
 }
 
 const TalentQualification = ({ eventid, kodekomite }) => {
-  const [isLoading, setLoading] = useState(true);
+  // const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [qualRow, setqualRow] = useState([]);
   const [quallolosRow, setquallolosRow] = useState([]);
@@ -55,47 +55,6 @@ const TalentQualification = ({ eventid, kodekomite }) => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
-
-  const fetchupdateskor = (eventid) => {
-    return fetch('http://localhost:4000/updateskor', {
-      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
-      headers: {
-        'Content-Type': 'application/json' // Specify the content type
-      }
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      }) // Return the parsed JSON data
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        throw error; // Rethrow the error to handle it elsewhere
-      });
-  };
-
-  const comparenilai = (eventid) => {
-    return fetch(`http://localhost:4000/comparenilai?eventtalentid=${eventidactive}`, {
-      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
-      headers: {
-        'Content-Type': 'application/json' // Specify the content type
-      },
-      body: JSON.stringify({
-        komite_talent: tipekomite
-      })
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      }) // Return the parsed JSON data
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        throw error; // Rethrow the error to handle it elsewhere
-      });
   };
 
   const fetchnilaiminimal = (eventid) => {
@@ -117,31 +76,37 @@ const TalentQualification = ({ eventid, kodekomite }) => {
       });
   };
 
-  useEffect(() => {
-    // Set loading to true when component mounts
-    setLoading(true);
-
-    Promise.all([
-      // List of all fetch requests
-      fetchupdateskor(),
-      fetchnilaiminimal(),
-      comparenilai(),
-      fetch(`http://localhost:4000/getqualificationtidak?eventtalentid=${eventidactive}`),
-      fetch(`http://localhost:4000/getquallolos?eventtalentid=${eventidactive}`)
-    ])
-      .then(([res1, res2, res3, res4, res5]) => Promise.all([res1, res2, res3, res4.json(), res5.json()]))
-      .then(([data1, data2, data3, data4, data5]) => {
-        // Update state with fetched data
-        setkkm(data2.map((row, index) => ({ ...row, id: index + 1 })));
-        setquallolosRow(data5.map((row, index) => ({ ...row, id: index + 1 })));
-        setqualRow(data4.map((row, index) => ({ ...row, id: index + 1 })));
-        // Update other state variables...
-        setLoading(false); // Set loading to false after all data is fetched
+  const fetchData = () => {
+    fetch(`http://localhost:4000/getqualificationtidak?eventtalentid=${eventidactive}`)
+      .then(response => response.json())
+      .then(notqualified => {
+        setqualRow(notqualified.map((row, index) => ({ ...row, id: index + 1 })));
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error fetching data:', error);
-        setLoading(false); // Set loading to false if there's an error
       });
+
+    fetch(`http://localhost:4000/getquallolos?eventtalentid=${eventidactive}`)
+      .then(response => response.json())
+      .then(qualified => {
+        setquallolosRow(qualified.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+    fetch(`http://localhost:4000/getkkm`)
+      .then(response => response.json())
+      .then(qualified => {
+        setkkm(qualified.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchData()
   }, []);
 
   const FlexContainer = styled('div')({
@@ -154,7 +119,7 @@ const TalentQualification = ({ eventid, kodekomite }) => {
   const komiteToPenilaianMap = {
     1: { comp: 1, pms: 5, akhlak: 6, laminimal: 7 },
     2: { comp: 2, pms: 5, akhlak: 6, laminimal: 7 },
-    3: { comp: 4, pms: 5, akhlak: 6, laminimal: 7 }
+    3: { comp: 4, pms: 5, akhlak: 6, laminimal: 7 },
   };
 
   const getMinimalScore = (kodekomite, id_kriteria_penilaian) => {
@@ -251,13 +216,15 @@ const TalentQualification = ({ eventid, kodekomite }) => {
   const filteredRowsFalse = qualRow.filter((row) => {
     const namaMatchFalse = !selectedNamaFalse || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaFalse.toLowerCase()));
     const nipposMatchFalse = !selectedNipposFalse || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposFalse.toLowerCase()));
-    const jobLevelMatchFalse =
-      !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase()));
-    const komiteUnitMatchFalse =
-      !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase()));
+    const jobLevelMatchFalse = !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase()));
+    const komiteUnitMatchFalse = !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase()));
 
-    return namaMatchFalse && nipposMatchFalse && jobLevelMatchFalse && komiteUnitMatchFalse;
+    return namaMatchFalse
+      && nipposMatchFalse
+      && jobLevelMatchFalse
+      && komiteUnitMatchFalse;
   });
+
 
   const resetRowIndexFalse = (filteredRowsFalse) => {
     return filteredRowsFalse.map((row, index) => ({
@@ -310,7 +277,10 @@ const TalentQualification = ({ eventid, kodekomite }) => {
     const komiteUnitMatchTrue =
       !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
 
-    return namaMatchTrue && nipposMatchTrue && jobLevelMatchTrue && komiteUnitMatchTrue;
+    return namaMatchTrue
+      && nipposMatchTrue
+      && jobLevelMatchTrue
+      && komiteUnitMatchTrue;
   });
 
   const resetRowIndexTrue = (filteredRowsTrue) => {
@@ -324,127 +294,74 @@ const TalentQualification = ({ eventid, kodekomite }) => {
 
   return (
     <>
-      {isLoading ? (
-        // Render loading indicator or skeleton loader
-        <div>Loading...</div>
-      ) : (
-        <MainCard>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab icon={<GppGoodOutlinedIcon />} iconPosition="start" label="Terkualifikasi" {...a11yProps(0)} />
-              <Tab icon={<GppBadOutlinedIcon />} iconPosition="start" label="Tidak Terkualifikasi" {...a11yProps(1)} />
-            </Tabs>
+      <MainCard>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab icon={<GppGoodOutlinedIcon />} iconPosition="start" label="Terkualifikasi" {...a11yProps(0)} />
+            <Tab icon={<GppBadOutlinedIcon />} iconPosition="start" label="Tidak Terkualifikasi" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+
+        <CustomTabPanel value={value} index={0}>
+          <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
+            <FlexContainer>
+              <Typography style={{ fontSize: '24px', fontWeight: 'bold' }} gutterBottom>
+                Tabel Karyawan
+              </Typography>
+              <div style={{ flex: '1' }}> </div>
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV} />
+            </FlexContainer>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width: '100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaTrue} label={'Nama'} onSearch={setSelectedNamaTrue} value={selectedNamaTrue} resetInput={resetNamaInputTrue} />
+                <CustomSearch field={listNipposTrue} label={'Nippos'} onSearch={setSelectedNipposTrue} value={selectedNipposTrue} resetInput={resetNipposInputTrue} />
+                <CustomSearch field={listJobLevelTrue} label={'Job Level'} onSearch={setSelectedJobLevelTrue} value={selectedJobLevelTrue} resetInput={resetJobLevelInputTrue} />
+                <CustomSearch field={listKomiteUnitTrue} label={'Komite Unit'} onSearch={setSelectedKomiteUnitTrue} value={selectedKomiteUnitTrue} resetInput={resetKomiteUnitInputTrue} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
+            </div>
+
+            <TalentQualificationTable
+              minimumCompeten5cyQualified={compminimal}
+              minimumPmsQualified={pmsminimal}
+              minimumAkhlakQualified={akhlakminimal}
+              minimumLearningAgilityQualified={laminimal}
+              rows={resetRowsTrue}
+            />
           </Box>
+        </CustomTabPanel>
 
-          <CustomTabPanel value={value} index={0}>
-            <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
-              <FlexContainer>
-                <Typography style={{ fontSize: '24px', fontWeight: 'bold' }} gutterBottom>
-                  Tabel Karyawan
-                </Typography>
-                <div style={{ flex: '1' }}> </div>
-                <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV} />
-              </FlexContainer>
+        <CustomTabPanel value={value} index={1}>
+          <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
+            <FlexContainer>
+              <Typography style={{ fontSize: '24px', fontWeight: 'bold' }} gutterBottom>
+                Tabel Karyawan
+              </Typography>
+              <div style={{ flex: '1' }}> </div>
+              <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV} />
+            </FlexContainer>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width: '100%' }}>
-                <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
-                  <CustomSearch
-                    field={listNamaTrue}
-                    label={'Nama'}
-                    onSearch={setSelectedNamaTrue}
-                    value={selectedNamaTrue}
-                    resetInput={resetNamaInputTrue}
-                  />
-                  <CustomSearch
-                    field={listNipposTrue}
-                    label={'Nippos'}
-                    onSearch={setSelectedNipposTrue}
-                    value={selectedNipposTrue}
-                    resetInput={resetNipposInputTrue}
-                  />
-                  <CustomSearch
-                    field={listJobLevelTrue}
-                    label={'Job Level'}
-                    onSearch={setSelectedJobLevelTrue}
-                    value={selectedJobLevelTrue}
-                    resetInput={resetJobLevelInputTrue}
-                  />
-                  <CustomSearch
-                    field={listKomiteUnitTrue}
-                    label={'Komite Unit'}
-                    onSearch={setSelectedKomiteUnitTrue}
-                    value={selectedKomiteUnitTrue}
-                    resetInput={resetKomiteUnitInputTrue}
-                  />
-                </Stack>
-                <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width: '100%' }}>
+              <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
+                <CustomSearch field={listNamaFalse} label={'Nama'} onSearch={setSelectedNamaFalse} value={selectedNamaFalse} resetInput={resetNamaInputFalse} />
+                <CustomSearch field={listNipposFalse} label={'Nippos'} onSearch={setSelectedNipposFalse} value={selectedNipposFalse} resetInput={resetNipposInputFalse} />
+                <CustomSearch field={listJobLevelFalse} label={'Job Level'} onSearch={setSelectedJobLevelFalse} value={selectedJobLevelFalse} resetInput={resetJobLevelInputFalse} />
+                <CustomSearch field={listKomiteUnitFalse} label={'Komite Unit'} onSearch={setSelectedKomiteUnitFalse} value={selectedKomiteUnitFalse} resetInput={resetKomiteUnitInputFalse} />
+              </Stack>
+              <ButtonErrorOutlined onClick={handleResetSearchFalse} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
+            </div>
 
-              <TalentQualificationTable
-                minimumCompeten5cyQualified={compminimal}
-                minimumPmsQualified={pmsminimal}
-                minimumAkhlakQualified={akhlakminimal}
-                minimumLearningAgilityQualified={laminimal}
-                rows={resetRowsTrue}
-              />
-            </Box>
-          </CustomTabPanel>
-
-          <CustomTabPanel value={value} index={1}>
-            <Box paddingLeft={3} paddingRight={3} paddingBottom={3}>
-              <FlexContainer>
-                <Typography style={{ fontSize: '24px', fontWeight: 'bold' }} gutterBottom>
-                  Tabel Karyawan
-                </Typography>
-                <div style={{ flex: '1' }}> </div>
-                <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV} />
-              </FlexContainer>
-
-              <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '16px', width: '100%' }}>
-                <Stack direction="row" spacing={2} marginRight={2} width={'100%'}>
-                  <CustomSearch
-                    field={listNamaFalse}
-                    label={'Nama'}
-                    onSearch={setSelectedNamaFalse}
-                    value={selectedNamaFalse}
-                    resetInput={resetNamaInputFalse}
-                  />
-                  <CustomSearch
-                    field={listNipposFalse}
-                    label={'Nippos'}
-                    onSearch={setSelectedNipposFalse}
-                    value={selectedNipposFalse}
-                    resetInput={resetNipposInputFalse}
-                  />
-                  <CustomSearch
-                    field={listJobLevelFalse}
-                    label={'Job Level'}
-                    onSearch={setSelectedJobLevelFalse}
-                    value={selectedJobLevelFalse}
-                    resetInput={resetJobLevelInputFalse}
-                  />
-                  <CustomSearch
-                    field={listKomiteUnitFalse}
-                    label={'Komite Unit'}
-                    onSearch={setSelectedKomiteUnitFalse}
-                    value={selectedKomiteUnitFalse}
-                    resetInput={resetKomiteUnitInputFalse}
-                  />
-                </Stack>
-                <ButtonErrorOutlined onClick={handleResetSearchFalse} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
-              </div>
-
-              <TalentQualificationTable
-                minimumCompeten5cyQualified={compminimal}
-                minimumPmsQualified={pmsminimal}
-                minimumAkhlakQualified={akhlakminimal}
-                minimumLearningAgilityQualified={laminimal}
-                rows={resetRowsFalse}
-              />
-            </Box>
-          </CustomTabPanel>
-        </MainCard>
-      )}
+            <TalentQualificationTable
+              minimumCompeten5cyQualified={compminimal}
+              minimumPmsQualified={pmsminimal}
+              minimumAkhlakQualified={akhlakminimal}
+              minimumLearningAgilityQualified={laminimal}
+              rows={resetRowsFalse}
+            />
+          </Box>
+        </CustomTabPanel>
+      </MainCard>
     </>
   );
 };

@@ -213,7 +213,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const posttalentqual = () => {
-    return fetch('http://localhost:4000/createqualificationquery', {
+    return fetch('http://localhost:4000/createqualificationtable', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
