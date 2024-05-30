@@ -133,26 +133,27 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     { id: '2', lokasi: 'Ruang Investasi Kantor Pos Pusat Jalan Cilaki Bandung' }
     // Add more options as needed
   ];
-  useEffect(() => {
-    // Define the request body
-    const requestBody = {
-      // Your request body data here
-      eventtalentid: eventidactive
-    };
 
-    // Fetch data from API with request body
-    fetch(`http://localhost:4000/createdaysbpj`, {
-      method: 'POST', // Specify the HTTP method
-      headers: {
-        'Content-Type': 'application/json' // Specify the content type
-      },
-      body: JSON.stringify(requestBody) // Convert the request body to JSON string
-    })
-      .then((response) => response.json())
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   // Define the request body
+  //   const requestBody = {
+  //     // Your request body data here
+  //     eventtalentid: eventidactive
+  //   };
+
+  //   // Fetch data from API with request body
+  //   fetch(`http://localhost:4000/createdaysbpj`, {
+  //     method: 'POST', // Specify the HTTP method
+  //     headers: {
+  //       'Content-Type': 'application/json' // Specify the content type
+  //     },
+  //     body: JSON.stringify(requestBody) // Convert the request body to JSON string
+  //   })
+  //     .then((response) => response.json())
+  //     .catch((error) => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  // }, []);
 
   const fetchkaryawandays = () => {
     // Fetch data from API
