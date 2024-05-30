@@ -39,10 +39,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => rolekaryawan(eventactive))
           .then(() => {
             refresh();
-            toast.success('Talent Profile berhasil diposting!');
+            toast.success('Talent Profile telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Profile.');
+            toast.error('Gagal menyelesaikan Talent Profile.');
           });
         break;
       case 3:
@@ -51,10 +51,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => handleConfirmation(selectedDate))
           .then(() => {
             refresh();
-            toast.success('Talent Qualification berhasil diposting!');
+            toast.success('Talent Qualification telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Qualification.');
+            toast.error('Gagal menyelesaikan Talent Qualification.');
           });
         break;
       case 4:
@@ -63,10 +63,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => handleConfirmation(selectedDate))
           .then(() => {
             refresh();
-            toast.success('Talent Days berhasil diposting!');
+            toast.success('Talent Days telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Days.');
+            toast.error('Gagal menyelesaikan Talent Days.');
           });
         break;
       case 5:
@@ -74,12 +74,13 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => updatedeadline(eventactive))
           .then(() => mapcluster(eventactive))
           .then(() => handleConfirmation(selectedDate))
+          .then(() => notifikasiketuakomite(eventactive))
           .then(() => {
             refresh();
-            toast.success('Talent Cluster berhasil diposting!');
+            toast.success('Talent Cluster telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Cluster.');
+            toast.error('Gagal menyelesaikan Talent Cluster.');
           });
         break;
       case 6:
@@ -88,10 +89,10 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => handleConfirmation(selectedDate))
           .then(() => {
             refresh();
-            toast.success('Talent Pool berhasil diposting!');
+            toast.success('Talent Pool telah selesai!');
           })
           .catch(() => {
-            toast.error('Gagal memposting Talent Pool.');
+            toast.error('Gagal menyelesaikan Talent Pool.');
           });
         break;
       default:
@@ -158,6 +159,33 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
       });
   };
 
+
+  const notifikasiketuakomite = (eventid) => {
+    return fetch('http://localhost:4000/notifketuakomite', {
+      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+      headers: {
+        'Content-Type': 'application/json' // Specify the content type
+      },
+      body: JSON.stringify({
+        // Include any data you want to send in the request body
+        eventtalentid: eventid
+      }) // Convert the bodyData object to a JSON string
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
+
   const posttalentprofile = () => {
     return fetch('http://localhost:4000/createtalentprofile', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
@@ -185,7 +213,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const posttalentqual = () => {
-    return fetch('http://localhost:4000/createqualificationquery', {
+    return fetch('http://localhost:4000/createqualificationtable', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type

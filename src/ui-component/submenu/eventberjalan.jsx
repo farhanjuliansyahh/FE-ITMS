@@ -34,7 +34,8 @@ export default function EventBerjalan({
   tanggal_mulai,
   status,
   showHitungMundur,
-  jobleve
+  jobleve,
+  setrefresh
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -423,8 +424,8 @@ export default function EventBerjalan({
         })}
       </Stepper>
 
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite} mulai={tanggal_mulai}/>
-      <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} />
+      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite} mulai={tanggal_mulai} setrefresh={setrefresh}/>
+      <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} setrefresh={setrefresh} />
       <EditEvent
         open={openEdit}
         handleClose={handleCloseEdit}
@@ -436,6 +437,7 @@ export default function EventBerjalan({
         mulai={tanggal_mulai}
         selesai={tanggal_selesai}
         deskripsiawal={deskripsi}
+        setrefresh={setrefresh}
       />
       {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>

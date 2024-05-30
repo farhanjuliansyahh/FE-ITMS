@@ -23,7 +23,7 @@ const getStatusStyle = (status) => {
   return { color, backgroundColor };
 };
 
-export default function TalentDaysBPJTable({ rows, question, eventid, refetchkaryawan }) {
+export default function TalentDaysBPJTable({ rows, question, eventid, refetchkaryawan, eventstatus_id }) {
   const [nilaiOpen, setNilaiOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('');
   const [nilai, setNilai] = useState([]);
@@ -153,6 +153,7 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
         eventid={eventid}
         refetchkaryawan={refetchkaryawan}
         nilai={nilai}
+        eventstatus_id={eventstatus_id}
       />
     </div>
   );

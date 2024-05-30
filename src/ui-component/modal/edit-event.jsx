@@ -14,11 +14,13 @@ import dayjs from 'dayjs';
 
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import ButtonError from '../../ui-component/button/ButtonError';
+import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
+import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quotaawal, mulai, selesai, deskripsiawal }) {
+function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quotaawal, mulai, selesai, deskripsiawal, setrefresh }) {
   const [originalData, setOriginalData] = useState({}); // State to store original data
   const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -162,6 +164,15 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
     setenddate(date); // Update the state with the selected date
   };
 
+  // Save all the changes of questions using Simpan Button and show Success Modal
+  const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
+  const handleCloseAlertBerhasil = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+      setOpenAlertBerhasil(false);
+  };
+
   const updateData = async () => {
     try {
       // Make the POST request to the API endpoint
@@ -189,7 +200,10 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
 
       // If successful, handle the response data (if needed)
       const responseData = await response.json();
-      window.location.reload()
+
+      setOpenAlertBerhasil(true);
+
+      setrefresh(true);
       console.log('Response data:', responseData);
     } catch (error) {
       // Handle any errors that occur during the API call
@@ -199,6 +213,13 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
 
 
   return (
+    <>
+    <AlertBerhasil
+      open={openAlertBerhasil}
+      handleClose={handleCloseAlertBerhasil}
+      Logo={IlustrasiBerhasil}
+      Keterangan={'Berhasil'}
+    />
     <Dialog 
       open={open}
       onClose={() => {
@@ -351,6 +372,7 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
         />
       </DialogActions>
     </Dialog>
+  </>
   );
 }
 

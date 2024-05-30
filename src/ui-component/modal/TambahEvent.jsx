@@ -28,12 +28,12 @@ import ButtonError from '../../ui-component/button/ButtonError';
 import dayjs from 'dayjs'; // Import dayjs for date manipulation
 import { toast } from 'react-toastify';
 import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
-import IlustrasiBerhasil from '../../assets/images/ilustration/berhasil.png';
+import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function AddEventModal({ open, handleClose }) {
+function AddEventModal({ open, handleClose, setrefresh }) {
   const [selectedCommittee, setSelectedCommittee] = useState('');
   const [isCommitteeTouched, setIsCommitteeTouched] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -129,7 +129,7 @@ function AddEventModal({ open, handleClose }) {
       }
     };
     fetchJobFamily();
-  }, []);
+  }, [open]);
 
   const handleJobFamilyChange = (event) => {
     setSelectedJobFamily(event.target.value);
@@ -147,7 +147,7 @@ function AddEventModal({ open, handleClose }) {
       }
     };
     fetchquestion();
-  }, []);
+  }, [open]);
 
   const handlequestionchange = (event) => {
     setselectedquestion(event.target.value);
@@ -198,15 +198,8 @@ function AddEventModal({ open, handleClose }) {
   useEffect(() => {
     console.log('enddate', enddate);
   }, [enddate]);
-
-  // Save all the changes of questions using Simpan Button and show Success Modal
+  
   const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
-  const handleCloseAlertBerhasil = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlertBerhasil(true);
-  };
 
   const postData = async () => {
     try {
@@ -255,17 +248,37 @@ function AddEventModal({ open, handleClose }) {
       setOpenAlertBerhasil(true);
 
       // Reload halaman setelah 2 detik agar data event diperbarui secara visual
-      setTimeout(() => {
-        setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
-        window.location.reload();
-      }, 3000);
+        // window.location.reload();
+        setrefresh(true);
+ 
     } catch (error) {
       // Handle any errors that occur during the API call
       console.error('Error posting data:', error.message);
     }
   };
 
+    // Save all the changes of questions using Simpan Button and show Success Modal
+    const handleCloseAlertBerhasil = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+        setOpenAlertBerhasil(false);
+    };
+
   const CloseDialog = () => {
+    setIsCommitteeTouched(false);
+    setIsJobLevelTouched(false);
+    setIsJobLevelTouched(false);
+    setIsJobFamilyTouched(false);
+    setIsKetuaKomiteTouched(false);
+    setIsComitteeMemberTouched(false);
+    setIsQuestionTouched(false);
+    setIsStartDateTouched(false);
+    setIsEndDateTouched(false);
+    setIsEventNameTouched(false);
+    setIsQoutaTouched(false);
+    setIsDeskripsiTouched(false);
+    setIsHeadOfCommitteeFetched(false);
     setSelectedCommittee('');
     setJobLevelOptions([]);
     setSelectedJobLevel([]);
@@ -281,8 +294,6 @@ function AddEventModal({ open, handleClose }) {
     setEventName('');
     setquota('');
     setdeskripsi('');
-    setIsDeskripsiTouched(false);
-    setIsHeadOfCommitteeFetched(false);
 
     handleClose();
   };
@@ -335,7 +346,7 @@ function AddEventModal({ open, handleClose }) {
 
   return (
     <>
-      <AlertBerhasil open={openAlertBerhasil} onClose={handleCloseAlertBerhasil} Logo={IlustrasiBerhasil} Keterangan={'Berhasil'} />
+      <AlertBerhasil open={openAlertBerhasil} handleClose={handleCloseAlertBerhasil} Logo={IlustrasiBerhasil} Keterangan={'Berhasil'} />
       <Dialog open={open} onClose={CloseDialog}>
         <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', textAlign: 'center' }}>
           <Typography style={{ fontSize: '24px', fontWeight: 'bold' }}>Tambah Event</Typography>
