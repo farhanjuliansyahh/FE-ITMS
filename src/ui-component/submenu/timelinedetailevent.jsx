@@ -91,7 +91,7 @@ export default function TimelineDetailEvent({
       const startdate = deadline[0][startdateProperty];
       const deadlineDate = new Date(deadline[0][deadlineProperty]);
 
-      const daysLeftStep = calculateDaysLeft(startdate, deadlineDate);
+      const daysLeftStep = calculateDaysLeft(new Date(), deadlineDate);
 
       deadlineDate.setDate(deadlineDate.getDate() + 1);
 
