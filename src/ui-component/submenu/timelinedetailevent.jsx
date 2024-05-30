@@ -342,9 +342,28 @@ export default function TimelineDetailEvent({
                       year: 'numeric',
                     });
                   })()}
-                </>
-              )}
-            </Typography>
+    </>
+  )}
+  {eventstatus_id === 8 && (
+    <>
+    Realisasi:
+      {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })} -{' '}
+                  {(() => {
+                    const endDate = new Date(deadline[0][`startdate_${activeStep + 2}`]);
+                    endDate.setDate(endDate.getDate() + 1); // Add one day
+                    return endDate.toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    });
+                  })()}
+    </>
+  )}
+</Typography>
           </FlexTitle>
         </BoxContainer>
 

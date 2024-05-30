@@ -83,6 +83,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
   const [selectedLokasi, setSelectedLokasi] = useState('');
   const [disableInputs, setDisableInputs] = useState(false);
   const [infobpj, setinfobpj] = useState([])
+  const [eventnotactive, seteventnotactive] = useState(false)
 
   const eventidactive = eventid;
   const handleChange = (event, newValue) => {
@@ -202,10 +203,17 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
   };
 
   useEffect(() => {
-    fetchbpjdays(), fetchkaryawandays();
+    fetchbpjdays();
+    fetchkaryawandays();
     fetchquestionevent();
-    fetchinfobpj()
-  }, [isLoading]);
+    fetchinfobpj();
+    
+    if (eventstatus_id !== 5) {
+      seteventnotactive(true);
+    } else {
+      seteventnotactive(false);
+    }
+  }, [isLoading, eventstatus_id]);
 
   let sudahdipilihcount = 0;
   let totalkaryawan = daysRow.length;
@@ -391,7 +399,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                     label="Tipe"
                     value={selectedTipe}
                     onChange={(event) => setSelectedTipe(event.target.value)}
-                    disabled={disableInputs}
+                    disabled={disableInputs || eventnotactive}
                   >
                     <MenuItem value="1">Sidang Jabatan</MenuItem>
                     <MenuItem value="2">Wawancara</MenuItem>
@@ -408,7 +416,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                         label="Tanggal"
                         onChange={(date) => setSelectedDate(date)}
                         value={dayjs(selectedDate)}
-                        disabled={disableInputs}
+                        disabled={disableInputs || eventnotactive}
                         fullWidth // Set fullWidth to occupy the entire width of its container
                       />
                     </DemoItem>
@@ -420,7 +428,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                     label="Lokasi"
                     value={selectedLokasi}
                     onChange={(e) => setSelectedLokasi(e.target.value)}
-                    disabled={disableInputs}
+                    disabled={disableInputs || eventnotactive}
                   />
                 </Grid>
                 {/* <Grid item xs={4}>
@@ -485,6 +493,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
               searchNippos={selectedNipposFalse}
               confirm={fetchbpjdays}
               eventstatus_id={eventstatus_id}
+              disabled = {eventnotactive}
             />
           </Box>
         </CustomTabPanel>
@@ -560,6 +569,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
               eventid={eventidactive}
               refetchkaryawan={fetchkaryawandays}
               eventstatus_id={eventstatus_id}
+              disabled={eventnotactive}
             />
           </Box>
         </CustomTabPanel>
