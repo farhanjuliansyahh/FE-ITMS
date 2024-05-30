@@ -415,7 +415,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                         InputLabelProps={{ shrink: true }}
                         label="Tanggal"
                         onChange={(date) => setSelectedDate(date)}
-                        value={dayjs(selectedDate)}
+                        value={selectedDate ? dayjs(selectedDate) : null} // Handle null value
                         disabled={disableInputs || eventnotactive}
                         fullWidth // Set fullWidth to occupy the entire width of its container
                       />
