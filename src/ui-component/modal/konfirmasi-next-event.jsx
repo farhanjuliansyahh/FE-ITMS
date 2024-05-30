@@ -74,6 +74,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => updatedeadline(eventactive))
           .then(() => mapcluster(eventactive))
           .then(() => handleConfirmation(selectedDate))
+          .then(() => notifikasiketuakomite(eventactive))
           .then(() => {
             refresh();
             toast.success('Talent Cluster telah selesai!');
@@ -158,6 +159,33 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
       });
   };
 
+
+  const notifikasiketuakomite = (eventid) => {
+    return fetch('http://localhost:4000/notifketuakomite', {
+      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+      headers: {
+        'Content-Type': 'application/json' // Specify the content type
+      },
+      body: JSON.stringify({
+        // Include any data you want to send in the request body
+        eventtalentid: eventid
+      }) // Convert the bodyData object to a JSON string
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
+      });
+  };
+
   const posttalentprofile = () => {
     return fetch('http://localhost:4000/createtalentprofile', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
@@ -185,7 +213,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const posttalentqual = () => {
-    return fetch('http://localhost:4000/createqualificationquery', {
+    return fetch('http://localhost:4000/createqualificationtable', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type

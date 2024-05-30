@@ -25,7 +25,7 @@ const StyledTableCell = styled(TableCell)(() => ({
   }
 }));
 
-export default function InputNilaiTalentDays({ nilai, open, handleClose, questionList, nippos, eventid, refetchkaryawan }) {
+export default function InputNilaiTalentDays({ nilai, open, handleClose, questionList, nippos, eventid, refetchkaryawan, eventstatus_id }) {
   const [sortedQuestionList, setSortedQuestionList] = useState([]);
   const [nilaiInput, setNilaiInput] = useState([]);
   const [nilaiArray, setNilaiArray] = useState([]);
@@ -174,6 +174,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
             setNilaiInput([]);
             setNilaiArray([]);
           }}
+          disabled={eventstatus_id !== 6}
         >
           Simpan
         </Button>

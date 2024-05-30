@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Box, Menu, MenuItem, Pagination, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { DownloadDone, ExpandMore, RotateRight } from '@mui/icons-material';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
-
+import notFoundImage from '../../../../public/assets/images/ilustration/notfound.png';
 import MainCard from '../../../ui-component/cards/MainCard';
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';

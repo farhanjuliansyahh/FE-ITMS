@@ -6,7 +6,7 @@ import { DownloadDone, ExpandMore, RotateRight } from '@mui/icons-material';
 
 import MainCard from '../../../ui-component/cards/MainCard';
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
-import notFoundImage from '../../../assets/images/ilustration/notfound.png';
+import notFoundImage from '../../../../public/assets/images/ilustration/notfound.png';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 
