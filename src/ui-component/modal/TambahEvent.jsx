@@ -249,6 +249,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
 
       // Reload halaman setelah 2 detik agar data event diperbarui secara visual
         // window.location.reload();
+        console.log("CALLED SETREFRESH FROM ADD");
         setrefresh(true);
  
     } catch (error) {

@@ -197,6 +197,7 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
       // Check if the request was successful
       if (response.ok) {
         setOpenAlertBerhasil(true);
+        console.log("CALLED SETREFRESH FROM EDIT");
         setrefresh(true);
       } else {
         throw new Error('Failed to delete data');

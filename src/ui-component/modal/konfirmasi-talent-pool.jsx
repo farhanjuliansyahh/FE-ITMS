@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import { toast } from 'react-toastify';
 
 function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }) {    
     const eventaktif = eventid;
@@ -25,12 +26,14 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
 
             // Check if the request was successful
             if (!response.ok) {
+                toast.error('Event gagal diselesaikan!')
                 throw new Error('Failed to post data');
             }
 
             // If successful, handle the response data (if needed)
             const responseData = await response.json();
             console.log('Response data:', responseData);
+            toast.success('Semua event telah selesai!')
         } catch (error) {
             // Handle any errors that occur during the API call
             console.error('Error posting data:', error.message);

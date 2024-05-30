@@ -35,7 +35,7 @@ function HapusEvent({ open, handleClose, eventid, setrefresh }) {
       if (response.ok) {
         setOpenAlertBerhasil(true);
         handleClose()
-        // setrefresh(true);
+        
       } else {
         throw new Error('Failed to delete data');
       }
@@ -102,14 +102,12 @@ function HapusEvent({ open, handleClose, eventid, setrefresh }) {
     // }
     console.log("HandleClose");
     setOpenAlertBerhasil(false);
+    setrefresh(true);
   };
 
   
   useEffect(()=>{
     console.log("alert data berubah jadi", openAlertBerhasil);
-    if(!openAlertBerhasil) {
-      setrefresh(true)
-    }
   },[openAlertBerhasil])
 
   const mulaiButton = (
@@ -144,7 +142,7 @@ function HapusEvent({ open, handleClose, eventid, setrefresh }) {
     <>
       <AlertBerhasil 
         open={openAlertBerhasil} 
-        handleClose={()=>{setOpenAlertBerhasil(false)}} 
+        handleClose={()=>{handleCloseAlertBerhasil()}} 
         Logo={IlustrasiBerhasil} 
         Keterangan={'Berhasil'} 
       />
