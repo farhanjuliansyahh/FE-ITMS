@@ -46,7 +46,7 @@ export default function TalentDaysBPJTable({
   };
 
   const columns = [
-    { field: 'id', headerName: 'No', width: 60 },
+    { field: 'id', headerName: 'No', width: 90 },
     { field: 'nama', headerName: 'Nama', width: 400 },
     { field: 'nippos', headerName: 'Nippos', width: 150 },
     { field: 'Posisi', headerName: 'Posisi', width: 600 },

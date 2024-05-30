@@ -65,14 +65,14 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
   };
 
   const columns = [
-    { field: 'id', headerName: 'No', width: 60 },
+    { field: 'id', headerName: 'No', width: 90 },
     { field: 'Nama', headerName: 'Nama', width: 200 },
     { field: 'Nippos', headerName: 'Nippos', width: 130 },
     { field: 'Posisi', headerName: 'Posisi', width: 400 },
     { field: 'Job Level', headerName: 'Job Level', width: 130 },
-    { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 130 },
-    { field: 'Nama Kantor', headerName: 'Kantor', width: 130 },
-    { field: 'Komite Unit', headerName: 'Komite Unit', width: 130 },
+    { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 150 },
+    { field: 'Nama Kantor', headerName: 'Kantor', width: 250 },
+    { field: 'Komite Unit', headerName: 'Komite Unit', width: 250 },
     {
       field: 'Status',
       headerName: 'Status',
