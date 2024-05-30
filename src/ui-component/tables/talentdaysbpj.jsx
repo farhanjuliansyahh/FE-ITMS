@@ -10,8 +10,7 @@ export default function TalentDaysBPJTable({
     rows,
     searchNama, // Receive the search term as a prop
     searchNippos,
-    confirm,
-    eventstatus_id
+    confirm
  }) {
   const filteredRows = rows.filter((row) => {
     const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
@@ -73,7 +72,6 @@ export default function TalentDaysBPJTable({
             }}
             endIcon={<DeleteOutlineOutlinedIcon />}
             onClick={() => handleHapusBPJOpen(params.row.nippos)} // Pass nippos to the handler
-            disabled={eventstatus_id !== 5}
           >
             Hapus
           </Button>
