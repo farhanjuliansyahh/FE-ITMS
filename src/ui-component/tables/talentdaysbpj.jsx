@@ -53,7 +53,7 @@ export default function TalentDaysBPJTable({
     {
       field: 'aksi',
       headerName: 'Aksi',
-      width: 150,
+      width: 160,
       renderCell: (params) => {
         return (
           <Button
