@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, MenuItem } from '@mui/material';
 import Box from '@mui/material/Box';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -29,25 +29,14 @@ function HapusEvent({ open, handleClose, eventid, setrefresh }) {
           // Include any data you want to send in the request body
           eventid: eventid
         })
-        // You can pass any data in the request body if required
-        // body: JSON.stringify({}),
       });
 
-      // Check if the request was successful (status code 200-299)
+      // Check if the request was successful
       if (response.ok) {
-        // If successful, handle the response or perform any necessary actions
-
         setOpenAlertBerhasil(true);
-
-        setrefresh(true);
-
-        // Reload halaman setelah 2 detik agar data event diperbarui secara visual
-        // setTimeout(() => {
-        //   setOpenAlertBerhasil(false); // Menutup alert setelah 3 detik
-        //   window.location.reload();
-        // }, 3000);
+        handleClose()
+        // setrefresh(true);
       } else {
-        // If not successful, throw an error or handle the error response
         throw new Error('Failed to delete data');
       }
     } catch (error) {
@@ -107,12 +96,21 @@ function HapusEvent({ open, handleClose, eventid, setrefresh }) {
 
   // Save all the changes of questions using Simpan Button and show Success Modal
   const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
-  const handleCloseAlertBerhasil = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  const handleCloseAlertBerhasil = () => {
+    // if (reason === 'clickaway') {
+    //   return;
+    // }
+    console.log("HandleClose");
     setOpenAlertBerhasil(false);
   };
+
+  
+  useEffect(()=>{
+    console.log("alert data berubah jadi", openAlertBerhasil);
+    if(!openAlertBerhasil) {
+      setrefresh(true)
+    }
+  },[openAlertBerhasil])
 
   const mulaiButton = (
     <Button
@@ -120,10 +118,11 @@ function HapusEvent({ open, handleClose, eventid, setrefresh }) {
       style={isHoveredMulai ? { ...mulaiButtonStyle, ...hoverMulaiStyle } : mulaiButtonStyle}
       onMouseEnter={() => setIsHoveredMulai(true)}
       onMouseLeave={() => setIsHoveredMulai(false)}
-      onClick={() => {
-        hapusdata() // Call the function to post deadline source
-          .then(() => handleClose()); // Close the popup after all operations are finished
-      }}
+      // onClick={() => {
+      //   hapusdata() // Call the function to post deadline source
+      //     // .then(() => handleClose()); // Close the popup after all operations are finished
+      // }}
+      onClick={hapusdata}
     >
       Ya, Hapus Data
     </Button>
@@ -143,7 +142,12 @@ function HapusEvent({ open, handleClose, eventid, setrefresh }) {
 
   return (
     <>
-      <AlertBerhasil open={openAlertBerhasil} handleClose={handleCloseAlertBerhasil} Logo={IlustrasiBerhasil} Keterangan={'Berhasil'} />
+      <AlertBerhasil 
+        open={openAlertBerhasil} 
+        handleClose={()=>{setOpenAlertBerhasil(false)}} 
+        Logo={IlustrasiBerhasil} 
+        Keterangan={'Berhasil'} 
+      />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           <Typography style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>Hapus Data</Typography>

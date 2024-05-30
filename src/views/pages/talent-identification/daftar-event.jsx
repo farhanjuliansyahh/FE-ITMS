@@ -289,6 +289,7 @@ const DaftarEvent = () => {
                   status={event.evenstatus_id}
                   statusHitungMundur={false}
                   jobleve={event.jobleve}
+                  setrefresh={setrefresh}
                 />
               ))}
               {paginatedEventsTab1.length === 0 ? (
