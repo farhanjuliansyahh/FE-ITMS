@@ -173,6 +173,7 @@ export default function TimelineDetailEvent({
       setDialogOpen(true);
     } else if (activeStep === 5) {
       setTalentPoolDialogOpen(true);
+      
     }
   };
 
