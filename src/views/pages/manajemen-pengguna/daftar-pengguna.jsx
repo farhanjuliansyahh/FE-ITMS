@@ -37,10 +37,12 @@ const DaftarPengguna = () => {
   //
   const listNama = [...new Set(rowsUser.map((row) => row.nama))];
   const listNippos = [...new Set(rowsUser.map((row) => row.nippos))];
+  const listPosisi = [...new Set(rowsUser.map((row) => row.posisi))];
   const listPeran = [...new Set(rowsUser.map((row) => row.Peran))];
 
   const [selectedNama, setSelectedNama] = useState(null);
   const [selectedNippos, setSelectedNippos] = useState(null);
+  const [selectedPosisi, setSelectedPosisi] = useState(null);
   const [selectedPeran, setSelectedPeran] = useState(null);
 
   const resetNamaInput = () => {
@@ -51,6 +53,10 @@ const DaftarPengguna = () => {
     setSelectedNippos('');
   };
 
+  const resetPosisiInput = () => {
+    setSelectedPosisi('');
+  };
+
   const resetPeranInput = () => {
     setSelectedPeran('');
   };
@@ -58,11 +64,13 @@ const DaftarPengguna = () => {
   const handleResetSearch = () => {
     setSelectedNama('');
     setSelectedNippos('');
+    setSelectedPosisi('');
     setSelectedPeran('');
 
     // Call resetInput function for each CustomSearch component
     resetNamaInput();
     resetNipposInput();
+    resetPosisiInput();
     resetPeranInput();
   };
 
@@ -166,6 +174,13 @@ const DaftarPengguna = () => {
                         resetInput={resetNipposInput}
                       />
                       <CustomSearch
+                        field={listPosisi}
+                        label={'Posisi'}
+                        onSearch={setSelectedPosisi}
+                        value={selectedPosisi}
+                        resetInput={resetPosisiInput}
+                      />
+                      <CustomSearch
                         field={listPeran}
                         label={'Peran'}
                         onSearch={setSelectedPeran}
@@ -180,6 +195,7 @@ const DaftarPengguna = () => {
                     rows={rowsUser}
                     searchNama={selectedNama}
                     searchNippos={selectedNippos}
+                    searchPosisi={selectedPosisi}
                     searchPeran={selectedPeran}
                     onFilteredData={handleFilteredData} // Pass the function to child component
                   />
