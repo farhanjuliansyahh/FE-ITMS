@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
 import PropTypes from 'prop-types';
 import MainCard from '../../ui-component/cards/MainCard';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
@@ -13,6 +12,7 @@ import ButtonPrimary from '../button/ButtonPrimary';
 import TalentQualificationTable from '../../ui-component/tables/talentqualification';
 import CustomSearch from '../../ui-component/searchsection/custom-search';
 import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
+import { useLocation } from 'react-router-dom';
 
 // ==============================|| DETAIL TALENT QUALIFICATION PAGE ||============================== //
 
@@ -43,8 +43,10 @@ function a11yProps(index) {
   };
 }
 
-const TalentQualification = ({ eventid, kodekomite }) => {
-  // const [isLoading, setLoading] = useState(true);
+const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
+  const location = useLocation();
+  const [prevLocationname, setPrevLocation] = useState(prevLocation);
+
   const [value, setValue] = React.useState(0);
   const [qualRow, setqualRow] = useState([]);
   const [quallolosRow, setquallolosRow] = useState([]);
@@ -57,26 +59,16 @@ const TalentQualification = ({ eventid, kodekomite }) => {
     setValue(newValue);
   };
 
-  const fetchnilaiminimal = (eventid) => {
-    return fetch('http://localhost:4000/getkkm', {
-      method: 'GET', // Specify the HTTP method (POST, GET, etc.)
-      headers: {
-        'Content-Type': 'application/json' // Specify the content type
-      }
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      }) // Return the parsed JSON data
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        throw error; // Rethrow the error to handle it elsewhere
-      });
-  };
-
   const fetchData = () => {
+    fetch(`http://localhost:4000/getkkm`)
+      .then(response => response.json())
+      .then(qualified => {
+        setkkm(qualified.map((row, index) => ({ ...row, id: index + 1 })));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
     fetch(`http://localhost:4000/getqualificationtidak?eventtalentid=${eventidactive}`)
       .then(response => response.json())
       .then(notqualified => {
@@ -94,20 +86,44 @@ const TalentQualification = ({ eventid, kodekomite }) => {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
+  };
 
-    fetch(`http://localhost:4000/getkkm`)
-      .then(response => response.json())
-      .then(qualified => {
-        setkkm(qualified.map((row, index) => ({ ...row, id: index + 1 })));
+  const posttalentqual = () => {
+    return fetch('http://localhost:4000/createqualificationtable', {
+      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+      headers: {
+        'Content-Type': 'application/json' // Specify the content type
+      },
+      body: JSON.stringify({
+        // Include any data you want to send in the request body
+        eventtalentid: eventid
+      }) // Convert the bodyData object to a JSON string
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
       })
-      .catch(error => {
+      .then((data) => {
+        return data; // Return the parsed JSON data
+      })
+      .catch((error) => {
         console.error('Error fetching data:', error);
+        throw error; // Rethrow the error to handle it elsewhere
       });
   };
 
   useEffect(() => {
-    fetchData()
-  }, []);
+    fetchData();
+
+    if (location.pathname  !== prevLocation) {
+      posttalentqual().then(() => {
+        fetchData();
+      });
+      setPrevLocation(location.pathname)
+    }
+  }, [location]);
 
   const FlexContainer = styled('div')({
     display: 'flex',

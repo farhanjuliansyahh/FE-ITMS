@@ -32,7 +32,8 @@ export default function TimelineDetailEvent({
   tanggal_mulai,
   tanggal_selesai,
   eventstatus_id,
-  handleActiveStepChange
+  handleActiveStepChange,
+  prevLocation
 }) {
   const [activeStep, setActiveStep] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -218,7 +219,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id}/>
+              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id} prevLocation={prevLocation}/>
             </Box>
           </MainCard>
         );
