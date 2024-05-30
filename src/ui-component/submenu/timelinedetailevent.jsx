@@ -91,7 +91,7 @@ export default function TimelineDetailEvent({
       const startdate = deadline[0][startdateProperty];
       const deadlineDate = new Date(deadline[0][deadlineProperty]);
 
-      const daysLeftStep = calculateDaysLeft(startdate, deadlineDate);
+      const daysLeftStep = calculateDaysLeft(new Date(), deadlineDate);
 
       deadlineDate.setDate(deadlineDate.getDate() + 1);
 
@@ -173,6 +173,7 @@ export default function TimelineDetailEvent({
       setDialogOpen(true);
     } else if (activeStep === 5) {
       setTalentPoolDialogOpen(true);
+      
     }
   };
 
@@ -331,7 +332,7 @@ export default function TimelineDetailEvent({
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric',
-                  })} -
+                  })} -{' '}
                   {(() => {
                     const endDate = new Date(deadline[0][`deadline_${activeStep + 1}`]);
                     endDate.setDate(endDate.getDate() + 1); // Add one day
@@ -362,21 +363,22 @@ export default function TimelineDetailEvent({
                   </Box>
                 }
 
-                {index === eventstatus_id - 2 && (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
-                    {DaysLeftStep !== null ? (
-                      DaysLeftStep > 0 ? (
-                        <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
-                      ) : DaysLeftStep === 0 ? (
-                        <CountdownStep>Hari ini</CountdownStep>
-                      ) : (
-                        <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
-                      )
-                    ) : (
-                      ''
-                    )}
-                  </Box>
-                )}
+{index === eventstatus_id - 2 && (
+  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+    {DaysLeftStep !== null ? (
+      DaysLeftStep > 0 ? (
+        <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
+      ) : DaysLeftStep === 0 ? (
+        <CountdownStep>Hari ini</CountdownStep>
+      ) : (
+        // Display negative days left with a different style
+        <CountdownStep style={{ backgroundColor: '#FFF5F5', color: '#FF6B6B' }}>{`${DaysLeftStep} hari`}</CountdownStep>
+      )
+    ) : (
+      ''
+    )}
+  </Box>
+)}
               </Step>
             );
           })}

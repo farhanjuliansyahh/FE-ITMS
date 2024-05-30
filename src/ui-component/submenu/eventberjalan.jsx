@@ -439,7 +439,6 @@ export default function EventBerjalan({
         deskripsiawal={deskripsi}
         setrefresh={setrefresh}
       />
-      {/* <KonfirmasiNextEvent open={open} handleClose={handleClose} /> */}
     </Box>
   );
 }

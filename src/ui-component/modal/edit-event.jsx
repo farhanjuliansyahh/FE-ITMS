@@ -41,6 +41,7 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
   const [formChanged, setFormChanged] = useState(false); // State to track form changes
   const [changesSaved, setChangesSaved] = useState(false); // State to track if changes have been saved
 
+  console.log("CREATE EDIT DIALOG");
   useEffect(() => {
     // Save original data when dialog opens
     setOriginalData({ 
@@ -194,17 +195,13 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
       });
 
       // Check if the request was successful
-      if (!response.ok) {
-        throw new Error('Failed to post data');
+      if (response.ok) {
+        setOpenAlertBerhasil(true);
+        console.log("CALLED SETREFRESH FROM EDIT");
+        setrefresh(true);
+      } else {
+        throw new Error('Failed to delete data');
       }
-
-      // If successful, handle the response data (if needed)
-      const responseData = await response.json();
-
-      setOpenAlertBerhasil(true);
-
-      setrefresh(true);
-      console.log('Response data:', responseData);
     } catch (error) {
       // Handle any errors that occur during the API call
       console.error('Error posting data:', error.message);

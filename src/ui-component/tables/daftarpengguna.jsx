@@ -129,45 +129,11 @@ const ActionButton = ({ row, onSave }) => {
               icon={SaveOutlinedIcon}
               LabelName={'Simpan'}
             />
-          {/* <Button
-            onClick={handleSavePeran}
-            variant="contained"
-            endIcon={<SaveOutlinedIcon />}
-            sx={{
-              color: '#ffffff',
-              backgroundColor: '#1C2D5A',
-              borderRadius: '12px',
-              fontSize: '14px',
-              padding: '8px 18px',
-              boxShadow: 'none',
-              width: '110px',
-              height: '40px'
-            }}
-          >
-            Simpan
-          </Button> */}
           <ButtonErrorOutlined  
           onClick={handleModalClose} 
           Color="#D32F2F" 
           icon={HighlightOffOutlinedIcon} 
           LabelName={'Batalkan'} />
-          {/* <Button
-            onClick={handleModalClose}
-            endIcon={<HighlightOffOutlinedIcon />}
-            sx={{
-              color: '#D32F2F',
-              backgroundColor: '#ffffff',
-              borderRadius: '12px',
-              fontSize: '14px',
-              padding: '8px 18px',
-              boxShadow: 'none',
-              width: '110px',
-              height: '40px',
-              border: '1.5px solid #D32F2F'
-            }}
-          >
-            Batalkan
-          </Button> */}
         </DialogActions>
       </Dialog>
     </>
@@ -178,6 +144,7 @@ export default function DaftarPenggunaTabel({
   rows,
   searchNama,
   searchNippos,
+  searchPosisi,
   searchPeran,
   onFilteredData // Receive the callback function
 }) {
@@ -224,9 +191,10 @@ export default function DaftarPenggunaTabel({
   const filteredRows = updatedRows.filter((row) => {
     const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase()));
     const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase()));
+    const posisiMatch = !searchPosisi || (row.posisi && row.posisi.toLowerCase().includes(searchPosisi.toLowerCase()));
     const peranMatch = !searchPeran || (row.Peran && row.Peran.toLowerCase().includes(searchPeran.toLowerCase()));
 
-    return (!searchNama || namaMatch) && (!searchNippos || nipposMatch) && (!searchPeran || peranMatch);
+    return (!searchNama || namaMatch) && (!searchNippos || nipposMatch) && (!searchPosisi || posisiMatch) && (!searchPeran || peranMatch);
   });
 
   //buat constanta yang isinya hasil filter yang indexnya udah di reset:
