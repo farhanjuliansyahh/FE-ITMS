@@ -331,7 +331,7 @@ export default function TimelineDetailEvent({
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric',
-                  })} -
+                  })} -{' '}
                   {(() => {
                     const endDate = new Date(deadline[0][`deadline_${activeStep + 1}`]);
                     endDate.setDate(endDate.getDate() + 1); // Add one day
