@@ -362,21 +362,22 @@ export default function TimelineDetailEvent({
                   </Box>
                 }
 
-                {index === eventstatus_id - 2 && (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
-                    {DaysLeftStep !== null ? (
-                      DaysLeftStep > 0 ? (
-                        <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
-                      ) : DaysLeftStep === 0 ? (
-                        <CountdownStep>Hari ini</CountdownStep>
-                      ) : (
-                        <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
-                      )
-                    ) : (
-                      ''
-                    )}
-                  </Box>
-                )}
+{index === eventstatus_id - 2 && (
+  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+    {DaysLeftStep !== null ? (
+      DaysLeftStep > 0 ? (
+        <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
+      ) : DaysLeftStep === 0 ? (
+        <CountdownStep>Hari ini</CountdownStep>
+      ) : (
+        // Display negative days left with a different style
+        <CountdownStep style={{ backgroundColor: '#FFF5F5', color: '#FF6B6B' }}>{`${DaysLeftStep} hari`}</CountdownStep>
+      )
+    ) : (
+      ''
+    )}
+  </Box>
+)}
               </Step>
             );
           })}
