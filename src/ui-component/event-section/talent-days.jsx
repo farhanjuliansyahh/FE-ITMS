@@ -33,6 +33,8 @@ import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import KonfirmasiIsiSemuaNilaiTalent from '../../ui-component/modal/konfirmasi-isi-semua-nilai-talent';
 import CustomSearch from '../searchsection/custom-search';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import dayjs from 'dayjs';
+
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -80,6 +82,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedLokasi, setSelectedLokasi] = useState('');
   const [disableInputs, setDisableInputs] = useState(false);
+  const [infobpj, setinfobpj] = useState([])
 
   const eventidactive = eventid;
   const handleChange = (event, newValue) => {
@@ -134,27 +137,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     // Add more options as needed
   ];
 
-  // useEffect(() => {
-  //   // Define the request body
-  //   const requestBody = {
-  //     // Your request body data here
-  //     eventtalentid: eventidactive
-  //   };
-
-  //   // Fetch data from API with request body
-  //   fetch(`http://localhost:4000/createdaysbpj`, {
-  //     method: 'POST', // Specify the HTTP method
-  //     headers: {
-  //       'Content-Type': 'application/json' // Specify the content type
-  //     },
-  //     body: JSON.stringify(requestBody) // Convert the request body to JSON string
-  //   })
-  //     .then((response) => response.json())
-  //     .catch((error) => {
-  //       console.error('Error fetching data:', error);
-  //     });
-  // }, []);
-
   const fetchkaryawandays = () => {
     // Fetch data from API
     fetch(`http://localhost:4000/gettablekaryawandays?eventtalentid=${eventidactive}`)
@@ -186,6 +168,25 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
       });
   };
 
+  const fetchinfobpj = () => {
+    // Fetch data from API
+    fetch(`http://localhost:4000/getsijabinfo?eventtalentid=${eventidactive}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with API data
+        setinfobpj(data);
+        if (data.jenis_bpj || data.tanggal_bpj || data.lokasi_bpj) {
+          setSelectedTipe(data.jenis_bpj || '');
+          setSelectedDate(dayjs(data.tanggal_bpj) || '');
+          setSelectedLokasi(data.lokasi_bpj || '');
+          setDisableInputs(true);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
   const fetchquestionevent = () => {
     // Fetch data from API
     fetch(`http://localhost:4000/getquestionevent?eventtalentid=${eventidactive}`)
@@ -203,6 +204,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
   useEffect(() => {
     fetchbpjdays(), fetchkaryawandays();
     fetchquestionevent();
+    fetchinfobpj()
   }, [isLoading]);
 
   let sudahdipilihcount = 0;
@@ -348,6 +350,8 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
   //setDisableInputs(true)
 
   console.log('statusevent:', eventstatus_id);
+  console.log('selected', selectedTipe, selectedDate, selectedLokasi);
+  console.log('disabled', isDisabled);
 
   return (
     <>
@@ -374,7 +378,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                   sx={{ backgroundColor: '#1C2D5A', borderRadius: '12px', padding: '14px 24px' }}
                   endIcon={<NotificationsNoneOutlined />}
                   onClick={handleOpenDetailBPJ}
-                  disabled={!isFormValid()}
+                  disabled={!isFormValid() || disableInputs}
                 >
                   Kirim Notifikasi
                 </Button>
@@ -403,6 +407,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                         InputLabelProps={{ shrink: true }}
                         label="Tanggal"
                         onChange={(date) => setSelectedDate(date)}
+                        value={dayjs(selectedDate)}
                         disabled={disableInputs}
                         fullWidth // Set fullWidth to occupy the entire width of its container
                       />
