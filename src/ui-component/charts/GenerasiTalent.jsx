@@ -99,7 +99,7 @@ const GenerasiTalent = ({ data }) => {
     <MainCard maxWidth="lg">
       <Grid container spacing={gridSpacing} paddingTop={3} paddingLeft={3} paddingRight={3} paddingBottom={3}>
         <Grid item xs={12}>
-          <Typography variant="h3">Rasio Talent Menurut Kelompok Jenis Kelamin</Typography>
+          <Typography variant="h3">Rasio Talent Menurut Kelompok Generasi</Typography>
         </Grid>
         <Grid item xs={12}>
           <div id="generasiTalentChart" ref={chartRef} />
