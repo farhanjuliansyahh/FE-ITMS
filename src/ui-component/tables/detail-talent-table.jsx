@@ -11,6 +11,7 @@ const columnKeys = {
   jobfam: 'Rumpun Jabatan',
   nama_kantor: 'Kantor',
   nama_event: 'Nama Event',
+  kategori_talent: 'Kategori Talent',
   year: 'Tahun'
 };
 
