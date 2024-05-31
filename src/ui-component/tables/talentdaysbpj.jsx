@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
+import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HapusDataBPJ from '../../ui-component/modal/hapus-data-bpj';
 
@@ -56,26 +57,13 @@ export default function TalentDaysBPJTable({
       width: 160,
       renderCell: (params) => {
         return (
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#FFFFFF',
-              color: '#D32F2F',
-              border: '1px solid #D32F2F',
-              borderColor: '#D32F2F',
-              borderRadius: '12px',
-              marginRight: '8px',
-              '&:hover': {
-                backgroundColor: 'transparent',
-                borderColor: '#D32F2F',
-              },
-            }}
-            endIcon={<DeleteOutlineOutlinedIcon />}
-            onClick={() => handleHapusBPJOpen(params.row.nippos)} // Pass nippos to the handler
-            disabled={disabled}
-          >
-            Hapus
-          </Button>
+          <ButtonErrorOutlined 
+              icon={DeleteOutlineOutlinedIcon}
+              LabelName={'Hapus'}
+              padding={'6px 16px'}
+              onClick={() => handleHapusBPJOpen(params.row.nippos)}
+              disabled={disabled}
+              />
         );
       },
     },

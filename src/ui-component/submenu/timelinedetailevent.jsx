@@ -147,7 +147,8 @@ export default function TimelineDetailEvent({
     padding: '8px 16px',
     borderRadius: '16px',
     fontWeight: 600,
-    fontSize: '16px'
+    fontSize: '16px',
+    whiteSpace: 'nowrap'
   });
 
   const CountdownStep = styled('div')({
