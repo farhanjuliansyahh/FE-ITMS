@@ -12,14 +12,9 @@ import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutline
 // ==============================|| MANAJEMEN PENGGUNA ||============================== //
 
 const DaftarPengguna = () => {
-  const [isLoading, setLoading] = useState(true);
   const [rowsUser, setRowsUser] = useState([]);
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
+  const getallroles = () => {
     // Fetch data from API
     fetch(`http://localhost:4000/getallroles`)
       .then((response) => response.json())
@@ -30,11 +25,14 @@ const DaftarPengguna = () => {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
+  }
+
+  useEffect(() => {
+    getallroles();
   }, []);
 
   const userLength = rowsUser.length;
 
-  //
   const listNama = [...new Set(rowsUser.map((row) => row.nama))];
   const listNippos = [...new Set(rowsUser.map((row) => row.nippos))];
   const listPosisi = [...new Set(rowsUser.map((row) => row.posisi))];
@@ -62,29 +60,28 @@ const DaftarPengguna = () => {
   };
 
   const handleResetSearch = () => {
-    setSelectedNama('');
-    setSelectedNippos('');
-    setSelectedPosisi('');
-    setSelectedPeran('');
-
-    // Call resetInput function for each CustomSearch component
     resetNamaInput();
     resetNipposInput();
     resetPosisiInput();
     resetPeranInput();
   };
 
-  const [filteredData, setFilteredData] = useState([]); // State to hold the filtered data
+  const filteredRows = rowsUser.filter((row) => {
+    const namaMatch = !selectedNama || (row.nama && row.nama.toLowerCase().includes(selectedNama.toLowerCase()));
+    const nipposMatch = !selectedNippos || (row.nippos && row.nippos.toLowerCase().includes(selectedNippos.toLowerCase()));
+    const posisiMatch = !selectedPosisi || (row.posisi && row.posisi.toLowerCase().includes(selectedPosisi.toLowerCase()));
+    const peranMatch = !selectedPeran || (row.Peran && row.Peran.toLowerCase().includes(selectedPeran.toLowerCase()));
 
-  // Memoize the function to prevent infinite loops
-  const handleFilteredData = useCallback((data) => {
-    setFilteredData(data);
-  }, []);
+    return (!selectedNama || namaMatch) && (!selectedNippos || nipposMatch) && (!selectedPosisi || posisiMatch) && (!selectedPeran || peranMatch);
+  });
 
-  useEffect(() => {
-    // Initially set filteredData to rowsUser
-    setFilteredData(rowsUser);
-  }, [rowsUser]);
+  const resetRowIndex = (filteredRows) => {
+    return filteredRows.map((row, index) => ({
+      ...row,
+      id: index + 1
+    }));
+  };
+  const resetRows = resetRowIndex(filteredRows);
 
   const handleDownloadCSV = () => {
     let dataToDownload = [];
@@ -192,12 +189,8 @@ const DaftarPengguna = () => {
                   </div>
 
                   <DaftarPenggunaTabel
-                    rows={rowsUser}
-                    searchNama={selectedNama}
-                    searchNippos={selectedNippos}
-                    searchPosisi={selectedPosisi}
-                    searchPeran={selectedPeran}
-                    onFilteredData={handleFilteredData} // Pass the function to child component
+                    rows={resetRows}
+                    refetchData={getallroles}
                   />
                 </Box>
               </Grid>
