@@ -363,7 +363,7 @@ export default function TimelineDetailEvent({
     })()}
   </>
 )}
-{activeStep >= 5 &&(
+{eventstatus_id === 8 && activeStep >= 5 &&(
   <>
      Realisasi:
     {new Date(deadline[0][`startdate_6`]).toLocaleDateString('id-ID', {
@@ -410,8 +410,9 @@ export default function TimelineDetailEvent({
         <CountdownStep>Hari ini</CountdownStep>
       ) : (
         // Display negative days left with a different style
-        <CountdownStep style={{ backgroundColor: '#FFF5F5', color: '#FF6B6B' }}>{`${DaysLeftStep} hari`}</CountdownStep>
-      )
+<CountdownStep style={{ backgroundColor: '#FFF5F5', color: '#FF6B6B' }}>
+  {`Terlewat ${Math.abs(DaysLeftStep)} hari`}
+</CountdownStep>      )
     ) : (
       ''
     )}
