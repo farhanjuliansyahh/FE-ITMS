@@ -51,33 +51,34 @@ const DaftarEvent = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [deadline, setDeadline] = useState([])
 
-    // Save all the changes of questions using Simpan Button and show Success Modal
-    const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
-    const handleCloseAlertBerhasil = (event, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-      setOpenAlertBerhasil(false);
-    };
+  // Save all the changes of questions using Simpan Button and show Success Modal
+  const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
+  const handleCloseAlertBerhasil = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlertBerhasil(false);
+  };
 
   const [refresh, setrefresh] = useState(false);
   useEffect(() => {
-    if (refresh){
+    if (refresh) {
       fetchDataFromDatabase()
-      .then((data) => {
-        setEventData(data.event);
-        setLoading(false); // Move this line to the end of the .then block
-        // setOpenSnackbar(true); // Show snackbar on event added
-        // setOpenAlertBerhasil(true);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
+        .then((data) => {
+          setEventData(data.event);
+          setLoading(false); // Move this line to the end of the .then block
+          // setOpenSnackbar(true); // Show snackbar on event added
+          // setOpenAlertBerhasil(true);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+          setLoading(false);
+        });
       setrefresh(false);
+      console.log("CALLED refresh");
       setPageTab0(1);
     }
-    
+
   }, [refresh]);
 
   const fetchDataFromDatabase = () => {
@@ -115,7 +116,7 @@ const DaftarEvent = () => {
       });
   }, []);
 
-  
+
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
@@ -138,6 +139,7 @@ const DaftarEvent = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  // console.log("asdasd", eventData);
 
   const BoxContainer = styled('div')({
     display: 'flex',
@@ -160,10 +162,12 @@ const DaftarEvent = () => {
   const [itemsPerPageTab0, setItemsPerPageTab0] = useState(5);
 
   const handleChangePageTab0 = (event, newPage) => {
+    console.log("CALLED HANDLE CHANGE PAGE TAB0");
     setPageTab0(newPage);
   };
 
   const handleItemsPerPageChangeTab0 = (newItemsPerPage) => {
+    console.log("CALLED HANDLE ITEMS PER PAGE TAB0");
     setItemsPerPageTab0(newItemsPerPage);
     setPageTab0(1);
   };
@@ -254,7 +258,7 @@ const DaftarEvent = () => {
                 >
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant="h4" marginTop={3}>
-                    Tidak Ada Data
+                    Belum ada event yang terjadwal
                   </Typography>
                 </Box>
               ) : (
@@ -291,7 +295,7 @@ const DaftarEvent = () => {
                   tanggal_mulai={event.tanggal_mulai}
                   tanggal_selesai={event.tanggal_selesai}
                   tanggal_mulai_real={event.deadline && event.deadline[0] ? event.deadline[0].startdate_1 : null}
-                  tanggal_selesai_real={event.deadline && event.deadline[0] ? event.deadline[0].eventselesai : null}              
+                  tanggal_selesai_real={event.deadline && event.deadline[0] ? event.deadline[0].eventselesai : null}
                   status={event.evenstatus_id}
                   statusHitungMundur={false}
                   jobleve={event.jobleve}
@@ -311,7 +315,7 @@ const DaftarEvent = () => {
                 >
                   <img src={notFoundImage} alt="Deskripsi gambar" />
                   <Typography variant="h4" marginTop={3}>
-                    Tidak Ada Data
+                    Event yang telah selesai akan segera ditampilkan di sini
                   </Typography>
                 </Box>
               ) : (
@@ -330,15 +334,15 @@ const DaftarEvent = () => {
           )}
         </CustomTabPanel>
 
-        <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} setrefresh={setrefresh}/>
+        <AddEventModal open={open} handleClose={handleClose} onEventAdded={handleEventAdded} setrefresh={setrefresh} />
         {/* {open && 
         } */}
 
         <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'center', horizontal: 'center' }}>
-        <MuiAlert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
-          Event successfully created!
-        </MuiAlert>
-      </Snackbar>
+          <MuiAlert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+            Event successfully created!
+          </MuiAlert>
+        </Snackbar>
 
         <AlertBerhasil
           open={openAlertBerhasil}
