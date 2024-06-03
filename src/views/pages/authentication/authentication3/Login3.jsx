@@ -38,7 +38,7 @@ const Login = () => {
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
                           <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                            Hi, Selamat Datang
+                            Hai, Selamat Datang
                           </Typography>
                         </Stack>
                       </Grid>

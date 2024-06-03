@@ -40,9 +40,9 @@ const Login = () => {
 
         {/* Nippos Sign In */}
         <Grid item xs={12} container alignItems="center" justifyContent="center">
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Masuk dengan kredensial Anda</Typography>
-          </Box>
+          {/* <Box sx={{ mb: 2 }}> */}
+            {/* <Typography variant="subtitle1">Masuk dengan kredensial Anda</Typography> */}
+          {/* </Box> */}
         </Grid>
       </Grid>
 
