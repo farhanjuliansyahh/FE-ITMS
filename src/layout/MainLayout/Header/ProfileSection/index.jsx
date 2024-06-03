@@ -217,16 +217,16 @@ const ProfileSection = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
-                  <Box sx={{ p: 2 }}>
+                  <Box sx={{ paddingTop: '24px', paddingLeft: '24px', paddingRight: '24px' }}>
                     <Stack>
-                      <Stack direction="row" spacing={0.5} alignItems="center">
+                      <Stack direction="row" spacing={0.5} alignItems="center" marginBottom={'4px'}>
                         <Typography variant="h4">{resultProfile.nama}</Typography>
                       </Stack>
                       {/* Check if nipposrole exists and has at least one element */}
                       {resultProfile.nipposrole && resultProfile.nipposrole.length > 0 && (
-                        <Stack>
+                        <Stack marginBottom={'12px'}>
                           {resultProfile.nipposrole.map((role, index) => (
-                            <Typography key={index} variant="subtitle2">
+                            <Typography key={index} variant="title1">
                               {role.roleid.nama_role}
                             </Typography>
                           ))}
@@ -236,24 +236,24 @@ const ProfileSection = () => {
                     <Divider />
                   </Box>
                   <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
-                    <Box sx={{ p: 2 }}>
+                    <Box sx={{ paddingTop: '12px', paddingLeft: '24px', paddingRight: '24px', paddingBottom: '24px' }}>
                       <List
                         component="nav"
                         sx={{
                           width: '100%',
-                          maxWidth: 350,
+                          maxWidth: 450,
                           minWidth: 300,
                           backgroundColor: theme.palette.background.paper,
-                          borderRadius: '10px',
+                          borderRadius: '12px',
                           [theme.breakpoints.down('md')]: {
                             minWidth: '100%'
                           },
-                          '& .MuiListItemButton-root': {
-                            mt: 0.5
-                          }
+                          // '& .MuiListItemButton-root': {
+                          //   mt: 0.5
+                          // }
                         }}
                       >
-                        <ListItemButton
+                        {/* <ListItemButton
                           sx={{ borderRadius: `${customization.borderRadius}px` }}
                           selected={selectedIndex === 0}
                           onClick={(event) => handleListItemClick(event, 0, '#')}
@@ -262,8 +262,9 @@ const ProfileSection = () => {
                             <IconSettings stroke={1.5} size="1.3rem" />
                           </ListItemIcon>
                           <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
-                        </ListItemButton>
-                        <ListItemButton
+                        </ListItemButton> */}
+
+                        {/* <ListItemButton
                           sx={{ borderRadius: `${customization.borderRadius}px` }}
                           selected={selectedIndex === 1}
                           onClick={(event) => handleListItemClick(event, 1, '#')}
@@ -290,7 +291,9 @@ const ProfileSection = () => {
                               </Grid>
                             }
                           />
-                        </ListItemButton>
+                        </ListItemButton> */}
+
+
                         <ListItemButton
                           sx={{ borderRadius: `${customization.borderRadius}px` }}
                           selected={selectedIndex === 4}

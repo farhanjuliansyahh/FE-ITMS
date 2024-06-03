@@ -13,6 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs'; // Import dayjs for date manipulation
 import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
 import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
+import { toast } from 'react-toastify';
 
 function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua, mulai }) {
   const [deadlinesource, setdeadlinesource] = useState('');
@@ -288,10 +289,12 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
           await notifikasikomiteunit();
           await rolekomiteunit();
           await ketuakomiterole(ketua);
+          // toast.success('Talent Source telah dimulai!');
           setOpenAlertBerhasil(true);
           window.location.href = `http://localhost:3000/talent/detail-event/${eventid}`;
           handleClose(); // Close the popup after all operations are finished
         } catch (error) {
+          // toast.error('Gagal memulai Talent Source.');
           console.error('Error:', error);
           // Handle error if any of the promises reject
         }
