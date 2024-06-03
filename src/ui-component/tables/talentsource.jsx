@@ -22,10 +22,11 @@ const TalentSourceTable = ({eventid,
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('')
   const [selectedKU, setSelectedKU]         = useState('')
+  const [selectedOption, setSelectedOption] = useState(false)
 
   const activeEvent = eventid
 
-  const updatekomiteunit = (eventid, nippos, komite_unit) => {
+  const updatekomiteunit = (eventid, nippos, komite_unit, selectedOption) => {
     return fetch(`http://localhost:4000/updatekomiteunit?eventtalentid=${eventid}`, {
         method: 'POST', // Specify the HTTP method (POST, GET, etc.)
         headers: {
@@ -34,7 +35,8 @@ const TalentSourceTable = ({eventid,
         body: JSON.stringify({
             // Include any data you want to send in the request body
             nippos: nippos,
-            komite_unit: komite_unit
+            komite_unit: komite_unit,
+            permanent: selectedOption 
         }) // Convert the bodyData object to a JSON string
     })
         .then(response => {
@@ -99,8 +101,10 @@ const updatekomiterole = (eventid, nippos) => {
 
 
 
-  const handleConfirm = () => {
-    updatekomiteunit(activeEvent, selectedNippos, selectedKU)
+  const handleConfirm = (selectedoption) => {
+    console.log("Confirm button clicked");
+    setSelectedOption(selectedoption)
+    updatekomiteunit(activeEvent, selectedNippos, selectedKU, selectedOption)
       .then(() => {
         // After updating komite unit, call updatekomiterole
         return updatekomiterole(activeEvent, selectedKU);
