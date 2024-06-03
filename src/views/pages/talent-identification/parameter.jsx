@@ -393,7 +393,7 @@ const ParameterTalent = () => {
     if (!nama_bagian) {
       return ''; // Return an empty string if nama_bagian is null or undefined
     }
-  
+
     const words = nama_bagian.split(' ');
     if (words.length > 4) {
       // Words to preserve intact
@@ -407,7 +407,7 @@ const ParameterTalent = () => {
     }
     return nama_bagian;
   };
-  
+
 
   const getKetuaKomiteTalent = () => {
     fetch(`http://localhost:4000/getNamaKetuaKomiteTalent`)
@@ -560,7 +560,11 @@ const ParameterTalent = () => {
               </Box>
 
               {/* Table */}
-              <DaftarPertanyaanTable pertanyaan={pertanyaan} handleSaveQuestion={handleSaveQuestionAutomatic} />
+              <DaftarPertanyaanTable
+                pertanyaan={pertanyaan}
+                handleSaveQuestion={handleSaveQuestionAutomatic}
+                setChangesMade={setChangesMade}
+              />
             </Grid>
 
             <Box display="flex" justifyContent="flex-end" width="100%">
