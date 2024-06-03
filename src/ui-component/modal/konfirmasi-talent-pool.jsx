@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 
 function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }) {    
     const eventaktif = eventid;
-    console.log("aktif", eventid);
 
     const statusselesai = async () => {
         try {
@@ -32,7 +31,6 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
 
             // If successful, handle the response data (if needed)
             const responseData = await response.json();
-            console.log('Response data:', responseData);
             toast.success('Semua event telah selesai!')
         } catch (error) {
             // Handle any errors that occur during the API call

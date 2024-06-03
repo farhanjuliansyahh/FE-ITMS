@@ -171,7 +171,7 @@ const DaftarEventKomiteUnit = () => {
               >
                 <img src={notFoundImage} alt="Deskripsi gambar" />
                 <Typography variant="h4" marginTop={3}>
-                  Tidak Ada Data
+                  Belum ada event yang terjadwal
                 </Typography>
               </Box>
             ) : (
@@ -225,7 +225,7 @@ const DaftarEventKomiteUnit = () => {
               >
                 <img src={notFoundImage} alt="Deskripsi gambar" />
                 <Typography variant="h4" marginTop={3}>
-                  Tidak Ada Data
+                  Event yang telah selesai akan segera ditampilkan di sini
                 </Typography>
               </Box>
             ) : (

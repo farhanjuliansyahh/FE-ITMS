@@ -24,12 +24,7 @@ const filterMenuItems = (role) => {
 
 const getMenuItems = (roleString) => {
   // const roleString = sessionStorage.getItem('role');
-  // console.log('agfagsfh', roleString);
   const role = roleString ? JSON.parse(roleString) : null;
-
-  // console.log('ini role', role);
-  // console.log('ini rolestring', roleString);
-
   let menuItems = [];
 
   if (role) {

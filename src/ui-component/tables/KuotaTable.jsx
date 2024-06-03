@@ -62,7 +62,6 @@ export default function KuotaTable({
   const [rows, setRows] = useState([]);
   const [koutafromrows, setKuotaFromRows] = useState(0);
 
-  console.log('eee', updatekuotastate);
   useEffect(() => {
     // Fetch data from API
     if (refetchstate) {

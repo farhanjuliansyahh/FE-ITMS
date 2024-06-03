@@ -41,7 +41,6 @@ export default function EventBerjalan({
   const [daysLeft, setDaysLeft] = React.useState(null);
   const [isBeforeStart, setIsBeforeStart] = React.useState(false);
 
-  console.log("tanggal", id, tanggal_mulai, tanggal_selesai);
   const nama = nama_event;
   const quotaawal = kuota;
   const kodefam = kode_rumpun;

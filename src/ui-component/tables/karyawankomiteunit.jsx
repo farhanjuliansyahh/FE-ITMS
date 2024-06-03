@@ -12,8 +12,7 @@ const KaryawanKomiteUnit = ({
     const currentYear = new Date().getFullYear();
 
     const handleSelectionChange = (newSelection) => {
-        onSelectedRowsChange(newSelection); // Pass the selectionModel directly
-        console.log(newSelection);
+        onSelectedRowsChange(newSelection); 
     };
 
     const columns = [

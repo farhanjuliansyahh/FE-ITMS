@@ -429,8 +429,13 @@ const TalentSourceTable = ({ eventId, rows, checkboxSelection, selectedRows, onS
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, rows.length);
+  const [selectedNippos, setSelectedNippos] = useState('')
+  const [selectedKU, setSelectedKU]         = useState('')
+  const [selectedOption, setSelectedOption] = useState(false)
 
-  const updatekomiteunit = (eventid, nippos, komite_unit) => {
+  const activeEvent = eventid
+
+  const updatekomiteunit = (eventid, nippos, komite_unit, selectedOption) => {
     return fetch(`http://localhost:4000/updatekomiteunit?eventtalentid=${eventid}`, {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
@@ -439,7 +444,8 @@ const TalentSourceTable = ({ eventId, rows, checkboxSelection, selectedRows, onS
       body: JSON.stringify({
         // Include any data you want to send in the request body
         nippos: nippos,
-        komite_unit: komite_unit
+        komite_unit: komite_unit,
+            permanent: selectedOption 
       }) // Convert the bodyData object to a JSON string
     })
       .then(response => {
@@ -501,11 +507,15 @@ const TalentSourceTable = ({ eventId, rows, checkboxSelection, selectedRows, onS
 
   const handleCloseSecondModal = () => {
     setOpenSecondModal(false);
+      setOpenSecondModal(false);
   };
+
+
 
   const handleConfirm = () => {
     console.log("Confirm button clicked");
-    updatekomiteunit(activeEvent, selectedNippos, selectedKU)
+    setSelectedOption(selectedoption)
+    updatekomiteunit(activeEvent, selectedNippos, selectedKU, selectedOption)
       .then(() => {
         // After updating komite unit, call updatekomiterole
         return updatekomiterole(activeEvent, selectedKU);

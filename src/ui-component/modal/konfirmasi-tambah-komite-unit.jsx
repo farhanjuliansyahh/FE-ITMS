@@ -45,6 +45,7 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
+        console.log("option",selectedOption);
     };
 
     // Conditionally enable/disable the "Tambah" button
@@ -75,8 +76,8 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {
                         value={selectedOption}
                         onChange={handleOptionChange} // Update selectedOption when a radio button is selected
                     >
-                        <FormControlLabel value="eventIniSaja" control={<Radio />} label="Event Ini Saja" />
-                        <FormControlLabel value="permanentSemuaEvent" control={<Radio />} label="Permanent Semua Event" />
+                        <FormControlLabel value={false} control={<Radio />} label="Event Ini Saja" />
+                        <FormControlLabel value={true} control={<Radio />} label="Permanent Semua Event" />
                     </RadioGroup>
                 </FormControl>
                 </OptionnBox>
@@ -94,7 +95,7 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {
             <DialogActions sx={{padding:'0 24px 24px 24px '}}>
                 <ButtonsContainer>
                     <ButtonError LabelName={'Batalkan'} icon={CancelOutlined} onClick={onClose}/>
-                    <ButtonPrimary LabelName={'Tambah'} icon={CheckCircleOutlineOutlined} onClick={onConfirm} disabled={isButtonDisabled}/>
+                    <ButtonPrimary LabelName={'Tambah'} icon={CheckCircleOutlineOutlined} onClick={() => onConfirm(selectedOption)} disabled={isButtonDisabled}/>
 
                 </ButtonsContainer>
             </DialogActions>

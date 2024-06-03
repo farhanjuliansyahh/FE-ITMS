@@ -9,7 +9,7 @@ export default function DetailEvent({ prevLocation }) {
   const { id } = useParams();
   const [isLoading, setLoading] = useState(true);
   const [eventaktif, seteventaktif] = useState([]);
-  console.log(id);
+  
   const fetcheventdetail = () => {
     return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
       .then((response) => {
@@ -45,7 +45,7 @@ export default function DetailEvent({ prevLocation }) {
         setLoading(false);
       });
   }, []);
-  console.log('noticeme', eventaktif);
+  
   const {
     eventid,
     nama_event,
@@ -59,7 +59,6 @@ export default function DetailEvent({ prevLocation }) {
     evenstatus_id
   } = eventaktif;
 
-  console.log('namaid', id);
   return (
     <>
       {/* <MainLayout /> */}

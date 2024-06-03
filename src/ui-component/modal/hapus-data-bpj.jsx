@@ -64,10 +64,7 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
             });
     
             // Check if the request was successful (status code 200-299)
-            if (response.ok) {
-                // If successful, handle the response or perform any necessary actions
-                console.log('Data deleted successfully');
-            } else {
+            if (!response.ok) {
                 // If not successful, throw an error or handle the error response
                 throw new Error('Failed to delete data');
             }
@@ -87,7 +84,6 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
                 hapusdata()
                 .then(response => {
                     // Handle success
-                    console.log(response); // Output: Data successfully deleted
                     handleClose(); // Close the dialog after successfully deleting data
                 })
                 .catch(error => {

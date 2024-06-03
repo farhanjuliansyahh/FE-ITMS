@@ -40,8 +40,6 @@ export default function TambahKomiteTalent({ open, onClose, onConfirm, komiteTal
         setOpenKonfirmasiModal(true); // Open the second modal first; // Close the first modal afterwards
     };
 
-    // console.log('selected nippos: ', selectedNippos, namaSelectedKomiteTalent);
-
     const HandleKonfirmasiModal = () => {
         onClose();
         if (onConfirm) {

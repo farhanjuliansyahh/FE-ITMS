@@ -137,7 +137,7 @@ export default function ClusterKetuaKomiteTalent() {
   const handlerefresh = () => {
     setrefreshstate(true);
   };
-  console.log(clusterRow);
+  
   useEffect(() => {
     // Fetch data from API
     fetch(`http://localhost:4000/getclustertable?eventtalentid=${id}`)
@@ -185,7 +185,6 @@ export default function ClusterKetuaKomiteTalent() {
   };
 
   const selected = countSelected();
-  console.log('Number of rows with different Kategori Matrix:', selected);
 
   const totalRows = clusterRow.length;
 

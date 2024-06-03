@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Avatar, Grid } from '@mui/material';
 import EmpatKolomDataKaryawan from "../../ui-component/tables/empatkolomdatakaryawan";
 import DuaKolomDataKaryawan from "../../ui-component/tables/duakolomdatakaryawan";
-import User1 from '../../assets/images/users/user-round.svg';
+import User1 from '../../../public/assets/images/users/user-round.svg';
 
 function createData(colname1, coldata1, colname2, coldata2) {
   return { colname1, coldata1, colname2, coldata2 };

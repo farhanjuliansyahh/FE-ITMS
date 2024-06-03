@@ -26,10 +26,7 @@ function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent, confirm
             });
     
             // Check if the request was successful (status code 200-299)
-            if (response.ok) {
-                // If successful, handle the response or perform any necessary actions
-                console.log('Data updated successfully');
-            } else {
+            if (!response.ok) {
                 // If not successful, throw an error or handle the error response
                 throw new Error('Failed to update data');
             }

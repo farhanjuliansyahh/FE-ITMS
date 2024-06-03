@@ -28,7 +28,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }));
 
-const DaftarPertanyaanTable = ({ pertanyaan, handleSaveQuestion }) => {
+const DaftarPertanyaanTable = ({ pertanyaan, handleSaveQuestion, setChangesMade }) => {
   const [editingId, setEditingId] = useState(null);
   const [editedText, setEditedText] = useState('');
 
@@ -39,6 +39,7 @@ const DaftarPertanyaanTable = ({ pertanyaan, handleSaveQuestion }) => {
 
   const handleInputChange = (e) => {
     setEditedText(e.target.value);
+    setChangesMade(true)
   };
 
   const handleSave = (id) => {
@@ -100,7 +101,8 @@ const DaftarPertanyaanTable = ({ pertanyaan, handleSaveQuestion }) => {
 
 DaftarPertanyaanTable.propTypes = {
   pertanyaan: PropTypes.array.isRequired,
-  handleSaveQuestion: PropTypes.func.isRequired
+  handleSaveQuestion: PropTypes.func.isRequired,
+  setChangesMade: PropTypes.func.isRequired
 };
 
 export default DaftarPertanyaanTable;

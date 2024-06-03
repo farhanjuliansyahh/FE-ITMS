@@ -104,7 +104,6 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   const eventactive = parseInt(eventid);
 
   const updatedeadline = (eventid) => {
-    console.log('event active', eventactive);
     return fetch('http://localhost:4000/updatedeadline', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
@@ -133,7 +132,6 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const notifikasikaryawan = () => {
-    console.log('event active', eventactive);
     return fetch('http://localhost:4000/notifkaryawan', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
@@ -388,7 +386,6 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const rolekaryawan = () => {
-    console.log('event active', eventactive);
     return fetch('http://localhost:4000/assignkaryawan', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {

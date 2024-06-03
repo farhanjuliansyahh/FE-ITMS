@@ -69,10 +69,6 @@ const TalentCluster = ({eventid}) => {
     setLoading(false);
   }, []);
 
-  useEffect(()=>{
-    console.log(filterNama);
-  },[filterNama])
-
   useEffect(() => {
     // Fetch data from API
     fetch(`http://localhost:4000/getclustertable?eventtalentid=${eventidactive}`)
@@ -115,7 +111,6 @@ const TalentCluster = ({eventid}) => {
     paddingBottom: '24px',
   });
 
-  console.log(clusterRow)
   // TABEL CLUSTER KARYAWAN
   const listNamaTrue = [...new Set(clusterRow.map(row => row.Nama))]
   const listNipposTrue = [...new Set(clusterRow.map(row => row.Nippos))];

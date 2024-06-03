@@ -51,7 +51,6 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
     
         // Remove null values (in case some IDs didn't match any rows)
         const validNippos = selectedNippos.filter(nippos => nippos !== null);
-        console.log("validnippos", validNippos);
     
         // Send update API request to change something in the database
         fetch(`http://localhost:4000/updatestatussource?eventtalentid=${id}`, {

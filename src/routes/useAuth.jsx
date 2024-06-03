@@ -58,7 +58,6 @@ export const useAuth = () => {
         sessionStorage.setItem('role', JSON.stringify(namaRoles));
 
         const role = JSON.parse(sessionStorage.getItem('role'));
-        console.log('ini dia role:', role);
 
         setTimeout(() => {
           if (role.includes('Super Admin') || role.includes('HCBP')) {

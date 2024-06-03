@@ -9,10 +9,6 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }
   const [ubahStatusOpen, setUbahStatusOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState(null); 
 
-  useEffect(() => {
-    console.log("Nippos yang ingin diubah status: ", selectedNippos);
-  }, [selectedNippos]); // Run this effect whenever selectedNippos changes
-
   const handleUbahStatusOpen = (nippos) => {
     setSelectedNippos(nippos);
     setUbahStatusOpen(true);

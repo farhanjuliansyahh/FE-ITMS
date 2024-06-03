@@ -175,7 +175,7 @@ export default function TimelineDetailEvent({
       setDialogOpen(true);
     } else if (activeStep === 5) {
       setTalentPoolDialogOpen(true);
-      
+
     }
   };
 
@@ -212,7 +212,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentProfile eventid={eventid} eventstatus_id={eventstatus_id}/>
+              <TalentProfile eventid={eventid} eventstatus_id={eventstatus_id} />
             </Box>
           </MainCard>
         );
@@ -220,7 +220,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id} prevLocation={prevLocation}/>
+              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id} prevLocation={prevLocation} />
             </Box>
           </MainCard>
         );
@@ -228,7 +228,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentDays eventid={eventid} eventstatus_id={eventstatus_id}/>
+              <TalentDays eventid={eventid} eventstatus_id={eventstatus_id} />
             </Box>
           </MainCard>
         );
@@ -236,7 +236,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentCluster eventid={eventid} eventstatus_id={eventstatus_id}/>
+              <TalentCluster eventid={eventid} eventstatus_id={eventstatus_id} />
             </Box>
           </MainCard>
         );
@@ -244,14 +244,12 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentPool eventid={eventid} eventstatus_id={eventstatus_id}/>
+              <TalentPool eventid={eventid} eventstatus_id={eventstatus_id} />
             </Box>
           </MainCard>
         );
     }
   };
-
-  console.log("status nyaaaa:", eventstatus_id);
 
   return (
     <Box sx={boxStyle}>
@@ -284,8 +282,17 @@ export default function TimelineDetailEvent({
 
           <div style={{ flex: '1' }}> </div>
 
-          {eventstatus_id !== 8 && <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari lagi` : ''}</CountdownLabel>}
-
+          {eventstatus_id !== 8 && (
+  <CountdownLabel style={{
+    color: DaysLeft === 0 ? 'yellow' : (DaysLeft > 0 ? '#66BB6A' : '#FF6B6B')
+  }}>
+    {DaysLeft !== null && DaysLeft > 0
+      ? `${DaysLeft} hari lagi`
+      : DaysLeft === 0
+      ? "Hari Ini"
+      : `Terlewat ${Math.abs(DaysLeft)} hari`}
+  </CountdownLabel>
+)}
 
           <ButtonSecondary
             Color="#1C2D5A"
@@ -344,47 +351,47 @@ export default function TimelineDetailEvent({
                       year: 'numeric',
                     });
                   })()}
-    </>
-  )}
-{eventstatus_id === 8 && activeStep < 5 &&(
-  <>
-    Realisasi:
-    {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    })} -{' '}
-    {(() => {
-      const endDate = new Date(deadline[0][`startdate_${activeStep + 2}`]);
-      endDate.setDate(endDate.getDate()); // Add one day
-      return endDate.toLocaleDateString('id-ID', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      });
-    })()}
-  </>
-)}
-{activeStep >= 5 &&(
-  <>
-     Realisasi:
-    {new Date(deadline[0][`startdate_6`]).toLocaleDateString('id-ID', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    })} -{' '}
-    {(() => {
-      const endDate = new Date(deadline[0][`eventselesai`]);
-      endDate.setDate(endDate.getDate()); // Add one day
-      return endDate.toLocaleDateString('id-ID', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      });
-    })()}
-  </>
-)}
-</Typography>
+                </>
+              )}
+              {eventstatus_id === 8 && activeStep < 5 && (
+                <>
+                  Realisasi:
+                  {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })} -{' '}
+                  {(() => {
+                    const endDate = new Date(deadline[0][`startdate_${activeStep + 2}`]);
+                    endDate.setDate(endDate.getDate()); // Add one day
+                    return endDate.toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    });
+                  })()}
+                </>
+              )}
+              {eventstatus_id === 8 && activeStep >= 5 && (
+                <>
+                  Realisasi:
+                  {new Date(deadline[0][`startdate_6`]).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })} -{' '}
+                  {(() => {
+                    const endDate = new Date(deadline[0][`eventselesai`]);
+                    endDate.setDate(endDate.getDate()); // Add one day
+                    return endDate.toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    });
+                  })()}
+                </>
+              )}
+            </Typography>
           </FlexTitle>
         </BoxContainer>
 
@@ -403,22 +410,23 @@ export default function TimelineDetailEvent({
                   </Box>
                 }
 
-{index === eventstatus_id - 2 && (
-  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
-    {DaysLeftStep !== null ? (
-      DaysLeftStep > 0 ? (
-        <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
-      ) : DaysLeftStep === 0 ? (
-        <CountdownStep>Hari ini</CountdownStep>
-      ) : (
-        // Display negative days left with a different style
-        <CountdownStep style={{ backgroundColor: '#FFF5F5', color: '#FF6B6B' }}>{`${DaysLeftStep} hari`}</CountdownStep>
-      )
-    ) : (
-      ''
-    )}
-  </Box>
-)}
+                {index === eventstatus_id - 2 && (
+                  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                    {DaysLeftStep !== null ? (
+                      DaysLeftStep > 0 ? (
+                        <CountdownStep>{`${DaysLeftStep} hari lagi`}</CountdownStep>
+                      ) : DaysLeftStep === 0 ? (
+                        <CountdownStep>Hari ini</CountdownStep>
+                      ) : (
+                        // Display negative days left with a different style
+                        <CountdownStep style={{ backgroundColor: '#FFF5F5', color: '#FF6B6B' }}>
+                          {`Terlewat ${Math.abs(DaysLeftStep)} hari`}
+                        </CountdownStep>)
+                    ) : (
+                      ''
+                    )}
+                  </Box>
+                )}
               </Step>
             );
           })}

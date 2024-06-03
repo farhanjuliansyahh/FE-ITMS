@@ -7,8 +7,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EmailIcon from '@mui/icons-material/Email';
 import PaktaIntegritas from '../../ui-component/tables/pakta-integritas';
 import TalentCheckbox from '../../ui-component/checkbox/talent-checkbox';
-import PosLogo from '../../assets/images/ilustration/PosIND_MainColor.png';
-import ITMSLogo from '../../assets/images/logo.svg';
+import PosLogo from '../../../public/assets/images/ilustration/PosIND_MainColor.png';
+import ITMSLogo from '../../../public/assets/images/logo/logo.svg';
 import PICLcontent from '../../ui-component/cards/PICL-content';
 import { useState,useEffect } from 'react';
 const styles = {

@@ -21,7 +21,6 @@ export default function TalentQualificationTable({
   minimumAkhlakQualified,
   minimumLearningAgilityQualified
 }) {
-  // console.log(minimumCompeten5cyQualified,minimumPmsQualified,minimumAkhlakQualified,minimumLearningAgilityQualified);
   const columns = [
     { field: 'id', headerName: 'No', width: 70 },
     { field: 'Nama', headerName: 'Nama', width: 130 },

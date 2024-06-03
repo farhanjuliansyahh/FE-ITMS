@@ -22,7 +22,6 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   const [isLoading, setLoading] = useState(true);
 
   const handleDateChange = (date) => {
-    console.log(date); // Check the date value
     setdeadlinesource(date); // Update the state with the selected date
     setIsDateSelected(!!date); // Update isDateSelected based on whether a date is selected
   };

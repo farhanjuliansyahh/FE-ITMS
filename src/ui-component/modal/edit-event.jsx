@@ -41,7 +41,6 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
   const [formChanged, setFormChanged] = useState(false); // State to track form changes
   const [changesSaved, setChangesSaved] = useState(false); // State to track if changes have been saved
 
-  console.log("CREATE EDIT DIALOG");
   useEffect(() => {
     // Save original data when dialog opens
     setOriginalData({ 
@@ -55,7 +54,6 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
   }, [open]);
 
   const handlequotachange = (event) => {
-    console.log('event', event.target.value);
     const value = event.target.value;
     // Check if the value is a valid number
     if (/^\d*$/.test(value)) {
@@ -65,10 +63,6 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
       setQuotaError(true);
     }
   };
-
-  useEffect(() => {
-    console.log(isQuotaTouched, quotaError);
-  }, [isQuotaTouched, quotaError]);
 
     // Function to check if the form has changed
     const checkFormChanges = () => {
@@ -197,7 +191,6 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
       // Check if the request was successful
       if (response.ok) {
         setOpenAlertBerhasil(true);
-        console.log("CALLED SETREFRESH FROM EDIT");
         setrefresh(true);
       } else {
         throw new Error('Failed to delete data');
@@ -279,7 +272,6 @@ function EditEvent({ open, handleClose, eventid, nama, koderumpun, jobfam, quota
               onFocus={() => {}}
               onBlur={() => {
                 setIsQoutaTouched(true);
-                console.log('touched');
                 setQuotaError(false);
               }}
               error={(isQuotaTouched && quotaError) || (isQuotaTouched && !quota)} // Display error state if invalid

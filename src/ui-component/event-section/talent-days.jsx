@@ -90,10 +90,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    console.log(filterNama);
-  }, [filterNama]);
-
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -356,10 +352,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     setDetailBPJOpen(false);
   };
   //setDisableInputs(true)
-
-  console.log('statusevent:', eventstatus_id);
-  console.log('selected', selectedTipe, selectedDate, selectedLokasi);
-  console.log('disabled', isDisabled);
 
   return (
     <>

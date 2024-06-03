@@ -148,8 +148,6 @@ const ParameterTalent = () => {
     fetchData();
   }, []);
 
-  // console.log(rows);
-
   // create list of Nama, Nippos, Job Level, Rumpun Jabatan
   const listNama = [...new Set(rows.map((row) => row.nama))];
   const listNippos = [...new Set(rows.map((row) => row.nippos))];
@@ -215,8 +213,6 @@ const ParameterTalent = () => {
     getQuestions();
   }, []); // Empty dependency array to run effect only once
 
-  // console.log('pertanyaan: ', pertanyaan);
-
   const [openAddQuestionModal, setOpenAddQuestionModal] = useState(false);
 
   const handleOpenAddQuestionModal = () => {
@@ -231,7 +227,6 @@ const ParameterTalent = () => {
       id: generateId(),
       text: newQuestionText
     };
-    // console.log('Adding new question:', newQuestion);
     setPertanyaan([...pertanyaan, newQuestion]);
   };
 
@@ -275,13 +270,6 @@ const ParameterTalent = () => {
     setPertanyaanChange((prevChanges) => [...prevChanges, newChange]);
   };
 
-  // console.log('diubah: ', pertanyaanChange);
-
-  useEffect(() => {
-    // console.log('Rows:', pertanyaan);
-    // console.log('Rows:', pertanyaan);
-  }, [pertanyaan]);
-
   // Save all the changes of questions using Simpan Button and show Success Modal
   const [openAlertBerhasilSimpan, setOpenAlertBerhasilSimpan] = useState(false);
   const handleCloseAlertBerhasilSimpan = (event, reason) => {
@@ -294,7 +282,6 @@ const ParameterTalent = () => {
   const handleSaveAllChanges = () => {
     updateQuestion(pertanyaanChange)
       .then((data) => {
-        console.log('API response:', data);
         setChangesMade(false);
         setOpenAlertBerhasilSimpan(true);
         setPertanyaanChange([]); // Clear the changes after successful update
@@ -358,10 +345,6 @@ const ParameterTalent = () => {
   //buat constanta yang isinya hasil filter yang indexnya udah di reset:
   const resetRows = resetRowIndex(filteredRows);
 
-  // console.log('sri: ', resetRows)
-
-  // console.log('sri: ', resetRows);
-
   const handleDownloadCSV = () => {
     let dataToDownload = [];
     let filename = '';
@@ -410,7 +393,7 @@ const ParameterTalent = () => {
     if (!nama_bagian) {
       return ''; // Return an empty string if nama_bagian is null or undefined
     }
-  
+
     const words = nama_bagian.split(' ');
     if (words.length > 4) {
       // Words to preserve intact
@@ -424,7 +407,7 @@ const ParameterTalent = () => {
     }
     return nama_bagian;
   };
-  
+
 
   const getKetuaKomiteTalent = () => {
     fetch(`http://localhost:4000/getNamaKetuaKomiteTalent`)
@@ -577,7 +560,11 @@ const ParameterTalent = () => {
               </Box>
 
               {/* Table */}
-              <DaftarPertanyaanTable pertanyaan={pertanyaan} handleSaveQuestion={handleSaveQuestionAutomatic} />
+              <DaftarPertanyaanTable
+                pertanyaan={pertanyaan}
+                handleSaveQuestion={handleSaveQuestionAutomatic}
+                setChangesMade={setChangesMade}
+              />
             </Grid>
 
             <Box display="flex" justifyContent="flex-end" width="100%">

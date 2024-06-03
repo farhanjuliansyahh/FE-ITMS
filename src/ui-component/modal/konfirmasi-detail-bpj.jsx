@@ -9,7 +9,6 @@ function KonfirmasiDetailBPJ({ open, handleClose, handleCloseBatalkan, eventid, 
 
     const eventactive = eventid
     const notifikasikaryawan = (eventid, jenis_bpj,tanggal_bpj, lokasi_bpj) => {
-        console.log("event active", eventactive);
         return fetch('http://localhost:4000/notifbpj', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
