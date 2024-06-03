@@ -394,14 +394,14 @@ import ButtonPrimary from '../button/ButtonPrimary';
 import TambahKomiteUnit from '../modal/tambah-komite-unit';
 import KonfirmasiTambahKomiteUnit from '../modal/konfirmasi-tambah-komite-unit';
 
-const TalentSourceTable = ({ eventId, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton }) => {
+const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton }) => {
   const [openFirstModal, setOpenFirstModal] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('');
   const [selectedKU, setSelectedKU] = useState('');
   const [selectAll, setSelectAll] = useState(false);
 
-  const activeEvent = eventId;
+  const activeEvent = eventid;
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
@@ -442,7 +442,7 @@ const TalentSourceTable = ({ eventId, rows, checkboxSelection, selectedRows, onS
         // Include any data you want to send in the request body
         nippos: nippos,
         komite_unit: komite_unit,
-            permanent: selectedOption 
+        permanent: selectedOption 
       }) // Convert the bodyData object to a JSON string
     })
       .then(response => {
@@ -511,7 +511,7 @@ const TalentSourceTable = ({ eventId, rows, checkboxSelection, selectedRows, onS
 
   const handleConfirm = () => {
     console.log("Confirm button clicked");
-    setSelectedOption(selectedoption)
+    setSelectedOption(selectedOption)
     updatekomiteunit(activeEvent, selectedNippos, selectedKU, selectedOption)
       .then(() => {
         // After updating komite unit, call updatekomiterole
