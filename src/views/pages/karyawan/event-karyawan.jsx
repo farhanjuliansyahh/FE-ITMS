@@ -180,7 +180,7 @@ useEffect(() => {
             {paginatedEventsTab0.length === 0 ? (
               <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                 <img src={notFoundImage} alt="Deskripsi gambar" />
-                <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                <Typography variant='h4' marginTop={3}>Belum ada event yang terjadwal</Typography>
               </Box>
             ) : (
               <Stack spacing={2} direction="row" sx={{ marginTop: '24px' }}>
@@ -222,7 +222,7 @@ useEffect(() => {
             {paginatedEventsTab1.length === 0 ? (
               <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', marginBottom: '24px' }}>
                 <img src={notFoundImage} alt="Deskripsi gambar" />
-                <Typography variant='h4' marginTop={3}>Tidak Ada Data</Typography>
+                <Typography variant='h4' marginTop={3}>Event yang telah selesai akan segera ditampilkan di sini</Typography>
               </Box>
             ) : (
               <Stack spacing={2} direction="row" sx={{ marginTop: '24px' }}>
