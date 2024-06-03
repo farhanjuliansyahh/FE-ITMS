@@ -52,7 +52,6 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   const handleSelectedRowsChange = (newSelectedRows) => {
     setSelectedRows(newSelectedRows);
   };
-  // console.log("selected row", selectedRows);
 
   const eventidactive = eventid;
 
@@ -93,7 +92,6 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     let dataToDownload = [];
     let filename = '';
 
-    console.log('tab', value);
     // Determine which dataset to use based on the active tab
     if (value === 0) {
       dataToDownload = resetRowsFalse;
@@ -153,7 +151,6 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
 
     // Remove null values (in case some IDs didn't match any rows)
     const validNippos = selectedNippos.filter((nippos) => nippos !== null);
-    console.log('validnippos', validNippos);
 
     // Send update API request to change something in the database
     fetch(`http://localhost:4000/updatestatussource?eventtalentid=${eventid}`, {

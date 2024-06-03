@@ -71,7 +71,6 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   };
 
   const handlequotachange = (event) => {
-    console.log('event', event.target.value);
     const value = event.target.value;
     // Check if the value is a valid number
     if (/^\d*$/.test(value)) {
@@ -81,10 +80,6 @@ function AddEventModal({ open, handleClose, setrefresh }) {
       setQuotaError(true);
     }
   };
-
-  useEffect(() => {
-    console.log(isQuotaTouched, quotaError);
-  }, [isQuotaTouched, quotaError]);
 
   const handledeskripsichange = (event) => {
     setdeskripsi(event.target.value); // Update state with input value
@@ -113,7 +108,6 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   };
 
   const handleJobLevelChange = (event, newJobLevels) => {
-    console.log('joblevebl', newJobLevels);
     setSelectedJobLevel(newJobLevels);
   };
 
@@ -151,7 +145,6 @@ function AddEventModal({ open, handleClose, setrefresh }) {
 
   const handlequestionchange = (event) => {
     setselectedquestion(event.target.value);
-    console.log(selectedquestion);
   };
 
   const fetchketuakomite = async (selectedCommittee) => {
@@ -186,19 +179,13 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   };
 
   const handleStartDateChange = (date) => {
-    // console.log(date); // Check the date value
     setstartdate(date); // Update the state with the selected date
   };
 
   const handleEndDateChange = (date) => {
-    // console.log(date); // Check the date value
     setenddate(date); // Update the state with the selected date
   };
 
-  useEffect(() => {
-    console.log('enddate', enddate);
-  }, [enddate]);
-  
   const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
 
   const postData = async () => {
@@ -210,7 +197,6 @@ function AddEventModal({ open, handleClose, setrefresh }) {
       const adjustedStartDate = dayjs(startdate).add(1, 'day');
       const adjustedEndDate = dayjs(enddate).add(1, 'day');
 
-      console.log(startdate);
       // Make the POST request to the API endpoint
       const response = await fetch('http://localhost:4000/addevent', {
         method: 'POST',
@@ -241,30 +227,24 @@ function AddEventModal({ open, handleClose, setrefresh }) {
       // If successful, handle the response data (if needed)
 
       const responseData = await response.json();
-      console.log('Response data:', responseData);
 
-      // Show success toast notification
-      // toast.success('Event berhasil dibuat.');
       setOpenAlertBerhasil(true);
 
-      // Reload halaman setelah 2 detik agar data event diperbarui secara visual
-        // window.location.reload();
-        console.log("CALLED SETREFRESH FROM ADD");
-        setrefresh(true);
- 
+      setrefresh(true);
+
     } catch (error) {
       // Handle any errors that occur during the API call
       console.error('Error posting data:', error.message);
     }
   };
 
-    // Save all the changes of questions using Simpan Button and show Success Modal
-    const handleCloseAlertBerhasil = (event, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-        setOpenAlertBerhasil(false);
-    };
+  // Save all the changes of questions using Simpan Button and show Success Modal
+  const handleCloseAlertBerhasil = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlertBerhasil(false);
+  };
 
   const CloseDialog = () => {
     setIsCommitteeTouched(false);
@@ -411,7 +391,6 @@ function AddEventModal({ open, handleClose, setrefresh }) {
                     required
                     onBlur={() => {
                       setIsJobLevelTouched(true);
-                      console.log('params', params);
                     }}
                     error={isJobLevelTouched && !selectedJobLevel.length > 0}
                     helperText={isJobLevelTouched && !selectedJobLevel.length > 0 ? 'Job Level harus diisi' : ''}
@@ -511,10 +490,9 @@ function AddEventModal({ open, handleClose, setrefresh }) {
                 label="Talent Pool Quota"
                 value={quota} // Set value from state
                 onChange={handlequotachange} // Handle input change
-                onFocus={() => {}}
+                onFocus={() => { }}
                 onBlur={() => {
                   setIsQoutaTouched(true);
-                  console.log('touched');
                   setQuotaError(false);
                 }}
                 error={(isQuotaTouched && quotaError) || (isQuotaTouched && !quota)} // Display error state if invalid

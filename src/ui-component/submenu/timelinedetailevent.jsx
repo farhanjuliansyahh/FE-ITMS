@@ -251,8 +251,6 @@ export default function TimelineDetailEvent({
     }
   };
 
-  console.log("status nyaaaa:", eventstatus_id);
-
   return (
     <Box sx={boxStyle}>
       <Box sx={{ backgroundColor: '#FFFFFF', padding: '24px', borderRadius: '12px' }}>

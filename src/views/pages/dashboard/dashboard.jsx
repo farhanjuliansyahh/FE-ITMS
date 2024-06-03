@@ -111,8 +111,6 @@ const Dashboard = () => {
     getgendata(selectedYear);
   }, [selectedYear]);
 
-  console.log(datarumpun);
-
   const cards = [
     {
       title: 'Total Talent',
@@ -126,8 +124,6 @@ const Dashboard = () => {
     //   // navigateTo: '/dashboard/total-pegawai',
     // },
   ];
-
-  console.log('datagen', datagen);
 
   return (
     <>

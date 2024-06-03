@@ -25,7 +25,7 @@ export default function KomiteUnitListButton({eventid}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [komiteunit, setkomiteunit] = useState([''])
-  console.log(eventid);
+  
   useEffect(() => {
     // Fetch data from API
     fetch(`http://localhost:4000/getkomiteunitlist?eventtalentid=${eventid}`)
@@ -38,8 +38,6 @@ export default function KomiteUnitListButton({eventid}) {
         console.error('Error fetching data:', error);
       });
   }, []); // Empty dependency array to run effect only once
-
-console.log(eventid);
 
 let sudahMemilihCount = 0;
 let belumMemilihCount = 0;

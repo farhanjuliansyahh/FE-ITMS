@@ -3,7 +3,6 @@ import { Typography, Button } from '@mui/material';
 import { ArrowForwardOutlined } from '@mui/icons-material';
 
 function KuotaKomiteUnitAlert({totalKaryawan, halfLength}) {
-    console.log(totalKaryawan,halfLength);
 
     return (
         <div style={{ display: 'block', backgroundColor: '#FFF6E9', borderRadius: '12px', padding: '24px', gap: '12px'}}>

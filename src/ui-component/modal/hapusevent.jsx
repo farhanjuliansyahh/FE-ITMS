@@ -97,18 +97,9 @@ function HapusEvent({ open, handleClose, eventid, setrefresh }) {
   // Save all the changes of questions using Simpan Button and show Success Modal
   const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
   const handleCloseAlertBerhasil = () => {
-    // if (reason === 'clickaway') {
-    //   return;
-    // }
-    console.log("HandleClose");
     setOpenAlertBerhasil(false);
     setrefresh(true);
   };
-
-  
-  useEffect(()=>{
-    console.log("alert data berubah jadi", openAlertBerhasil);
-  },[openAlertBerhasil])
 
   const mulaiButton = (
     <Button

@@ -95,13 +95,11 @@ const updatekomiterole = (eventid, nippos) => {
 
   const handleCloseSecondModal = () => {
       setOpenSecondModal(false);
-      console.log("selected ku", selectedKU);
   };
 
 
 
   const handleConfirm = () => {
-    console.log("Confirm button clicked");
     updatekomiteunit(activeEvent, selectedNippos, selectedKU)
       .then(() => {
         // After updating komite unit, call updatekomiterole

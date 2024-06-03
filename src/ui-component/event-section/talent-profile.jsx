@@ -129,15 +129,6 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    console.log(filterNama);
-  }, [filterNama]);
-
-  // const handleButtonClick = () => {
-  //   // Logic for button click
-  //   console.log('Button clicked!');
-  // };
-
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -159,7 +150,6 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
     let dataToDownload = [];
     let filename = '';
 
-    console.log('tab', value);
     // Determine which dataset to use based on the active tab
     if (value === 0) {
       dataToDownload = resetRowsFalse;

@@ -75,7 +75,6 @@ const DaftarEvent = () => {
         setLoading(false);
       });
       setrefresh(false);
-      console.log("CALLED refresh");
       setPageTab0(1);
     }
     
@@ -139,7 +138,6 @@ const DaftarEvent = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  // console.log("asdasd", eventData);
 
   const BoxContainer = styled('div')({
     display: 'flex',
@@ -162,12 +160,10 @@ const DaftarEvent = () => {
   const [itemsPerPageTab0, setItemsPerPageTab0] = useState(5);
 
   const handleChangePageTab0 = (event, newPage) => {
-    console.log("CALLED HANDLE CHANGE PAGE TAB0");
     setPageTab0(newPage);
   };
 
   const handleItemsPerPageChangeTab0 = (newItemsPerPage) => {
-    console.log("CALLED HANDLE ITEMS PER PAGE TAB0");
     setItemsPerPageTab0(newItemsPerPage);
     setPageTab0(1);
   };

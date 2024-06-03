@@ -32,7 +32,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
   const [daysLeft, setDaysLeft] = React.useState(null);
 
   let statusberjalan;
-  // console.log(status);
+  
   if (status === 1) {
     statusberjalan = "Belum Mulai";
   } else if (status >= 2 && status <= 7) {
@@ -240,12 +240,12 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
 
 
   const navigate = useNavigate();
-  const [openAkses, setOpenAkses] = useState(); 
+  const [openAkses, setOpenAkses] = useState();
   const handleOpenAkses = () => {
     // Perform other actions
-   
+
     setOpenAkses(true); // If you still need to open a modal or something similar
-    
+
     // Navigate
     navigate('daftar-eventkomiteunit');
   };
@@ -256,17 +256,17 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
     borderRadius: '12px',
     paddingLeft: '12px',
     paddingRight: '12px',
-    ':hover':{
+    ':hover': {
       backgroundColor: '#AB1D05',
       color: '#fff',
     }
   }
-  
+
   const akseseventButton = (
-    <Button 
-    sx={akseseventButtonStyle} 
-    endIcon={<ArrowForwardRoundedIcon />}
-    onClick={handleOpenAkses}>
+    <Button
+      sx={akseseventButtonStyle}
+      endIcon={<ArrowForwardRoundedIcon />}
+      onClick={handleOpenAkses}>
       Akses Event
     </Button>
   );
@@ -311,7 +311,7 @@ export default function EventBerjalan({ id, nama_event, deskripsi, tipe_komite_t
               <Link
                 to={{
                   pathname: '/event-komiteunit/daftar-eventkomiteunit',
-                  
+
                 }}
                 style={{ color: 'inherit' }}
               >

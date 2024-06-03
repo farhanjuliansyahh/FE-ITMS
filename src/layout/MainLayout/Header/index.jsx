@@ -59,8 +59,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
         // Call API to update notification status
         updatenotifstatus(notif.nippos, notif.eventtalentid, notif.id_referensi_notifikasi)
           .then((response) => {
-            // Handle success response if needed
-            console.log('Notification status updated successfully:', response);
           })
           .catch((error) => {
             // Handle error if needed

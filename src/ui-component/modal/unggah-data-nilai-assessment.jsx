@@ -191,7 +191,6 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 setUploadInProgressToastId(null)
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
                 toast.success('All chunks uploaded successfully'); // Show toast notification
-                console.log('All chunks uploaded successfully');
                 handleResetAndClose(); // Close the dialog after successful upload
                 if (onConfirm) {
                     onConfirm();
@@ -217,7 +216,6 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(`Chunk ${chunkIndex + 1} upload successful:`, data);
                     uploadChunk(chunkIndex + 1); // Upload the next chunk
                 })
                 .catch(error => {

@@ -84,10 +84,6 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    console.log(filterNama);
-  }, [filterNama]);
-
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -197,8 +193,6 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
     // Clean up
     document.body.removeChild(link);
   };
-
-  console.log("hai:", eventstatus_id);
 
   return (
     <>

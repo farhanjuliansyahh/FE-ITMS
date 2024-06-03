@@ -125,7 +125,6 @@ const TalentClusterKetuaKomiteTalentTable = ({
     };
 
     const handleCloseSecondModal = (reason) => {
-        console.log("test", eventid,selectedCategory,selectedNippos,reason);
         ubahmatriks(eventid, selectedNippos, selectedCategory, reason)
         .then(() => {
             // Trigger the callback function passed from the parent component to refresh the table data

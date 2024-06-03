@@ -82,15 +82,6 @@ const TalentKomiteUnit = () => {
     setLoading(false);
   }, []);
 
-  useEffect(()=>{
-    console.log(filterNama);
-  },[filterNama])
-
-  // const handleButtonClick = () => {
-  //   // Logic for button click
-  //   console.log('Button clicked!');
-  // };
-
  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
