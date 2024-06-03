@@ -63,6 +63,9 @@ const columns = [
       );
     },
   },
+  {
+    field: 'reason', headerName: 'Alasan Perubahan', width: 180
+    },
 ];
 
 

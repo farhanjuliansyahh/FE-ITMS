@@ -200,6 +200,9 @@ const TalentClusterKetuaKomiteTalentTable = ({
                 );
             },
         },
+        {
+        field: 'reason', headerName: 'Alasan Perubahan', width: 130
+        },
     ];
 
     const filteredRows = rows.filter((row) => {
