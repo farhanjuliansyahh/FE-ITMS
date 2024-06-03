@@ -15,7 +15,7 @@ import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
 import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 import { toast } from 'react-toastify';
 
-function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua, mulai }) {
+function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua, mulai, tipekomitetalent}) {
   const [deadlinesource, setdeadlinesource] = useState('');
   const [activejoblevel, setactivejoblevel] = useState(['']);
   const [isDateSelected, setIsDateSelected] = useState(false); // New state to track if date is selected
@@ -136,7 +136,8 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
       },
       body: JSON.stringify({
         // Include any data you want to send in the request body
-        eventtalentid: eventid
+        eventtalentid: eventid,
+        tipekomitetalent: tipekomitetalent
       }) // Convert the bodyData object to a JSON string
     })
       .then((response) => {

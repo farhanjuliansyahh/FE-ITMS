@@ -46,6 +46,7 @@ export default function EventBerjalan({
   const quotaawal = kuota;
   const kodefam = kode_rumpun;
   const ketuakomite = ketua;
+  const tipekomitetalent = tipe_komite_talent;
 
   let statusberjalan;
   if (status === 1) {
@@ -429,7 +430,7 @@ export default function EventBerjalan({
         })}
       </Stepper>
 
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite} mulai={tanggal_mulai} setrefresh={setrefresh}/>
+      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite} tipekomitetalent={tipekomitetalent} mulai={tanggal_mulai} setrefresh={setrefresh}/>
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} setrefresh={setrefresh} />
       <EditEvent
         open={openEdit}
