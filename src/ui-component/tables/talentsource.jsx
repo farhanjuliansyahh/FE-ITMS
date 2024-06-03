@@ -429,11 +429,8 @@ const TalentSourceTable = ({ eventId, rows, checkboxSelection, selectedRows, onS
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, rows.length);
-  const [selectedNippos, setSelectedNippos] = useState('')
-  const [selectedKU, setSelectedKU]         = useState('')
   const [selectedOption, setSelectedOption] = useState(false)
 
-  const activeEvent = eventid
 
   const updatekomiteunit = (eventid, nippos, komite_unit, selectedOption) => {
     return fetch(`http://localhost:4000/updatekomiteunit?eventtalentid=${eventid}`, {
