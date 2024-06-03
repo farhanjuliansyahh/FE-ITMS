@@ -30,11 +30,13 @@ export default function TalentDetail() {
   const listJobLevel = [...new Set(rows.map((row) => row.joblevel))];
   const listRumpunJabatan = [...new Set(rows.map((row) => row.jobfam))];
   const listKantor = [...new Set(rows.map((row) => row.nama_kantor))];
+  const listTahun = [...new Set(rows.map((row) => row.year))];
 
   const [selectedNama, setSelectedNama] = useState(null);
   const [selectedJobLevel, setSelectedJobLevel] = useState(null);
   const [selectedRumpunJabatan, setSelectedRumpunJabatan] = useState(null);
   const [selectedKantor, setSelectedKantor] = useState(null);
+  const [selectedTahun, setSelectedTahun] = useState(null);
 
   const resetNamaInput = () => {
     setSelectedNama('');
@@ -52,17 +54,23 @@ export default function TalentDetail() {
     setSelectedKantor('');
   };
 
+  const resetTahunInput = () => {
+    setSelectedTahun('');
+  };
+
   const handleResetSearch = () => {
     setSelectedNama('');
     setSelectedJobLevel('');
     setSelectedRumpunJabatan('');
     setSelectedKantor('');
+    setSelectedTahun('')
 
     // Call resetInput function for each CustomSearch component
     resetNamaInput();
     resetJobLevelInput();
     resetRumpunJabatanInput();
     resetKantorInput();
+    resetTahunInput();
   };
   //Unduh Button Action
   const handleDownloadCSV = () => {
@@ -87,15 +95,16 @@ export default function TalentDetail() {
   const filteredRows = rows.filter((row) => {
     const namaMatch = !selectedNama || (row.nama && row.nama.toLowerCase().includes(selectedNama.toLowerCase()));
     const jobLevelMatch = !selectedJobLevel || (row.joblevel && row.joblevel.toLowerCase().includes(selectedJobLevel.toLowerCase()));
-    const rumpunJabatanMatch =
-      !selectedRumpunJabatan || (row.jobfam && row.jobfam.toLowerCase().includes(selectedRumpunJabatan.toLowerCase()));
+    const rumpunJabatanMatch = !selectedRumpunJabatan || (row.jobfam && row.jobfam.toLowerCase().includes(selectedRumpunJabatan.toLowerCase()));
     const kantorMatch = !selectedKantor || (row.nama_kantor && row.nama_kantor.toLowerCase().includes(selectedKantor.toLowerCase()));
+    const tahunMatch = !selectedTahun || (row.year && row.year.toLowerCase().includes(selectedTahun.toLowerCase()));
 
     return (
       (!selectedNama || namaMatch) &&
       (!selectedJobLevel || jobLevelMatch) &&
       (!selectedRumpunJabatan || rumpunJabatanMatch) &&
-      (!selectedKantor || kantorMatch)
+      (!selectedKantor || kantorMatch) &&
+      (!selectedTahun || tahunMatch) 
     );
   });
 
@@ -150,6 +159,13 @@ export default function TalentDetail() {
                   onSearch={setSelectedKantor}
                   value={selectedKantor}
                   resetInput={resetKantorInput}
+                />
+                <CustomSearch
+                  field={listTahun}
+                  label={'Tahun'}
+                  onSearch={setSelectedTahun}
+                  value={selectedTahun}
+                  resetInput={resetTahunInput}
                 />
               </Stack>
               <ButtonErrorOutlined onClick={handleResetSearch} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
