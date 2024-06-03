@@ -49,6 +49,7 @@ const DaftarEvent = () => {
   const [value, setValue] = React.useState(0);
   const [eventData, setEventData] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [deadline, setDeadline] = useState([])
 
     // Save all the changes of questions using Simpan Button and show Success Modal
     const [openAlertBerhasil, setOpenAlertBerhasil] = useState(false);
@@ -96,6 +97,9 @@ const DaftarEvent = () => {
         throw error; // Rethrow the error to handle it elsewhere
       });
   };
+
+
+
 
 
   useEffect(() => {
@@ -189,6 +193,7 @@ const DaftarEvent = () => {
   const endIndexTab1 = startIndexTab1 + itemsPerPageTab1;
   const filteredEventsTab1 = filteredEvents.filter((event) => event.evenstatus_id === 8);
   const paginatedEventsTab1 = filteredEventsTab1.slice(startIndexTab1, endIndexTab1);
+
 
   return (
     <>
@@ -289,6 +294,8 @@ const DaftarEvent = () => {
                   kuota={event.kuota}
                   tanggal_mulai={event.tanggal_mulai}
                   tanggal_selesai={event.tanggal_selesai}
+                  tanggal_mulai_real={event.deadline && event.deadline[0] ? event.deadline[0].startdate_1 : null}
+                  tanggal_selesai_real={event.deadline && event.deadline[0] ? event.deadline[0].eventselesai : null}              
                   status={event.evenstatus_id}
                   statusHitungMundur={false}
                   jobleve={event.jobleve}

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 // ==============================|| DETAIL EVENT PAGE ||============================== //
 
-export default function DetailEvent() {
+export default function DetailEvent({ prevLocation }) {
   const { id } = useParams();
   const [isLoading, setLoading] = useState(true);
   const [eventaktif, seteventaktif] = useState([]);
@@ -75,6 +75,7 @@ export default function DetailEvent() {
         tanggal_selesai={tanggal_selesai}
         eventstatus_id={evenstatus_id}
         handleActiveStepChange={handleActiveStepChange}
+        prevLocation={prevLocation}
       />
     </>
   );

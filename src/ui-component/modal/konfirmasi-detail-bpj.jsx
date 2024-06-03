@@ -5,10 +5,10 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
-function KonfirmasiDetailBPJ({ open, handleClose, handleCloseBatalkan, eventid }) {
+function KonfirmasiDetailBPJ({ open, handleClose, handleCloseBatalkan, eventid, selectedTipe, selectedDate, selectedLokasi }) {
 
     const eventactive = eventid
-    const notifikasikaryawan = (eventid) => {
+    const notifikasikaryawan = (eventid, jenis_bpj,tanggal_bpj, lokasi_bpj) => {
         console.log("event active", eventactive);
         return fetch('http://localhost:4000/notifbpj', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
@@ -17,7 +17,10 @@ function KonfirmasiDetailBPJ({ open, handleClose, handleCloseBatalkan, eventid }
             },
             body: JSON.stringify({
                 // Include any data you want to send in the request body
-                eventtalentid: eventid
+                eventtalentid: eventid,
+                jenis_bpj: jenis_bpj,
+                tanggal_bpj: tanggal_bpj,
+                lokasi_bpj: lokasi_bpj
             }) // Convert the bodyData object to a JSON string
         })
             .then(response => {
@@ -80,7 +83,7 @@ function KonfirmasiDetailBPJ({ open, handleClose, handleCloseBatalkan, eventid }
             onMouseLeave={() => setIsHoveredKirimNotifikasi(false)}
             onClick={async () => {
                 try {
-                    await notifikasikaryawan(eventactive);
+                    await notifikasikaryawan(eventactive, selectedTipe, selectedDate, selectedLokasi);
                     handleClose();
                 } catch (error) {
                     // Handle error if notifkasikaryawan() fails

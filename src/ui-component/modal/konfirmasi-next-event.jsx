@@ -159,7 +159,6 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
       });
   };
 
-
   const notifikasiketuakomite = (eventid) => {
     return fetch('http://localhost:4000/notifketuakomite', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
@@ -238,16 +237,45 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
       });
   };
 
+  // const posttalentdays = () => {
+  //   return fetch('http://localhost:4000/createtdays', {
+  //     method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+  //     headers: {
+  //       'Content-Type': 'application/json' // Specify the content type
+  //     },
+  //     body: JSON.stringify({
+  //       // Include any data you want to send in the request body
+  //       eventtalentid: eventid
+  //     }) // Convert the bodyData object to a JSON string
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       return data; // Return the parsed JSON data
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching data:', error);
+  //       throw error; // Rethrow the error to handle it elsewhere
+  //     });
+  // };
+
   const posttalentdays = () => {
+    const requestBody = {
+      // Your request body data here
+      eventtalentid: eventid
+    };
     return fetch('http://localhost:4000/createtdays', {
-      method: 'POST', // Specify the HTTP method (POST, GET, etc.)
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json' // Specify the content type
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        // Include any data you want to send in the request body
         eventtalentid: eventid
-      }) // Convert the bodyData object to a JSON string
+      })
     })
       .then((response) => {
         if (!response.ok) {
@@ -256,11 +284,28 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
         return response.json();
       })
       .then((data) => {
-        return data; // Return the parsed JSON data
+        data;
+        return fetch(`http://localhost:4000/createdaysbpj`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+            throw error;
+          });
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        throw error; // Rethrow the error to handle it elsewhere
+        throw error;
       });
   };
 

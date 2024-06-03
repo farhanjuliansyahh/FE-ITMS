@@ -23,7 +23,7 @@ const getStatusStyle = (status) => {
   return { color, backgroundColor };
 };
 
-export default function TalentDaysBPJTable({ rows, question, eventid, refetchkaryawan, eventstatus_id }) {
+export default function TalentDaysBPJTable({ rows, question, eventid, refetchkaryawan, eventstatus_id, disabled }) {
   const [nilaiOpen, setNilaiOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('');
   const [nilai, setNilai] = useState([]);
@@ -65,14 +65,14 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
   };
 
   const columns = [
-    { field: 'id', headerName: 'No', width: 60 },
+    { field: 'id', headerName: 'No', width: 90 },
     { field: 'Nama', headerName: 'Nama', width: 200 },
     { field: 'Nippos', headerName: 'Nippos', width: 130 },
     { field: 'Posisi', headerName: 'Posisi', width: 400 },
     { field: 'Job Level', headerName: 'Job Level', width: 130 },
-    { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 130 },
-    { field: 'Nama Kantor', headerName: 'Kantor', width: 130 },
-    { field: 'Komite Unit', headerName: 'Komite Unit', width: 130 },
+    { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 150 },
+    { field: 'Nama Kantor', headerName: 'Kantor', width: 250 },
+    { field: 'Komite Unit', headerName: 'Komite Unit', width: 250 },
     {
       field: 'Status',
       headerName: 'Status',
@@ -111,6 +111,7 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
             }}
             endIcon={<AssignmentOutlinedIcon />}
             onClick={() => handleOpen(params.row.Nippos)}
+            disabled = {disabled}
           >
             Nilai
           </Button>

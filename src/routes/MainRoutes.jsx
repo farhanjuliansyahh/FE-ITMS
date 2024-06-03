@@ -52,7 +52,7 @@ const MainRoutes = {
         },
         {
           path: 'detail-event/:id',
-          element: <DetailEvent />
+          element: <DetailEvent prevLocation={'/talent/event'}/>
         }
       ]
     },

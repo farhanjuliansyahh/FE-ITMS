@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
+import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HapusDataBPJ from '../../ui-component/modal/hapus-data-bpj';
 
@@ -11,7 +12,7 @@ export default function TalentDaysBPJTable({
     searchNama, // Receive the search term as a prop
     searchNippos,
     confirm,
-    eventstatus_id
+    disabled
  }) {
   const filteredRows = rows.filter((row) => {
     const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
@@ -34,7 +35,6 @@ export default function TalentDaysBPJTable({
   const [selectedNippos, setSelectedNippos] = useState(null); // State to store selected nippos
 
   useEffect(() => {
-    console.log("nippos untuk di hapus", selectedNippos);
   }, [selectedNippos]); // Run this effect whenever selectedNippos changes
 
   const handleHapusBPJOpen = (nippos) => {
@@ -47,7 +47,7 @@ export default function TalentDaysBPJTable({
   };
 
   const columns = [
-    { field: 'id', headerName: 'No', width: 60 },
+    { field: 'id', headerName: 'No', width: 90 },
     { field: 'nama', headerName: 'Nama', width: 400 },
     { field: 'nippos', headerName: 'Nippos', width: 150 },
     { field: 'Posisi', headerName: 'Posisi', width: 600 },
@@ -57,26 +57,13 @@ export default function TalentDaysBPJTable({
       width: 160,
       renderCell: (params) => {
         return (
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#FFFFFF',
-              color: '#D32F2F',
-              border: '1px solid #D32F2F',
-              borderColor: '#D32F2F',
-              borderRadius: '12px',
-              marginRight: '8px',
-              '&:hover': {
-                backgroundColor: 'transparent',
-                borderColor: '#D32F2F',
-              },
-            }}
-            endIcon={<DeleteOutlineOutlinedIcon />}
-            onClick={() => handleHapusBPJOpen(params.row.nippos)} // Pass nippos to the handler
-            disabled={eventstatus_id !== 5}
-          >
-            Hapus
-          </Button>
+          <ButtonErrorOutlined 
+              icon={DeleteOutlineOutlinedIcon}
+              LabelName={'Hapus'}
+              padding={'6px 16px'}
+              onClick={() => handleHapusBPJOpen(params.row.nippos)}
+              disabled={disabled}
+              />
         );
       },
     },

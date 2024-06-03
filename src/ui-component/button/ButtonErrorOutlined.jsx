@@ -19,6 +19,11 @@ export default function ButtonErrorOutlined({ Color, backgroundColor, icon, Labe
           backgroundColor: '#FFEDED', // Warna latar belakang saat hover
           color: '#D32F2F', // Warna teks saat hover
         },
+        '&.Mui-disabled': {
+          // color: '#BDBDBD', // Disabled text color
+          // backgroundColor: '#F5F5F5', // Disabled background color
+          border: 'transparent', // Disabled border color
+        },
       }} 
       endIcon={<IconComponent />} // Dynamically setting the icon size using relative units
       onClick={onClick}

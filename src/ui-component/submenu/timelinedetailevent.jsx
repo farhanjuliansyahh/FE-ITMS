@@ -32,7 +32,8 @@ export default function TimelineDetailEvent({
   tanggal_mulai,
   tanggal_selesai,
   eventstatus_id,
-  handleActiveStepChange
+  handleActiveStepChange,
+  prevLocation
 }) {
   const [activeStep, setActiveStep] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -146,7 +147,8 @@ export default function TimelineDetailEvent({
     padding: '8px 16px',
     borderRadius: '16px',
     fontWeight: 600,
-    fontSize: '16px'
+    fontSize: '16px',
+    whiteSpace: 'nowrap'
   });
 
   const CountdownStep = styled('div')({
@@ -218,7 +220,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id}/>
+              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id} prevLocation={prevLocation}/>
             </Box>
           </MainCard>
         );
@@ -332,7 +334,7 @@ export default function TimelineDetailEvent({
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric',
-                  })} -
+                  })} -{' '}
                   {(() => {
                     const endDate = new Date(deadline[0][`deadline_${activeStep + 1}`]);
                     endDate.setDate(endDate.getDate() + 1); // Add one day
@@ -342,9 +344,47 @@ export default function TimelineDetailEvent({
                       year: 'numeric',
                     });
                   })()}
-                </>
-              )}
-            </Typography>
+    </>
+  )}
+{eventstatus_id === 8 && activeStep < 5 &&(
+  <>
+    Realisasi:
+    {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })} -{' '}
+    {(() => {
+      const endDate = new Date(deadline[0][`startdate_${activeStep + 2}`]);
+      endDate.setDate(endDate.getDate()); // Add one day
+      return endDate.toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+    })()}
+  </>
+)}
+{activeStep >= 5 &&(
+  <>
+     Realisasi:
+    {new Date(deadline[0][`startdate_6`]).toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })} -{' '}
+    {(() => {
+      const endDate = new Date(deadline[0][`eventselesai`]);
+      endDate.setDate(endDate.getDate()); // Add one day
+      return endDate.toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+    })()}
+  </>
+)}
+</Typography>
           </FlexTitle>
         </BoxContainer>
 

@@ -1,7 +1,5 @@
 import * as React from 'react';
-
 import { useEffect, useState } from 'react';
-// import Box from '@mui/material/Box';
 import { Avatar, Box, Button, Container, Grid, Typography } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import Stepper from '@mui/material/Stepper';
@@ -17,7 +15,6 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import KonfirmasiEvent from '../modal/konfirmasi-event';
 import HapusEvent from '../modal/hapusevent';
 import EditEvent from '../modal/edit-event';
-import { shadows } from '@mui/system';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -32,6 +29,8 @@ export default function EventBerjalan({
   kuota,
   tanggal_selesai,
   tanggal_mulai,
+  tanggal_mulai_real,
+  tanggal_selesai_real,
   status,
   showHitungMundur,
   jobleve,
@@ -42,6 +41,7 @@ export default function EventBerjalan({
   const [daysLeft, setDaysLeft] = React.useState(null);
   const [isBeforeStart, setIsBeforeStart] = React.useState(false);
 
+  console.log("tanggal", id, tanggal_mulai, tanggal_selesai);
   const nama = nama_event;
   const quotaawal = kuota;
   const kodefam = kode_rumpun;
@@ -88,8 +88,6 @@ export default function EventBerjalan({
       newSkipped.delete(activeStep);
     }
 
-    //setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
     setActiveStep(status);
     setSkipped(newSkipped);
   };
@@ -100,8 +98,6 @@ export default function EventBerjalan({
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
       throw new Error("You can't skip a step that isn't optional.");
     }
 
@@ -118,8 +114,8 @@ export default function EventBerjalan({
   };
 
   const boxStyle = {
-    border: '1px solid #E0E0E0', // Border style definition
-    padding: '20px', // Example padding
+    border: '1px solid #E0E0E0',
+    padding: '20px',
     width: '100%',
     borderRadius: '12px'
   };
@@ -129,7 +125,7 @@ export default function EventBerjalan({
   const FlexContainer = styled('div')({
     display: 'flex',
     alignItems: 'center',
-    gap: '16px', // Adjust the gap between elements as needed
+    gap: '16px',
     paddingBottom: '24px'
   });
 
@@ -189,7 +185,7 @@ export default function EventBerjalan({
   const statusColors = {
     1: { backgroundColor: '#FFEDED', color: '#F44336' }, // Belum Mulai
     2: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung
-    3: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung (you can add more statuses if needed)
+    3: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung
     4: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung
     5: { backgroundColor: '#EAF8FF', color: '#2196F3' },
     6: { backgroundColor: '#EAF8FF', color: '#2196F3' }, // Berlangsung
@@ -260,6 +256,7 @@ export default function EventBerjalan({
       Mulai Event
     </Button>
   );
+
   const DividerContainer = styled('div')({
     width: '100%',
     textAlign: 'center',
@@ -271,22 +268,16 @@ export default function EventBerjalan({
   };
 
   useEffect(() => {
-    // Convert 'tanggal_selesai' from ISO 8601 format to a Date object
     const endDate = new Date(tanggal_selesai);
-    // Get the current date
     const currentDate = new Date();
-    // Calculate the difference in milliseconds between the current date and the 'tanggal_selesai'
     const timeDifference = endDate.getTime() - currentDate.getTime();
-    // Convert the difference from milliseconds to days
     const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-    // Set the number of days left
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
   const jobleveString = jobleve.map(item => item.level_jabatan).join(", ");
 
-  console.log('ini kuota ituloh', quotaawal);
-  console.log("ini job:",jobleve);
+  const isRealEndDateBeforePlannedEndDate = new Date(tanggal_selesai_real) <= new Date(tanggal_selesai);
 
   return (
     <Box sx={boxStyle} style={{ marginBottom: '24px' }}>
@@ -297,7 +288,6 @@ export default function EventBerjalan({
 
         <BoxContainer>
           <FlexTitle style={{ paddingBottom: '8px' }}>
-            {/* Wrap the Typography with Link */}
             {status !== 1 ? (
               <Typography
                 style={{
@@ -334,21 +324,41 @@ export default function EventBerjalan({
 
           <FlexTitle>
             <CalendarIcon style={{ color: '#828282' }} />
-            <Typography style={{ color: '#828282' }}>
-              {tanggal_mulai &&
-                new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+            {status === 8 ? (
+              <Typography style={{ color: isRealEndDateBeforePlannedEndDate ? '#66BB6A' : '#F44336' }}>
+                Realisasi:
+                {new Date(tanggal_mulai_real).toLocaleDateString('id-ID', {
                   day: 'numeric',
                   month: 'long',
-                  year: 'numeric'
-                })}{' '}
-              -{' '}
-              {tanggal_selesai &&
-                new Date(tanggal_selesai).toLocaleDateString('id-ID', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric'
-                })}
-            </Typography>
+                  year: 'numeric',
+                })} -{' '}
+                {(() => {
+                  const endDate = new Date(tanggal_selesai_real);
+                  endDate.setDate(endDate.getDate());
+                  return endDate.toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  });
+                })()}
+              </Typography>
+            ) : (
+              <Typography style={{ color: '#828282' }}>
+                {tanggal_mulai &&
+                  new Date(tanggal_mulai).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}{' '}
+                -{' '}
+                {tanggal_selesai &&
+                  new Date(tanggal_selesai).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}
+              </Typography>
+            )}
           </FlexTitle>
         </BoxContainer>
 
@@ -408,11 +418,6 @@ export default function EventBerjalan({
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          // if (isStepOptional(index)) {
-          //   labelProps.optional = (
-          //     <Typography variant="caption">Optional</Typography>
-          //   );
-          // }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
