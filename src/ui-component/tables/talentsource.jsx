@@ -557,7 +557,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(startIndex, endIndex).map((row) => (
+            {rows.slice(startIndex, endIndex).map((row, index) => (
               <TableRow key={row.id}>
                 {checkboxSelection && (
                   <TableCell>
@@ -568,7 +568,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                     />
                   </TableCell>
                 )}
-                <TableCell component="th" scope="row">{row.id}</TableCell>
+                <TableCell component="th" scope="row">{startIndex + index + 1}</TableCell>
                 <TableCell>{row.Nama}</TableCell>
                 <TableCell>{row.Nippos}</TableCell>
                 <TableCell>{row.Posisi}</TableCell>
