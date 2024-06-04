@@ -193,39 +193,42 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid item xs={12}>
           <MainCard style={{ padding: '24px 24px' }}>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={18} md={18}>
               <Typography variant="body1" style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '6px' }}>
                 Keterangan
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Grid container spacing={2} justifyContent="start">
+              <Grid container spacing={4}>
+                <Grid container item spacing={3} xs={18}>
+              <Grid item xs={3}>
+                <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis" />
+              </Grid>
                 <Grid item xs={3}>
-                  <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis" />
-                </Grid>
-                <Grid item xs={2.5}>
-                  <ButtonChart buttonText="B" detail="Bisnis" />
-                </Grid>
-                <Grid item xs={4}>
-                  <ButtonChart buttonText="OP" detail="Operasi" />
+                <ButtonChart buttonText="SD" detail="Sumber Daya Manusia" />
                 </Grid>
                 <Grid item xs={3}>
-                  <ButtonChart buttonText="MR" detail="Manajemen Risiko dan Kepatuhan" />
-                </Grid>
-                <Grid item xs={2.5}>
                   <ButtonChart buttonText="PR" detail="Pengelolaan Regulasi" />
                 </Grid>
-                <Grid item xs={4}>
-                  <ButtonChart buttonText="DI" detail="Pengelolaan Teknologi" />
+                <Grid item xs={1}>
+                <ButtonChart buttonText="OP" detail="Operasi" />
                 </Grid>
-                <Grid item xs={3}>
-                  <ButtonChart buttonText="KU" detail="Keuangan" />
-                </Grid>
-                <Grid item xs={4}>
-                  <ButtonChart buttonText="SD" detail="Sumber Daya Manusia" />
+              </Grid>
+                <Grid container item spacing={2} xs={12}>
+                  <Grid item xs={3}>
+                    <ButtonChart buttonText="MR" detail="Manajemen Risiko dan Kepatuhan" />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <ButtonChart buttonText="DI" detail="Pengelolaan Teknologi" />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <ButtonChart buttonText="KU" detail="Keuangan" />
+                  </Grid>
+                  <Grid item xs={1}>
+                    <ButtonChart buttonText="B" detail="Bisnis" />
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
