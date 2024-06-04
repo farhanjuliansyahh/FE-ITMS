@@ -317,7 +317,13 @@ export default function AksesEvent({
         {showHitungMundur && (
           <Grid item xs={12} md={2}>
             <Typography>Hitung Mundur</Typography>
-            <Typography style={{ fontWeight: 'bold', color: '#F44336' }}>{daysLeft !== null ? `${daysLeft} hari` : ''}</Typography>
+            <Typography style={{ fontWeight: 'bold', color: '#F44336' }}>
+              {daysLeft !== null && daysLeft > 0
+                ? `${daysLeft} hari lagi`
+                : daysLeft === 0
+                  ? 'Hari Ini'
+                  : `Terlewat ${Math.abs(daysLeft)} hari`}
+            </Typography>
           </Grid>
         )}
       </Grid>

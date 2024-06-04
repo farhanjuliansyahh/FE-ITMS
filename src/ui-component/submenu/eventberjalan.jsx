@@ -275,7 +275,7 @@ export default function EventBerjalan({
     setDaysLeft(daysDifference);
   }, [tanggal_selesai]);
 
-  const jobleveString = jobleve.map(item => item.level_jabatan).join(", ");
+  const jobleveString = jobleve.map((item) => item.level_jabatan).join(', ');
 
   const isRealEndDateBeforePlannedEndDate = new Date(tanggal_selesai_real) <= new Date(tanggal_selesai);
 
@@ -330,15 +330,16 @@ export default function EventBerjalan({
                 {new Date(tanggal_mulai_real).toLocaleDateString('id-ID', {
                   day: 'numeric',
                   month: 'long',
-                  year: 'numeric',
-                })} -{' '}
+                  year: 'numeric'
+                })}{' '}
+                -{' '}
                 {(() => {
                   const endDate = new Date(tanggal_selesai_real);
                   endDate.setDate(endDate.getDate());
                   return endDate.toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric',
+                    year: 'numeric'
                   });
                 })()}
               </Typography>
@@ -386,7 +387,9 @@ export default function EventBerjalan({
 
         <Grid item xs={12} md={3}>
           <Typography>Tipe</Typography>
-          <Typography style={{ fontWeight: 'bold' }}>{tipe_komite_talent} ({jobleveString})</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>
+            {tipe_komite_talent} ({jobleveString})
+          </Typography>
         </Grid>
 
         <Grid item xs={12} md={2}>
@@ -409,7 +412,13 @@ export default function EventBerjalan({
         {showHitungMundur && (
           <Grid item xs={12} md={2}>
             <Typography>Hitung Mundur</Typography>
-            <Typography style={{ fontWeight: 'bold', color: '#F44336' }}>{daysLeft !== null ? `${daysLeft} hari` : ''}</Typography>
+            <Typography style={{ fontWeight: 'bold', color: '#F44336' }}>
+              {daysLeft !== null && daysLeft > 0
+                ? `${daysLeft} hari lagi`
+                : daysLeft === 0
+                  ? 'Hari Ini'
+                  : `Terlewat ${Math.abs(daysLeft)} hari`}
+            </Typography>
           </Grid>
         )}
       </Grid>
@@ -429,7 +438,16 @@ export default function EventBerjalan({
         })}
       </Stepper>
 
-      <KonfirmasiEvent open={open} handleClose={handleClose} eventid={id} rumpun_jabatan={kode_rumpun} ketua={ketuakomite} tipekomitetalent={tipekomitetalent} mulai={tanggal_mulai} setrefresh={setrefresh}/>
+      <KonfirmasiEvent
+        open={open}
+        handleClose={handleClose}
+        eventid={id}
+        rumpun_jabatan={kode_rumpun}
+        ketua={ketuakomite}
+        tipekomitetalent={tipekomitetalent}
+        mulai={tanggal_mulai}
+        setrefresh={setrefresh}
+      />
       <HapusEvent open={openHapus} handleClose={handleCloseHapus} eventid={id} setrefresh={setrefresh} />
       <EditEvent
         open={openEdit}
