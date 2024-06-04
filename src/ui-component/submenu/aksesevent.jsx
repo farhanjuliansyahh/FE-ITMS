@@ -30,7 +30,7 @@ export default function AksesEvent({
   kuota,
   tanggal_selesai,
   tanggal_mulai,
-  status_event,
+  // status_event,
   status,
   ButtonName,
   pathDetailEvent,
@@ -255,7 +255,7 @@ export default function AksesEvent({
                 color: 'inherit'
               }}
             ></Typography>
-            <EventLabel>{status_event} </EventLabel>
+            {/* <EventLabel>{status_event} </EventLabel> */}
           </FlexTitle>
 
           <FlexTitle>

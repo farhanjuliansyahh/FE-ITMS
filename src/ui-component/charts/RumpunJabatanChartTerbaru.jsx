@@ -19,7 +19,7 @@ const RumpunJabatanTerbaru = ({ isLoading, data }) => {
   useEffect(() => {
     if (!isLoading && data.length > 0) {
       // Define all desired categories
-      const allCategories = ['OP', 'B', 'PP', 'MR', 'PR', 'TI', 'KU', 'SDM'];
+      const allCategories = ['OP', 'B', 'PP', 'MR', 'PR', 'DI', 'KU', 'SD'];
   
       // Extracting unique categories from data
       const uniqueCategories = Array.from(new Set(data.map(item => item.nama_rumpun_jabatan)));
