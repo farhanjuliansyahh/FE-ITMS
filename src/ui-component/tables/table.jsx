@@ -2,23 +2,42 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Pagination, Checkbox } from '@mui/material';
-import FilterButton from '../../ui-component/button/FilterButton'; // Adjust the path as necessary
+import FilterButton from '../../ui-component/button/FilterButton';
+
+const tableHeaderStyles = {
+  backgroundColor: '#F5F5F5',
+  color: '#1F1F1F',
+  fontSize: 14,
+  fontWeight: 600,
+  whiteSpace: 'nowrap',
+};
+
+const tableBodyStyles = {
+  fontSize: 12,
+  minHeight: 20,
+  fontWeight: 400,
+  verticalAlign: 'center',
+};
+
+const columnStyles = {
+  'id-column': { whiteSpace: 'nowrap' },
+  'nama-column': { whiteSpace: 'nowrap' },
+  'posisi-column': { minWidth: '280px' },
+  'nama_kantor-column': { minWidth: '300px' },
+  'nama_event-column': { minWidth: '280px' },
+  'kategori_talent-column': { minWidth: '180px' },
+};
 
 const StyledTableCell = styled(TableCell)(() => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#F5F5F5',
-        color: '#1F1F1F',
-        fontSize: 14,
-        fontWeight: 600,
-        whiteSpace: 'nowrap',
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 12,
-        minHeight: 20,
-        fontWeight: 400,
-        verticalAlign: 'center',
-    },
-    }));
+  [`&.${tableCellClasses.head}`]: tableHeaderStyles,
+  [`&.${tableCellClasses.body}`]: {
+    ...tableBodyStyles,
+    ...Object.entries(columnStyles).reduce((acc, [key, value]) => {
+      acc[`&.${key}`] = value;
+      return acc;
+    }, {}),
+  },
+}));
 
 export default function MainTable({ columnKeys, filteredRows, minWidth, checkboxSelection }) {
   const [page, setPage] = useState(1);
@@ -85,7 +104,7 @@ export default function MainTable({ columnKeys, filteredRows, minWidth, checkbox
                   </StyledTableCell>
                 )}
                 {Object.keys(columnKeys).map((key) => (
-                  <StyledTableCell key={key}>{columnKeys[key]}</StyledTableCell>
+                  <StyledTableCell key={key} className={`${key}-column`}>{columnKeys[key]}</StyledTableCell>
                 ))}
               </TableRow>
             </TableHead>
@@ -108,7 +127,7 @@ export default function MainTable({ columnKeys, filteredRows, minWidth, checkbox
                       </StyledTableCell>
                     )}
                     {Object.keys(columnKeys).map((key) => (
-                      <StyledTableCell key={key}>{row[key]}</StyledTableCell>
+                      <StyledTableCell key={key} className={`${key}-column`}>{row[key]}</StyledTableCell>
                     ))}
                   </TableRow>
                 );
