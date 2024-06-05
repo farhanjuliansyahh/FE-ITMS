@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Grid, Stack, Typography, useMediaQuery, Box } from '@mui/material';
 
 // project imports
 import AuthWrapper1 from '../AuthWrapper1';
@@ -10,9 +8,8 @@ import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
 import Logo from '../../../../ui-component/LogoITMSLogin';
 import AuthFooter from '../../../../ui-component/cards/AuthFooter';
-import { height, width } from '@mui/system';
-
-// assets
+import logobumn from '../../../../../public/assets/images/logo/Logobumn.png';
+import logopos from '../../../../../public/assets/images/logo/logoposind-maincolor.png';
 
 // ================================|| AUTH3 - LOGIN ||================================ //
 
@@ -30,7 +27,7 @@ const Login = () => {
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
                     <Link to="#">
-                      <Logo/>
+                      <Logo />
                     </Link>
                   </Grid>
                   <Grid item xs={12}>
@@ -46,6 +43,12 @@ const Login = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <AuthLogin />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: '48px' }}>
+                      <img src={logopos} alt="Logo POS" style={{ height: 45, marginRight: 'auto' }} />
+                      <img src={logobumn} alt="Logo BUMN" style={{ height: 22, marginLeft: 'auto' }} />
+                    </Box>
                   </Grid>
                 </Grid>
               </AuthCardWrapper>

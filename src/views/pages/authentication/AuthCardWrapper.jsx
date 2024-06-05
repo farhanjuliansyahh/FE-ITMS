@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 // project import
 import MainCard from '../../../ui-component/cards/MainCard';
 
+
 // ==============================|| AUTHENTICATION CARD WRAPPER ||============================== //
 
 const AuthCardWrapper = ({ children, ...other }) => (
@@ -16,9 +17,10 @@ const AuthCardWrapper = ({ children, ...other }) => (
       '& > *': {
         flexGrow: 1,
         flexBasis: '50%'
-      }
+      },
+      boxShadow: '0px 0px 24px rgba(0, 0, 0, 0.1)' // Tambahkan properti boxShadow di sini
     }}
-    content={false}
+    content={true}
     {...other}
   >
     <Box sx={{ p: { xs: 2, sm: 3, xl: 5 } }}>{children}</Box>
