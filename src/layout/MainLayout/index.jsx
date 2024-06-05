@@ -9,6 +9,7 @@ import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material'
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import Footer from './Footer/footer';
 import Customization from '../Customization';
 import navigation from '../../menu-items';
 import { drawerWidth } from '../../store/constant';
@@ -90,7 +91,13 @@ const MainLayout = () => {
         {/* breadcrumb */}
         <Breadcrumbs separator={IconChevronRight} navigation={navigation.map} icon title rightAlign />
         <Outlet />
+
+      {/* footer */}
+      <Box sx={{ mt: '48px' }}>
+        <Footer />
+      </Box>
       </Main>
+
       <Customization />
     </Box>
   );

@@ -1,6 +1,6 @@
 // material-ui
 import { Link, Typography, Stack } from '@mui/material';
-// import logobumn from '../../../public/assets/images/logo/Logobumn.png';
+// import logobumn from '../../../public/assets/images/logo/logobumn.png';
 // import logopos from '../../../public/assets/images/logo/logoposind-putih.png';
 
 // ==============================|| FOOTER - AUTHENTICATION 2 & 3 ||============================== //
