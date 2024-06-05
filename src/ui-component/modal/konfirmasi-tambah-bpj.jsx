@@ -82,7 +82,7 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid, nippos, onConfirm }) 
             onMouseLeave={() => setIsHoveredTambahData(false)}
             onClick={async () => {
                 try {
-                    await tambahdatabpj(eventid,nippos);
+                    await tambahdatabpj(eventid, nippos);
                     handleClose();
                     onConfirm();
                 } catch (error) {

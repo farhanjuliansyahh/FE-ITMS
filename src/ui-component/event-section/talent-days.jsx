@@ -561,8 +561,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
               eventid={eventidactive}
               refetchkaryawan={fetchkaryawandays}
               eventstatus_id={eventstatus_id}
-              disabled={eventnotactive}
-            />
+                          />
           </Box>
         </CustomTabPanel>
 
