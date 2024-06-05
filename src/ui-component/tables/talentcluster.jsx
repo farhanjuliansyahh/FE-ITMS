@@ -195,18 +195,18 @@ export default function TalentClusterTable({rows}) {
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{ padding: '0 24px' }}>No</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Nama</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Nippos</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Posisi</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Job Level</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Rumpun Jabatan</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Kantor</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Komite Unit</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Kategori Matrix Awal</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Kategori Matrix Akhir</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Status</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Alasan Perubahan</StyledTableCell>
+              <StyledTableCell >No</StyledTableCell>
+              <StyledTableCell >Nama</StyledTableCell>
+              <StyledTableCell >Nippos</StyledTableCell>
+              <StyledTableCell >Posisi</StyledTableCell>
+              <StyledTableCell >Job Level</StyledTableCell>
+              <StyledTableCell >Rumpun Jabatan</StyledTableCell>
+              <StyledTableCell >Kantor</StyledTableCell>
+              <StyledTableCell >Komite Unit</StyledTableCell>
+              <StyledTableCell >Kategori Matrix Awal</StyledTableCell>
+              <StyledTableCell >Kategori Matrix Akhir</StyledTableCell>
+              <StyledTableCell >Status</StyledTableCell>
+              <StyledTableCell >Alasan Perubahan</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

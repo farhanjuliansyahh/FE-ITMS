@@ -336,30 +336,30 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{ padding: '0 24px' }}>No</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Nama</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Nippos</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Posisi</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Job Level</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Rumpun Jabatan</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Kantor</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Komite Unit</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Status</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Aksi</StyledTableCell>
+              <StyledTableCell >No</StyledTableCell>
+              <StyledTableCell >Nama</StyledTableCell>
+              <StyledTableCell >Nippos</StyledTableCell>
+              <StyledTableCell >Posisi</StyledTableCell>
+              <StyledTableCell >Job Level</StyledTableCell>
+              <StyledTableCell >Rumpun Jabatan</StyledTableCell>
+              <StyledTableCell >Kantor</StyledTableCell>
+              <StyledTableCell >Komite Unit</StyledTableCell>
+              <StyledTableCell >Status</StyledTableCell>
+              <StyledTableCell >Aksi</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.slice(startIndex, endIndex).map((row) => (
               <StyledTableRow key={row.id}>
-                <StyledTableCell style={{ padding: '0 24px' }}>{row.id}</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>{row.Nama}</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>{row.Nippos}</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>{row.Posisi}</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>{row['Job Level']}</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>{row['Rumpun Jabatan']}</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>{row['Nama Kantor']}</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>{row['Komite Unit']}</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>
+                <StyledTableCell >{row.id}</StyledTableCell>
+                <StyledTableCell >{row.Nama}</StyledTableCell>
+                <StyledTableCell >{row.Nippos}</StyledTableCell>
+                <StyledTableCell >{row.Posisi}</StyledTableCell>
+                <StyledTableCell >{row['Job Level']}</StyledTableCell>
+                <StyledTableCell >{row['Rumpun Jabatan']}</StyledTableCell>
+                <StyledTableCell >{row['Nama Kantor']}</StyledTableCell>
+                <StyledTableCell >{row['Komite Unit']}</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>
                   <div>
                     <span
                       style={{
@@ -372,7 +372,7 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
                     </span>
                   </div>
                 </StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px' }}>
+                <StyledTableCell >
                   <Button
                     variant="contained"
                     sx={{

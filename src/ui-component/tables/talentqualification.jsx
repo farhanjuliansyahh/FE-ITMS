@@ -154,8 +154,9 @@
 
 import { useState } from 'react';
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import {Pagination, Stack, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
 import FilterButton from '../../ui-component/button/FilterButton';
 
 const getColorStyle = (value, minimumValueQualified) => {
@@ -170,21 +171,28 @@ const getColorStyle = (value, minimumValueQualified) => {
 
   return { color, backgroundColor };
 };
+
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#F5F5F5',
     color: '#1F1F1F',
     fontSize: 14,
     fontWeight: 600,
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    height: '60px',
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 12,
+    fontSize: 13,
     minHeight: 20,
-    fontWeight: 400,
     verticalAlign: 'center',
+    height: '60px',
   },
 }));
+
+const calculateColumnWidth = (data, accessor, headerText) => {
+  const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
+  return maxLength * 11;
+};
 
 export default function TalentQualificationTable({
   rows,
@@ -192,105 +200,8 @@ export default function TalentQualificationTable({
   minimumPmsQualified,
   minimumAkhlakQualified,
   minimumLearningAgilityQualified
-}) {
-  const columns = [
-    { field: 'id', headerName: 'No', width: 70 },
-    { field: 'Nama', headerName: 'Nama', width: 130 },
-    { field: 'Nippos', headerName: 'NIPPOS', width: 130 },
-    { field: 'Posisi', headerName: 'Posisi', width: 130 },
-    { field: 'Job Level', headerName: 'Job Level', width: 130 },
-    { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 130 },
-    { field: 'Nama Kantor', headerName: 'Kantor', width: 130 },
-    { field: 'Komite Unit', headerName: 'Komite Unit', width: 130 },
-    {
-      field: 'Competency/Psychotest',
-      headerName: 'Competency/Psychotest',
-      width: 180,
-      renderCell: (params) => {
-        const { color, backgroundColor } = getColorStyle(params.value, minimumCompeten5cyQualified);
-        return (
-          <div>
-            <span
-              style={{
-                color,
-                backgroundColor,
-                padding: '4px 8px',
-                borderRadius: '24px'
-              }}
-            >
-              {params.value}
-            </span>
-          </div>
-        );
-      }
-    },
-    {
-      field: 'PMS',
-      headerName: 'PMS',
-      width: 180,
-      renderCell: (params) => {
-        const { color, backgroundColor } = getColorStyle(params.value, minimumPmsQualified);
-        return (
-          <div>
-            <span
-              style={{
-                color,
-                backgroundColor,
-                padding: '4px 8px',
-                borderRadius: '24px'
-              }}
-            >
-              {params.value}
-            </span>
-          </div>
-        );
-      }
-    },
-    {
-      field: 'AKHLAK',
-      headerName: 'AKHLAK',
-      width: 180,
-      renderCell: (params) => {
-        const { color, backgroundColor } = getColorStyle(params.value, minimumAkhlakQualified);
-        return (
-          <div>
-            <span
-              style={{
-                color,
-                backgroundColor,
-                padding: '4px 8px',
-                borderRadius: '24px'
-              }}
-            >
-              {params.value}
-            </span>
-          </div>
-        );
-      }
-    },
-    {
-      field: 'Learning Agility',
-      headerName: 'Learning Agility',
-      width: 180,
-      renderCell: (params) => {
-        const { color, backgroundColor } = getColorStyle(params.value, minimumLearningAgilityQualified);
-        return (
-          <div>
-            <span
-              style={{
-                color,
-                backgroundColor,
-                padding: '4px 8px',
-                borderRadius: '24px'
-              }}
-            >
-              {params.value}
-            </span>
-          </div>
-        );
-      }
-    }
-  ];
+}) 
+{
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5); 
   
@@ -307,95 +218,95 @@ export default function TalentQualificationTable({
 
   return (
     <div>
-    <div>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650, borderRadius: '12px', overflow: 'hidden' }}>
-        <TableHead>
-          <TableRow>
-            <th>No</th>
-            <th >Nama</th >
-            <th >NIPPOS</th >
-            <th >Posisi</th >
-            <th >Job Level</th >
-            <th >Rumpun Jabatan</th >
-            <th >Kantor</th >
-            <th >Komite Unit</th >
-            <th >Competency/ Psychotest</th >
-            <th >PMS</th >
-            <th >AKHLAK</th >
-            <th >Learning Agility</th >
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.slice(startIndex, endIndex).map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
-              <TableCell>{row.Nama}</TableCell>
-              <TableCell>{row.Nippos}</TableCell>
-              <TableCell>{row.Posisi}</TableCell>
-              <TableCell>{row['Job Level']}</TableCell>
-              <TableCell>{row['Rumpun Jabatan']}</TableCell>
-              <TableCell>{row['Nama Kantor']}</TableCell>
-              <TableCell>{row['Komite Unit']}</TableCell>
-              <TableCell>
-                <div
-                  style={{
-                    ...getColorStyle(row['Competency/ Psychotest'], minimumCompeten5cyQualified),
-                    padding: '4px 8px',
-                    borderRadius: '24px'
-                  }}
-                >
-                  {row['Competency/ Psychotest']}
-                </div>
-              </TableCell>
-              <TableCell>
-                <div
-                  style={{
-                    ...getColorStyle(row.PMS, minimumPmsQualified),
-                    padding: '4px 8px',
-                    borderRadius: '24px'
-                  }}
-                >
-                  {row.PMS}
-                </div>
-              </TableCell>
-              <TableCell>
-                <div
-                  style={{
-                    ...getColorStyle(row.AKHLAK, minimumAkhlakQualified),
-                    padding: '4px 8px',
-                    borderRadius: '24px'
-                  }}
-                >
-                  {row.AKHLAK}
-                </div>
-              </TableCell>
-              <TableCell>
-                <div
-                  style={{
-                    ...getColorStyle(row['Learning Agility'], minimumLearningAgilityQualified),
-                    padding: '4px 8px',
-                    borderRadius: '24px'
-                  }}
-                >
-                  {row['Learning Agility']}
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </div>
-    <Stack spacing={2} direction="row" marginTop={2}>
-        <Pagination
-          count={Math.ceil(rows.length / itemsPerPage)}
-          page={page}
-          onChange={handleChangePage}
-          color="primary" />
-        <div style={{ flex: '1' }}> </div>
-        <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
-    </Stack>
+      <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }}>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }} >No</StyledTableCell>
+                <StyledTableCell sx={{ width: 350 }}>Nama</StyledTableCell >
+                <StyledTableCell sx={{ width: 150 }}>NIPPOS</StyledTableCell >
+                <StyledTableCell sx={{ width: 500 }}>Posisi</StyledTableCell >
+                <StyledTableCell >Job Level</StyledTableCell >
+                <StyledTableCell >Rumpun Jabatan</StyledTableCell >
+                <StyledTableCell >Kantor</StyledTableCell >
+                <StyledTableCell >Komite Unit</StyledTableCell >
+                <StyledTableCell >Competency/Psychotest</StyledTableCell >
+                <StyledTableCell >PMS</StyledTableCell >
+                <StyledTableCell >AKHLAK</StyledTableCell >
+                <StyledTableCell >Learning Agility</StyledTableCell >
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.slice(startIndex, endIndex).map((row) => (
+                <TableRow key={row.id}>
+                  <StyledTableCell>{row.id}</StyledTableCell>
+                  <StyledTableCell>{row.Nama}</StyledTableCell>
+                  <StyledTableCell>{row.Nippos}</StyledTableCell>
+                  <StyledTableCell>{row.Posisi}</StyledTableCell>
+                  <StyledTableCell>{row['Job Level']}</StyledTableCell>
+                  <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
+                  <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
+                  <StyledTableCell style={{textAlign:"center"}}>{row['Komite Unit']}</StyledTableCell>
+                  <StyledTableCell style={{textAlign:"center"}}>
+                    <div
+                      style={{
+                        ...getColorStyle(row['Competency/Psychotest'], minimumCompeten5cyQualified),
+                        padding: '4px 8px',
+                        borderRadius: '24px'
+                      }}
+                    >
+                      {row['Competency/Psychotest']}
+                    </div>
+                  </StyledTableCell>
+                  <StyledTableCell style={{textAlign:"center"}}>
+                    <div
+                      style={{
+                        ...getColorStyle(row.PMS, minimumPmsQualified),
+                        padding: '4px 8px',
+                        borderRadius: '24px'
+                      }}
+                    >
+                      {row.PMS}
+                    </div>
+                  </StyledTableCell>
+                  <StyledTableCell style={{textAlign:"center"}}>
+                    <div
+                      style={{
+                        ...getColorStyle(row.AKHLAK, minimumAkhlakQualified),
+                        padding: '4px 8px',
+                        borderRadius: '24px'
+                      }}
+                    >
+                      {row.AKHLAK}
+                    </div>
+                  </StyledTableCell>
+                  <StyledTableCell style={{textAlign:"center"}}>
+                    <div
+                      style={{
+                        ...getColorStyle(row['Learning Agility'], minimumLearningAgilityQualified),
+                        padding: '4px 8px',
+                        borderRadius: '24px'
+                      }}
+                    >
+                      {row['Learning Agility']}
+                    </div>
+                  </StyledTableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+      <Stack spacing={2} direction="row" marginTop={2}>
+          <Pagination
+            count={Math.ceil(rows.length / itemsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            color="primary" />
+          <div style={{ flex: '1' }}> </div>
+          <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
+      </Stack>
     </div>
   );
 }

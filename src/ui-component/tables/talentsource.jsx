@@ -389,10 +389,33 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
 import { AddCircleOutline } from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
 import FilterButton from '../../ui-component/button/FilterButton';
 import ButtonPrimary from '../button/ButtonPrimary';
 import TambahKomiteUnit from '../modal/tambah-komite-unit';
 import KonfirmasiTambahKomiteUnit from '../modal/konfirmasi-tambah-komite-unit';
+
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#F5F5F5',
+    color: '#1F1F1F',
+    fontSize: 14,
+    fontWeight: 600,
+    whiteSpace: 'nowrap',
+    height: '60px',
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 12,
+    minHeight: 20,
+    verticalAlign: 'center',
+    height: '60px',
+  },
+}));
+
+const ButtonContainer = styled('div')({
+  whiteSpace: 'nowrap',
+});
 
 const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton }) => {
   const [openFirstModal, setOpenFirstModal] = useState(false);
@@ -430,7 +453,11 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, rows.length);
   const [selectedOption, setSelectedOption] = useState(false)
-
+  
+  const calculateColumnWidth = (data, accessor, headerText) => {
+    const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
+    return maxLength * 11;
+  };
 
   const updatekomiteunit = (eventid, nippos, komite_unit, selectedOption) => {
     return fetch(`http://localhost:4000/updatekomiteunit?eventtalentid=${eventid}`, {
@@ -507,8 +534,6 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
       setOpenSecondModal(false);
   };
 
-
-
   const handleConfirm = () => {
     console.log("Confirm button clicked");
     setSelectedOption(selectedOption)
@@ -533,73 +558,76 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
 
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              {checkboxSelection && (
-                <TableCell>
-                  <input
-                    type="checkbox"
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
-              )}
-              <TableCell>No</TableCell>
-              <TableCell>Nama</TableCell>
-              <TableCell>Nippos</TableCell>
-              <TableCell>Posisi</TableCell>
-              <TableCell>Job Family</TableCell>
-              <TableCell>Job Level</TableCell>
-              <TableCell>Kantor</TableCell>
-              <TableCell>Komite Unit</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(startIndex, endIndex).map((row, index) => (
-              <TableRow key={row.id}>
+      <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }}>
+            <TableHead>
+              <TableRow>
                 {checkboxSelection && (
-                  <TableCell>
+                  <StyledTableCell sx={{ width: 60 }}>
                     <input
                       type="checkbox"
-                      checked={selectedRows.includes(row.id)}
-                      onChange={(event) => handleCheckboxChange(event, row.id)}
+                      checked={selectAll}
+                      onChange={handleSelectAll}
                     />
-                  </TableCell>
+                  </StyledTableCell>
                 )}
-                <TableCell component="th" scope="row">{startIndex + index + 1}</TableCell>
-                <TableCell>{row.Nama}</TableCell>
-                <TableCell>{row.Nippos}</TableCell>
-                <TableCell>{row.Posisi}</TableCell>
-                <TableCell>{row['Job Family']}</TableCell>
-                <TableCell>{row['Job Level']}</TableCell>
-                <TableCell>{row['Nama Kantor']}</TableCell>
-                <TableCell>
-                  {row['Komite Unit'] === null && showButton ? (
-                    <ButtonPrimary
-                      icon={AddCircleOutline}
-                      LabelName={'Tambah Komite Unit'}
-                      padding={'6px 16px'}
-                      onClick={() => handleOpenFirstModal(row.Nippos)}
-                    />
-                  ) : (
-                    row['Komite Unit']
-                  )}
-                </TableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No</StyledTableCell>
+                <StyledTableCell sx={{ width: 300 }}>Nama</StyledTableCell>
+                <StyledTableCell sx={{ width: 150 }}>Nippos</StyledTableCell>
+                <StyledTableCell sx={{ width: 500 }}>Posisi</StyledTableCell>
+                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
+                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
+                <StyledTableCell >Komite Unit</StyledTableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {rows.slice(startIndex, endIndex).map((row, index) => (
+                <TableRow key={row.id}>
+                  {checkboxSelection && (
+                    <StyledTableCell>
+                      <input
+                        type="checkbox"
+                        checked={selectedRows.includes(row.id)}
+                        onChange={(event) => handleCheckboxChange(event, row.id)}
+                      />
+                    </StyledTableCell>
+                  )}
+                  <StyledTableCell component="th" scope="row">{startIndex + index + 1}</StyledTableCell>
+                  <StyledTableCell>{row.Nama}</StyledTableCell>
+                  <StyledTableCell>{row.Nippos}</StyledTableCell>
+                  <StyledTableCell>{row.Posisi}</StyledTableCell>
+                  <StyledTableCell>{row['Job Family']}</StyledTableCell>
+                  <StyledTableCell>{row['Job Level']}</StyledTableCell>
+                  <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
+                  <StyledTableCell>
+                    <ButtonContainer >
+                    {row['Komite Unit'] === null && showButton ? (
+                      <ButtonPrimary
+                        icon={AddCircleOutline}
+                        LabelName={'Tambah Komite Unit'}
+                        padding={'6px 16px'}
+                        onClick={() => handleOpenFirstModal(row.Nippos)}
+                      />
+                    ) : (
+                      row['Komite Unit']
+                    )}
+                    </ButtonContainer>
+                  </StyledTableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>   
+      </div>
       <Stack spacing={2} direction="row" marginTop={2}>
         <Pagination
           count={Math.ceil(rows.length / itemsPerPage)}
           page={page}
           onChange={handleChangePage}
-          color="primary"
-        />
-        <div style={{ flex: '1' }}> </div>
+          color="primary"/>
+        <div style={{ flex: '1' }}></div>
         <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
       </Stack>
       <TambahKomiteUnit

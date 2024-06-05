@@ -85,7 +85,7 @@ const ActionButton = ({ row, refetchData }) => {
 
   return (
     <>
-      <Button variant="contained" color="primary" size="small" onClick={handleButtonClick}>
+      <Button variant="contained" color="primary" size="small" onClick={handleButtonClick} sx={{whiteSpace: 'nowrap'}}>
         Ubah Akses
       </Button>
       <Dialog open={open} onClose={handleModalClose}>
@@ -170,14 +170,14 @@ export default function DaftarPenggunaTabel({
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <StyledTableCell sx={{ width: 60 }}>No </StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No </StyledTableCell>
                 <StyledTableCell sx={{ width: 300 }}>Nama</StyledTableCell>
                 <StyledTableCell sx={{ width: 150 }}>NIPPOS</StyledTableCell>
                 <StyledTableCell sx={{ width: 500 }}>Posisi</StyledTableCell>
                 <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
                 <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
                 <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'Peran', 'Peran') }}>Peran</StyledTableCell>
-                <StyledTableCell sx={{ width: 240 }}>Aksi</StyledTableCell>
+                <StyledTableCell >Aksi</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

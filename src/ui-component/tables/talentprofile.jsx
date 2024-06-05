@@ -182,7 +182,9 @@
 import { useState } from 'react';
 import * as React from 'react';
 import { GridLogicOperator } from '@mui/x-data-grid';
-import {Pagination, Stack, TableCell } from '@mui/material';
+import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
 import FilterButton from '../../ui-component/button/FilterButton';
 
 const getStatusStyle = (status) => {
@@ -221,69 +223,26 @@ const getSubmittedByStyle = (status) => {
   return { color, backgroundColor };
 };
 
-const columns = [
-  { field: 'id', headerName: 'No', width: 70 },
-  { field: 'Nama', headerName: 'Nama', width: 180 },
-  { field: 'Nippos', headerName: 'NIPPOS', width: 180 },
-  { field: 'Posisi', headerName: 'Posisi', width: 300 },
-  { field: 'Job Level', headerName: 'Job Level', width: 120 },
-  { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 180 },
-  {
-    field: 'Commitment Letter',
-    headerName: 'Commitment Letter',
-    width: 180,
-    renderCell: (params) => {
-      const { color, backgroundColor } = getStatusStyle(params.value);
-      return (
-        <div>
-          <span style={{
-            color,
-            backgroundColor,
-            padding: '4px 8px',
-            borderRadius: '24px'
-          }}>{params.value}</span>
-        </div>
-      );
-    },
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#F5F5F5',
+    color: '#1F1F1F',
+    fontSize: 14,
+    fontWeight: 600,
+    whiteSpace: 'nowrap',
+    height: '60px',
   },
-  {
-    field: 'Pakta Integritas',
-    headerName: 'Pakta Integritas',
-    width: 180,
-    renderCell: (params) => {
-      const { color, backgroundColor } = getStatusStyle(params.value);
-      return (
-        <div>
-          <span style={{
-            color,
-            backgroundColor,
-            padding: '4px 8px',
-            borderRadius: '24px'
-          }}>{params.value}</span>
-        </div>
-      );
-    },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 13,
+    minHeight: 20,
+    verticalAlign: 'center',
+    height: '60px',
   },
-  {
-    field: 'Status Submit',
-    headerName: 'Status Submit',
-    width: 180,
-    renderCell: (params) => {
-      const { color, backgroundColor } = getSubmittedByStyle(params.value);
-      return (
-        <div>
-          <span style={{
-            color,
-            backgroundColor,
-            padding: '4px 8px',
-            borderRadius: '24px'
-          }}>{params.value}</span>
-        </div>
-      );
-    },
-  },
-  { field: 'Komite Unit', headerName: 'Komite Unit', width: 180 },
-];
+}));
+const calculateColumnWidth = (data, accessor, headerText) => {
+  const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
+  return maxLength * 11;
+};
 
 export default function TalentProfileTable({ 
   filter, 
@@ -338,51 +297,53 @@ export default function TalentProfileTable({
 
   return (
     <div>
-    <div style={{ height: 400, width: '100%', overflow: 'auto' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', borderRadius: '12px', border: '1px solid #ddd' }}>
-        <thead style={{ backgroundColor: '#F5F5F5' }}>
-          <tr>
-            <th style={{ padding: '12px' }}>No</th>
-            <th style={{ padding: '12px' }}>Nama</th>
-            <th style={{ padding: '12px' }}>NIPPOS</th>
-            <th style={{ padding: '12px' }}>Posisi</th>
-            <th style={{ padding: '12px' }}>Job Level</th>
-            <th style={{ padding: '12px' }}>Rumpun Jabatan</th>
-            <th style={{ padding: '12px' }}>Commitment Letter</th>
-            <th style={{ padding: '12px' }}>Pakta Integritas</th>
-            <th style={{ padding: '12px' }}>Status Submit</th>
-            <th style={{ padding: '12px' }}>Komite Unit</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }}>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No</StyledTableCell>
+              <StyledTableCell sx={{ width: 350 }}>Nama</StyledTableCell>
+              <StyledTableCell sx={{ width: 150 }}>NIPPOS</StyledTableCell>
+              <StyledTableCell sx={{ width: 500}}>Posisi</StyledTableCell>
+              <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+              <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
+              <StyledTableCell >Commitment Letter</StyledTableCell>
+              <StyledTableCell >Pakta Integritas</StyledTableCell>
+              <StyledTableCell >Status Submit</StyledTableCell>
+              <StyledTableCell >Komite Unit</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
           {rows.slice(startIndex, endIndex).map((row) => (
-            <tr key={row.id} style={{ borderBottom: '1px solid #ddd' }}>
-              <TableCell style={{ padding: '12px' }}>{row.id}</TableCell>
-              <TableCell style={{ padding: '12px' }}>{row.Nama}</TableCell>
-              <TableCell style={{ padding: '12px' }}>{row.Nippos}</TableCell>
-              <TableCell style={{ padding: '12px' }}>{row.Posisi}</TableCell>
-              <TableCell style={{ padding: '12px' }}>{row['Job Level']}</TableCell>
-              <TableCell style={{ padding: '12px' }}>{row['Rumpun Jabatan']}</TableCell>
-              <TableCell style={{ padding: '12px' }}>
+            <TableRow key={row.id} >
+              <StyledTableCell>{row.id}</StyledTableCell>
+              <StyledTableCell>{row.Nama}</StyledTableCell>
+              <StyledTableCell>{row.Nippos}</StyledTableCell>
+              <StyledTableCell>{row.Posisi}</StyledTableCell>
+              <StyledTableCell>{row['Job Level']}</StyledTableCell>
+              <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
+              <StyledTableCell>
                 <div style={{ ...getStatusStyle(commitmentLetterValue), padding: '4px 8px', borderRadius: '24px' }}>
                   {commitmentLetterValue}
                 </div>
-              </TableCell>
-              <TableCell style={{ padding: '12px' }}>
+              </StyledTableCell>
+              <StyledTableCell style={{ padding: '12px' }}>
                 <div style={{ ...getStatusStyle(paktaIntegritasValue), padding: '4px 8px', borderRadius: '24px' }}>
                   {paktaIntegritasValue}
                 </div>
-              </TableCell>
-              <TableCell style={{ padding: '12px' }}>
+              </StyledTableCell>
+              <StyledTableCell style={{ padding: '12px' }}>
                 <div style={{ ...getSubmittedByStyle(row['Status Submit']), padding: '4px 8px', borderRadius: '24px' }}>
                   {row['Status Submit']}
                 </div>
-              </TableCell>
-              <TableCell style={{ padding: '12px' }}>{row['Komite Unit']}</TableCell>
-            </tr>
+              </StyledTableCell>
+              <StyledTableCell>{row['Komite Unit']}</StyledTableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+        </Table>
+      </TableContainer>
     </div>
       <Stack spacing={2} direction="row" marginTop={2}>
         <Pagination

@@ -193,21 +193,21 @@ export default function TalentDaysBPJTable({
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <StyledTableCell style={{ padding: '0 24px', textAlign: 'center' }}>No</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px', textAlign: 'center' }}>Nama</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px', textAlign: 'center' }}>Nippos</StyledTableCell>
-                <StyledTableCell style={{ padding: '0 24px', textAlign: 'center' }}>Posisi</StyledTableCell>
-                <StyledTableCell style={{ padding: '10px 24px', textAlign: 'center' }}>Aksi</StyledTableCell>
+                <StyledTableCell >No</StyledTableCell>
+                <StyledTableCell >Nama</StyledTableCell>
+                <StyledTableCell >Nippos</StyledTableCell>
+                <StyledTableCell >Posisi</StyledTableCell>
+                <StyledTableCell >Aksi</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {resetRows.slice(startIndex, endIndex).map((row) => (
                 <StyledTableRow key={row.id}>
-                  <StyledTableCell style={{ padding: '0 24px', textAlign: 'center' }}>{row.id}</StyledTableCell>
-                  <StyledTableCell style={{ padding: '0 24px', textAlign: 'center' }}>{row.nama}</StyledTableCell>
-                  <StyledTableCell style={{ padding: '0 24px', textAlign: 'center' }}>{row.nippos}</StyledTableCell>
-                  <StyledTableCell style={{ padding: '0 24px', textAlign: 'center' }}>{row.Posisi}</StyledTableCell>
-                  <StyledTableCell style={{ padding: '10px 24px', textAlign: 'center' }}>
+                  <StyledTableCell >{row.id}</StyledTableCell>
+                  <StyledTableCell >{row.nama}</StyledTableCell>
+                  <StyledTableCell >{row.nippos}</StyledTableCell>
+                  <StyledTableCell >{row.Posisi}</StyledTableCell>
+                  <StyledTableCell >
                     <ButtonErrorOutlined
                       icon={DeleteOutlineOutlinedIcon}
                       LabelName={'Hapus'}

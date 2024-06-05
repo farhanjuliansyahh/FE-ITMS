@@ -116,9 +116,12 @@ const StyledTableCell = styled(TableCell)(() => ({
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:last-child td, &:last-child th': {
     border: 0,
-    // height: '60px',
   },
 }));
+
+const ButtonContainer = styled('div')({
+  whiteSpace: 'nowrap',
+});
 
 export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }) {
   const [ubahStatusOpen, setUbahStatusOpen] = useState(false);
@@ -154,16 +157,16 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{ padding: '0 24px' }}>No</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Nama</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Nippos</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Posisi</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Job Level</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Rumpun Jabatan</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Kantor</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Kategori Matrix Akhir</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Status</StyledTableCell>
-              <StyledTableCell style={{ padding: '0 24px' }}>Aksi</StyledTableCell>
+              <StyledTableCell >No</StyledTableCell>
+              <StyledTableCell >Nama</StyledTableCell>
+              <StyledTableCell >Nippos</StyledTableCell>
+              <StyledTableCell >Posisi</StyledTableCell>
+              <StyledTableCell >Job Level</StyledTableCell>
+              <StyledTableCell >Rumpun Jabatan</StyledTableCell>
+              <StyledTableCell >Kantor</StyledTableCell>
+              <StyledTableCell >Kategori Matrix Akhir</StyledTableCell>
+              <StyledTableCell >Status</StyledTableCell>
+              <StyledTableCell style={{textAlign:"center"}}>Aksi</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -173,19 +176,21 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }
                 <StyledTableCell>{row.Nama}</StyledTableCell>
                 <StyledTableCell>{row.Nippos}</StyledTableCell>
                 <StyledTableCell>{row.Posisi}</StyledTableCell>
-                <StyledTableCell>{row['Job Level']}</StyledTableCell>
+                <StyledTableCell style={{textAlign:"center"}}>{row['Job Level']}</StyledTableCell>
                 <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
                 <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
-                <StyledTableCell>{row['Kategori Matrix Akhir']}</StyledTableCell>
-                <StyledTableCell>{row.Status}</StyledTableCell>
+                <StyledTableCell style={{textAlign:"center"}}>{row['Kategori Matrix Akhir']}</StyledTableCell>
+                <StyledTableCell style={{textAlign:"center"}}>{row.Status}</StyledTableCell>
                 <StyledTableCell>
-                  <ButtonPrimary
-                    icon={CreateOutlined}
-                    LabelName={'Ubah Status'}
-                    padding={'6px 16px'}
-                    onClick={() => handleUbahStatusOpen(row.Nippos)}
-                    disabled={eventstatus_id !== 7}
-                  />
+                  <ButtonContainer>
+                    <ButtonPrimary
+                      icon={CreateOutlined}
+                      LabelName={'Ubah Status'}
+                      padding={'6px 16px'}
+                      onClick={() => handleUbahStatusOpen(row.Nippos)}
+                      disabled={eventstatus_id !== 7}
+                    />
+                  </ButtonContainer>
                 </StyledTableCell>
                 
               </StyledTableRow>
