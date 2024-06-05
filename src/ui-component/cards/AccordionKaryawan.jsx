@@ -3,7 +3,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Typography } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 
-export default function AccordionKaryawan({ summary, icon, content }) {
+export default function AccordionKaryawan({ summary, icon, content, disabled }) {
   const theme = useTheme();
   const IconComponent = icon;
 
@@ -28,7 +28,7 @@ export default function AccordionKaryawan({ summary, icon, content }) {
 
   return (
     <div style={{ display: 'block', borderRadius: '12px', padding: '12px', gap: '16px', border: '1px solid #E0E0E0', marginTop: '16px' }}>
-      <Accordion>
+      <Accordion disabled={disabled}>
         <AccordionSummary
           expandIcon={<ExpandMore />}
         >
