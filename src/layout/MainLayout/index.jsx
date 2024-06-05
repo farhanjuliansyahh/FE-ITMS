@@ -35,6 +35,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' && pr
           duration: theme.transitions.duration.leavingScreen
         }
   ),
+  flexGrow: 1,
   [theme.breakpoints.up('md')]: {
     marginLeft: open ? 0 : -(drawerWidth - 20),
     width: `calc(100% - ${drawerWidth}px)`

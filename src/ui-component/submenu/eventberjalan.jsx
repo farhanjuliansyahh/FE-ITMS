@@ -133,7 +133,11 @@ export default function EventBerjalan({
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    paddingBottom: 0
+    paddingBottom: 0,
+    '&:hover': {
+      color: '#2196F3', // Ubah warna teks menjadi biru saat dihover
+      cursor: 'pointer' // Tambahkan cursor pointer saat dihover
+    }
   });
 
   const BoxContainer = styled('div')({
@@ -148,6 +152,9 @@ export default function EventBerjalan({
     color: '#1C2D5A',
     width: 48,
     height: 48,
+    '&:hover': {
+      boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' // Efek drop shadow saat pointer dihover
+    },
     '& svg': {
       fontSize: '2rem'
     }
@@ -282,9 +289,16 @@ export default function EventBerjalan({
   return (
     <Box sx={boxStyle} style={{ marginBottom: '24px' }}>
       <FlexContainer>
-        <BoxAvatar variant="rounded">
-          <EmojiEventsOutlinedIcon />
-        </BoxAvatar>
+        <Link
+          to={{
+            pathname: `/talent/detail-event/${id}`
+          }}
+          style={{ color: 'inherit', textDecoration: 'none' }}
+        >
+          <BoxAvatar variant="rounded">
+            <EmojiEventsOutlinedIcon />
+          </BoxAvatar>
+        </Link>
 
         <BoxContainer>
           <FlexTitle style={{ paddingBottom: '8px' }}>
@@ -301,7 +315,7 @@ export default function EventBerjalan({
                   to={{
                     pathname: `/talent/detail-event/${id}`
                   }}
-                  style={{ color: 'inherit' }}
+                  style={{ color: 'inherit', textDecoration: 'none' }}
                 >
                   {nama_event}
                 </Link>
@@ -311,7 +325,7 @@ export default function EventBerjalan({
                 style={{
                   fontSize: '16px',
                   fontWeight: 'bold',
-                  color: 'inherit'
+                  color: 'inherit',
                 }}
               >
                 {nama_event}
@@ -326,7 +340,7 @@ export default function EventBerjalan({
             <CalendarIcon style={{ color: '#828282' }} />
             {status === 8 ? (
               <Typography style={{ color: isRealEndDateBeforePlannedEndDate ? '#66BB6A' : '#F44336' }}>
-                Realisasi:
+                Realisasi : {' '}
                 {new Date(tanggal_mulai_real).toLocaleDateString('id-ID', {
                   day: 'numeric',
                   month: 'long',
