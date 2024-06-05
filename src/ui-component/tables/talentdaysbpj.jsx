@@ -124,17 +124,20 @@ const StyledTableCell = styled(TableCell)(() => ({
     fontSize: 14,
     fontWeight: 600,
     whiteSpace: 'nowrap',
+    height: '60px',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
     minHeight: 20,
     verticalAlign: 'center',
+    height: '60px',
   },
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:last-child td, &:last-child th': {
     border: 0,
+    // height: '60px',
   },
 }));
 
