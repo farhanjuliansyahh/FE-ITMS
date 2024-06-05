@@ -8,7 +8,7 @@ import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
 import Logo from '../../../../ui-component/LogoITMSLogin';
 import AuthFooter from '../../../../ui-component/cards/AuthFooter';
-import logobumn from '../../../../../public/assets/images/logo/logobumn.png';
+import logobumn from '../../../../../public/assets/images/logo/Logobumn.png';
 import logopos from '../../../../../public/assets/images/logo/logoposind-maincolor.png';
 
 // ================================|| AUTH3 - LOGIN ||================================ //

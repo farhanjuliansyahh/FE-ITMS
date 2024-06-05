@@ -104,7 +104,7 @@ const EventKetuaKomiteTalent = () => {
 
   const startIndexTab0 = (pageTab0 - 1) * itemsPerPageTab0;
   const endIndexTab0 = startIndexTab0 + itemsPerPageTab0;
-  const filteredEventsTab0 = filteredEvents.filter((event) => event.evenstatus_id !== 8);
+  const filteredEventsTab0 = filteredEvents.filter((event) => event.evenstatus_id === 6 && event.statusisi === false);
   const paginatedEventsTab0 = filteredEventsTab0.slice(startIndexTab0, endIndexTab0);
 
   const [pageTab1, setPageTab1] = useState(1);
@@ -121,7 +121,7 @@ const EventKetuaKomiteTalent = () => {
 
   const startIndexTab1 = (pageTab1 - 1) * itemsPerPageTab1;
   const endIndexTab1 = startIndexTab1 + itemsPerPageTab1;
-  const filteredEventsTab1 = filteredEvents.filter((event) => event.evenstatus_id === 8);
+  const filteredEventsTab1 = filteredEvents.filter((event) => event.evenstatus_id !== 6 || event.statusisi === true);
   const paginatedEventsTab1 = filteredEventsTab1.slice(startIndexTab1, endIndexTab1);
 
   return (
@@ -142,8 +142,8 @@ const EventKetuaKomiteTalent = () => {
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab icon={<RotateRight />} iconPosition="start" label="Berjalan" {...a11yProps(0)} />
-            <Tab icon={<DownloadDone />} iconPosition="start" label="Selesai" {...a11yProps(1)} />
+            <Tab icon={<RotateRight />} iconPosition="start" label="Belum Diisi" {...a11yProps(0)} />
+            <Tab icon={<DownloadDone />} iconPosition="start" label="Sudah Diisi" {...a11yProps(1)} />
           </Tabs>
         </Box>
 
