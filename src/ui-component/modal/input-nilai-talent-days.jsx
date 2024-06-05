@@ -174,7 +174,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
             setNilaiInput([]);
             setNilaiArray([]);
           }}
-          disabled={eventstatus_id !== 6}
+          disabled={eventstatus_id !== 5}
         >
           Simpan
         </Button>
