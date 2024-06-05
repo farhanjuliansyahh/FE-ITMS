@@ -6,7 +6,7 @@ const Header = ({ title }) => {
     const headerStyle = {
         width: '100%',
         height: 'fit-content', // Hug (64px) is equivalent to fit-content in this context
-        padding: '16px 24px',
+        // padding: '16px 24px',
         justifyContent: 'space-between',
         display: 'flex',
         backgroundColor: '#fff',

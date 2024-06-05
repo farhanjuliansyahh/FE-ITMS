@@ -122,7 +122,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }) {
   const [ubahStatusOpen, setUbahStatusOpen] = useState(false);
-  const [selectedNippos, setSelectedNippos] = useState(null); 
+  const [selectedNippos, setSelectedNippos] = useState(null);
 
   const handleUbahStatusOpen = (nippos) => {
     setSelectedNippos(nippos);
@@ -209,7 +209,7 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }
           // confirm()
           setUbahStatusOpen(false);
           setSelectedNippos(null); // Reset selected nippos when closing modal
-          updaterows()
+          updaterows();
         }}
         nippos={selectedNippos} // Pass selected nippos as prop
         eventid={eventid}

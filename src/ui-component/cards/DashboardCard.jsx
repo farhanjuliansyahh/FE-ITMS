@@ -72,8 +72,7 @@ const DashboardCard = ({ isLoading, icon, title, content, PathLink }) => {
         <SkeletonEarningCard />
       ) : (
         <CardWrapper border={false} content={false}>
-          <Box sx={{ p: 2.25 }}>
-
+          <Box sx={{ p: '24px' }}>
 
             <Grid container spacing={2} justifyContent={"space-between"}>
               <Grid container spacing={2} item xs={4}>

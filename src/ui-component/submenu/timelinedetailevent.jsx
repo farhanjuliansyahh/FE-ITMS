@@ -45,7 +45,6 @@ export default function TimelineDetailEvent({
   const [startdate, setStartdate] = useState(null);
   const [enddate, setEnddate] = useState(null);
 
-
   useEffect(() => {
     setActiveStep(eventstatus_id - 2);
   }, [eventstatus_id]);
@@ -175,7 +174,6 @@ export default function TimelineDetailEvent({
       setDialogOpen(true);
     } else if (activeStep === 5) {
       setTalentPoolDialogOpen(true);
-
     }
   };
 
@@ -283,16 +281,18 @@ export default function TimelineDetailEvent({
           <div style={{ flex: '1' }}> </div>
 
           {eventstatus_id !== 8 && (
-  <CountdownLabel style={{
-    color: DaysLeft === 0 ? 'yellow' : (DaysLeft > 0 ? '#66BB6A' : '#FF6B6B')
-  }}>
-    {DaysLeft !== null && DaysLeft > 0
-      ? `${DaysLeft} hari lagi`
-      : DaysLeft === 0
-      ? "Hari Ini"
-      : `Terlewat ${Math.abs(DaysLeft)} hari`}
-  </CountdownLabel>
-)}
+            <CountdownLabel
+              style={{
+                color: DaysLeft === 0 ? 'yellow' : DaysLeft > 0 ? '#66BB6A' : '#FF6B6B'
+              }}
+            >
+              {DaysLeft !== null && DaysLeft > 0
+                ? `${DaysLeft} hari lagi`
+                : DaysLeft === 0
+                  ? 'Hari Ini'
+                  : `Terlewat ${Math.abs(DaysLeft)} hari`}
+            </CountdownLabel>
+          )}
 
           <ButtonSecondary
             Color="#1C2D5A"
@@ -340,15 +340,16 @@ export default function TimelineDetailEvent({
                   {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric',
-                  })} -{' '}
+                    year: 'numeric'
+                  })}{' '}
+                  -{' '}
                   {(() => {
                     const endDate = new Date(deadline[0][`deadline_${activeStep + 1}`]);
                     endDate.setDate(endDate.getDate() + 1); // Add one day
                     return endDate.toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'long',
-                      year: 'numeric',
+                      year: 'numeric'
                     });
                   })()}
                 </>
@@ -359,15 +360,16 @@ export default function TimelineDetailEvent({
                   {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric',
-                  })} -{' '}
+                    year: 'numeric'
+                  })}{' '}
+                  -{' '}
                   {(() => {
                     const endDate = new Date(deadline[0][`startdate_${activeStep + 2}`]);
                     endDate.setDate(endDate.getDate()); // Add one day
                     return endDate.toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'long',
-                      year: 'numeric',
+                      year: 'numeric'
                     });
                   })()}
                 </>
@@ -378,15 +380,16 @@ export default function TimelineDetailEvent({
                   {new Date(deadline[0][`startdate_6`]).toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric',
-                  })} -{' '}
+                    year: 'numeric'
+                  })}{' '}
+                  -{' '}
                   {(() => {
                     const endDate = new Date(deadline[0][`eventselesai`]);
                     endDate.setDate(endDate.getDate()); // Add one day
                     return endDate.toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'long',
-                      year: 'numeric',
+                      year: 'numeric'
                     });
                   })()}
                 </>
@@ -404,11 +407,11 @@ export default function TimelineDetailEvent({
               <Step key={label} {...stepProps}>
                 <StepLabel {...labelProps}>{label}</StepLabel>
 
-                {index < eventstatus_id - 2 &&
+                {index < eventstatus_id - 2 && (
                   <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
                     <CountdownStep style={{ backgroundColor: '#F5FFF5', color: '#66BB6A' }}>Selesai</CountdownStep>
                   </Box>
-                }
+                )}
 
                 {index === eventstatus_id - 2 && (
                   <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
@@ -421,7 +424,8 @@ export default function TimelineDetailEvent({
                         // Display negative days left with a different style
                         <CountdownStep style={{ backgroundColor: '#FFF5F5', color: '#FF6B6B' }}>
                           {`Terlewat ${Math.abs(DaysLeftStep)} hari`}
-                        </CountdownStep>)
+                        </CountdownStep>
+                      )
                     ) : (
                       ''
                     )}
