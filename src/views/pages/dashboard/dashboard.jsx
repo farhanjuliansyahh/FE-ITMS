@@ -138,8 +138,8 @@ const Dashboard = () => {
         </Grid> */}
 
       <Grid container spacing={gridSpacing}>
-        <Grid item xs={12}>
-          <MainCard style={{ padding: '14px 14px', display: 'flex', justifyContent: 'flex-end' }}>
+        <Grid item xs={12} >
+          <MainCard style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems:'center' }}>
             <Header title={'Dashboard'} />
             <FormControl variant="outlined" sx={{ width: '25%' }}>
               <InputLabel>Tahun</InputLabel>
