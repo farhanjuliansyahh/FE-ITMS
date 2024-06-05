@@ -7,7 +7,7 @@ export default function ConfirmationMessage() {
                 Selamat !!!
             </Typography>
             <Typography fontWeight={600} fontSize={14} color='#1F1F1F'>
-                Anda dinyatakan sebagai Kandidat Talent POSIND tahun 2024
+                Anda dinyatakan sebagai Kandidat Talent POSIND
             </Typography>
             <Typography fontWeight={400} fontSize={12} color={'#828282'} marginTop={2} marginBottom={2}>
                 Jika berminat silahkan konfirmasi dengan menyetujui Pakta Integritas dan Commitment Letter dibawah ini.

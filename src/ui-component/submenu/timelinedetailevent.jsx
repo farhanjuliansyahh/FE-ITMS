@@ -127,8 +127,8 @@ export default function TimelineDetailEvent({
   });
 
   const CalendarIcon = styled(CalendarMonthOutlined)({
-    fontSize: '1rem',
-    color: '#1C2D5A'
+    fontSize: '18px',
+    color: '#1C2D5A',
   });
 
   const CurrentEventLabel = styled('div')({
@@ -328,13 +328,13 @@ export default function TimelineDetailEvent({
         </DividerContainer>
 
         <BoxContainer>
-          <FlexTitle style={{ paddingBottom: '8px', justifyContent: 'center' }}>
+          <FlexTitle style={{ paddingBottom: '12px', justifyContent: 'center' }}>
             <CurrentEventLabel>{currentStepLabel}</CurrentEventLabel>
           </FlexTitle>
 
-          <FlexTitle style={{ paddingBottom: '24px', justifyContent: 'center' }}>
+          <FlexTitle style={{ paddingBottom: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <CalendarIcon style={{ color: '#828282' }} />
-            <Typography style={{ color: '#828282' }}>
+            <Typography style={{ color: '#828282'}}>
               {deadline.length > 0 && eventstatus_id >= 2 && eventstatus_id <= 7 && (
                 <>
                   {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
@@ -356,7 +356,7 @@ export default function TimelineDetailEvent({
               )}
               {eventstatus_id === 8 && activeStep < 5 && (
                 <>
-                  Realisasi:
+                  Realisasi : {' '}
                   {new Date(deadline[0][`startdate_${activeStep + 1}`]).toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
@@ -376,7 +376,7 @@ export default function TimelineDetailEvent({
               )}
               {eventstatus_id === 8 && activeStep >= 5 && (
                 <>
-                  Realisasi:
+                  Realisasi : {' '}
                   {new Date(deadline[0][`startdate_6`]).toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
