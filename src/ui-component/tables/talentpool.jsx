@@ -68,51 +68,6 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id, 
     <div>
       <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
         <TableContainer component={Paper}>
-<<<<<<< Updated upstream
-        <Table sx={{ minWidth: 700 }}>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell >No</StyledTableCell>
-              <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
-              <StyledTableCell >Nippos</StyledTableCell>
-              <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
-              <StyledTableCell >Job Level</StyledTableCell>
-              <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
-              <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
-              <StyledTableCell >Kategori Matrix Akhir</StyledTableCell>
-              <StyledTableCell >Status</StyledTableCell>
-              <StyledTableCell style={{textAlign:"center"}}>Aksi</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-           {rows.slice(startIndex, endIndex).map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
-                <StyledTableCell>{row.Nama}</StyledTableCell>
-                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
-                <StyledTableCell>{row.Posisi}</StyledTableCell>
-                <StyledTableCell style={{textAlign:"center"}}>{row['Job Level']}</StyledTableCell>
-                <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
-                <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
-                <StyledTableCell style={{textAlign:"center", whiteSpace: 'nowrap'}}>{row['Kategori Matrix Akhir']}</StyledTableCell>
-                <StyledTableCell style={{textAlign:"center", whiteSpace: 'nowrap'}}>{row.Status}</StyledTableCell>
-                <StyledTableCell>
-                  <ButtonContainer>
-                    <ButtonPrimary
-                      icon={CreateOutlined}
-                      LabelName={'Ubah Status'}
-                      padding={'6px 16px'}
-                      onClick={() => handleUbahStatusOpen(row.Nippos)}
-                      disabled={eventstatus_id !== 7}
-                    />
-                  </ButtonContainer>
-                </StyledTableCell>
-                
-              </StyledTableRow>
-          ))}
-          </TableBody>
-        </Table>
-=======
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
@@ -155,7 +110,6 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id, 
               ))}
             </TableBody>
           </Table>
->>>>>>> Stashed changes
         </TableContainer>
       </div>
       <Stack spacing={2} direction="row" marginTop={2}>
