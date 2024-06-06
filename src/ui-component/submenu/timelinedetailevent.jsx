@@ -19,6 +19,7 @@ import TalentPool from '../../ui-component/event-section/talent-pool';
 import KonfirmasiNextEvent from '../../ui-component/modal/konfirmasi-next-event';
 import KonfirmasiTalentPool from '../../ui-component/modal/konfirmasi-talent-pool';
 import TalentCluster from '../../ui-component/event-section/talent-cluster';
+import ButtonPrimaryOutlined from '../../ui-component/button/ButtonPrimaryOutlined';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -294,7 +295,7 @@ export default function TimelineDetailEvent({
             </CountdownLabel>
           )}
 
-          <ButtonSecondary
+          <ButtonPrimaryOutlined
             Color="#1C2D5A"
             icon={ArrowBackOutlined}
             LabelName={'Lihat Tahap Sebelumnya'}

@@ -35,7 +35,9 @@ import { IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 
 // ==============================|| PROFILE MENU ||============================== //
 
+
 const ProfileSection = () => {
+
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
@@ -149,6 +151,10 @@ const ProfileSection = () => {
   //   };
   //   fetchRole();
   // }, [nippos]);
+
+  const handleAccessProfile = () => {
+    navigate('/profile'); // Navigate to the '/profile' route when clicked
+  };
 
   return (
     <>
@@ -293,6 +299,16 @@ const ProfileSection = () => {
                           />
                         </ListItemButton> */}
 
+                        <ListItemButton
+                          sx={{ borderRadius: `${customization.borderRadius}px` }}
+                          selected={selectedIndex === 3}
+                          onClick={handleAccessProfile}
+                        >
+                          <ListItemIcon>
+                            <IconUser stroke={1.5} size="1.3rem" />
+                          </ListItemIcon>
+                          <ListItemText primary={<Typography variant="body2">Profile</Typography>} />
+                        </ListItemButton>
 
                         <ListItemButton
                           sx={{ borderRadius: `${customization.borderRadius}px` }}

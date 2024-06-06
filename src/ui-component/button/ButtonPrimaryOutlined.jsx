@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 
-export default function ButtonOptional({ Color, backgroundColor, borderColor, icon, LabelName, onClick, disabled }) {
+export default function ButtonPrimaryOutlined({ Color, backgroundColor, borderColor, icon, LabelName, onClick, disabled }) {
   const IconComponent = icon; 
 
   return (
@@ -25,7 +25,7 @@ export default function ButtonOptional({ Color, backgroundColor, borderColor, ic
           border: borderColor || '1px solid #E0E0E0'
         }
       }}
-      endIcon={<IconComponent />}
+      startIcon={<IconComponent />}
       onClick={onClick}
       disabled={disabled}
     >

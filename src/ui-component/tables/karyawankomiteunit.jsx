@@ -28,7 +28,7 @@ const KaryawanKomiteUnit = ({
         { field: 'PMSthisyear', headerName: `PMS ${currentYear}`, width: 180 },
         { field: 'AKHLAK', headerName: 'AKHLAK', width: 180 },
         { field: 'Learning Agility', headerName: 'Learning Agility', width: 180 },
-        { field: 'Status Hukdis', headerName: 'Sedang Menjalani Hukdis?', width: 200 },
+        { field: 'Status Hukdis', headerName: 'Status Hukdis', width: 200 },
     ];
 
     return (
