@@ -9,6 +9,7 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| EVENT KETUA KOMITE TALENT PAGE ||============================== //
 
@@ -44,9 +45,10 @@ const EventKetuaKomiteTalent = () => {
   const [value, setValue] = React.useState(0);
   const [komitetalentevent, setkomitetalentevent] = useState([]);
   const nippos = sessionStorage.getItem('nippos');
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const fetcheventkomitalent = () => {
-    return fetch(`http://localhost:4000/getkomiteevent?nippos=${nippos}`) // Replace with your actual endpoint
+    return fetch(url + `getkomiteevent?nippos=${nippos}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

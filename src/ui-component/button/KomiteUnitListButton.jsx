@@ -7,6 +7,7 @@ import { useState,useEffect } from 'react';
 // import { height } from '@mui/system';
 import KomiteUnitListTable from '../tables/komiteunittable';
 import CloseIcon from '@mui/icons-material/Close';
+import.meta.env.VITE_API_BASE_URL
 const style = {
   position: 'absolute',
   top: '50%',
@@ -25,10 +26,11 @@ export default function KomiteUnitListButton({eventid}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [komiteunit, setkomiteunit] = useState([''])
+  const url = import.meta.env.VITE_API_BASE_URL
   
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getkomiteunitlist?eventtalentid=${eventid}`)
+    fetch(url + `getkomiteunitlist?eventtalentid=${eventid}`)
       .then(response => response.json())
       .then(data => {
         // Update state with API data

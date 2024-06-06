@@ -29,6 +29,7 @@ import dayjs from 'dayjs'; // Import dayjs for date manipulation
 import { toast } from 'react-toastify';
 import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
 import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
+import.meta.env.VITE_API_BASE_URL
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -65,6 +66,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   const [isDeskripsiTouched, setIsDeskripsiTouched] = useState(false);
   const [isHeadOfCommitteeFetched, setIsHeadOfCommitteeFetched] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const handleEventNameChange = (event) => {
     setEventName(event.target.value); // Update state with input value
@@ -97,7 +99,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   const fetchJobLevels = async (selectedCommittee) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:4000/getjoblevel?tipe_komite=${selectedCommittee}`);
+      const response = await fetch(url + `getjoblevel?tipe_komite=${selectedCommittee}`);
       const data = await response.json();
       setJobLevelOptions(data.job_level);
       setLoading(false);
@@ -115,7 +117,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
     // Fetch job family data
     const fetchJobFamily = async () => {
       try {
-        const response = await fetch('http://localhost:4000/getjobfamily');
+        const response = await fetch(url + 'getjobfamily');
         const data = await response.json();
         setJobFamilyOptions(data.fam);
       } catch (error) {
@@ -133,7 +135,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
     // Fetch job family data
     const fetchquestion = async () => {
       try {
-        const response = await fetch('http://localhost:4000/getquestion');
+        const response = await fetch(url + 'getquestion');
         const data = await response.json();
         setquestionOption(data.quest);
       } catch (error) {
@@ -150,7 +152,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   const fetchketuakomite = async (selectedCommittee) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:4000/getheadcommit?id_komite_talent=${selectedCommittee}`);
+      const response = await fetch(url + `getheadcommit?id_komite_talent=${selectedCommittee}`);
       const data = await response.json();
       setselectedketuakomite(data[0]);
       setIsHeadOfCommitteeFetched(true); // Set to true when data is fetched
@@ -168,7 +170,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   const fetchcommitteemember = async (selectedCommittee) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:4000/getcommite?id_komite_talent=${selectedCommittee}`);
+      const response = await fetch(url + `getcommite?id_komite_talent=${selectedCommittee}`);
       const data = await response.json();
       setcommitteememberOptions(data);
       setLoading(false);
@@ -198,7 +200,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
       const adjustedEndDate = dayjs(enddate).add(1, 'day');
 
       // Make the POST request to the API endpoint
-      const response = await fetch('http://localhost:4000/addevent', {
+      const response = await fetch(url + 'addevent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

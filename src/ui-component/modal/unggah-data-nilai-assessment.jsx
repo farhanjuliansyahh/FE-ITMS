@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import Papa from 'papaparse';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import ButtonError from '../../ui-component/button/ButtonError';
+import.meta.env.VITE_API_BASE_URL
 
 function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
     const ButtonsContainer = styled('div')({
@@ -68,6 +69,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
     // untuk handle upload file
     const [parsedData, setParsedData] = useState([]);
     const [namaFile, setNamaFile] = useState('')
+    const url = import.meta.env.VITE_API_BASE_URL
 
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
@@ -199,7 +201,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 return;
             }
 
-            fetch('http://localhost:4000/addskor', {
+            fetch(url + 'addskor', {
                 method: 'POST', // Specify the HTTP method (POST, GET, etc.)
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type

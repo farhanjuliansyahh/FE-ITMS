@@ -20,6 +20,7 @@ import KonfirmasiNextEvent from '../../ui-component/modal/konfirmasi-next-event'
 import KonfirmasiTalentPool from '../../ui-component/modal/konfirmasi-talent-pool';
 import TalentCluster from '../../ui-component/event-section/talent-cluster';
 import ButtonPrimaryOutlined from '../../ui-component/button/ButtonPrimaryOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
@@ -45,13 +46,14 @@ export default function TimelineDetailEvent({
   const [DaysLeftStep, setDaysLeftStep] = useState('');
   const [startdate, setStartdate] = useState(null);
   const [enddate, setEnddate] = useState(null);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   useEffect(() => {
     setActiveStep(eventstatus_id - 2);
   }, [eventstatus_id]);
 
   const geteventdeadline = () => {
-    return fetch(`http://localhost:4000/geteventdeadline?eventtalentid=${eventid}`) // endpoint
+    return fetch(url + `geteventdeadline?eventtalentid=${eventid}`) // endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

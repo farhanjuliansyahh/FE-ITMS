@@ -14,12 +14,14 @@ import dayjs from 'dayjs'; // Import dayjs for date manipulation
 import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
 import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 import { toast } from 'react-toastify';
+import.meta.env.VITE_API_BASE_URL
 
 function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua, mulai, tipekomitetalent}) {
   const [deadlinesource, setdeadlinesource] = useState('');
   const [activejoblevel, setactivejoblevel] = useState(['']);
   const [isDateSelected, setIsDateSelected] = useState(false); // New state to track if date is selected
   const [isLoading, setLoading] = useState(true);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const handleDateChange = (date) => {
     setdeadlinesource(date); // Update the state with the selected date
@@ -27,7 +29,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   };
 
   const ketuakomiterole = (nippos) => {
-    return fetch('http://localhost:4000/assignroleketuakomite', {
+    return fetch(url + 'assignroleketuakomite', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -53,7 +55,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   };
 
   const postdeadlinesource = () => {
-    return fetch('http://localhost:4000/createdeadline', {
+    return fetch(url + 'createdeadline', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -92,7 +94,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   };
 
   const getactivejoblevel = () => {
-    return fetch(`http://localhost:4000/getactivejoblevel?eventtalentid=${eventid}`, {
+    return fetch(url + `getactivejoblevel?eventtalentid=${eventid}`, {
       method: 'GET', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -128,7 +130,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   const joblevelclean = activejoblevel.join(',');
 
   const posttalentsource = () => {
-    return fetch(`http://localhost:4000/getfilterkaryawan?kode_rumpun_jabatan=${rumpun_jabatan}&job_level=${joblevelclean}`, {
+    return fetch(url + `getfilterkaryawan?kode_rumpun_jabatan=${rumpun_jabatan}&job_level=${joblevelclean}`, {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -155,7 +157,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   };
 
   const mapkomiteunit = () => {
-    return fetch('http://localhost:4000/cariotomatis', {
+    return fetch(url + 'cariotomatis', {
       method: 'POST' // Specify the HTTP method (POST, GET, etc.)
     })
       .then((response) => {
@@ -174,7 +176,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   };
 
   const notifikasikomiteunit = () => {
-    return fetch(`http://localhost:4000/notifkomiteunit`, {
+    return fetch(url + `notifkomiteunit`, {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -200,7 +202,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   };
 
   const rolekomiteunit = () => {
-    return fetch('http://localhost:4000/assignkomiteunit', {
+    return fetch(url + 'assignkomiteunit', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type

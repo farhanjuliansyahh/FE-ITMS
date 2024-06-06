@@ -33,6 +33,8 @@ import User1 from '../../../../../public/assets/images/users/user-round.svg';
 // assets
 import { IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 
+import.meta.env.VITE_API_BASE_URL
+
 // ==============================|| PROFILE MENU ||============================== //
 
 
@@ -47,6 +49,7 @@ const ProfileSection = () => {
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
+  const url = import.meta.env.VITE_API_BASE_URL
   /**
    * anchorRef is used on different componets and specifying one type leads to other components throwing an error
    * */
@@ -89,7 +92,7 @@ const ProfileSection = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const responseProfile = await fetch('http://localhost:4000/getkaryawan', {
+        const responseProfile = await fetch(url + 'getkaryawan', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`
@@ -122,35 +125,6 @@ const ProfileSection = () => {
       navigate('/');
     }
   }, [token, navigate]);
-
-  // useEffect(() => {
-  //   const fetchRole = async () => {
-  //     try {
-  //       const responseRole = await fetch('http://localhost:4000/getrole', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         },
-  //         body: JSON.stringify({
-  //           nippos: nippos
-  //         })
-  //       });
-  //       const response = await responseRole.json();
-
-  //       // Extract nama_role(s) from the response
-  //       const { namaroles } = response;
-  //       const namaRoles = namaroles.map((role) => role.nama_role);
-
-  //       if (namaRoles.length > 0) {
-  //         // Set sessionStorage with the array of nama_roles
-  //         sessionStorage.setItem('role', JSON.stringify(namaRoles));
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching role:', error);
-  //     }
-  //   };
-  //   fetchRole();
-  // }, [nippos]);
 
   const handleAccessProfile = () => {
     navigate('/profile'); // Navigate to the '/profile' route when clicked

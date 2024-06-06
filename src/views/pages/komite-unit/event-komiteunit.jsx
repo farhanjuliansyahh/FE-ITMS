@@ -9,6 +9,7 @@ import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import notFoundImage from '../../../../public/assets/images/ilustration/notfound.png';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DAFTAR EVENT KOMITE UNIT ||============================== //
 
@@ -42,9 +43,10 @@ const DaftarEventKomiteUnit = () => {
   const [value, setValue] = useState(0);
   const [komiteunitevent, setkomiteunitevent] = useState([]);
   const nippos = sessionStorage.getItem('nippos');
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const fetcheventkomiteunit = () => {
-    return fetch(`http://localhost:4000/getkomiteunitevent?nippos=${nippos}`) // Replace with your actual endpoint
+    return fetch(url + `getkomiteunitevent?nippos=${nippos}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

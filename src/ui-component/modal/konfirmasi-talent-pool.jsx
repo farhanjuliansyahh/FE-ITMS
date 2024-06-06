@@ -5,14 +5,16 @@ import { styled } from '@mui/material/styles';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { toast } from 'react-toastify';
+import.meta.env.VITE_API_BASE_URL
 
 function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }) {    
     const eventaktif = eventid;
+    const url = import.meta.env.VITE_API_BASE_URL
 
     const statusselesai = async () => {
         try {
             // Make the POST request to the API endpoint
-            const response = await fetch('http://localhost:4000/statusselesai', {
+            const response = await fetch(url + 'statusselesai', {
                 
                 method: 'POST',
                 headers: {

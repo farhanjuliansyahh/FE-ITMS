@@ -8,6 +8,7 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import AksesEvent from '../../../ui-component/submenu/aksesevent';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| EVENT KARYAWAN PAGE ||============================== //
 
@@ -49,9 +50,10 @@ const EventKaryawan = () => {
   const [value, setValue] = React.useState(0);
   const [karyawanevent, setkaryawanevent] = useState([])
   const nippos = sessionStorage.getItem('nippos');
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const fetchkaryawanevent = () => {
-    return fetch(`http://localhost:4000/getkaryawanevent?nippos=${nippos}`) // Replace with your actual endpoint  
+    return fetch(url + `getkaryawanevent?nippos=${nippos}`) // Replace with your actual endpoint  
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

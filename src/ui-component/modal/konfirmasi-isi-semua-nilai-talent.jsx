@@ -4,13 +4,14 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 function KonfirmasiIsiSemuaNilaiTalent({ open, handleClose, activeEvent,confirm }) {  
-    
+    const url = import.meta.env.VITE_API_BASE_URL
     const loloskandays = async () => {
         try {
             // Make an HTTP DELETE request to your API endpoint
-            const response = await fetch(`http://localhost:4000/loloskandays`, {
+            const response = await fetch(url + `loloskandays`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

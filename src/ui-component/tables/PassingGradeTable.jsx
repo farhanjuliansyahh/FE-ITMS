@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { OutlinedInput, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import.meta.env.VITE_API_BASE_URL
 
 const OutlineInputStyle = styled(OutlinedInput)(({ theme }) => ({
   width: '100%',
@@ -56,10 +57,11 @@ export default function PassingGradeTable({tipekomite, updatekkmstate, refetchst
   const [performancefromrows, setPerformanceFromRows] = useState(0);
   const [akhlakfromrows, setAkhlakFromRows] = useState(0);
   const [learningagilityfromrows, setLearningAgilityFromRows] = useState(0);
+  const url =import.meta.env.VITE_API_BASE_URL
 
   useEffect(() => {
     if (refetchstate){
-      fetch(`http://localhost:4000/getparameterqual?tipekomite=${komite}`)
+      fetch(url + `getparameterqual?tipekomite=${komite}`)
         .then(response => response.json())
         .then(data => {
           setscore(data);
@@ -83,7 +85,7 @@ export default function PassingGradeTable({tipekomite, updatekkmstate, refetchst
   }, [refetchstate]);
 
   const updateparameterqual = () => {
-    return fetch('http://localhost:4000/updateparamqual', {
+    return fetch(url + 'updateparamqual', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

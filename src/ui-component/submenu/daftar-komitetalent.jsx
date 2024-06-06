@@ -6,11 +6,13 @@ import { AddCircleOutline } from '@mui/icons-material';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import TabelDaftarAnggotaKomiteTalent from '../../ui-component/tables/anggota-komite-talent';
 import TambahKomiteTalent from '../../ui-component/modal/tambah-anggota-komite-talent';
+import.meta.env.VITE_API_BASE_URL
 
 export default function DaftarKomiteTalent({ komiteTalentId }) {
     const [tambahKomiteTalentOpen, setTambahKomiteTalentOpen] = useState(false);
     const [openKonfirmasiKomiteTalent, setKonfirmasiKomiteTalentOpen] = useState(false);
     const [selectedKomiteTalent, setSelectedKomiteTalent] = useState('')
+    const url = import.meta.env.VITE_API_BASE_URL
 
     const handleOpen = () => {
         setTambahKomiteTalentOpen(true);
@@ -41,7 +43,7 @@ export default function DaftarKomiteTalent({ komiteTalentId }) {
     const [anggotaKomiteTalent, setAnggotaKomiteTalent] = useState([]);
 
     const fetchKomiteTalentData = (komiteTalentId) => {
-        fetch(`http://localhost:4000/getanggotakomitetalent?komitetalentid=${komiteTalentId}`)
+        fetch(url + `getanggotakomitetalent?komitetalentid=${komiteTalentId}`)
             .then(response => response.json())
             .then(data => {
                 setAnggotaKomiteTalent(data.map((row, index) => ({ ...row, id: index + 1 })));

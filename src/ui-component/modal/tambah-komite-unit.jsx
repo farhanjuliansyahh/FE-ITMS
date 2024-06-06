@@ -7,6 +7,7 @@ import TabelDaftarAnggotaKomiteUnit from '../../ui-component/tables/daftar-komit
 import KonfirmasiTambahKomiteUnit from './konfirmasi-tambah-komite-unit';
 import CustomSearch from '../searchsection/custom-search';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 
 export default function TambahKomiteUnit({ open, onClose, onConfirm, onOpenSecondModal }) {
@@ -17,10 +18,11 @@ export default function TambahKomiteUnit({ open, onClose, onConfirm, onOpenSecon
     
     const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);
     const [rows, setRows] = useState([])
+    const url = import.meta.env.VITE_API_BASE_URL
 
     useEffect(() => {
         // Fetch data from API
-        fetch(`http://localhost:4000/getkomiteunitcandidate`)
+        fetch(url + `getkomiteunitcandidate`)
           .then(response => response.json())
           .then(data => {
             // Update state with API data

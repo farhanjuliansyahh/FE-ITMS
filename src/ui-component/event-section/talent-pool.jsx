@@ -13,12 +13,13 @@ import LabelInfo from '../../ui-component/label/label-info';
 import { RestartAltOutlined } from '@mui/icons-material';
 import CustomSearch from '../searchsection/custom-search';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-
+  
   return (
     <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
@@ -52,14 +53,15 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
   const [filterStatus, setFilterStatus] = useState('');
   const [poolrow, setpool] = useState([]);
   const [refreshstate, setrefreshstate] = useState([false]);
-
+  const url = import.meta.env.VITE_API_BASE_URL
+  
   const eventidactive = eventid;
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const gettalentpool = () => {
-    fetch(`http://localhost:4000/gettalentpool?eventtalentid=${eventidactive}`)
+    fetch(url + `gettalentpool?eventtalentid=${eventidactive}`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data
@@ -254,7 +256,13 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
             <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
           </div>
 
-          <TalentPoolTable rows={resetRowsTrue} eventid={eventidactive} updaterows={handlerefresh} eventstatus_id={eventstatus_id} setrefresh={setrefresh} />
+          <TalentPoolTable
+            rows={resetRowsTrue}
+            eventid={eventidactive}
+            updaterows={handlerefresh}
+            eventstatus_id={eventstatus_id}
+            setrefresh={setrefresh}
+          />
         </Box>
 
         <AddEventModal open={open} handleClose={handleClose} />
