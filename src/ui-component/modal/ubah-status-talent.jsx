@@ -44,7 +44,7 @@ function UbahStatusTalent({ open, nippos, eventid, handleClose }) {
   const handleUbah = () => {
     updatestatus(eventid, nippos, selectedStatus); // Update the selected status state
     handleClose();
-    setselectedStatus('')
+    setselectedStatus('');
   };
 
   const UbahButtonStyle = {
