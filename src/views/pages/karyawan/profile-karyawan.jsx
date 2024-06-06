@@ -229,7 +229,7 @@ export default function ProfileKaryawan() {
 
   const eventidactive = eventid;
 
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   return (
     <MainCard>
@@ -281,7 +281,7 @@ export default function ProfileKaryawan() {
       <CustomTabPanel value={value} index={0}>
         <Box sx={boxStyle}>
           <CheckDataAlert />
-          <AccordionKaryawan summary={'Data Diri'} icon={Person} content={<DataDiriKaryawan />} />
+          <AccordionKaryawan summary={'Data Diri'} icon={Person} content={<DataDiriKaryawan photosize={128} spaces={[2, 10]} />} />
           <AccordionKaryawan summary={'Riwayat Pendidikan'} icon={School} content={<RiwayatPendidikanKaryawan />} disabled={isDisabled}/>
           <AccordionKaryawan summary={'Kompetensi'} icon={EmojiEvents} content={<KompetensiKaryawan />} disabled={isDisabled}/>
         </Box>

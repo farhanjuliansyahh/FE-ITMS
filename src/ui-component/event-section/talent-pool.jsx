@@ -70,11 +70,19 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
       });
   };
 
+  const [refresh, setrefresh] = useState(true);
   useEffect(() => {
-    // Fetch data from API
-    gettalentpool();
-    setrefreshstate(true);
-  }, []);
+    if (refresh) {
+      gettalentpool();
+      setrefresh(false);
+    }
+  }, [refresh]);
+
+  // useEffect(() => {
+  //   // Fetch data from API
+  //   gettalentpool();
+  //   setrefreshstate(true);
+  // }, []);
 
   const handlerefresh = () => {
     gettalentpool();
@@ -246,7 +254,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
             <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
           </div>
 
-          <TalentPoolTable rows={resetRowsTrue} eventid={eventidactive} updaterows={handlerefresh} eventstatus_id={eventstatus_id}/>
+          <TalentPoolTable rows={resetRowsTrue} eventid={eventidactive} updaterows={handlerefresh} eventstatus_id={eventstatus_id} setrefresh={setrefresh} />
         </Box>
 
         <AddEventModal open={open} handleClose={handleClose} />

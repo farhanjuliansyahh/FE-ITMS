@@ -24,6 +24,9 @@ const ProfileKaryawan = Loadable(lazy(() => import('../views/pages/karyawan/prof
 const EventKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/event-ketuakomitetalent')));
 const ClusterKetuaKomiteTalent = Loadable(lazy(() => import('../views/pages/ketua-komite-talent/cluster-ketuakomitetalent')));
 const TalentDetail = Loadable(lazy(() => import('../views/pages/dashboard/talent-detail')));
+const UserProfile = Loadable(lazy(() => import('../views/pages/user-profile/profile')));
+const UbahKataSandi = Loadable(lazy(() => import('../views/pages/user-profile/change-password')))
+
 import { Navigate } from 'react-router-dom';
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -92,6 +95,14 @@ const MainRoutes = {
     {
       path: 'dashboard/detail-talent',
       element: <TalentDetail />
+    },
+    {
+      path: 'profile',
+      element: <UserProfile />
+    },
+    {
+      path: 'profile/change-password',
+      element: <UbahKataSandi />
     }
   ]
 };

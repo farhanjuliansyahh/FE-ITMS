@@ -221,7 +221,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 .catch(error => {
                     console.error('Error uploading chunk:', error);
                     setUploadInProgressToastId(null)
-                    toast.dismiss(progressToastId); 
+                    toast.dismiss(progressToastId);
                     toast.error('Error uploading chunk of data:', error)
                     // Optionally, you can handle the error by showing a message to the user or retrying
                 });
@@ -290,7 +290,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 ) : (
                     <UploadBox onDrop={handleDrop} onDragOver={(event) => event.preventDefault()}>
                         <StyledUploadFileOutlined />
-                        <Typography style={{ fontSize: '16px', fontWeight: '400', textAlign: 'center' }}>
+                        <Typography style={{ fontSize: '16px', fontWeight: '400', textAlign: 'center', padding: '0 10px', boxSizing: 'border-box', wordBreak: 'break-word', }}>
                             {namaFile}
                         </Typography>
                     </UploadBox>

@@ -190,7 +190,6 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:last-child td, &:last-child th': {
     border: 0,
@@ -257,60 +256,6 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
     setNilaiOpen(false);
   };
 
-  const columns = [
-    { field: 'id', headerName: 'No', width: 90 },
-    { field: 'Nama', headerName: 'Nama', width: 200 },
-    { field: 'Nippos', headerName: 'Nippos', width: 130 },
-    { field: 'Posisi', headerName: 'Posisi', width: 400 },
-    { field: 'Job Level', headerName: 'Job Level', width: 130 },
-    { field: 'Rumpun Jabatan', headerName: 'Rumpun Jabatan', width: 150 },
-    { field: 'Nama Kantor', headerName: 'Kantor', width: 250 },
-    { field: 'Komite Unit', headerName: 'Komite Unit', width: 250 },
-    {
-      field: 'Status',
-      headerName: 'Status',
-      width: 130,
-      renderCell: (params) => {
-        const { color, backgroundColor } = getStatusStyle(params.value);
-        return (
-          <div>
-            <span
-              style={{
-                color,
-                backgroundColor,
-                padding: '4px 8px',
-                borderRadius: '24px'
-              }}
-            >
-              {params.value}
-            </span>
-          </div>
-        );
-      }
-    },
-    {
-      field: 'aksi',
-      headerName: 'Aksi',
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#1C2D5A',
-              color: '#FFFFFF',
-              borderRadius: '12px',
-              padding: '6px 16px'
-            }}
-            endIcon={<AssignmentOutlinedIcon />}
-            onClick={() => handleOpen(params.row.Nippos)}
-          >
-            Nilai
-          </Button>
-        );
-      }
-    }
-  ];
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
@@ -325,9 +270,13 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
     setPage(1);
   };
 
-
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
+  const calculateColumnWidth = (data, accessor, headerText) => {
+    const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
+    return maxLength * 11;
+  };
 
   return (
     <div>
@@ -337,25 +286,25 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
           <TableHead>
             <TableRow>
               <StyledTableCell >No</StyledTableCell>
-              <StyledTableCell >Nama</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
               <StyledTableCell >Nippos</StyledTableCell>
-              <StyledTableCell >Posisi</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
               <StyledTableCell >Job Level</StyledTableCell>
-              <StyledTableCell >Rumpun Jabatan</StyledTableCell>
-              <StyledTableCell >Kantor</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
               <StyledTableCell >Komite Unit</StyledTableCell>
-              <StyledTableCell >Status</StyledTableCell>
-              <StyledTableCell >Aksi</StyledTableCell>
+              <StyledTableCell sx={{ textAlign: 'center' }}>Status</StyledTableCell>
+              <StyledTableCell sx={{ textAlign: 'center' }}>Aksi</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.slice(startIndex, endIndex).map((row) => (
               <StyledTableRow key={row.id}>
-                <StyledTableCell >{row.id}</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
                 <StyledTableCell >{row.Nama}</StyledTableCell>
-                <StyledTableCell >{row.Nippos}</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
                 <StyledTableCell >{row.Posisi}</StyledTableCell>
-                <StyledTableCell >{row['Job Level']}</StyledTableCell>
+                <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
                 <StyledTableCell >{row['Rumpun Jabatan']}</StyledTableCell>
                 <StyledTableCell >{row['Nama Kantor']}</StyledTableCell>
                 <StyledTableCell >{row['Komite Unit']}</StyledTableCell>
@@ -373,7 +322,7 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
                     </span>
                   </div>
                 </StyledTableCell>
-                <StyledTableCell >
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>
                   <Button
                     variant="contained"
                     sx={{
