@@ -10,11 +10,11 @@ const CurrentEventLabel = styled('div')({
   fontSize:'16px'
 });
 
-export default function LabelInfo({length}) {
+export default function LabelInfo({length, kuota}) {
 
   return (
     <>
-      <CurrentEventLabel>{length} Talent Karyawan</CurrentEventLabel>
+      <CurrentEventLabel>Terpilih {length} dari {kuota} Talent Karyawan</CurrentEventLabel>
     </>
   );
 }
