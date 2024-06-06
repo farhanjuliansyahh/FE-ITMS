@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
+import { toast } from 'react-toastify';
 
 function KonfirmasiTambahBPJ({ open, handleClose, eventid, nippos, onConfirm }) {
 
@@ -28,9 +29,11 @@ function KonfirmasiTambahBPJ({ open, handleClose, eventid, nippos, onConfirm }) 
                 return response.json();
             })
             .then(data => {
+                toast.success('Anggota BPJ berhasil ditambah !');
                 return data; // Return the parsed JSON data
             })
             .catch(error => {
+                toast.error('Gagal menambah anggota BPJ !');
                 console.error('Error fetching data:', error);
                 throw error; // Rethrow the error to handle it elsewhere
             });

@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import { toast } from 'react-toastify';
 
 function KonfirmasiIsiSemuaNilaiTalent({ open, handleClose, activeEvent,confirm }) {  
     
@@ -83,10 +84,12 @@ function KonfirmasiIsiSemuaNilaiTalent({ open, handleClose, activeEvent,confirm 
                     await loloskandays();
                     confirm();
                     handleClose();
+                    toast.success('Nilai berhasil diisi untuk semua talent !');
                 } catch (error) {
                     // Handle error if loloskanprofile() fails
                     console.error("Error:", error);
                     // Optionally, you can show an error message to the user
+                    toast.error('Gagal mengisi nilai untuk semua talent !');
                 }
             }}
         >

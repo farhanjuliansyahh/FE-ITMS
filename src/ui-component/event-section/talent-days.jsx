@@ -375,7 +375,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                 <div style={{ flex: '1' }}> </div>
                 <Button
                   variant="contained"
-                  sx={{ backgroundColor: '#1C2D5A', borderRadius: '12px', padding: '14px 24px' }}
+                  sx={{ backgroundColor: '#1C2D5A', borderRadius: '12px', padding: '14px 24px', boxShadow: 'none' }}
                   endIcon={<NotificationsNoneOutlined />}
                   onClick={handleOpenDetailBPJ}
                   disabled={!isFormValid() || disableInputs}
@@ -449,7 +449,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
               <div style={{ flex: '1' }}> </div>
               <Button
                 variant="contained"
-                sx={{ backgroundColor: '#1C2D5A', borderRadius: '12px', padding: '14px 24px' }}
+                sx={{ backgroundColor: '#1C2D5A', borderRadius: '12px', padding: '14px 24px', boxShadow: 'none' }}
                 endIcon={<AddCircleOutlineOutlined />}
                 onClick={handleOpen}
                 disabled={eventstatus_id !== 5}

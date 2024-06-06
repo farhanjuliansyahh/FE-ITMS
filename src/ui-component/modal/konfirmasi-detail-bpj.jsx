@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import { toast } from 'react-toastify';
 
 function KonfirmasiDetailBPJ({ open, handleClose, handleCloseBatalkan, eventid, selectedTipe, selectedDate, selectedLokasi }) {
 
@@ -29,9 +30,11 @@ function KonfirmasiDetailBPJ({ open, handleClose, handleCloseBatalkan, eventid, 
                 return response.json();
             })
             .then(data => {
+                toast.success('Notifikasi berhasil dikirim !');
                 return data; // Return the parsed JSON data
             })
             .catch(error => {
+                toast.error('Gagal mengirim Notifikasi !');
                 console.error('Error fetching data:', error);
                 throw error; // Rethrow the error to handle it elsewhere
             });
