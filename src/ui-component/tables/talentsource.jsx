@@ -577,7 +577,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                 <StyledTableCell >Nippos</StyledTableCell>
                 <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
                 <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+                <StyledTableCell >Job Level</StyledTableCell>
                 <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
                 <StyledTableCell >Komite Unit</StyledTableCell>
               </TableRow>
