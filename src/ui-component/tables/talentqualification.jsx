@@ -182,7 +182,7 @@ const StyledTableCell = styled(TableCell)(() => ({
     height: '60px',
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 13,
+    fontSize: 12,
     minHeight: 20,
     verticalAlign: 'center',
     height: '60px',
@@ -223,13 +223,13 @@ export default function TalentQualificationTable({
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <StyledTableCell sx={{ whiteSpace: 'nowrap' }} >No</StyledTableCell>
-                <StyledTableCell sx={{ width: 350 }}>Nama</StyledTableCell >
-                <StyledTableCell sx={{ width: 150 }}>NIPPOS</StyledTableCell >
-                <StyledTableCell sx={{ width: 500 }}>Posisi</StyledTableCell >
+                <StyledTableCell >No</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell >
+                <StyledTableCell >NIPPOS</StyledTableCell >
+                <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell >
                 <StyledTableCell >Job Level</StyledTableCell >
-                <StyledTableCell >Rumpun Jabatan</StyledTableCell >
-                <StyledTableCell >Kantor</StyledTableCell >
+                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell >
+                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell >
                 <StyledTableCell >Komite Unit</StyledTableCell >
                 <StyledTableCell >Competency/Psychotest</StyledTableCell >
                 <StyledTableCell >PMS</StyledTableCell >
@@ -240,14 +240,14 @@ export default function TalentQualificationTable({
             <TableBody>
               {rows.slice(startIndex, endIndex).map((row) => (
                 <TableRow key={row.id}>
-                  <StyledTableCell>{row.id}</StyledTableCell>
+                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
                   <StyledTableCell>{row.Nama}</StyledTableCell>
-                  <StyledTableCell>{row.Nippos}</StyledTableCell>
+                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
                   <StyledTableCell>{row.Posisi}</StyledTableCell>
-                  <StyledTableCell>{row['Job Level']}</StyledTableCell>
+                  <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
                   <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
                   <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
-                  <StyledTableCell style={{textAlign:"center"}}>{row['Komite Unit']}</StyledTableCell>
+                  <StyledTableCell >{row['Komite Unit']}</StyledTableCell>
                   <StyledTableCell style={{textAlign:"center"}}>
                     <div
                       style={{

@@ -572,13 +572,13 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                     />
                   </StyledTableCell>
                 )}
-                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No</StyledTableCell>
-                <StyledTableCell sx={{ width: 300 }}>Nama</StyledTableCell>
-                <StyledTableCell sx={{ width: 150 }}>Nippos</StyledTableCell>
-                <StyledTableCell sx={{ width: 500 }}>Posisi</StyledTableCell>
-                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
-                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
-                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
+                <StyledTableCell >No</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+                <StyledTableCell >Nippos</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
                 <StyledTableCell >Komite Unit</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -594,12 +594,12 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                       />
                     </StyledTableCell>
                   )}
-                  <StyledTableCell component="th" scope="row">{startIndex + index + 1}</StyledTableCell>
+                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{startIndex + index + 1}</StyledTableCell>
                   <StyledTableCell>{row.Nama}</StyledTableCell>
-                  <StyledTableCell>{row.Nippos}</StyledTableCell>
+                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
                   <StyledTableCell>{row.Posisi}</StyledTableCell>
                   <StyledTableCell>{row['Job Family']}</StyledTableCell>
-                  <StyledTableCell>{row['Job Level']}</StyledTableCell>
+                  <StyledTableCell sx={{ textAlign: 'center'}}>{row['Job Level']}</StyledTableCell>
                   <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
                   <StyledTableCell>
                     <ButtonContainer >

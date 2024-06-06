@@ -233,12 +233,13 @@ const StyledTableCell = styled(TableCell)(() => ({
     height: '60px',
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 13,
+    fontSize: 12,
     minHeight: 20,
     verticalAlign: 'center',
     height: '60px',
   },
 }));
+
 const calculateColumnWidth = (data, accessor, headerText) => {
   const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
   return maxLength * 11;
@@ -302,10 +303,10 @@ export default function TalentProfileTable({
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No</StyledTableCell>
-              <StyledTableCell sx={{ width: 350 }}>Nama</StyledTableCell>
-              <StyledTableCell sx={{ width: 150 }}>NIPPOS</StyledTableCell>
-              <StyledTableCell sx={{ width: 500}}>Posisi</StyledTableCell>
+              <StyledTableCell >No</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+              <StyledTableCell >NIPPOS</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
               <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
               <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
               <StyledTableCell >Commitment Letter</StyledTableCell>
@@ -317,11 +318,11 @@ export default function TalentProfileTable({
           <TableBody>
           {rows.slice(startIndex, endIndex).map((row) => (
             <TableRow key={row.id} >
-              <StyledTableCell>{row.id}</StyledTableCell>
+              <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
               <StyledTableCell>{row.Nama}</StyledTableCell>
-              <StyledTableCell>{row.Nippos}</StyledTableCell>
+              <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
               <StyledTableCell>{row.Posisi}</StyledTableCell>
-              <StyledTableCell>{row['Job Level']}</StyledTableCell>
+              <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
               <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
               <StyledTableCell>
                 <div style={{ ...getStatusStyle(commitmentLetterValue), padding: '4px 8px', borderRadius: '24px' }}>

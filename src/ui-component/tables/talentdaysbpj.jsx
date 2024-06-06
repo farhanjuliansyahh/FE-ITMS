@@ -123,13 +123,15 @@ const StyledTableCell = styled(TableCell)(() => ({
     color: '#1F1F1F',
     fontSize: 14,
     fontWeight: 600,
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    height: '60px',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
     minHeight: 20,
-    verticalAlign: 'center'
-  }
+    verticalAlign: 'center',
+    height: '60px',
+  },
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -137,6 +139,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0
   }
 }));
+const ButtonContainer = styled('div')({
+  whiteSpace: 'nowrap',
+});
 
 export default function TalentDaysBPJTable({
   eventid,
@@ -194,27 +199,29 @@ export default function TalentDaysBPJTable({
             <TableHead>
               <TableRow>
                 <StyledTableCell >No</StyledTableCell>
-                <StyledTableCell >Nama</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
                 <StyledTableCell >Nippos</StyledTableCell>
-                <StyledTableCell >Posisi</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
                 <StyledTableCell >Aksi</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {resetRows.slice(startIndex, endIndex).map((row) => (
                 <StyledTableRow key={row.id}>
-                  <StyledTableCell >{row.id}</StyledTableCell>
+                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
                   <StyledTableCell >{row.nama}</StyledTableCell>
-                  <StyledTableCell >{row.nippos}</StyledTableCell>
+                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.nippos}</StyledTableCell>
                   <StyledTableCell >{row.Posisi}</StyledTableCell>
                   <StyledTableCell >
-                    <ButtonErrorOutlined
-                      icon={DeleteOutlineOutlinedIcon}
-                      LabelName={'Hapus'}
-                      padding={'6px 16px'}
-                      onClick={() => handleHapusBPJOpen(row.nippos)}
-                      disabled={disabled}
-                    />
+                    <ButtonContainer >
+                      <ButtonErrorOutlined
+                        icon={DeleteOutlineOutlinedIcon}
+                        LabelName={'Hapus'}
+                        padding={'6px 16px'}
+                        onClick={() => handleHapusBPJOpen(row.nippos)}
+                        disabled={disabled}
+                      />
+                    </ButtonContainer>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

@@ -127,7 +127,6 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:last-child td, &:last-child th': {
     border: 0,
@@ -167,7 +166,11 @@ const getKategoriMatrixStyle = (value) => {
     }}>{value}</span>
   );
 };
-  
+const calculateColumnWidth = (data, accessor, headerText) => {
+  const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
+  return maxLength * 11;
+};
+
 
 export default function TalentClusterTable({rows}) {
   const [page, setPage] = useState(1);
@@ -196,12 +199,12 @@ export default function TalentClusterTable({rows}) {
           <TableHead>
             <TableRow>
               <StyledTableCell >No</StyledTableCell>
-              <StyledTableCell >Nama</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
               <StyledTableCell >Nippos</StyledTableCell>
-              <StyledTableCell >Posisi</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
               <StyledTableCell >Job Level</StyledTableCell>
-              <StyledTableCell >Rumpun Jabatan</StyledTableCell>
-              <StyledTableCell >Kantor</StyledTableCell>
+              <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
+              <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
               <StyledTableCell >Komite Unit</StyledTableCell>
               <StyledTableCell >Kategori Matrix Awal</StyledTableCell>
               <StyledTableCell >Kategori Matrix Akhir</StyledTableCell>
@@ -214,16 +217,16 @@ export default function TalentClusterTable({rows}) {
             const { color, backgroundColor } = getStatusStyle(row.status);
             return (
               <StyledTableRow key={row.id}>
-                <StyledTableCell>{row.id}</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
                 <StyledTableCell>{row.nama}</StyledTableCell>
-                <StyledTableCell>{row.nippos}</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.nippos}</StyledTableCell>
                 <StyledTableCell>{row.Posisi}</StyledTableCell>
-                <StyledTableCell>{row['Job Level']}</StyledTableCell>
+                <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
                 <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
                 <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
                 <StyledTableCell>{row['Komite Unit']}</StyledTableCell>
-                <StyledTableCell>{getKategoriMatrixStyle(row['Matriks Kategori Awal'])}</StyledTableCell>
-                <StyledTableCell>{getKategoriMatrixStyle(row['Matriks Kategori Akhir'])}</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{getKategoriMatrixStyle(row['Matriks Kategori Awal'])}</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{getKategoriMatrixStyle(row['Matriks Kategori Akhir'])}</StyledTableCell>
                 <StyledTableCell>
                   <div>
                     <span style={{ 
