@@ -123,7 +123,7 @@ const ButtonContainer = styled('div')({
   whiteSpace: 'nowrap',
 });
 
-export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }) {
+export default function TalentPool({ rows, eventid, updaterows, eventstatus_id, setrefresh }) {
   const [ubahStatusOpen, setUbahStatusOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState(null);
 
@@ -215,6 +215,7 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id }
           setUbahStatusOpen(false);
           setSelectedNippos(null); // Reset selected nippos when closing modal
           updaterows();
+          setrefresh(true)
         }}
         nippos={selectedNippos} // Pass selected nippos as prop
         eventid={eventid}
