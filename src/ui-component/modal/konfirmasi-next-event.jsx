@@ -11,11 +11,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs'; // Import dayjs for date manipulation
 import { toast } from 'react-toastify';
+import.meta.env.VITE_API_BASE_URL
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 
 function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentstep, eventid, status, refresh, eventStartDate }) {
   const [selectedDate, setSelectedDate] = useState(null);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const currenteventstatus = status;
   const handleDateChange = (date) => {
@@ -104,7 +106,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   const eventactive = parseInt(eventid);
 
   const updatedeadline = (eventid) => {
-    return fetch('http://localhost:4000/updatedeadline', {
+    return fetch(url + 'updatedeadline', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -132,7 +134,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const notifikasikaryawan = () => {
-    return fetch('http://localhost:4000/notifkaryawan', {
+    return fetch(url + 'notifkaryawan', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -158,7 +160,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const notifikasiketuakomite = (eventid) => {
-    return fetch('http://localhost:4000/notifketuakomite', {
+    return fetch(url + 'notifketuakomite', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -184,7 +186,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const posttalentprofile = () => {
-    return fetch('http://localhost:4000/createtalentprofile', {
+    return fetch(url + 'createtalentprofile', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -210,7 +212,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const posttalentqual = () => {
-    return fetch('http://localhost:4000/createqualificationtable', {
+    return fetch(url + 'createqualificationtable', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -235,38 +237,12 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
       });
   };
 
-  // const posttalentdays = () => {
-  //   return fetch('http://localhost:4000/createtdays', {
-  //     method: 'POST', // Specify the HTTP method (POST, GET, etc.)
-  //     headers: {
-  //       'Content-Type': 'application/json' // Specify the content type
-  //     },
-  //     body: JSON.stringify({
-  //       // Include any data you want to send in the request body
-  //       eventtalentid: eventid
-  //     }) // Convert the bodyData object to a JSON string
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       return data; // Return the parsed JSON data
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching data:', error);
-  //       throw error; // Rethrow the error to handle it elsewhere
-  //     });
-  // };
-
   const posttalentdays = () => {
     const requestBody = {
       // Your request body data here
       eventtalentid: eventid
     };
-    return fetch('http://localhost:4000/createtdays', {
+    return fetch(url + 'createtdays', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -283,7 +259,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
       })
       .then((data) => {
         data;
-        return fetch(`http://localhost:4000/createdaysbpj`, {
+        return fetch(url + `createdaysbpj`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -308,7 +284,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const posttalentcluster = () => {
-    return fetch('http://localhost:4000/createcluster', {
+    return fetch(url + 'createcluster', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -334,7 +310,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const mapcluster = () => {
-    return fetch('http://localhost:4000/updateskorcluster', {
+    return fetch(url + 'updateskorcluster', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -360,7 +336,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const posttalentpool = () => {
-    return fetch(`http://localhost:4000/createpool?eventtalentid=${eventid}`, {
+    return fetch(url + `createpool?eventtalentid=${eventid}`, {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -386,7 +362,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const rolekaryawan = () => {
-    return fetch('http://localhost:4000/assignkaryawan', {
+    return fetch(url + 'assignkaryawan', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type

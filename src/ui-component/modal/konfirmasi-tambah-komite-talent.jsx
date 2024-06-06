@@ -5,12 +5,14 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import { toast } from 'react-toastify';
+import.meta.env.VITE_API_BASE_URL
 
 function KonfirmasiTambahKomiteTalent({ open, handleClose, nippos, nama, onConfirm, komiteTalentId }) {
     const [TotalAddedMember, setTotalAddedMember] = useState([]);
+    const url = import.meta.env.VITE_API_BASE_URL
 
     const fetchTotalAddedMember = (nippos) => {
-        fetch(`http://localhost:4000/gettotaladdedmember?nippos=${nippos}`)
+        fetch(url + `gettotaladdedmember?nippos=${nippos}`)
             .then(response => response.json())
             .then(data => {
                 setTotalAddedMember(data.map((row, index) => ({ ...row, id: index + 1 })));
@@ -28,7 +30,7 @@ function KonfirmasiTambahKomiteTalent({ open, handleClose, nippos, nama, onConfi
     }, [nippos, komiteTalentId]);
 
     const tambahdatakomitetalent = (komiteTalentId, nippos) => {
-        return fetch('http://localhost:4000/assignaskomitetalent', {
+        return fetch(url + 'assignaskomitetalent', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
                 'Content-Type': 'application/json', // Specify the content type

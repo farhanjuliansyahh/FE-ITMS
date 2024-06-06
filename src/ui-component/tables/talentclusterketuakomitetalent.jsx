@@ -4,6 +4,7 @@ import { CreateOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import UbahKategoriMatrix from '../../ui-component/modal/ubah-kategori-matrix';
 import KonfirmasiUbahMatrix from '../../ui-component/modal/konfirmasi-ubah-matrix';
+import.meta.env.VITE_API_BASE_URL
 
 const getStyledRenderCell = () => (params) => (
     <div>
@@ -80,8 +81,10 @@ const TalentClusterKetuaKomiteTalentTable = ({
         setSelectedCategory(category); // Store the selected category in the state
     };
 
+    const url = import.meta.env.VITE_API_BASE_URL
+
     const ubahmatriks = (eventid, nippos, matriks, reason ) => {
-        return fetch('http://localhost:4000/updatematriks', {
+        return fetch(url + 'updatematriks', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
                 'Content-Type': 'application/json', // Specify the content type

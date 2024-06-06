@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { SaveOutlined, CancelOutlined } from '@mui/icons-material';
+import.meta.env.VITE_API_BASE_URL
 import { toast } from 'react-toastify';
 
 const StyledTableCell = styled(TableCell)(() => ({
@@ -30,6 +31,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
   const [sortedQuestionList, setSortedQuestionList] = useState([]);
   const [nilaiInput, setNilaiInput] = useState([]);
   const [nilaiArray, setNilaiArray] = useState([]);
+  const url = import.meta.env.VITE_API_BASE_URL
   const [initialNilaiInput, setInitialNilaiInput] = useState([]);
   const [hasChanges, setHasChanges] = useState(false);
 
@@ -90,7 +92,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
   };
 
   const updatenilaidays = (eventid, nippos, nilaiArray) => {
-    return fetch('http://localhost:4000/updatenilaibutton', {
+    return fetch(url + 'updatenilaibutton', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

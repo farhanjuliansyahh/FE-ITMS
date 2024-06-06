@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 export default function ClusterKetuaKomiteTalent() {
   const { id } = useParams();
@@ -22,9 +23,10 @@ export default function ClusterKetuaKomiteTalent() {
   const [categoryCounts, setCategoryCounts] = useState({});
   const [refreshstate, setrefreshstate] = useState(false);
   const [kuota, setkuota] = useState('');
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const fetcheventdetail = () => {
-    return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
+    return fetch(url + `getoneevent?id=${id}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -140,7 +142,7 @@ export default function ClusterKetuaKomiteTalent() {
   
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getclustertable?eventtalentid=${id}`)
+    fetch(url + `getclustertable?eventtalentid=${id}`)
       .then((response) => response.json())
       .then((datacluster) => {
         // Update state with API data
@@ -163,7 +165,7 @@ export default function ClusterKetuaKomiteTalent() {
 
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getparameterkuota?id=2`)
+    fetch(url + `getparameterkuota?id=2`)
       .then((response) => response.json())
       .then((data) => {
         // Initialize rows based on fetched score data

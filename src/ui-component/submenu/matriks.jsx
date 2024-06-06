@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
+import.meta.env.VITE_API_BASE_URL
 
 function createData(colname1, colname2, colname3) {
   return { colname1, colname2, colname3 };
@@ -64,10 +65,12 @@ export default function Matriks({eventid}) {
     "Unfit": 0
   });
 
+  const url = import.meta.env.VITE_API_BASE_URL
+
   const eventidactive = eventid;
    useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getclustertable?eventtalentid=${eventidactive}`)
+    fetch(url + `getclustertable?eventtalentid=${eventidactive}`)
       .then(response => response.json())
       .then(datacluster => {
         // Initialize category counts

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+import.meta.env.VITE_API_BASE_URL
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const [resultProfile, setResultProfile] = useState(null);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const doLoginSide = async (nippos, password) => {
     const headers = {
@@ -16,7 +18,7 @@ export const useAuth = () => {
       password: password
     });
 
-    const responseApi = await fetch('http://localhost:4000/loginadmin', {
+    const responseApi = await fetch(url + 'loginadmin', {
       method: 'POST',
       headers: headers,
       body: content
@@ -33,7 +35,7 @@ export const useAuth = () => {
       // alert(response.message);
 
       try {
-        const responseProfile = await fetch('http://localhost:4000/getkaryawan', {
+        const responseProfile = await fetch(url + 'getkaryawan', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${response.token}`

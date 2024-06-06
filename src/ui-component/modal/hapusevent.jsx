@@ -10,16 +10,18 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
 import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
+import.meta.env.VITE_API_BASE_URL
 
 function HapusEvent({ open, handleClose, eventid, setrefresh }) {
   const [selectedCommittee, setSelectedCommittee] = useState('');
   const [selectedJobLevel, setSelectedJobLevel] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const hapusdata = async () => {
     try {
       // Make an HTTP DELETE request to your API endpoint
-      const response = await fetch(`http://localhost:4000/hapusevent`, {
+      const response = await fetch(url + `hapusevent`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

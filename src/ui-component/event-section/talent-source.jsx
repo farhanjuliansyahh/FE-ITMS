@@ -12,6 +12,7 @@ import ButtonPrimary from '../button/ButtonPrimary';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
 import TalentSourceTable from '../tables/talentsource';
 import CustomSearch from '../searchsection/custom-search';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL TALENT SOURCE PAGE ||============================== //
 
@@ -48,6 +49,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   const [rowstrue, setRowstrue] = useState([]);
   const [rowsfalse, setRowsfalse] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const handleSelectedRowsChange = (newSelectedRows) => {
     setSelectedRows(newSelectedRows);
@@ -56,7 +58,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   const eventidactive = eventid;
 
   const getkandidatfalse = () => {
-    fetch(`http://localhost:4000/getkandidatfalse?eventtalentid=${eventid}`)
+    fetch(url + `getkandidatfalse?eventtalentid=${eventid}`)
       .then((response) => response.json())
       .then((datafalse) => {
         // Update state with API data
@@ -68,7 +70,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   };
 
   const getkandidattrue = () => {
-    fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${eventid}`)
+    fetch(url + `getkandidattrue?eventtalentid=${eventid}`)
       .then((response) => response.json())
       .then((datatrue) => {
         // Update state with API data
@@ -153,7 +155,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     const validNippos = selectedNippos.filter((nippos) => nippos !== null);
 
     // Send update API request to change something in the database
-    fetch(`http://localhost:4000/updatestatussource?eventtalentid=${eventid}`, {
+    fetch(url + `updatestatussource?eventtalentid=${eventid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -170,8 +172,8 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
         setSelectedRows([]);
         // Refetch data after successful addition
         return Promise.all([
-          fetch(`http://localhost:4000/getkandidatfalse?eventtalentid=${eventid}`),
-          fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${eventid}`)
+          fetch(url + `getkandidatfalse?eventtalentid=${eventid}`),
+          fetch(url + `getkandidattrue?eventtalentid=${eventid}`)
         ]);
       })
       .then((responses) => Promise.all(responses.map((response) => response.json())))

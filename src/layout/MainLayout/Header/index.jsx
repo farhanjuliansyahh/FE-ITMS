@@ -12,6 +12,7 @@ import NotificationSection from './NotificationSection';
 // assets
 import { IconMenu2 } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
@@ -19,9 +20,10 @@ const Header = ({ handleLeftDrawerToggle }) => {
   const theme = useTheme();
   const nippos = sessionStorage.getItem('nippos');
   const [notificationList, setNotificationList] = useState([])
+  const url = import.meta.env.VITE_API_BASE_URL
   
   const updatenotifstatus = (nippos, eventid, jenisnotif) => {
-    return fetch('http://localhost:4000/updatestatusnotif', {
+    return fetch(url + 'updatestatusnotif', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json', // Specify the content type
@@ -72,7 +74,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
 
 
   const fetchnotification = (nippos) => {
-    return fetch(`http://localhost:4000/getnotification?nippos=${nippos}`) // endpoint
+    return fetch(url + `getnotification?nippos=${nippos}`) // endpoint
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

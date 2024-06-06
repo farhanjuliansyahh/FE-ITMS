@@ -13,6 +13,7 @@ import MatrixNineBox from '../../ui-component/submenu/matrixninebox';
 import TalentClusterTable from '../../ui-component/tables/talentcluster';
 import CustomSearch from '../searchsection/custom-search';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| TALENT CLUSTER PAGE ||============================== //
 
@@ -58,6 +59,7 @@ const TalentCluster = ({eventid}) => {
   const [filterKategoriMatrix, setFilterKategoriMatrix] = useState('');
   const [clusterRow, setclusterRow] = useState([])
   const [categoryCounts, setCategoryCounts] = useState({});
+  const url = import.meta.env.VITE_API_BASE_URL
 
 
   const eventidactive = eventid
@@ -71,7 +73,7 @@ const TalentCluster = ({eventid}) => {
 
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getclustertable?eventtalentid=${eventidactive}`)
+    fetch(url + `getclustertable?eventtalentid=${eventidactive}`)
       .then(response => response.json())
       .then(datacluster => {
         // Update state with API data

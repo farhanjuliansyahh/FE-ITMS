@@ -17,6 +17,7 @@ import KonfirmasiSubmitTalentProfile from '../../ui-component/modal/konfirmasi-s
 import ButtonOptional from '../../ui-component/button/ButtonOptional';
 import CustomSearch from '../../ui-component/searchsection/custom-search';
 import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL TALENT PROFILE PAGE ||============================== //
 
@@ -58,6 +59,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
   const [filterKomite, setFilterKomite] = useState('');
   const [openSubmit, setOpenSubmit] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const activeEvent = eventid;
   const handleOpenSubmit = () => {
@@ -69,7 +71,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
 
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getbelumlengkap?eventtalentid=${eventid}`)
+    fetch(url + `getbelumlengkap?eventtalentid=${eventid}`)
       .then((response) => response.json())
       .then((databelum) => {
         // Update state with API data
@@ -89,7 +91,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
 
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getlengkap?eventtalentid=${eventid}`)
+    fetch(url + `getlengkap?eventtalentid=${eventid}`)
       .then((response) => response.json())
       .then((datalengkap) => {
         // Update state with API data
@@ -101,7 +103,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
   }, []); // Empty dependency array to run effect only once
 
   const fetchData = () => {
-    fetch(`http://localhost:4000/getbelumlengkap?eventtalentid=${eventid}`)
+    fetch(url + `getbelumlengkap?eventtalentid=${eventid}`)
       .then((response) => response.json())
       .then((databelum) => {
         setrowsbelum(databelum.map((row, index) => ({ ...row, id: index + 1 })));
@@ -111,7 +113,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
         console.error('Error fetching data:', error);
       });
 
-    fetch(`http://localhost:4000/getlengkap?eventtalentid=${eventid}`)
+    fetch(url + `getlengkap?eventtalentid=${eventid}`)
       .then((response) => response.json())
       .then((datalengkap) => {
         setrowslengkap(datalengkap.map((row, index) => ({ ...row, id: index + 1 })));

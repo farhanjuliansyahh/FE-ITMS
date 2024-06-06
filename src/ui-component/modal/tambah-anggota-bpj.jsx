@@ -7,9 +7,12 @@ import TabelDaftarAnggotaBPJ from '../../ui-component/tables/daftar-anggota-bpj'
 import KonfirmasiTambahAnggotaBPJ from './konfirmasi-tambah-bpj';
 import CustomSearch from '../searchsection/custom-search';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 export default function TambahAnggotaBPJ({ open, onClose, onConfirm, eventid }) {
     const [isLoading, setLoading] = useState(true);
+    const url = import.meta.env.VITE_API_BASE_URL
+
     useEffect(() => {
         setLoading(false);
     }, []);
@@ -19,7 +22,7 @@ export default function TambahAnggotaBPJ({ open, onClose, onConfirm, eventid }) 
     const [selectedNippos, setSelectedNippos] = useState('');
 
     useEffect(() => {
-        fetch(`http://localhost:4000/getkomiteunitcandidate`)
+        fetch(url + `getkomiteunitcandidate`)
           .then(response => response.json())
           .then(data => {
             setRows(data.map((row, index) => ({ ...row, id: index + 1 })));

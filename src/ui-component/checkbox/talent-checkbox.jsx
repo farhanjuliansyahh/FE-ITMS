@@ -8,14 +8,16 @@ import { styled } from '@mui/material/styles';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import.meta.env.VITE_API_BASE_URL
 
 export default function TalentCheckbox({ onStatusUpdate, Title, Body , subBody, Footer, data, eventid, datatoupdate, statusprofile}) {
     const [checked, setChecked] = useState(false);
     const [openModal, setOpenModal] = useState(false); // State to manage modal open/close
     const [processCompleted, setProcessCompleted] = useState(statusprofile); // State to track if process is completed
+const url = import.meta.env.VITE_API_BASE_URL
 
     const updatepakta = (eventid,nippos,datatoupdate) => {
-        return fetch(`http://localhost:4000/updatepaktacommitpribadi`, {
+        return fetch(url + `updatepaktacommitpribadi`, {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
                 'Content-Type': 'application/json', // Specify the content type

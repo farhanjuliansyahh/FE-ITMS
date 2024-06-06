@@ -8,10 +8,12 @@ import DetailTalentTable from '../../../ui-component/tables/detail-talent-table'
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
 import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
+import.meta.env.VITE_API_BASE_URL
 // ==============================|| DETAIL TALENT - DASHBOARD ||============================== //
 
 export default function TalentDetail() {
   const [isLoading, setLoading] = useState(true);
+  const url = import.meta.env.VITE_API_BASE_URL
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -19,7 +21,7 @@ export default function TalentDetail() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/getdetailtalent')
+    fetch(url + 'getdetailtalent')
       .then((response) => response.json())
       // 4. Setting *dogImage* to the image url that we received from the response above
       .then((data) => setRows(data));
