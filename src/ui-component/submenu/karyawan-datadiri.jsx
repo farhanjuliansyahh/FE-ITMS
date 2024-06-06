@@ -51,7 +51,7 @@ export default function DataDiriKaryawan({ photosize, spaces, statusButton }) {
       </Grid>
       <Grid item xs={spaces[1]}>
         <EmpatKolomDataKaryawan tabletitle={'Informasi Pribadi'} rows={rows_informasi} widthDataCell={170} />
-        <DuaKolomDataKaryawan tabletitle={'Alamat'} rows={rows_alamat} widthDataCell={170} />
+        {/* <DuaKolomDataKaryawan tabletitle={'Alamat'} rows={rows_alamat} widthDataCell={170} /> */}
         <EmpatKolomDataKaryawan tabletitle={'Posisi'} rows={rows_posisi} widthDataCell={170} />
       </Grid>
     </Grid>
