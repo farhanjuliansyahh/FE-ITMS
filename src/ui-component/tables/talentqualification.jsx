@@ -251,6 +251,7 @@ export default function TalentQualificationTable({
                   <StyledTableCell style={{textAlign:"center"}}>
                     <div
                       style={{
+                        display: 'inline-block',
                         ...getColorStyle(row['Competency/Psychotest'], minimumCompeten5cyQualified),
                         padding: '4px 8px',
                         borderRadius: '24px'
@@ -262,6 +263,7 @@ export default function TalentQualificationTable({
                   <StyledTableCell style={{textAlign:"center"}}>
                     <div
                       style={{
+                        display: 'inline-block',
                         ...getColorStyle(row.PMS, minimumPmsQualified),
                         padding: '4px 8px',
                         borderRadius: '24px'
@@ -273,6 +275,7 @@ export default function TalentQualificationTable({
                   <StyledTableCell style={{textAlign:"center"}}>
                     <div
                       style={{
+                        display: 'inline-block',
                         ...getColorStyle(row.AKHLAK, minimumAkhlakQualified),
                         padding: '4px 8px',
                         borderRadius: '24px'
@@ -284,6 +287,7 @@ export default function TalentQualificationTable({
                   <StyledTableCell style={{textAlign:"center"}}>
                     <div
                       style={{
+                        display: 'inline-block',
                         ...getColorStyle(row['Learning Agility'], minimumLearningAgilityQualified),
                         padding: '4px 8px',
                         borderRadius: '24px'

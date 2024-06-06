@@ -324,17 +324,17 @@ export default function TalentProfileTable({
               <StyledTableCell>{row['Job Level']}</StyledTableCell>
               <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
               <StyledTableCell>
-                <div style={{ ...getStatusStyle(commitmentLetterValue), padding: '4px 8px', borderRadius: '24px' }}>
+                <div style={{ display: 'inline-block', ...getStatusStyle(commitmentLetterValue), padding: '4px 8px', borderRadius: '24px' }}>
                   {commitmentLetterValue}
                 </div>
               </StyledTableCell>
               <StyledTableCell style={{ padding: '12px' }}>
-                <div style={{ ...getStatusStyle(paktaIntegritasValue), padding: '4px 8px', borderRadius: '24px' }}>
+                <div style={{ display: 'inline-block', ...getStatusStyle(paktaIntegritasValue), padding: '4px 8px', borderRadius: '24px' }}>
                   {paktaIntegritasValue}
                 </div>
               </StyledTableCell>
               <StyledTableCell style={{ padding: '12px' }}>
-                <div style={{ ...getSubmittedByStyle(row['Status Submit']), padding: '4px 8px', borderRadius: '24px' }}>
+                <div style={{ display: 'inline-block', ...getSubmittedByStyle(row['Status Submit']), padding: '4px 8px', borderRadius: '24px' }}>
                   {row['Status Submit']}
                 </div>
               </StyledTableCell>

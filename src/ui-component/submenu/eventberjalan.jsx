@@ -136,7 +136,7 @@ export default function EventBerjalan({
     paddingBottom: 0,
     '&:hover': {
       color: '#2196F3', // Ubah warna teks menjadi biru saat dihover
-      cursor: 'pointer' // Tambahkan cursor pointer saat dihover
+      // cursor: 'pointer' // Tambahkan cursor pointer saat dihover
     }
   });
 
@@ -339,7 +339,7 @@ export default function EventBerjalan({
           <FlexTitle>
             <CalendarIcon style={{ color: '#828282' }} />
             {status === 8 ? (
-              <Typography style={{ color: isRealEndDateBeforePlannedEndDate ? '#66BB6A' : '#F44336' }}>
+              <Typography style={{ color: isRealEndDateBeforePlannedEndDate ? '#66BB6A' : '#F44336', fontSize: '15px' }}>
                 Realisasi : {' '}
                 {new Date(tanggal_mulai_real).toLocaleDateString('id-ID', {
                   day: 'numeric',
@@ -358,7 +358,7 @@ export default function EventBerjalan({
                 })()}
               </Typography>
             ) : (
-              <Typography style={{ color: '#828282' }}>
+              <Typography style={{ color: '#828282', fontSize: '15px' }}>
                 {tanggal_mulai &&
                   new Date(tanggal_mulai).toLocaleDateString('id-ID', {
                     day: 'numeric',
