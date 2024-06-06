@@ -229,7 +229,7 @@ export default function ProfileKaryawan() {
 
   const eventidactive = eventid;
 
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   return (
     <MainCard>
