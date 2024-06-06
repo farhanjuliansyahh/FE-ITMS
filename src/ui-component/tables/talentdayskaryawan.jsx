@@ -312,6 +312,7 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
                   <div>
                     <span
                       style={{
+                        display: 'inline-block',
                         ...getStatusStyle(row.Status),
                         padding: '4px 8px',
                         borderRadius: '24px'
@@ -328,7 +329,8 @@ export default function TalentDaysBPJTable({ rows, question, eventid, refetchkar
                       backgroundColor: '#1C2D5A',
                       color: '#FFFFFF',
                       borderRadius: '12px',
-                      padding: '6px 16px'
+                      padding: '6px 16px',
+                      boxShadow: 'none'
                     }}
                     endIcon={<AssignmentOutlinedIcon />}
                     onClick={() => handleOpen(row.Nippos)}

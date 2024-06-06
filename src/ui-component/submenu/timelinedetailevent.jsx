@@ -284,7 +284,7 @@ export default function TimelineDetailEvent({
           {eventstatus_id !== 8 && (
             <CountdownLabel
               style={{
-                color: DaysLeft === 0 ? 'yellow' : DaysLeft > 0 ? '#66BB6A' : '#FF6B6B'
+                color: DaysLeft === 0 ? 'yellow' : DaysLeft > 0 ? '#F44336' : '#FF6B6B'
               }}
             >
               {DaysLeft !== null && DaysLeft > 0

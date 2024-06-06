@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { SaveOutlined, CancelOutlined } from '@mui/icons-material';
+import { toast } from 'react-toastify';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,6 +30,8 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
   const [sortedQuestionList, setSortedQuestionList] = useState([]);
   const [nilaiInput, setNilaiInput] = useState([]);
   const [nilaiArray, setNilaiArray] = useState([]);
+  const [initialNilaiInput, setInitialNilaiInput] = useState([]);
+  const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {
     const sortedList = [...questionList].sort((a, b) => a.id_pertanyaan - b.id_pertanyaan);
@@ -40,6 +43,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
     });
 
     setNilaiInput(initialNilai);
+    setInitialNilaiInput(initialNilai); // Store initial values
 
     const initialNilaiArray = sortedList.map((question, index) => ({
       id_pertanyaan: question.id_pertanyaan,
@@ -64,6 +68,9 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
   const updatedArray = [...nilaiArray];
   updatedArray[index].nilaiInput = value;
   setNilaiArray(updatedArray);
+
+  // Check for changes
+  setHasChanges(JSON.stringify(values) !== JSON.stringify(initialNilaiInput));
   };
 
   const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
@@ -101,19 +108,32 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
         return response.json();
       })
       .then((data) => {
+        toast.success('Nilai berhasil disimpan!');
         handleClose();
         refetchkaryawan();
+        setHasChanges(false);
         return data;
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
+        toast.error('Gagal menyimpan nilai!');
         throw error;
       });
   };
 
+  const handleDialogClose = () => {
+    setNilaiInput(initialNilaiInput); // Reset to initial values
+    setNilaiArray(initialNilaiInput.map((nilai, index) => ({
+      id_pertanyaan: sortedQuestionList[index].id_pertanyaan,
+      nilaiInput: nilai
+    })));
+    setHasChanges(false);
+    handleClose();
+  };
+
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
+    <Dialog open={open} onClose={handleDialogClose}>
+      <DialogTitle style={{marginTop: '12px', marginLeft: '12px', marginRight: '12px'}}>
         <Typography
           style={{
             fontSize: '24px',
@@ -128,8 +148,8 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
           Daftar Nilai BPJ Karyawan
         </Typography>
       </DialogTitle>
-      <DialogContent>
-        <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '16px' }}>
+      <DialogContent style={{marginLeft: '12px', marginRight: '12px'}}>
+        <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0' }}>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 500 }}>
               <TableHead>
@@ -159,25 +179,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
           </TableContainer>
         </div>
       </DialogContent>
-      <DialogActions>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: '#1a2b5a',
-            borderRadius: '12px',
-            padding: '14px 24px',
-            fontSize: '14px'
-          }}
-          endIcon={<SaveOutlined />}
-          onClick={() => {
-            updatenilaidays(eventid, nippos, nilaiArray);
-            setNilaiInput([]);
-            setNilaiArray([]);
-          }}
-          disabled={eventstatus_id !== 5}
-        >
-          Simpan
-        </Button>
+      <DialogContent style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '12px', marginRight: '12px', marginBottom: '12px' }}>
         <Button
           endIcon={<CancelOutlined />}
           style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
@@ -191,7 +193,30 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
         >
           Batalkan
         </Button>
-      </DialogActions>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: '#1a2b5a',
+            borderRadius: '12px',
+            padding: '14px 24px',
+            fontSize: '14px'
+          }}
+          endIcon={<SaveOutlined />}
+          onClick={() => {
+            updatenilaidays(eventid, nippos, nilaiArray);
+            setNilaiInput(initialNilaiInput); // Reset to initial values
+            setNilaiArray(initialNilaiInput.map((nilai, index) => ({
+              id_pertanyaan: sortedQuestionList[index].id_pertanyaan,
+              nilaiInput: nilai
+            })));
+            setHasChanges(false);
+            handleDialogClose
+          }}
+          disabled={!hasChanges || eventstatus_id !== 5}
+        >
+          Simpan
+        </Button>
+      </DialogContent>
     </Dialog>
   );
 }
