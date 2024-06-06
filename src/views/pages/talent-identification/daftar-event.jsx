@@ -14,6 +14,7 @@ import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import AlertBerhasil from '../../../ui-component/modal/alert-berhasil';
 import IlustrasiBerhasil from '../../../../public/assets/images/ilustration/berhasil.png';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -61,6 +62,8 @@ const DaftarEvent = () => {
   };
 
   const [refresh, setrefresh] = useState(false);
+  const url = import.meta.env.VITE_API_BASE_URL
+
   useEffect(() => {
     if (refresh) {
       fetchDataFromDatabase()
@@ -82,7 +85,7 @@ const DaftarEvent = () => {
   }, [refresh]);
 
   const fetchDataFromDatabase = () => {
-    return fetch('http://localhost:4000/getallevent') // endpoint
+    return fetch(url + 'getallevent') // endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

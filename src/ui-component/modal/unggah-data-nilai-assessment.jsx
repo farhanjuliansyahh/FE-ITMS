@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import Papa from 'papaparse';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import ButtonError from '../../ui-component/button/ButtonError';
+import.meta.env.VITE_API_BASE_URL
 
 function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
     const ButtonsContainer = styled('div')({
@@ -58,16 +59,15 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
         width: 1,
     });
 
-    // ini untuk record selected value di radio button
     const [selectedValue, setSelectedValue] = useState('1');
     const handleChange = (event) => {
         const newValue = event.target.value;
         setSelectedValue(newValue);
     };
 
-    // untuk handle upload file
     const [parsedData, setParsedData] = useState([]);
     const [namaFile, setNamaFile] = useState('')
+    const url = import.meta.env.VITE_API_BASE_URL
 
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
@@ -109,11 +109,23 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
 
     const [uploadInProgressToastId, setUploadInProgressToastId] = useState(null);
 
+    const renderMissingHeadersList = (missingHeaders) => {
+        return (
+            <div>
+                <p>Required headers are missing:</p>
+                <ul>
+                    {missingHeaders.map((header, index) => (
+                        <li key={index}>{header}</li>
+                    ))}
+                </ul>
+            </div>
+        );
+    };
+
     const uploadskor = () => {
         const progressToastId = toast.info('Upload in progress...', { autoClose: false });
         setUploadInProgressToastId(progressToastId);
 
-        // Map the data based on selectedValue
         let modifiedData;
 
         if (selectedValue === "6" || selectedValue === "5") {
@@ -122,7 +134,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.error(`Required headers are missing: ${missingHeaders.join(', ')}`);
+                toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
 
@@ -133,13 +145,11 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 skor: item['VALUE']
             }));
         } else if (selectedValue === "1" || selectedValue === "4") {
-            // Check if the required headers exist
             const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'ASSESSMENT VALUE']);
             if (!exists) {
-                // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
-                toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.error(`Required headers are missing: ${missingHeaders.join(', ')}`);
+                toast.dismiss(progressToastId); 
+                toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
 
@@ -156,7 +166,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.error(`Required headers are missing: ${missingHeaders.join(', ')}`);
+                toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
 
@@ -173,7 +183,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.error(`Required headers are missing: ${missingHeaders.join(', ')}`);
+                toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
             modifiedData = parsedData;
@@ -199,7 +209,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 return;
             }
 
-            fetch('http://localhost:4000/addskor', {
+            fetch(url + 'addskor', {
                 method: 'POST', // Specify the HTTP method (POST, GET, etc.)
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type
@@ -211,19 +221,19 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
             })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        return response.json().then(errorData => {
+                            throw new Error(errorData.error);
+                        });
                     }
                     return response.json();
                 })
                 .then(data => {
-                    uploadChunk(chunkIndex + 1); // Upload the next chunk
+                    uploadChunk(chunkIndex + 1);
                 })
                 .catch(error => {
-                    console.error('Error uploading chunk:', error);
-                    setUploadInProgressToastId(null)
+                    setUploadInProgressToastId(null);
                     toast.dismiss(progressToastId);
-                    toast.error('Error uploading chunk of data:', error)
-                    // Optionally, you can handle the error by showing a message to the user or retrying
+                    toast.error(`${error.message}`);
                 });
         };
 

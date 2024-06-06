@@ -9,6 +9,7 @@ import notFoundImage from '../../../../public/assets/images/ilustration/notfound
 import MainCard from '../../../ui-component/cards/MainCard';
 import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert';
 import DetailKaryawandiKomiteUnit from './detail-karyawandikomiteunit';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL EVENT KOMITE UNIT ||============================== //
 // ============|| yang ada tab "Daftar Karyawan" dan "Karyawan Terkualifikasi" ||============ //
@@ -50,9 +51,10 @@ export default function DetailEventKomiteUnit() {
   const [selectedRows, setSelectedRows] = useState([]);
   const nippos = sessionStorage.getItem('nippos');
   const [kuota, setkuota] = useState('');
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const fetcheventdetail = () => {
-    return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
+    return fetch(url + `getoneevent?id=${id}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -82,7 +84,7 @@ export default function DetailEventKomiteUnit() {
 
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getparameterkuota?id=1`)
+    fetch(url + `getparameterkuota?id=1`)
       .then((response) => response.json())
       .then((data) => {
         // Initialize rows based on fetched score data
@@ -129,7 +131,7 @@ export default function DetailEventKomiteUnit() {
 
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getkandidatfalse?eventtalentid=${id}&nippos=${nippos}`)
+    fetch(url + `getkandidatfalse?eventtalentid=${id}&nippos=${nippos}`)
       .then((response) => response.json())
       .then((datafalse) => {
         // Update state with API data
@@ -142,7 +144,7 @@ export default function DetailEventKomiteUnit() {
 
   useEffect(() => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getkandidattrue?eventtalentid=${id}&nippos=${nippos}`)
+    fetch(url + `getkandidattrue?eventtalentid=${id}&nippos=${nippos}`)
       .then((response) => response.json())
       .then((datatrue) => {
         // Update state with API data

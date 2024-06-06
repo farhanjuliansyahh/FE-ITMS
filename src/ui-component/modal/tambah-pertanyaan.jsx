@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Modal, Box, Typography, TextField, Button } from '@mui/material';
 import ButtonPrimary from '../button/ButtonPrimary';
 import SaveOutlined from '@mui/icons-material/SaveOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 const style = {
   position: 'absolute',
@@ -18,6 +19,7 @@ const style = {
 
 const AddQuestionModal = ({ open, handleClose, handleAddQuestion }) => {
   const [newQuestion, setNewQuestion] = React.useState('');
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const handleSave = async () => {
     try {
@@ -26,7 +28,7 @@ const AddQuestionModal = ({ open, handleClose, handleAddQuestion }) => {
       // Then, call the parent component's function
       handleAddQuestion(newQuestion);
       // Now, perform the fetch operation
-      const response = await fetch('http://localhost:4000/addquestion', {
+      const response = await fetch(url + 'addquestion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -10,6 +10,7 @@ import KaryawanKomiteUnit from '../../../ui-component/tables/karyawankomiteunit'
 import KonfirmasiTalentSource from '../../../ui-component/modal/konfirmasi-talentsource';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL KARYAWAN DARI KOMITE UNIT ||============================== //
 
@@ -20,13 +21,15 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
     const [showModal, setShowModal] = useState(false);  // State to control the visibility of the modal
     const [selectedRows, setSelectedRows] = useState([]);
     const [checkedCount, setCheckedCount] = useState(0); // State variable to store the count of checked checkboxes
-
+    const url = import.meta.env.VITE_API_BASE_URL
 
     const handleSelectedRowsChange = (newSelectedRows) => {
         setSelectedRows(newSelectedRows);
         setCheckedCount(newSelectedRows.length); // Update the checkedCount whenever selectedRows changes
     };
-
+    const closeModal = () => {
+        setShowModal(false);
+      };
     const toggleModal = () => {
         if (ActionForButton) {
             setShowModal(!showModal);
@@ -53,7 +56,7 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
         const validNippos = selectedNippos.filter(nippos => nippos !== null);
     
         // Send update API request to change something in the database
-        fetch(`http://localhost:4000/updatestatussource?eventtalentid=${id}`, {
+        fetch(url + `updatestatussource?eventtalentid=${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -200,7 +203,7 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
 
                 {ActionForButton && <KonfirmasiTalentSource 
                     open={showModal} 
-                    handleClose={() => setShowModal(false)} 
+                    handleClose={closeModal} 
                     onConfirmation={handleTambahTalent} />
                 }
 

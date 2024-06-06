@@ -6,13 +6,15 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { toast } from 'react-toastify';
+import.meta.env.VITE_API_BASE_URL
 
 function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent, confirm }) { 
+    const url = import.meta.env.VITE_API_BASE_URL
     
     const loloskanprofile = async () => {
         try {
             // Make an HTTP DELETE request to your API endpoint
-            const response = await fetch(`http://localhost:4000/loloskanprofile`, {
+            const response = await fetch(url + `loloskanprofile`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -99,7 +101,7 @@ function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent, confirm
     );
 
     const notifpool = (eventid) => {
-        return fetch('http://localhost:4000/notiftalent', {
+        return fetch(url + 'notiftalent', {
           method: 'POST', // Specify the HTTP method (POST, GET, etc.)
           headers: {
             'Content-Type': 'application/json' // Specify the content type

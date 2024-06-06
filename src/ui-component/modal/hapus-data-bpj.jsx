@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import { toast } from 'react-toastify';
-
+import.meta.env.VITE_API_BASE_URL
 
 function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
     const HapusDataBPJButtonStyle = {
@@ -45,11 +45,12 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
 
     const [IsHoverHapusDataBPJ, setIsHoverHapusDataBPJ] = useState(false);
     const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
+    const url = import.meta.env.VITE_API_BASE_URL
 
     const hapusdata = async () => {
         try {
             // Make an HTTP DELETE request to your API endpoint
-            const response = await fetch(`http://localhost:4000/hapusbpj`, {
+            const response = await fetch(url + `hapusbpj`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

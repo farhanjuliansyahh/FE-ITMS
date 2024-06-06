@@ -14,6 +14,7 @@ import KompetensiKaryawan from '../../../ui-component/submenu/karyawan-kompetens
 import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri';
 import ProfileAccordion from '../../../ui-component/modal/profile-accordion';
 import ConfirmationMessage from '../../../ui-component/cards/Alert-PI-CL';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| PROFIL KARYAWAN ||============================== //
 
@@ -51,11 +52,12 @@ export default function ProfileKaryawan() {
   const [DaysLeft, setDaysLeft] = useState('');
   const [infokaryawan, setInforkaryawan] = useState([])
   const  [statusprofile, setStatusproflie] = useState([])
+  const url =import.meta.env.VITE_API_BASE_URL
 
   const nippos = sessionStorage.getItem('nippos'); 
 
   const fetcheventdetail = () => {
-    return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
+    return fetch(url + `getoneevent?id=${id}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -72,7 +74,7 @@ export default function ProfileKaryawan() {
   };
 
   const fetchstatusprofile = () => {
-    return fetch(`http://localhost:4000/getallprofile?eventtalentid=${id}&nippos=${nippos}`) // Replace with your actual endpoint
+    return fetch(url + `getallprofile?eventtalentid=${id}&nippos=${nippos}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -89,7 +91,7 @@ export default function ProfileKaryawan() {
   };
 
   const fetchinforkaryawan = () => {
-    return fetch(`http://localhost:4000/getinforkaryawan?nippos=${nippos}`) // Replace with your actual endpoint
+    return fetch(url + `getinforkaryawan?nippos=${nippos}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -106,7 +108,7 @@ export default function ProfileKaryawan() {
   };
 
   const fetchprofile = () => {
-    return fetch(`http://localhost:4000/getinforkaryawan?nippos=${nippos}`) // Replace with your actual endpoint
+    return fetch(url + `getinforkaryawan?nippos=${nippos}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

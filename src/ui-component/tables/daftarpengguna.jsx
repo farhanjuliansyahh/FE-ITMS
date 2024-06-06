@@ -8,6 +8,7 @@ import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
 import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
 import FilterButton from '../../ui-component/button/FilterButton';
 import { tableCellClasses } from '@mui/material/TableCell';
+import.meta.env.VITE_API_BASE_URL
 
 const peranOptions = ['Admin Talent', 'Karyawan', 'Ketua Komite Talent', 'Komite Unit', 'Super Admin', 'Admin HCBP'];
 
@@ -53,9 +54,11 @@ const ActionButton = ({ row, refetchData }) => {
     }
   };
 
+  const url = import.meta.env.VITE_API_BASE_URL
+
   const postTalentPool = async (nippos, selectedRole) => {
     try {
-      const response = await fetch(`http://localhost:4000/updaterolemanagement`, {
+      const response = await fetch(url + `updaterolemanagement`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

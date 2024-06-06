@@ -395,6 +395,7 @@ import FilterButton from '../../ui-component/button/FilterButton';
 import ButtonPrimary from '../button/ButtonPrimary';
 import TambahKomiteUnit from '../modal/tambah-komite-unit';
 import KonfirmasiTambahKomiteUnit from '../modal/konfirmasi-tambah-komite-unit';
+import.meta.env.VITE_API_BASE_URL
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -427,6 +428,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
   const activeEvent = eventid;
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -460,7 +462,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
   };
 
   const updatekomiteunit = (eventid, nippos, komite_unit, selectedOption) => {
-    return fetch(`http://localhost:4000/updatekomiteunit?eventtalentid=${eventid}`, {
+    return fetch(url + `updatekomiteunit?eventtalentid=${eventid}`, {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json', // Specify the content type
@@ -488,7 +490,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
   };
 
   const updatekomiterole = (eventid, nippos) => {
-    return fetch(`http://localhost:4000/assignkomiteunibybutton`, {
+    return fetch(url + `assignkomiteunibybutton`, {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json', // Specify the content type
@@ -577,7 +579,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                 <StyledTableCell >Nippos</StyledTableCell>
                 <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
                 <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+                <StyledTableCell >Job Level</StyledTableCell>
                 <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
                 <StyledTableCell >Komite Unit</StyledTableCell>
               </TableRow>

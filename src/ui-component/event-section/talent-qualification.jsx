@@ -13,6 +13,7 @@ import TalentQualificationTable from '../../ui-component/tables/talentqualificat
 import CustomSearch from '../../ui-component/searchsection/custom-search';
 import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
 import { useLocation } from 'react-router-dom';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL TALENT QUALIFICATION PAGE ||============================== //
 
@@ -54,13 +55,14 @@ const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
 
   const eventidactive = parseInt(eventid);
   const tipekomite = kodekomite;
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const fetchData = () => {
-    fetch(`http://localhost:4000/getkkm`)
+    fetch(url + `getkkm`)
       .then(response => response.json())
       .then(qualified => {
         setkkm(qualified.map((row, index) => ({ ...row, id: index + 1 })));
@@ -69,7 +71,7 @@ const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
         console.error('Error fetching data:', error);
       });
 
-    fetch(`http://localhost:4000/getqualificationtidak?eventtalentid=${eventidactive}`)
+    fetch(url + `getqualificationtidak?eventtalentid=${eventidactive}`)
       .then(response => response.json())
       .then(notqualified => {
         setqualRow(notqualified.map((row, index) => ({ ...row, id: index + 1 })));
@@ -78,7 +80,7 @@ const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
         console.error('Error fetching data:', error);
       });
 
-    fetch(`http://localhost:4000/getquallolos?eventtalentid=${eventidactive}`)
+    fetch(url + `getquallolos?eventtalentid=${eventidactive}`)
       .then(response => response.json())
       .then(qualified => {
         setquallolosRow(qualified.map((row, index) => ({ ...row, id: index + 1 })));
@@ -89,7 +91,7 @@ const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
   };
 
   const posttalentqual = () => {
-    return fetch('http://localhost:4000/createqualificationtable', {
+    return fetch(url + 'createqualificationtable', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type

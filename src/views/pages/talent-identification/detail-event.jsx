@@ -2,6 +2,7 @@ import * as React from 'react';
 import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetailevent';
 import { useLocation, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL EVENT PAGE ||============================== //
 
@@ -9,9 +10,10 @@ export default function DetailEvent({ prevLocation }) {
   const { id } = useParams();
   const [isLoading, setLoading] = useState(true);
   const [eventaktif, seteventaktif] = useState([]);
+  const url = import.meta.env.VITE_API_BASE_URL
   
   const fetcheventdetail = () => {
-    return fetch(`http://localhost:4000/getoneevent?id=${id}`) // Replace with your actual endpoint
+    return fetch(url + `getoneevent?id=${id}`) // Replace with your actual endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

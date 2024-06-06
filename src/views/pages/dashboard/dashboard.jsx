@@ -11,6 +11,7 @@ import RumpunJabatanTerbaru from '../../../ui-component/charts/RumpunJabatanChar
 import JenisKelaminTerbaru from '../../../ui-component/charts/JenisKelaminTerbaru';
 import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent';
 import Tooltip from '@mui/material/Tooltip';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
@@ -23,6 +24,7 @@ const Dashboard = () => {
   const [ListTahun, setlisttahun] = useState([]);
   const [selectedYear, setSelectedYear] = useState('0');
   const [totalTalent, setTotalTalent] = useState('');
+  const url = import.meta.env.VITE_API_BASE_URL
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
@@ -33,14 +35,14 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:4000/getdetailtalent')
+    fetch(url + 'getdetailtalent')
       .then((response) => response.json())
       // 4. Setting *dogImage* to the image url that we received from the response above
       .then((data) => setrows(data));
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:4000/getpopulasi')
+    fetch(url + 'getpopulasi')
       .then((response) => response.json())
       .then((data) => setTotalTalent(data))
       .catch((error) => console.error('Error fetching data:', error));
@@ -52,7 +54,7 @@ const Dashboard = () => {
   }, [rows]);
 
   const getgenderdata = (year) => {
-    fetch(`http://localhost:4000/getdatagender?year=${year}`)
+    fetch(url + `getdatagender?year=${year}`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data
@@ -64,7 +66,7 @@ const Dashboard = () => {
   };
 
   const getgendata = (year) => {
-    fetch(`http://localhost:4000/getgendistribution?year=${year}`)
+    fetch(url + `getgendistribution?year=${year}`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data
@@ -81,7 +83,7 @@ const Dashboard = () => {
   }));
 
   const getrumpundata = (year) => {
-    fetch(`http://localhost:4000/getdatatalentrumpun?year=${year}`)
+    fetch(url + `getdatatalentrumpun?year=${year}`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data
@@ -93,7 +95,7 @@ const Dashboard = () => {
   };
 
   const getjobleveldata = (year) => {
-    fetch(`http://localhost:4000/getdatatalentjoblevel?year=${year}`)
+    fetch(url + `getdatatalentjoblevel?year=${year}`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data

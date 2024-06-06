@@ -8,15 +8,17 @@ import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
 import DaftarPenggunaTabel from '../../../ui-component/tables/daftarpengguna';
 import CustomSearch from '../../../ui-component/searchsection/custom-search';
 import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| MANAJEMEN PENGGUNA ||============================== //
 
 const DaftarPengguna = () => {
   const [rowsUser, setRowsUser] = useState([]);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const getallroles = () => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getallroles`)
+    fetch(url + `getallroles`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data
@@ -87,7 +89,7 @@ const DaftarPengguna = () => {
     let dataToDownload = [];
     let filename = '';
 
-    dataToDownload = filteredData;
+    dataToDownload = resetRows;
     filename = `Daftar_Pengguna.csv`;
 
     // Create a CSV header with column names

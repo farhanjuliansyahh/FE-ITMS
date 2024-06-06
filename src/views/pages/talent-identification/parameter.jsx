@@ -132,9 +132,10 @@ const ParameterTalent = () => {
   });
 
   const [rows, setAsessmentRow] = useState([]);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const fetchData = () => {
-    fetch(`http://localhost:4000/getnilaiassessment`)
+    fetch(url + `getnilaiassessment`)
       .then(response => response.json())
       .then(data => {
         setAsessmentRow(data.map((row, index) => ({ ...row, id: index + 1 })));
@@ -198,7 +199,7 @@ const ParameterTalent = () => {
   // Ini fetch buat get all question
   const [pertanyaan, setPertanyaan] = useState([]);
   const getQuestions = () => {
-    fetch(`http://localhost:4000/getquest`)
+    fetch(url + `getquest`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data
@@ -231,7 +232,7 @@ const ParameterTalent = () => {
   };
 
   const updateQuestion = (pertanyaanChange) => {
-    return fetch('http://localhost:4000/updatequestion', {
+    return fetch(url + 'updatequestion', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type
@@ -410,7 +411,7 @@ const ParameterTalent = () => {
 
 
   const getKetuaKomiteTalent = () => {
-    fetch(`http://localhost:4000/getNamaKetuaKomiteTalent`)
+    fetch(url + `getNamaKetuaKomiteTalent`)
       .then((response) => response.json())
       .then((data) => {
         setKomiteTalents({

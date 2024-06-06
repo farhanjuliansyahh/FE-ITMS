@@ -6,12 +6,13 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import { toast } from 'react-toastify';
+import.meta.env.VITE_API_BASE_URL
 
 function KonfirmasiTambahBPJ({ open, handleClose, eventid, nippos, onConfirm }) {
-
+const url = import.meta.env.VITE_API_BASE_URL
 
     const tambahdatabpj = (eventid, nippos) => {
-        return fetch('http://localhost:4000/assignasbpj', {
+        return fetch(url + 'assignasbpj', {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
                 'Content-Type': 'application/json', // Specify the content type

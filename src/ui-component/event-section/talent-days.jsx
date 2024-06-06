@@ -34,6 +34,7 @@ import KonfirmasiIsiSemuaNilaiTalent from '../../ui-component/modal/konfirmasi-i
 import CustomSearch from '../searchsection/custom-search';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
 import dayjs from 'dayjs';
+import.meta.env.VITE_API_BASE_URL
 
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
@@ -84,6 +85,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
   const [disableInputs, setDisableInputs] = useState(false);
   const [infobpj, setinfobpj] = useState([])
   const [eventnotactive, seteventnotactive] = useState(false)
+  const url = import.meta.env.VITE_API_BASE_URL
 
   const eventidactive = eventid;
   const handleChange = (event, newValue) => {
@@ -136,7 +138,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
 
   const fetchkaryawandays = () => {
     // Fetch data from API
-    fetch(`http://localhost:4000/gettablekaryawandays?eventtalentid=${eventidactive}`)
+    fetch(url + `gettablekaryawandays?eventtalentid=${eventidactive}`)
       .then((response) => response.json())
       .then((datadays) => {
         // Update state with API data
@@ -153,7 +155,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
 
   const fetchbpjdays = () => {
     // Fetch data from API
-    fetch(`http://localhost:4000/gettablebpjdays?eventtalentid=${eventidactive}`)
+    fetch(url + `gettablebpjdays?eventtalentid=${eventidactive}`)
       .then((response) => response.json())
       .then((datadays) => {
         // Update state with API data
@@ -167,7 +169,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
 
   const fetchinfobpj = () => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getsijabinfo?eventtalentid=${eventidactive}`)
+    fetch(url + `getsijabinfo?eventtalentid=${eventidactive}`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data
@@ -186,7 +188,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
 
   const fetchquestionevent = () => {
     // Fetch data from API
-    fetch(`http://localhost:4000/getquestionevent?eventtalentid=${eventidactive}`)
+    fetch(url + `getquestionevent?eventtalentid=${eventidactive}`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with API data

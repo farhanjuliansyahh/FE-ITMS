@@ -12,6 +12,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { OutlinedInput, Stack } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
+import.meta.env.VITE_API_BASE_URL
 
 const OutlineInputStyle = styled(OutlinedInput)(({ theme }) => ({
   width: '100%',
@@ -61,11 +62,12 @@ export default function KuotaTable({
   const [score, setscore] = useState([]);
   const [rows, setRows] = useState([]);
   const [koutafromrows, setKuotaFromRows] = useState(0);
+  const url = import.meta.env.VITE_API_BASE_URL
 
   useEffect(() => {
     // Fetch data from API
     if (refetchstate) {
-      fetch(`http://localhost:4000/getparameterkuota?id=${kuotatochange}`)
+      fetch(url + `getparameterkuota?id=${kuotatochange}`)
         .then((response) => response.json())
         .then((data) => {
           // Update state with API data
@@ -86,7 +88,7 @@ export default function KuotaTable({
   }, [refetchstate]); // Empty dependency array to run effect only once
 
   const updatekuota = () => {
-    return fetch('http://localhost:4000/updatekuota', {
+    return fetch(url + 'updatekuota', {
       method: 'POST', // Specify the HTTP method (POST, GET, etc.)
       headers: {
         'Content-Type': 'application/json' // Specify the content type

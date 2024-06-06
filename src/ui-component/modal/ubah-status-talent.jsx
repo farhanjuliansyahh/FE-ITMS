@@ -3,16 +3,18 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, MenuIte
 import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { CreateOutlined } from '@mui/icons-material';
+import.meta.env.VITE_API_BASE_URL
 
 function UbahStatusTalent({ open, nippos, eventid, handleClose }) {
     const [selectedStatus, setselectedStatus] = useState('')
+    const url = import.meta.env.VITE_API_BASE_URL
 
     const handleStatusChange = (event) => {
         setselectedStatus(event.target.value); // Update the selected status state
     };
 
     const updatestatus = (eventid, nippos, status) => {
-        return fetch(`http://localhost:4000/updatestatuspool`, {
+        return fetch(url + `updatestatuspool`, {
             method: 'POST', // Specify the HTTP method (POST, GET, etc.)
             headers: {
                 'Content-Type': 'application/json', // Specify the content type
