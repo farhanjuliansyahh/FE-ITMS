@@ -146,7 +146,7 @@ const DaftarPengguna = () => {
                         fontWeight: 500
                       }}
                     >
-                      {userLength} Talent Karyawan
+                      {userLength} Karyawan
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} /> {/* This will push the following elements to the right */}
                     <Stack direction="row" spacing={1}>

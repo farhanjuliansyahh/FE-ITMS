@@ -313,7 +313,11 @@ export default function ClusterKetuaKomiteTalent() {
 
           <div style={{ flex: '1' }}> </div>
 
-          {evenstatus_id !== 8 && <CountdownLabel>{DaysLeft !== null ? `${DaysLeft} hari lagi` : ''}</CountdownLabel>}
+          {evenstatus_id !== 8 && <CountdownLabel>{DaysLeft !== null && DaysLeft > 0
+                ? `${DaysLeft} hari lagi`
+                : DaysLeft === 0
+                  ? 'Hari Ini'
+                  : `Terlewat ${Math.abs(DaysLeft)} hari`}</CountdownLabel>}
         </FlexContainer>
       </Box>
 
