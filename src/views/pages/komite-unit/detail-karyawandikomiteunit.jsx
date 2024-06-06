@@ -27,7 +27,9 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
         setSelectedRows(newSelectedRows);
         setCheckedCount(newSelectedRows.length); // Update the checkedCount whenever selectedRows changes
     };
-
+    const closeModal = () => {
+        setShowModal(false);
+      };
     const toggleModal = () => {
         if (ActionForButton) {
             setShowModal(!showModal);
@@ -201,7 +203,7 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
 
                 {ActionForButton && <KonfirmasiTalentSource 
                     open={showModal} 
-                    handleClose={() => setShowModal(false)} 
+                    handleClose={closeModal} 
                     onConfirmation={handleTambahTalent} />
                 }
 
