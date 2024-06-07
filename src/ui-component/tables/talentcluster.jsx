@@ -218,7 +218,7 @@ export default function TalentClusterTable({rows}) {
             return (
               <StyledTableRow key={row.id}>
                 <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
-                <StyledTableCell>{row.nama}</StyledTableCell>
+                <StyledTableCell >{row.nama}</StyledTableCell>
                 <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.nippos}</StyledTableCell>
                 <StyledTableCell>{row.Posisi}</StyledTableCell>
                 <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
