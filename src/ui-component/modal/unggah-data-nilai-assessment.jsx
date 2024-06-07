@@ -128,6 +128,13 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
 
         let modifiedData;
 
+        const validateSkor = (data) => {
+            return data.every(item => {
+                const skor = parseFloat(item.skor);
+                return !isNaN(skor) && skor >= 0 && skor <= 5;
+            });
+        };
+
         if (selectedValue === "6" || selectedValue === "5") {
             const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'VALUE']);
             if (!exists) {
@@ -187,6 +194,13 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 return;
             }
             modifiedData = parsedData;
+        }
+
+        if (!validateSkor(modifiedData)) {
+            setUploadInProgressToastId(null);
+            toast.dismiss(progressToastId);
+            toast.error('Nilai skor harus berada dalam rentang 0 dan 5');
+            return;
         }
 
         const chunkSize = 700; // Define the size of each chunk
