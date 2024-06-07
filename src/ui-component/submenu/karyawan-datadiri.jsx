@@ -1,42 +1,106 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { Avatar, Grid, Stack } from '@mui/material';
 import { LockOpenRounded } from '@mui/icons-material';
 import ButtonOptional from '../../ui-component/button/ButtonOptional';
 import EmpatKolomDataKaryawan from "../../ui-component/tables/empatkolomdatakaryawan";
-import DuaKolomDataKaryawan from "../../ui-component/tables/duakolomdatakaryawan";
+// import DuaKolomDataKaryawan from "../../ui-component/tables/duakolomdatakaryawan";
 import User1 from '../../../public/assets/images/users/user-round.svg';
 import { Link } from 'react-router-dom';
+import.meta.env.VITE_API_BASE_URL
 
 function createData(colname1, coldata1, colname2, coldata2) {
   return { colname1, coldata1, colname2, coldata2 };
 }
 
-const rows_informasi = [
-  createData('Nama', 'Abang', 'NIPPOS', '990494379'),
-  createData('Tanggal Lahir', '01-12-1990', 'Jenis Kelamin', 'Laki-laki'),
-  createData('Agama', 'Islam', 'Email', '900494379@posindonesia.co.id'),
-];
-
-const rows_posisi = [
-  createData('Jabatan', 'Manajer', 'Bagian', 'Performance Management'),
-  createData('Tempat Kerja', 'KANTOR PUSAT BANDUNG 40005'),
-];
-
-const rows_alamat = [
-  createData('Alamat KTP', 'KP. MAYAK KALER \nRT : 002 / RW : 005, MAYAK - CIBEBER \nKAB. CIANJUR, JAWA BARAT - 43262'),
-  createData('Alamat Domisili', 'JL PAHLAWAN NO 59 BANDUNG \nRT : 000 / RW : 000, SUKALUYU - CIBEUNYING KALER \nKOTA BANDUNG, JAWA BARAT - 41115'),
-];
-
 export default function DataDiriKaryawan({ photosize, spaces, statusButton }) {
-  const boxStyle = {
-    padding: '20px',
-    width: '100%',
-    borderRadius: '12px',
+  const url = import.meta.env.VITE_API_BASE_URL
+  const nippos = sessionStorage.getItem('nippos');
+  const [profile, setProfile] = useState([])
+
+  const getprofile = () => {
+    return fetch(url + `getprofile?nippos=${nippos}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error;
+      });
   };
+
+  useEffect(() => {
+    getprofile()
+      .then((data) => {
+        setProfile(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  const toTitleCase = (str) => {
+    return str.toLowerCase().split(' ').map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${day}-${month}-${year}`;
+  };
+
+  const mapGender = (gender) => {
+    if (gender === 'F') return 'Perempuan';
+    if (gender === 'M') return 'Laki-laki';
+    return gender; 
+  };
+
+  const namaJabatan = profile.jabatan && profile.jabatan.nama_jabatan ? toTitleCase(profile.jabatan.nama_jabatan) : '';
+  const namaBagian = profile.bagian && profile.bagian.nama_bagian ? toTitleCase(profile.bagian.nama_bagian) : '';
+  const namaKantor = profile.nopend && profile.nopend.nama_kantor ? toTitleCase(profile.nopend.nama_kantor) : '';
+  const nopendKantor = profile.nopend && profile.nopend.nopend ? toTitleCase(profile.nopend.nopend) : '';
+
+  const rows_informasi = [
+    createData(
+      'Nama', profile.nama ? toTitleCase(profile.nama) : '', 
+      'NIPPOS', profile.nippos || ''
+    ),
+    createData(
+      'Tanggal Lahir', profile.tanggal_lahir ? formatDate(profile.tanggal_lahir) : '', 
+      'Jenis Kelamin', profile.jenis_kelamin ? mapGender(profile.jenis_kelamin) : ''
+    ),
+    createData(
+      'Agama', '', 
+      'Email', profile.email),
+  ];
+
+  const rows_posisi = [
+    createData(
+      'Jabatan', namaJabatan, 
+      'Bagian', namaBagian
+    ),
+    createData(
+      'Tempat Kerja', namaKantor + ' ' + nopendKantor),
+  ];
+
+  // const rows_alamat = [
+  //   createData('Alamat KTP', 'KP. MAYAK KALER \nRT : 002 / RW : 005, MAYAK - CIBEBER \nKAB. CIANJUR, JAWA BARAT - 43262'),
+  //   createData('Alamat Domisili', 'JL PAHLAWAN NO 59 BANDUNG \nRT : 000 / RW : 000, SUKALUYU - CIBEUNYING KALER \nKOTA BANDUNG, JAWA BARAT - 41115'),
+  // ];
 
   return (
     <Grid container>
-      <Grid item xs={spaces[0]}>
+      <Grid item xs={spaces[0]} marginRight={8}>
         <Stack direction="column" justifyContent="space-between" alignItems="center" >
           <Avatar alt="John Doe" src={User1} style={{ width: photosize, height: photosize, marginBottom: 24 }} />
           {statusButton && (

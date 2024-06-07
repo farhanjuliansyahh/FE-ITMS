@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
@@ -7,7 +7,7 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { toast } from 'react-toastify';
 import.meta.env.VITE_API_BASE_URL
 
-function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }) {    
+function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }) {
     const eventaktif = eventid;
     const url = import.meta.env.VITE_API_BASE_URL
 
@@ -15,14 +15,15 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
         try {
             // Make the POST request to the API endpoint
             const response = await fetch(url + 'statusselesai', {
-                
+
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     // Include any data you want to send in the request body
-                    eventid : eventaktif})
+                    eventid: eventaktif
+                })
             });
 
             // Check if the request was successful
@@ -48,25 +49,25 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
 
     const SelesaiButtonStyle = {
         backgroundColor: '#1C2D5A',
-        color:'#fff',
+        color: '#fff',
         borderRadius: '12px',
-        padding : '14px 24px',
+        padding: '14px 24px',
         transition: 'background-color 0.3s'
     };
 
     const batalkanButtonStyle = {
         backgroundColor: '#D32F2F',
-        color:'#fff',
+        color: '#fff',
         borderRadius: '12px',
-        padding : '14px 24px',
+        padding: '14px 24px',
         transition: 'background-color 0.3s',
         fontSize: '14px'
     };
-    
+
     const hoverSelesaiStyle = {
         backgroundColor: '#122350' // Darker shade for hover
     };
-    
+
     const hoverBatalkanStyle = {
         backgroundColor: '#B71C1C' // Darker shade for hover
     };
@@ -74,9 +75,9 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
     const ButtonsContainer = styled('div')({
         display: 'flex',
         alignItems: 'center',
-        width:'100%',
+        width: '100%',
         padding: '0px 8px',
-        gap:'16px',
+        gap: '16px',
         justifyContent: 'space-between'
     });
 
@@ -113,15 +114,62 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
         backgroundColor: '#E0E0E0'
     });
 
+    const [poolrow, setpool] = useState([]);
+    const gettalentpool = () => {
+        fetch(url + `gettalentpool?eventtalentid=${eventid}`)
+            .then((response) => response.json())
+            .then((data) => {
+                // Update state with API data
+                setpool(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    };
+
+    useEffect(() => {
+        gettalentpool();
+    })
+
+    const poolLength = poolrow.length;
+
+    const [eventaktifdata, seteventaktifdata] = useState([]);
+    const fetcheventdetail = () => {
+        return fetch(url + `getoneevent?id=${eventid}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+                throw error;
+            });
+    };
+
+    useEffect(() => {
+        fetcheventdetail()
+            .then((data) => {
+                seteventaktifdata(data.event);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
-                <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign:'center', marginTop: '10px' }}>
+                <Typography style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
                     Konfirmasi Talent Pool
                 </Typography>
             </DialogTitle>
             <DividerContainer>
-                <Divider orientation="horizontal" flexItem /> 
+                <Divider orientation="horizontal" flexItem />
             </DividerContainer>
             <DialogContent>
                 <Box>
@@ -129,13 +177,22 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
                         <Typography style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '14px', marginTop: '16px' }}>
                             Apakah anda yakin seluruh event sudah selesai?
                         </Typography>
-                        <Typography style={{textAlign:'center', color:'#828282', fontSize:'14px', marginTop:'16px', marginBottom: '24px'}}>
+                        <Typography style={{ textAlign: 'center', color: '#828282', fontSize: '14px', marginTop: '16px', marginBottom: '24px' }}>
+                            {poolLength > eventaktifdata.kuota ? (
+                                <>
+                                    Total Talent terpilih
+                                    <span style={{ color: '#1C2D5A', fontWeight: 'bold' }}> ({poolLength}) melebihi </span>
+                                    kuota talent yang ditetapkan
+                                    <span style={{ color: '#1C2D5A', fontWeight: 'bold' }}> ({eventaktifdata.kuota}) </span>
+                                    <br />
+                                </>
+                            ) : null}
                             Anda tidak dapat kembali ke tahap sebelumnya jika klik selesai.
                         </Typography>
                     </div>
                 </Box>
             </DialogContent>
-            <DialogActions sx={{padding:'0 24px 24px 24px '}}>
+            <DialogActions sx={{ padding: '0 24px 24px 24px ' }}>
                 <ButtonsContainer>
                     {batalkanButton}
                     {SelesaiButton}

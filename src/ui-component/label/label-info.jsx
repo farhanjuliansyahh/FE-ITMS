@@ -14,7 +14,7 @@ export default function LabelInfo({length, kuota}) {
 
   return (
     <>
-      <CurrentEventLabel>Terpilih {length} dari {kuota} Talent Karyawan</CurrentEventLabel>
+      <CurrentEventLabel>Terpilih {length} dari {kuota} Kuota Talent Pool</CurrentEventLabel>
     </>
   );
 }
