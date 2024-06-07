@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import { toast } from 'react-toastify';
 import.meta.env.VITE_API_BASE_URL
 
 function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent, confirm }) { 
@@ -86,10 +87,12 @@ function KonfirmasiSubmitTalentProfile({ open, handleClose, activeEvent, confirm
                     await notifpool(activeEvent)
                     await confirm();
                     handleClose();
+                    toast.success('Submit semua talent berhasil !');
                 } catch (error) {
                     // Handle error if loloskanprofile() fails
                     console.error("Error:", error);
                     // Optionally, you can show an error message to the user
+                    toast.error('Gagal submit semua talant !');
                 }
             }}
         >

@@ -3,6 +3,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Box, Button, MenuIte
 import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import { toast } from 'react-toastify';
 import.meta.env.VITE_API_BASE_URL
 
 function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
@@ -25,8 +26,8 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
     };
 
     const hoverHapusDataBPJStyle = {
-        backgroundColor: '#D32F2F',
-        color: '#fff',
+        backgroundColor: '#FFEDED',
+        color: '#D32F2F',
     };
 
     const hoverBatalkanStyle = {
@@ -69,9 +70,12 @@ function HapusDataBPJ({ open, handleClose, eventid, nippos }) {
                 // If not successful, throw an error or handle the error response
                 throw new Error('Failed to delete data');
             }
+            toast.success('Anggota BPJ berhasil dihapus !');
+            handleClose();
         } catch (error) {
             // Handle any errors that occurred during the process
             console.error('Error deleting data:', error.message);
+            toast.error('Gagal menghapus anggota BPJ !');
         }
     };
 

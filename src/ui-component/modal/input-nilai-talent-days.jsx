@@ -78,8 +78,8 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
   const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
   const hoverBatalkanStyle = {
-    backgroundColor: '#D32F2F',
-    color: '#fff'
+    backgroundColor: '#FFEDED',
+    color: '#D32F2F'
   };
 
   const batalkanButtonStyle = {
@@ -110,7 +110,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
         return response.json();
       })
       .then((data) => {
-        toast.success('Nilai berhasil disimpan!');
+        toast.success('Nilai berhasil disimpan !');
         handleClose();
         refetchkaryawan();
         setHasChanges(false);
@@ -118,7 +118,7 @@ export default function InputNilaiTalentDays({ nilai, open, handleClose, questio
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        toast.error('Gagal menyimpan nilai!');
+        toast.error('Gagal menyimpan nilai !');
         throw error;
       });
   };

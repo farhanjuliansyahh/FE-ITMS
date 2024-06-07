@@ -198,11 +198,11 @@ export default function TalentDaysBPJTable({
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <StyledTableCell >No</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
-                <StyledTableCell >Nippos</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
-                <StyledTableCell >Aksi</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 'auto' }}>No</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 'auto' }}>Nama</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 'auto' }}>Nippos</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 'auto' }}>Posisi</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 'auto' }}>Aksi</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
