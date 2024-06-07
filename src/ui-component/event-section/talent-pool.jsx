@@ -294,8 +294,6 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
             setrefresh={setrefresh}
           />
         </Box>
-
-        <AddEventModal open={open} handleClose={handleClose} />
       </MainCard>
     </>
   );

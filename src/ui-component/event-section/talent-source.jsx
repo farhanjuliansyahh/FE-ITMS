@@ -249,8 +249,6 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   // const resetRowsFalse = resetRowIndexFalse(filteredRowsFalse);
   const resetRowsFalse = filteredRowsFalse
 
-  console.log('terpilih: ', selectedRows);
-
   // TERDAFTAR
   const listNamaTrue = [...new Set(rowstrue.map((row) => row.Nama))];
   const listNipposTrue = [...new Set(rowstrue.map((row) => row.Nippos))];

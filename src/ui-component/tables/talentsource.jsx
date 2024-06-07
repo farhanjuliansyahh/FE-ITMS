@@ -95,13 +95,11 @@
 
 //   const handleCloseSecondModal = () => {
 //       setOpenSecondModal(false);
-//       console.log("selected ku", selectedKU);
 //   };
 
 
 
 //   const handleConfirm = () => {
-//     console.log("Confirm button clicked");
 //     updatekomiteunit(activeEvent, selectedNippos, selectedKU)
 //       .then(() => {
 //         // After updating komite unit, call updatekomiterole
@@ -289,13 +287,11 @@
 
 //   const handleCloseSecondModal = () => {
 //       setOpenSecondModal(false);
-//       console.log("selected ku", selectedKU);
 //   };
 
 
 
 //   const handleConfirm = () => {
-//     console.log("Confirm button clicked");
 //     updatekomiteunit(activeEvent, selectedNippos, selectedKU)
 //       .then(() => {
 //         // After updating komite unit, call updatekomiterole
@@ -537,7 +533,6 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
   };
 
   const handleConfirm = () => {
-    console.log("Confirm button clicked");
     setSelectedOption(selectedOption)
     updatekomiteunit(activeEvent, selectedNippos, selectedKU, selectedOption)
       .then(() => {

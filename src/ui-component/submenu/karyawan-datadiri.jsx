@@ -45,8 +45,6 @@ export default function DataDiriKaryawan({ photosize, spaces, statusButton }) {
       });
   }, []);
 
-  console.log(profile);
-
   const toTitleCase = (str) => {
     return str.toLowerCase().split(' ').map(word => {
       return word.charAt(0).toUpperCase() + word.slice(1);
