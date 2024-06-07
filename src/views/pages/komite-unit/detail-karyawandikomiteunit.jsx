@@ -4,12 +4,12 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { RestartAltOutlined, Search } from '@mui/icons-material';
 
-import MainCard from '../../../ui-component/cards/MainCard';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-import KaryawanKomiteUnit from '../../../ui-component/tables/karyawankomiteunit';
-import KonfirmasiTalentSource from '../../../ui-component/modal/konfirmasi-talentsource';
-import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
-import CustomSearch from '../../../ui-component/searchsection/custom-search';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary.jsx';
+import KaryawanKomiteUnit from '../../../ui-component/tables/karyawankomiteunit.jsx';
+import KonfirmasiTalentSource from '../../../ui-component/modal/konfirmasi-talentsource.jsx';
+import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined.jsx';
+import CustomSearch from '../../../ui-component/searchsection/custom-search.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL KARYAWAN DARI KOMITE UNIT ||============================== //

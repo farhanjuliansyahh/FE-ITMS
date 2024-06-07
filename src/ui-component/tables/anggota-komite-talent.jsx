@@ -3,8 +3,8 @@ import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
-import FilterButton from '../../ui-component/button/FilterButton';
-import HapusDataKomiteTalent from '../../ui-component/modal/hapus-data-komite-talent';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
+import HapusDataKomiteTalent from '../../ui-component/modal/hapus-data-komite-talent.jsx';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {

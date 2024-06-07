@@ -27,10 +27,10 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import useScriptRef from '../../../../hooks/useScriptRef';
+import useScriptRef from '../../../../hooks/useScriptRef.jsx';
 import Google from '../../../../assets/images/icons/social-google.svg';
-import AnimateButton from '../../../../ui-component/extended/AnimateButton';
-import { strengthColor, strengthIndicator } from '../../../../utils/password-strength';
+import AnimateButton from '../../../../ui-component/extended/AnimateButton.jsx';
+import { strengthColor, strengthIndicator } from '../../../../utils/password-strength.jsx';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';

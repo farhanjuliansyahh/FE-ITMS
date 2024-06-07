@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Grid, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { gridSpacing } from '../../../store/constant';
-import GroupsIcon from '@mui/icons-material/Groups';
-import Header from '../../../ui-component/header/header';
-import DashboardCard from '../../../ui-component/cards/DashboardCard';
-import LevelJabatanChart from '../../../ui-component/charts/LevelJabatanChart';
-import ButtonChart from '../../../ui-component/button/ButtonChart';
-import MainCard from '../../../ui-component/cards/MainCard';
-import RumpunJabatanTerbaru from '../../../ui-component/charts/RumpunJabatanChartTerbaru';
-import JenisKelaminTerbaru from '../../../ui-component/charts/JenisKelaminTerbaru';
-import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent';
+import { gridSpacing } from '../../../store/constant.jsx';
+import GroupsIcon from '@mui/icons-material/Groups.jsx';
+import Header from '../../../ui-component/header/header.jsx';
+import DashboardCard from '../../../ui-component/cards/DashboardCard.jsx';
+import LevelJabatanChart from '../../../ui-component/charts/LevelJabatanChart.jsx';
+import ButtonChart from '../../../ui-component/button/ButtonChart.jsx';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import RumpunJabatanTerbaru from '../../../ui-component/charts/RumpunJabatanChartTerbaru.jsx';
+import JenisKelaminTerbaru from '../../../ui-component/charts/JenisKelaminTerbaru.jsx';
+import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import.meta.env.VITE_API_BASE_URL
 

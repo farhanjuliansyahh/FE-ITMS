@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Grid, Stack } from '@mui/material';
 import { gridSpacing } from '../../../store/constant';
 import { RestartAltOutlined, FileDownloadOutlined } from '@mui/icons-material';
-import Header from '../../../ui-component/header/header';
-import MainCard from '../../../ui-component/cards/MainCard';
-import DetailTalentTable from '../../../ui-component/tables/detail-talent-table';
-import CustomSearch from '../../../ui-component/searchsection/custom-search';
-import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
+import Header from '../../../ui-component/header/header.jsx';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import DetailTalentTable from '../../../ui-component/tables/detail-talent-table.jsx';
+import CustomSearch from '../../../ui-component/searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined.jsx';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary.jsx';
 import.meta.env.VITE_API_BASE_URL
 // ==============================|| DETAIL TALENT - DASHBOARD ||============================== //
 

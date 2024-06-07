@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { Box, Menu, MenuItem, Pagination, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { DownloadDone, ExpandMore, RotateRight } from '@mui/icons-material';
 import notFoundImage from '../../../../public/assets/images/ilustration/notfound.png';
-import MainCard from '../../../ui-component/cards/MainCard';
-import AksesEvent from '../../../ui-component/submenu/aksesevent';
-import CustomSearch from '../../../ui-component/searchsection/custom-search';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import AksesEvent from '../../../ui-component/submenu/aksesevent.jsx';
+import CustomSearch from '../../../ui-component/searchsection/custom-search.jsx';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| EVENT KARYAWAN PAGE ||============================== //

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Pagination, Checkbox } from '@mui/material';
-import FilterButton from '../../ui-component/button/FilterButton';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
 
 const tableHeaderStyles = {
   backgroundColor: '#F5F5F5',

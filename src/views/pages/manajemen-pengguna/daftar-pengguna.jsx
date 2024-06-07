@@ -3,11 +3,11 @@ import { gridSpacing } from '../../../store/constant';
 import { Grid, Stack, Typography, Box } from '@mui/material';
 import { FileDownloadOutlined, RestartAltOutlined } from '@mui/icons-material';
 
-import MainCard from '../../../ui-component/cards/MainCard';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-import DaftarPenggunaTabel from '../../../ui-component/tables/daftarpengguna';
-import CustomSearch from '../../../ui-component/searchsection/custom-search';
-import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary.jsx';
+import DaftarPenggunaTabel from '../../../ui-component/tables/daftarpengguna.jsx';
+import CustomSearch from '../../../ui-component/searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| MANAJEMEN PENGGUNA ||============================== //

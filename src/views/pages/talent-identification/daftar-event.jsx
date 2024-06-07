@@ -7,12 +7,12 @@ import notFoundImage from '../../../../public/assets/images/ilustration/notfound
 import LinearProgress from '@mui/material/LinearProgress';
 import MuiAlert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
-import MainCard from '../../../ui-component/cards/MainCard';
-import EventBerjalan from '../../../ui-component/submenu/eventberjalan';
-import AddEventModal from '../../../ui-component/modal/TambahEvent';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-import CustomSearch from '../../../ui-component/searchsection/custom-search';
-import AlertBerhasil from '../../../ui-component/modal/alert-berhasil';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import EventBerjalan from '../../../ui-component/submenu/eventberjalan.jsx';
+import AddEventModal from '../../../ui-component/modal/TambahEvent.jsx';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary.jsx';
+import CustomSearch from '../../../ui-component/searchsection/custom-search.jsx';
+import AlertBerhasil from '../../../ui-component/modal/alert-berhasil.jsx';
 import IlustrasiBerhasil from '../../../../public/assets/images/ilustration/berhasil.png';
 import.meta.env.VITE_API_BASE_URL
 

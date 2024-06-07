@@ -6,14 +6,14 @@ import { useLocation, useParams } from 'react-router-dom';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { CalendarMonthOutlined, EmojiEvents, Person, PersonPinOutlined, School, TaskOutlined } from '@mui/icons-material';
 
-import MainCard from '../../../ui-component/cards/MainCard';
-import CheckDataAlert from '../../../ui-component/cards/CheckDataAlert';
-import AccordionKaryawan from '../../../ui-component/cards/AccordionKaryawan';
-import RiwayatPendidikanKaryawan from '../../../ui-component/submenu/karyawan-riwayatpendidikan';
-import KompetensiKaryawan from '../../../ui-component/submenu/karyawan-kompetensi';
-import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri';
-import ProfileAccordion from '../../../ui-component/modal/profile-accordion';
-import ConfirmationMessage from '../../../ui-component/cards/Alert-PI-CL';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import CheckDataAlert from '../../../ui-component/cards/CheckDataAlert.jsx';
+import AccordionKaryawan from '../../../ui-component/cards/AccordionKaryawan.jsx';
+import RiwayatPendidikanKaryawan from '../../../ui-component/submenu/karyawan-riwayatpendidikan.jsx';
+import KompetensiKaryawan from '../../../ui-component/submenu/karyawan-kompetensi.jsx';
+import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri.jsx';
+import ProfileAccordion from '../../../ui-component/modal/profile-accordion.jsx';
+import ConfirmationMessage from '../../../ui-component/cards/Alert-PI-CL.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| PROFIL KARYAWAN ||============================== //

@@ -6,9 +6,9 @@ import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AddCircleOutlineRounded, CalendarMonthOutlined, FileDownloadOutlined, PersonPinOutlined, TaskOutlined } from '@mui/icons-material';
 import notFoundImage from '../../../../public/assets/images/ilustration/notfound.png';
-import MainCard from '../../../ui-component/cards/MainCard';
-import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert';
-import DetailKaryawandiKomiteUnit from './detail-karyawandikomiteunit';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import KuotaKomiteUnitAlert from '../../../ui-component/cards/KuotaKomiteUnitAlert.jsx';
+import DetailKaryawandiKomiteUnit from './detail-karyawandikomiteunit.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL EVENT KOMITE UNIT ||============================== //

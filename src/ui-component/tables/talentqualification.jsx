@@ -157,7 +157,7 @@ import * as React from 'react';
 import {Pagination, Stack, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import FilterButton from '../../ui-component/button/FilterButton';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
 
 const getColorStyle = (value, minimumValueQualified) => {
   let color, backgroundColor;

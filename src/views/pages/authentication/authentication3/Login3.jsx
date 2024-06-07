@@ -3,12 +3,12 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Stack, Typography, useMediaQuery, Box } from '@mui/material';
 
 // project imports
-import AuthWrapper1 from '../AuthWrapper1';
-import AuthCardWrapper from '../AuthCardWrapper';
-import AuthLogin from '../auth-forms/AuthLogin';
-import Logo from '../../../../ui-component/LogoITMSLogin';
-import AuthFooter from '../../../../ui-component/cards/AuthFooter';
-import logobumn from '../../../../../public/assets/images/logo/logobumn.png';
+import AuthWrapper1 from '../AuthWrapper1.jsx';
+import AuthCardWrapper from '../AuthCardWrapper.jsx';
+import AuthLogin from '../auth-forms/AuthLogin.jsx';
+import Logo from '../../../../ui-component/LogoITMSLogin.jsx';
+import AuthFooter from '../../../../ui-component/cards/AuthFooter.jsx';
+import logobumn from '../../../../../public/assets/images/logo/Logobumn.png';
 import logopos from '../../../../../public/assets/images/logo/logoposind-maincolor.png';
 
 // ================================|| AUTH3 - LOGIN ||================================ //

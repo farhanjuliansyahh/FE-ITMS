@@ -109,13 +109,13 @@
 
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
+import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined.jsx';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import HapusDataBPJ from '../../ui-component/modal/hapus-data-bpj';
+import HapusDataBPJ from '../../ui-component/modal/hapus-data-bpj.jsx';
 import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import FilterButton from '../../ui-component/button/FilterButton';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {

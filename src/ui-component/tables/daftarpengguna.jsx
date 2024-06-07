@@ -4,9 +4,9 @@ import { Pagination, Button, Dialog, Stack, Paper, Table, TableBody, TableCell, 
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
-import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
-import FilterButton from '../../ui-component/button/FilterButton';
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary.jsx';
+import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined.jsx';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
 import { tableCellClasses } from '@mui/material/TableCell';
 import.meta.env.VITE_API_BASE_URL
 

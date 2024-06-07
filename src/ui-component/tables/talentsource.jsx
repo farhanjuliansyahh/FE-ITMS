@@ -387,10 +387,10 @@ import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import { AddCircleOutline } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import FilterButton from '../../ui-component/button/FilterButton';
-import ButtonPrimary from '../button/ButtonPrimary';
-import TambahKomiteUnit from '../modal/tambah-komite-unit';
-import KonfirmasiTambahKomiteUnit from '../modal/konfirmasi-tambah-komite-unit';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import TambahKomiteUnit from '../modal/tambah-komite-unit.jsx';
+import KonfirmasiTambahKomiteUnit from '../modal/konfirmasi-tambah-komite-unit.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 const StyledTableCell = styled(TableCell)(() => ({

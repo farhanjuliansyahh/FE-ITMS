@@ -3,8 +3,8 @@ import { styled } from '@mui/material/styles';
 import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Menu, MenuItem } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { AddCircleOutlineOutlined, ExpandMore } from '@mui/icons-material';
-import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
-import FilterButton from '../../ui-component/button/FilterButton'; // Adjust the path as necessary
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary.jsx';
+import FilterButton from '../../ui-component/button/FilterButton.jsx'; // Adjust the path as necessary
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {

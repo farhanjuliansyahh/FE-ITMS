@@ -17,7 +17,7 @@ import {
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { useAuth } from '../../../../routes/useAuth';
+import { useAuth } from '../../../../routes/useAuth.jsx';
 import { useNavigate } from 'react-router';
 
 const Login = () => {

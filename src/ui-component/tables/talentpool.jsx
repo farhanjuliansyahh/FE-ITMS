@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { CreateOutlined } from '@mui/icons-material/';
-import ButtonPrimary from '../button/ButtonPrimary';
-import UbahStatusTalent from '../modal/ubah-status-talent';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import UbahStatusTalent from '../modal/ubah-status-talent.jsx';
 import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import FilterButton from '../../ui-component/button/FilterButton';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {

@@ -10,7 +10,7 @@ import Routes from './routes';
 import themes from './themes';
 
 // project imports
-import NavigationScroll from './layout/NavigationScroll';
+import NavigationScroll from './layout/NavigationScroll.jsx';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

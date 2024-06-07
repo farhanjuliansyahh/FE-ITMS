@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ExpandLessOutlined, ExpandMoreOutlined } from '@mui/icons-material'; // Import ExpandMoreOutlined for "Turun" buttons
-import ButtonPrimary from '../button/ButtonPrimary';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
 
 const StyledTableCell = styled(TableCell)(({ columnIndex }) => ({
     [`&.${tableCellClasses.head}`]: {

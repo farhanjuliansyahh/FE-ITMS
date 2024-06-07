@@ -5,13 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 // project imports
-import * as serviceWorker from './serviceWorker';
-import App from './App';
+import * as serviceWorker from './serviceWorker.jsx';
+import App from './App.jsx';
 import { store } from './store';
 
 // style + assets
 import './assets/scss/style.scss';
-import config from './config';
+import config from './config.jsx';
 
 // ==============================|| REACT DOM RENDER  ||============================== //
 

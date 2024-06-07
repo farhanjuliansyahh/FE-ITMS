@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetailevent';
+import TimelineDetailEvent from '../../../ui-component/submenu/timelinedetailevent.jsx';
 import { useLocation, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import.meta.env.VITE_API_BASE_URL

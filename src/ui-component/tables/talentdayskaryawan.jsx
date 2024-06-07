@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
-import InputNilaiTalentDays from '../../ui-component/modal/input-nilai-talent-days';
+import InputNilaiTalentDays from '../../ui-component/modal/input-nilai-talent-days.jsx';
 import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import FilterButton from '../../ui-component/button/FilterButton';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 const StyledTableCell = styled(TableCell)(() => ({

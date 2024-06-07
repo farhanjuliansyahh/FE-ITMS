@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Divider, Grid, Typography } from '@mui/material';
-import AlertUbahSandi from '../../../ui-component/cards/AlertUbahSandi';
-import ResetPassword from '../authentication/auth-forms/AuthChangePassword';
+import AlertUbahSandi from '../../../ui-component/cards/AlertUbahSandi.jsx';
+import ResetPassword from '../authentication/auth-forms/AuthChangePassword.jsx';
 
 export default function UbahKataSandi() {
     return (

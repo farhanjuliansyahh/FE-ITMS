@@ -185,7 +185,7 @@ import { GridLogicOperator } from '@mui/x-data-grid';
 import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import FilterButton from '../../ui-component/button/FilterButton';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
 
 const getStatusStyle = (status) => {
   let color, backgroundColor;

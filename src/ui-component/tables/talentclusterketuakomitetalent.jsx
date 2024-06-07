@@ -252,12 +252,12 @@
 import React, { useState, useEffect } from 'react';
 import { CreateOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import UbahKategoriMatrix from '../../ui-component/modal/ubah-kategori-matrix';
-import KonfirmasiUbahMatrix from '../../ui-component/modal/konfirmasi-ubah-matrix';
+import UbahKategoriMatrix from '../../ui-component/modal/ubah-kategori-matrix.jsx';
+import KonfirmasiUbahMatrix from '../../ui-component/modal/konfirmasi-ubah-matrix.jsx';
 import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import FilterButton from '../../ui-component/button/FilterButton';
+import FilterButton from '../../ui-component/button/FilterButton.jsx';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {

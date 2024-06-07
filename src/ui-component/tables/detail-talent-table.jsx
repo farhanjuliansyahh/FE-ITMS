@@ -1,6 +1,6 @@
 // src/pages/DetailTalentTable.js
 import React from 'react';
-import MainTable from './table';
+import MainTable from './table.jsx';
 
 const columnKeys = {
   id: 'No',

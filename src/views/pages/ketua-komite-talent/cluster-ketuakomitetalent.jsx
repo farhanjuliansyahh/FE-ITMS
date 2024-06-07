@@ -3,15 +3,15 @@ import { Box, Button, Divider, Typography, Stack } from '@mui/material';
 import { CalendarMonthOutlined, RestartAltOutlined, Search } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
 
-import MainCard from '../../../ui-component/cards/MainCard';
-import MatrixNineBox from '../../../ui-component/submenu/matrixninebox';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import MatrixNineBox from '../../../ui-component/submenu/matrixninebox.jsx';
 import { useParams } from 'react-router';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-import TalentClusterKetuaKomiteTalentTable from '../../../ui-component/tables/talentclusterketuakomitetalent';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary.jsx';
+import TalentClusterKetuaKomiteTalentTable from '../../../ui-component/tables/talentclusterketuakomitetalent.jsx';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import CustomSearch from '../../../ui-component/searchsection/custom-search';
-import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined';
+import CustomSearch from '../../../ui-component/searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../../../ui-component/button/ButtonErrorOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 export default function ClusterKetuaKomiteTalent() {

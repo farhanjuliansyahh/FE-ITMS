@@ -5,10 +5,10 @@ import { Box, Menu, MenuItem, Pagination, Stack, Tab, Tabs, Typography } from '@
 import { DownloadDone, ExpandMore, RotateRight } from '@mui/icons-material';
 import notFoundImage from '../../../../public/assets/images/ilustration/notfound.png';
 
-import MainCard from '../../../ui-component/cards/MainCard';
-import AksesEvent from '../../../ui-component/submenu/aksesevent';
-import ButtonPrimary from '../../../ui-component/button/ButtonPrimary';
-import CustomSearch from '../../../ui-component/searchsection/custom-search';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import AksesEvent from '../../../ui-component/submenu/aksesevent.jsx';
+import ButtonPrimary from '../../../ui-component/button/ButtonPrimary.jsx';
+import CustomSearch from '../../../ui-component/searchsection/custom-search.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| EVENT KETUA KOMITE TALENT PAGE ||============================== //

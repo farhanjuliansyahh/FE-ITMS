@@ -4,11 +4,11 @@ import { Formik } from 'formik';
 import { Box, Button, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useAuth } from '../../../../routes/useAuth';
+import { useAuth } from '../../../../routes/useAuth.jsx';
 import { useNavigate } from 'react-router';
 import { styled } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
-import ButtonPrimary from '../../../../ui-component/button/ButtonPrimary';
+import ButtonPrimary from '../../../../ui-component/button/ButtonPrimary.jsx';
 import { LockOpenRounded, LockOutlined, LockResetOutlined } from '@mui/icons-material';
 
 

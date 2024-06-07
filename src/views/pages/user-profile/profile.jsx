@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Divider, Typography } from '@mui/material';
-import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri';
+import DataDiriKaryawan from '../../../ui-component/submenu/karyawan-datadiri.jsx';
 
 export default function UserProfile() {
     return (
