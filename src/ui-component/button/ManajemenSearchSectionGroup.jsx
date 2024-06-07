@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Grid,  Stack,  Box, } from '@mui/material';
-import { gridSpacing } from '../../store/constant';
-import SearchResetButton from './SearchResetButton';
-import EventDetailSearchSection from './EventDetailSearchSection';
+import { gridSpacing } from '../../store/constant.jsx';
+import SearchResetButton from './SearchResetButton.jsx';
+import EventDetailSearchSection from './EventDetailSearchSection.jsx';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 

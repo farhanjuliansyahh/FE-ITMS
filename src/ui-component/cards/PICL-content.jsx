@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import PaktaIntegritas from '../../ui-component/tables/pakta-integritas';
+import PaktaIntegritas from '../../ui-component/tables/pakta-integritas.jsx';
 const styles = {
     typog3: {
       marginLeft: '40px',

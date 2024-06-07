@@ -1,8 +1,8 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-import MainCard from '../../ui-component/cards/MainCard';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
 import { Grid, Typography } from '@mui/material';
-import { gridSpacing } from '../../store/constant';
+import { gridSpacing } from '../../store/constant.jsx';
 
 const LevelJabatanChart = ({ data }) => {
   const chartRef = React.useRef();

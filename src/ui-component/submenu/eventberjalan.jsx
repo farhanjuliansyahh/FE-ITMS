@@ -12,9 +12,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
-import KonfirmasiEvent from '../modal/konfirmasi-event';
-import HapusEvent from '../modal/hapusevent';
-import EditEvent from '../modal/edit-event';
+import KonfirmasiEvent from '../modal/konfirmasi-event.jsx';
+import HapusEvent from '../modal/hapusevent.jsx';
+import EditEvent from '../modal/edit-event.jsx';
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];
 

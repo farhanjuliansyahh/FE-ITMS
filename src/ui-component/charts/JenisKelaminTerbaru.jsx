@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import ApexCharts from 'apexcharts';
-import MainCard from '../../ui-component/cards/MainCard';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
 import { Grid, Typography } from '@mui/material';
-import { gridSpacing } from '../../store/constant';
+import { gridSpacing } from '../../store/constant.jsx';
 import PropTypes from 'prop-types'; 
 
 const chartOptions = {

@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AddCircleOutline } from '@mui/icons-material';
-import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
-import TabelDaftarAnggotaKomiteTalent from '../../ui-component/tables/anggota-komite-talent';
-import TambahKomiteTalent from '../../ui-component/modal/tambah-anggota-komite-talent';
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary.jsx';
+import TabelDaftarAnggotaKomiteTalent from '../../ui-component/tables/anggota-komite-talent.jsx';
+import TambahKomiteTalent from '../../ui-component/modal/tambah-anggota-komite-talent.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 export default function DaftarKomiteTalent({ komiteTalentId }) {

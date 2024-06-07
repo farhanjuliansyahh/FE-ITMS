@@ -1,8 +1,8 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-import MainCard from '../cards/MainCard';
+import MainCard from '../cards/MainCard.jsx';
 import { Grid, Typography, Button, MenuItem, Menu } from '@mui/material';
-import { gridSpacing } from '../../store/constant';
+import { gridSpacing } from '../../store/constant.jsx';
 
 const GenerasiChart = ({ series, options }) => {
   const chartRef = React.useRef(null);

@@ -4,22 +4,22 @@ import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
-import MainCard from '../cards/MainCard';
+import MainCard from '../cards/MainCard.jsx';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
-import EventDetailSearchSection from '../button/EventDetailSearchSection';
-import SearchResetButton from '../button/SearchResetButton';
+import EventDetailSearchSection from '../button/EventDetailSearchSection.jsx';
+import SearchResetButton from '../button/SearchResetButton.jsx';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import KomiteUnitListButton from '../button/KomiteUnitListButton';
+import KomiteUnitListButton from '../button/KomiteUnitListButton.jsx';
 import { IconFileDownload } from '@tabler/icons-react';
-import ButtonPrimary from '../button/ButtonPrimary';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import TalentSourceTable from '../tables/talentsource';
-import AdminSearchSectionGroup from '../button/AdminSearchButtonGroup';
-import KomiteUnitTable from '../../ui-component/tables/komiteunittable';
-import KonfirmasiTalentSource from '../../ui-component/modal/konfirmasi-talentsource';
+import TalentSourceTable from '../tables/talentsource.jsx';
+import AdminSearchSectionGroup from '../button/AdminSearchButtonGroup.jsx';
+import KomiteUnitTable from '../../ui-component/tables/komiteunittable.jsx';
+import KonfirmasiTalentSource from '../../ui-component/modal/konfirmasi-talentsource.jsx';
 // ==============================|| DETAIL TALENT SOURCE PAGE ||============================== //
 
 function CustomTabPanel(props) {

@@ -1,12 +1,12 @@
 import { lazy } from 'react';
 
 // project imports
-import Loadable from '../ui-component/Loadable';
+import Loadable from '../ui-component/Loadable.jsx';
 import MinimalLayout from '../layout/MinimalLayout';
 
 // login option 3 routing
-const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Login3')));
-const AuthRegister3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3')));
+const AuthLogin3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Login3.jsx')));
+const AuthRegister3 = Loadable(lazy(() => import('../views/pages/authentication/authentication3/Register3.jsx')));
 
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 

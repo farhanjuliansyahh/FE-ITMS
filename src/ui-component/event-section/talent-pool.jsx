@@ -4,15 +4,15 @@ import { Box, Button, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
-import MainCard from '../cards/MainCard';
-import AddEventModal from '../modal/TambahEvent';
-import TalentPoolTable from '../tables/talentpool';
+import MainCard from '../cards/MainCard.jsx';
+import AddEventModal from '../modal/TambahEvent.jsx';
+import TalentPoolTable from '../tables/talentpool.jsx';
 import { IconFileDownload } from '@tabler/icons-react';
-import ButtonPrimary from '../button/ButtonPrimary';
-import LabelInfo from '../../ui-component/label/label-info';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import LabelInfo from '../../ui-component/label/label-info.jsx';
 import { RestartAltOutlined } from '@mui/icons-material';
-import CustomSearch from '../searchsection/custom-search';
-import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import CustomSearch from '../searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //

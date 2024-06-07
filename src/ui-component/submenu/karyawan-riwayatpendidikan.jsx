@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box } from '@mui/material';
-import EmpatKolomDataKaryawan from "../../ui-component/tables/empatkolomdatakaryawan";
+import EmpatKolomDataKaryawan from "../../ui-component/tables/empatkolomdatakaryawan.jsx";
 
 function createData(colname1, coldata1, colname2, coldata2) {
     return { colname1, coldata1, colname2, coldata2 };

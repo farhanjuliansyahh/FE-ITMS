@@ -2,24 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { ArrowBackOutlined, ArrowForwardOutlined, CalendarMonthOutlined, CheckCircleOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import MainCard from '../../ui-component/cards/MainCard';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
 
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Divider from '@mui/material/Divider';
-import ButtonPrimary from '../button/ButtonPrimary';
-import ButtonSecondary from '../button/ButtonOptional';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import ButtonSecondary from '../button/ButtonOptional.jsx';
 
-import TalentSource from '../../ui-component/event-section/talent-source';
-import TalentProfile from '../../ui-component/event-section/talent-profile';
-import TalentQualification from '../../ui-component/event-section/talent-qualification';
-import TalentDays from '../../ui-component/event-section/talent-days';
-import TalentPool from '../../ui-component/event-section/talent-pool';
-import KonfirmasiNextEvent from '../../ui-component/modal/konfirmasi-next-event';
-import KonfirmasiTalentPool from '../../ui-component/modal/konfirmasi-talent-pool';
-import TalentCluster from '../../ui-component/event-section/talent-cluster';
-import ButtonPrimaryOutlined from '../../ui-component/button/ButtonPrimaryOutlined';
+import TalentSource from '../../ui-component/event-section/talent-source.jsx';
+import TalentProfile from '../../ui-component/event-section/talent-profile.jsx';
+import TalentQualification from '../../ui-component/event-section/talent-qualification.jsx';
+import TalentDays from '../../ui-component/event-section/talent-days.jsx';
+import TalentPool from '../../ui-component/event-section/talent-pool.jsx';
+import KonfirmasiNextEvent from '../../ui-component/modal/konfirmasi-next-event.jsx';
+import KonfirmasiTalentPool from '../../ui-component/modal/konfirmasi-talent-pool.jsx';
+import TalentCluster from '../../ui-component/event-section/talent-cluster.jsx';
+import ButtonPrimaryOutlined from '../../ui-component/button/ButtonPrimaryOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talent Days', 'Talent Cluster', 'Talent Pool'];

@@ -3,15 +3,15 @@ import { useEffect, useState, useRef } from 'react';
 import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import MainCard from '../../ui-component/cards/MainCard';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
 import { RestartAltOutlined } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
-import ButtonPrimary from '../button/ButtonPrimary';
-import TalentQualificationTable from '../../ui-component/tables/talentqualification';
-import CustomSearch from '../../ui-component/searchsection/custom-search';
-import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import TalentQualificationTable from '../../ui-component/tables/talentqualification.jsx';
+import CustomSearch from '../../ui-component/searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined.jsx';
 import { useLocation } from 'react-router-dom';
 import.meta.env.VITE_API_BASE_URL
 

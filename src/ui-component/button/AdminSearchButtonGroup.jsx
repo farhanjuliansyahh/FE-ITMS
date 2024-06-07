@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Grid,  Stack,  Box, } from '@mui/material';
-import { gridSpacing } from '../../store/constant';
-import SearchResetButton from './SearchResetButton';
+import { gridSpacing } from '../../store/constant.jsx';
+import SearchResetButton from './SearchResetButton.jsx';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import SearchEventButton from './SearchEventButton';
+import SearchEventButton from './SearchEventButton.jsx';
 const AdminSearchSectionGroup= () => {
     return (
         <Box>

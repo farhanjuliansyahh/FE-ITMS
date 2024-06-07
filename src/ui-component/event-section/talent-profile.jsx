@@ -4,19 +4,19 @@ import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
-import MainCard from '../../ui-component/cards/MainCard';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import { RestartAltOutlined } from '@mui/icons-material';
 
 import { IconFileDownload } from '@tabler/icons-react';
-import ButtonPrimary from '../button/ButtonPrimary';
-import TalentProfileTable from '../../ui-component/tables/talentprofile';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import TalentProfileTable from '../../ui-component/tables/talentprofile.jsx';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
-import KonfirmasiSubmitTalentProfile from '../../ui-component/modal/konfirmasi-submit-talent-profile';
-import ButtonOptional from '../../ui-component/button/ButtonOptional';
-import CustomSearch from '../../ui-component/searchsection/custom-search';
-import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined';
+import KonfirmasiSubmitTalentProfile from '../../ui-component/modal/konfirmasi-submit-talent-profile.jsx';
+import ButtonOptional from '../../ui-component/button/ButtonOptional.jsx';
+import CustomSearch from '../../ui-component/searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL TALENT PROFILE PAGE ||============================== //

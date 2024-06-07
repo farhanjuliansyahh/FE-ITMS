@@ -4,15 +4,15 @@ import { Box, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import PropTypes from 'prop-types';
-import MainCard from '../../ui-component/cards/MainCard';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
 import { IconFileDownload } from '@tabler/icons-react';
 import { RestartAltOutlined } from '@mui/icons-material';
 
-import ButtonPrimary from '../button/ButtonPrimary';
-import MatrixNineBox from '../../ui-component/submenu/matrixninebox';
-import TalentClusterTable from '../../ui-component/tables/talentcluster';
-import CustomSearch from '../searchsection/custom-search';
-import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import MatrixNineBox from '../../ui-component/submenu/matrixninebox.jsx';
+import TalentClusterTable from '../../ui-component/tables/talentcluster.jsx';
+import CustomSearch from '../searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| TALENT CLUSTER PAGE ||============================== //

@@ -451,7 +451,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, rows.length);
   const [selectedOption, setSelectedOption] = useState(false)
-  
+
   const calculateColumnWidth = (data, accessor, headerText) => {
     const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
     return maxLength * 11;
@@ -467,7 +467,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
         // Include any data you want to send in the request body
         nippos: nippos,
         komite_unit: komite_unit,
-        permanent: selectedOption 
+        permanent: selectedOption
       }) // Convert the bodyData object to a JSON string
     })
       .then(response => {
@@ -529,7 +529,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
 
   const handleCloseSecondModal = () => {
     setOpenSecondModal(false);
-      setOpenSecondModal(false);
+    setOpenSecondModal(false);
   };
 
   const handleConfirm = () => {
@@ -555,78 +555,153 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
 
   return (
     <div>
-      <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }}>
-            <TableHead>
-              <TableRow>
-                {checkboxSelection && (
-                  <StyledTableCell sx={{ width: 60 }}>
-                    <input
-                      type="checkbox"
-                      checked={selectAll}
-                      onChange={handleSelectAll}
-                    />
-                  </StyledTableCell>
-                )}
-                <StyledTableCell >No</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
-                <StyledTableCell >Nippos</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
-                <StyledTableCell >Job Level</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
-                <StyledTableCell >Komite Unit</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.slice(startIndex, endIndex).map((row, index) => (
-                <TableRow key={row.id}>
-                  {checkboxSelection && (
-                    <StyledTableCell>
-                      <input
-                        type="checkbox"
-                        checked={selectedRows.includes(row.id)}
-                        onChange={(event) => handleCheckboxChange(event, row.id)}
-                      />
-                    </StyledTableCell>
-                  )}
-                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{startIndex + index + 1}</StyledTableCell>
-                  <StyledTableCell>{row.Nama}</StyledTableCell>
-                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
-                  <StyledTableCell>{row.Posisi}</StyledTableCell>
-                  <StyledTableCell>{row['Job Family']}</StyledTableCell>
-                  <StyledTableCell sx={{ textAlign: 'center'}}>{row['Job Level']}</StyledTableCell>
-                  <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
-                  <StyledTableCell>
-                    <ButtonContainer >
-                    {row['Komite Unit'] === null && showButton ? (
-                      <ButtonPrimary
-                        icon={AddCircleOutline}
-                        LabelName={'Tambah Komite Unit'}
-                        padding={'6px 16px'}
-                        onClick={() => handleOpenFirstModal(row.Nippos)}
-                      />
-                    ) : (
-                      row['Komite Unit']
+      {
+        rows.length > 0 ? (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    {checkboxSelection && (
+                      <StyledTableCell sx={{ width: 60 }}>
+                        <input
+                          type="checkbox"
+                          checked={selectAll}
+                          onChange={handleSelectAll}
+                        />
+                      </StyledTableCell>
                     )}
-                    </ButtonContainer>
-                  </StyledTableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>   
-      </div>
-      <Stack spacing={2} direction="row" marginTop={2}>
-        <Pagination
-          count={Math.ceil(rows.length / itemsPerPage)}
-          page={page}
-          onChange={handleChangePage}
-          color="primary"/>
-        <div style={{ flex: '1' }}></div>
-        <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
-      </Stack>
+                    <StyledTableCell >No</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+                    <StyledTableCell >Nippos</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
+                    <StyledTableCell >Job Level</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
+                    <StyledTableCell >Komite Unit</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.slice(startIndex, endIndex).map((row, index) => (
+                    <TableRow key={row.id}>
+                      {checkboxSelection && (
+                        <StyledTableCell>
+                          <input
+                            type="checkbox"
+                            checked={selectedRows.includes(row.id)}
+                            onChange={(event) => handleCheckboxChange(event, row.id)}
+                          />
+                        </StyledTableCell>
+                      )}
+                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{startIndex + index + 1}</StyledTableCell>
+                      <StyledTableCell>{row.Nama}</StyledTableCell>
+                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
+                      <StyledTableCell>{row.Posisi}</StyledTableCell>
+                      <StyledTableCell>{row['Job Family']}</StyledTableCell>
+                      <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
+                      <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
+                      <StyledTableCell>
+                        <ButtonContainer >
+                          {row['Komite Unit'] === null && showButton ? (
+                            <ButtonPrimary
+                              icon={AddCircleOutline}
+                              LabelName={'Tambah Komite Unit'}
+                              padding={'6px 16px'}
+                              onClick={() => handleOpenFirstModal(row.Nippos)}
+                            />
+                          ) : (
+                            row['Komite Unit']
+                          )}
+                        </ButtonContainer>
+                      </StyledTableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        ) : (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px', height: '400px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    {checkboxSelection && (
+                      <StyledTableCell sx={{ width: 60 }}>
+                        <input
+                          type="checkbox"
+                          checked={selectAll}
+                          onChange={handleSelectAll}
+                        />
+                      </StyledTableCell>
+                    )}
+                    <StyledTableCell >No</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+                    <StyledTableCell >Nippos</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
+                    <StyledTableCell >Job Level</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
+                    <StyledTableCell >Komite Unit</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.slice(startIndex, endIndex).map((row, index) => (
+                    <TableRow key={row.id}>
+                      {checkboxSelection && (
+                        <StyledTableCell>
+                          <input
+                            type="checkbox"
+                            checked={selectedRows.includes(row.id)}
+                            onChange={(event) => handleCheckboxChange(event, row.id)}
+                          />
+                        </StyledTableCell>
+                      )}
+                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{startIndex + index + 1}</StyledTableCell>
+                      <StyledTableCell>{row.Nama}</StyledTableCell>
+                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
+                      <StyledTableCell>{row.Posisi}</StyledTableCell>
+                      <StyledTableCell>{row['Job Family']}</StyledTableCell>
+                      <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
+                      <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
+                      <StyledTableCell>
+                        <ButtonContainer >
+                          {row['Komite Unit'] === null && showButton ? (
+                            <ButtonPrimary
+                              icon={AddCircleOutline}
+                              LabelName={'Tambah Komite Unit'}
+                              padding={'6px 16px'}
+                              onClick={() => handleOpenFirstModal(row.Nippos)}
+                            />
+                          ) : (
+                            row['Komite Unit']
+                          )}
+                        </ButtonContainer>
+                      </StyledTableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        )
+      }
+
+      {rows.length > 0 && (
+        <Stack spacing={2} direction="row" marginTop={2}>
+          <Pagination
+            count={Math.ceil(rows.length / itemsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            color="primary"
+          />
+          <div style={{ flex: '1' }}></div>
+          <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
+        </Stack>
+      )}
+
+
+
       <TambahKomiteUnit
         open={openFirstModal}
         onClose={handleCloseFirstModal}

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
-import MainCard from '../../ui-component/cards/MainCard';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
 import { Grid, Typography} from '@mui/material';
-import { gridSpacing } from '../../store/constant';
+import { gridSpacing } from '../../store/constant.jsx';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Skeleton from '@mui/material/Skeleton';

@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 // project imports
 import MainLayout from '../layout/MainLayout';
-import Loadable from '../ui-component/Loadable';
+import Loadable from '../ui-component/Loadable.jsx';
 import AuthGuard from './AuthGuard';
 
 // import DaftarPengguna from 'views/pages/manajemen-pengguna/daftar-pengguna';

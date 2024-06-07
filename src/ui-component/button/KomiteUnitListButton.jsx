@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal';
 import { useState,useEffect } from 'react';
 // import { height } from '@mui/system';
-import KomiteUnitListTable from '../tables/komiteunittable';
+import KomiteUnitListTable from '../tables/komiteunittable.jsx';
 import CloseIcon from '@mui/icons-material/Close';
 import.meta.env.VITE_API_BASE_URL
 const style = {

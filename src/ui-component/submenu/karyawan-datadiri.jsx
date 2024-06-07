@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Avatar, Grid, Stack } from '@mui/material';
 import { LockOpenRounded } from '@mui/icons-material';
-import ButtonOptional from '../../ui-component/button/ButtonOptional';
-import EmpatKolomDataKaryawan from "../../ui-component/tables/empatkolomdatakaryawan";
-// import DuaKolomDataKaryawan from "../../ui-component/tables/duakolomdatakaryawan";
+import ButtonOptional from '../../ui-component/button/ButtonOptional.jsx';
+import EmpatKolomDataKaryawan from "../../ui-component/tables/empatkolomdatakaryawan.jsx";
+// import DuaKolomDataKaryawan from "../../ui-component/tables/duakolomdatakaryawan.jsx";
 import User1 from '../../../public/assets/images/users/user-round.svg';
 import { Link } from 'react-router-dom';
 import.meta.env.VITE_API_BASE_URL

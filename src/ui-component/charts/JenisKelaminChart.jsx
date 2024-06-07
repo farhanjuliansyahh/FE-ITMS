@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import ApexCharts from 'apexcharts';
-import MainCard from '../cards/MainCard';
+import MainCard from '../cards/MainCard.jsx';
 import { Grid, Typography, Button, Menu, MenuItem } from '@mui/material';
-import { gridSpacing } from '../../store/constant';
+import { gridSpacing } from '../../store/constant.jsx';
 
 const JenisKelaminChart = ({ series, options }) => {
   const chartRef = useRef(null);

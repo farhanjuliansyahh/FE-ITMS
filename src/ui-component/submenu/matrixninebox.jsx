@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Matriks from '../../../src/ui-component/submenu/matriks';
+import Matriks from '../../../src/ui-component/submenu/matriks.jsx';
 
 export default function MatrixNineBox({eventid, totalrows}) {
     const activeStep = eventid

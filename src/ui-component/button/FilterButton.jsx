@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Menu, MenuItem } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
-import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary.jsx';
 
 export default function FilterButton({ itemsPerPage, setItemsPerPage }) {
   const [anchorEl, setAnchorEl] = useState(null);

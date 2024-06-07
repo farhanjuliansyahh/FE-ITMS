@@ -14,13 +14,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
-import KonfirmasiEvent from '../modal/konfirmasi-event';
-import HapusEvent from '../modal/hapusevent';
-import DaftarKomiteUnit from '../../views/pages/komite-unit/daftar-eventkomiteunit';
+import KonfirmasiEvent from '../modal/konfirmasi-event.jsx';
+import HapusEvent from '../modal/hapusevent.jsx';
+import DaftarKomiteUnit from '../../views/pages/komite-unit/daftar-eventkomiteunit.jsx';
 import { useNavigate } from 'react-router-dom';
 
 
-import KonfirmasiNextEvent from '../modal/konfirmasi-next-event';
+import KonfirmasiNextEvent from '../modal/konfirmasi-next-event.jsx';
 import { bgcolor } from '@mui/system';
 import { color } from 'framer-motion';
 

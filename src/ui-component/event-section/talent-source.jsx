@@ -6,12 +6,12 @@ import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { AddCircleOutline, GppGoodOutlined, PersonOffOutlined, RestartAlt, RestartAltOutlined, Search } from '@mui/icons-material';
 import { IconFileDownload } from '@tabler/icons-react';
 
-import MainCard from '../cards/MainCard';
-import KomiteUnitListButton from '../button/KomiteUnitListButton';
-import ButtonPrimary from '../button/ButtonPrimary';
-import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
-import TalentSourceTable from '../tables/talentsource';
-import CustomSearch from '../searchsection/custom-search';
+import MainCard from '../cards/MainCard.jsx';
+import KomiteUnitListButton from '../button/KomiteUnitListButton.jsx';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
+import TalentSourceTable from '../tables/talentsource.jsx';
+import CustomSearch from '../searchsection/custom-search.jsx';
 import { toast } from 'react-toastify';
 import.meta.env.VITE_API_BASE_URL
 

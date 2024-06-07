@@ -4,9 +4,9 @@ import { createTheme } from '@mui/material/styles';
 import colors from '../assets/scss/_themes-vars.module.scss';
 
 // project imports
-import componentStyleOverrides from './compStyleOverride';
-import themePalette from './palette';
-import themeTypography from './typography';
+import componentStyleOverrides from './compStyleOverride.jsx';
+import themePalette from './palette.jsx';
+import themeTypography from './typography.jsx';
 
 /**
  * Represent theme style and structure as per Material-UI

@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { Box, Button, Grid, Tab, Tabs, Typography, Stack, TextField, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import MainCard from '../../ui-component/cards/MainCard';
-import EventDetailSearchSection from '../../ui-component/button/EventDetailSearchSection';
-import SearchResetButton from '../../ui-component/button/SearchResetButton';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
+import EventDetailSearchSection from '../../ui-component/button/EventDetailSearchSection.jsx';
+import SearchResetButton from '../../ui-component/button/SearchResetButton.jsx';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
@@ -20,19 +20,19 @@ import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import ButtonPrimary from '../button/ButtonPrimary';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
 import { IconFileDownload } from '@tabler/icons-react';
 
-import TalentDaysBPJTable from '../tables/talentdaysbpj';
-import TalentDaysKaryawanTable from '../tables/talentdayskaryawan';
-import TambahBPJ from '../../ui-component/modal/tambah-anggota-bpj';
-import KonfirmasiDetailBPJ from '../../ui-component/modal/konfirmasi-detail-bpj';
-import KonfirmasiTambahBPJ from '../../ui-component/modal/konfirmasi-tambah-bpj';
-import ButtonOptional from '../../ui-component/button/ButtonOptional';
+import TalentDaysBPJTable from '../tables/talentdaysbpj.jsx';
+import TalentDaysKaryawanTable from '../tables/talentdayskaryawan.jsx';
+import TambahBPJ from '../../ui-component/modal/tambah-anggota-bpj.jsx';
+import KonfirmasiDetailBPJ from '../../ui-component/modal/konfirmasi-detail-bpj.jsx';
+import KonfirmasiTambahBPJ from '../../ui-component/modal/konfirmasi-tambah-bpj.jsx';
+import ButtonOptional from '../../ui-component/button/ButtonOptional.jsx';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
-import KonfirmasiIsiSemuaNilaiTalent from '../../ui-component/modal/konfirmasi-isi-semua-nilai-talent';
-import CustomSearch from '../searchsection/custom-search';
-import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import KonfirmasiIsiSemuaNilaiTalent from '../../ui-component/modal/konfirmasi-isi-semua-nilai-talent.jsx';
+import CustomSearch from '../searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
 import dayjs from 'dayjs';
 import.meta.env.VITE_API_BASE_URL
 

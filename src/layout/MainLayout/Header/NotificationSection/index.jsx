@@ -25,9 +25,9 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import MainCard from '../../../../ui-component/cards/MainCard';
-import Transitions from '../../../../ui-component/extended/Transitions';
-import NotificationList from './NotificationList';
+import MainCard from '../../../../ui-component/cards/MainCard.jsx';
+import Transitions from '../../../../ui-component/extended/Transitions.jsx';
+import NotificationList from './NotificationList.jsx';
 
 // assets
 import { IconBell } from '@tabler/icons-react';

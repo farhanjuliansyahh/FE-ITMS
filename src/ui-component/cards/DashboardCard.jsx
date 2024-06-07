@@ -6,8 +6,8 @@ import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Button, Grid, Menu, MenuItem, Typography, Stack } from '@mui/material';
 
 // project imports
-import MainCard from '../../ui-component/cards/MainCard';
-import SkeletonEarningCard from './Skeleton/EarningCard';
+import MainCard from '../../ui-component/cards/MainCard.jsx';
+import SkeletonEarningCard from './Skeleton/EarningCard.jsx';
 
 // assets
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
