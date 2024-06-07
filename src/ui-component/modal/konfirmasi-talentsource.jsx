@@ -104,6 +104,7 @@ function KonfirmasiTalentSource({ open, handleClose, eventid, onConfirmation }) 
       style={isHoveredBatalkan ? { ...batalkanButtonStyle, ...hoverBatalkanStyle } : batalkanButtonStyle}
       onMouseEnter={() => setIsHoveredBatalkan(true)}
       onMouseLeave={() => setIsHoveredBatalkan(false)}
+      onClick={handleClose}
     >
       Batalkan
     </Button>

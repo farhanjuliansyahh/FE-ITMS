@@ -89,7 +89,7 @@ const DaftarPengguna = () => {
     let dataToDownload = [];
     let filename = '';
 
-    dataToDownload = filteredData;
+    dataToDownload = resetRows;
     filename = `Daftar_Pengguna.csv`;
 
     // Create a CSV header with column names

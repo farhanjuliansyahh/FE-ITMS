@@ -75,13 +75,14 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   const handlequotachange = (event) => {
     const value = event.target.value;
     // Check if the value is a valid number
-    if (/^\d*$/.test(value)) {
+    if (/^(?!0)\d*$/.test(value)) {
       setQuotaError(false);
       setquota(value); // Update state with input value
     } else {
       setQuotaError(true);
     }
   };
+  // if (/^\d*$/.test(value))
 
   const handledeskripsichange = (event) => {
     setdeskripsi(event.target.value); // Update state with input value
@@ -318,9 +319,9 @@ function AddEventModal({ open, handleClose, setrefresh }) {
   const validateQuota = () => {
     if (isQuotaTouched) {
       if (quotaError) {
-        return 'Talent Pool Quota harus berupa angka';
+        return 'Talent Pool Quota harus berupa angka dan tidak berawalan nol';
       } else if (!quota) {
-        return 'Talent Pool Quota harus diisi';
+        return 'Talent Pool Quota harus diisi (tidak berawalan nol)';
       }
     } else {
       return '';

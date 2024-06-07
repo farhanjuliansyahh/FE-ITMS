@@ -34,11 +34,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const ButtonContainer = styled('div')({
   whiteSpace: 'nowrap'
 });
+
 const calculateColumnWidth = (data, accessor, headerText) => {
   const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
   return maxLength * 11;
 };
-
 
 export default function TalentPool({ rows, eventid, updaterows, eventstatus_id, setrefresh }) {
   const [ubahStatusOpen, setUbahStatusOpen] = useState(false);
@@ -71,13 +71,13 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id, 
           <Table sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <StyledTableCell>No</StyledTableCell>
-                <StyledTableCell>Nama</StyledTableCell>
-                <StyledTableCell>Nippos</StyledTableCell>
-                <StyledTableCell>Posisi</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>Nippos</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
                 <StyledTableCell>Job Level</StyledTableCell>
-                <StyledTableCell>Rumpun Jabatan</StyledTableCell>
-                <StyledTableCell>Kantor</StyledTableCell>
+                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
+                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
                 <StyledTableCell>Kategori Matrix Akhir</StyledTableCell>
                 <StyledTableCell>Status</StyledTableCell>
                 <StyledTableCell style={{ textAlign: 'center' }}>Aksi</StyledTableCell>
@@ -86,9 +86,9 @@ export default function TalentPool({ rows, eventid, updaterows, eventstatus_id, 
             <TableBody>
               {rows.slice(startIndex, endIndex).map((row) => (
                 <StyledTableRow key={row.id}>
-                  <StyledTableCell>{row.id}</StyledTableCell>
+                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
                   <StyledTableCell>{row.Nama}</StyledTableCell>
-                  <StyledTableCell>{row.Nippos}</StyledTableCell>
+                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
                   <StyledTableCell>{row.Posisi}</StyledTableCell>
                   <StyledTableCell style={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
                   <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>

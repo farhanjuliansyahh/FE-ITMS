@@ -59,14 +59,12 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
         width: 1,
     });
 
-    // ini untuk record selected value di radio button
     const [selectedValue, setSelectedValue] = useState('1');
     const handleChange = (event) => {
         const newValue = event.target.value;
         setSelectedValue(newValue);
     };
 
-    // untuk handle upload file
     const [parsedData, setParsedData] = useState([]);
     const [namaFile, setNamaFile] = useState('')
     const url = import.meta.env.VITE_API_BASE_URL
@@ -111,12 +109,31 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
 
     const [uploadInProgressToastId, setUploadInProgressToastId] = useState(null);
 
+    const renderMissingHeadersList = (missingHeaders) => {
+        return (
+            <div>
+                <p>Required headers are missing:</p>
+                <ul>
+                    {missingHeaders.map((header, index) => (
+                        <li key={index}>{header}</li>
+                    ))}
+                </ul>
+            </div>
+        );
+    };
+
     const uploadskor = () => {
         const progressToastId = toast.info('Upload in progress...', { autoClose: false });
         setUploadInProgressToastId(progressToastId);
 
-        // Map the data based on selectedValue
         let modifiedData;
+
+        const validateSkor = (data) => {
+            return data.every(item => {
+                const skor = parseFloat(item.skor);
+                return !isNaN(skor) && skor >= 0 && skor <= 5;
+            });
+        };
 
         if (selectedValue === "6" || selectedValue === "5") {
             const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'VALUE']);
@@ -124,7 +141,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.error(`Required headers are missing: ${missingHeaders.join(', ')}`);
+                toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
 
@@ -135,13 +152,11 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 skor: item['VALUE']
             }));
         } else if (selectedValue === "1" || selectedValue === "4") {
-            // Check if the required headers exist
             const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'ASSESSMENT VALUE']);
             if (!exists) {
-                // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
-                toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.error(`Required headers are missing: ${missingHeaders.join(', ')}`);
+                toast.dismiss(progressToastId); 
+                toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
 
@@ -158,7 +173,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.error(`Required headers are missing: ${missingHeaders.join(', ')}`);
+                toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
 
@@ -175,10 +190,17 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.error(`Required headers are missing: ${missingHeaders.join(', ')}`);
+                toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
             modifiedData = parsedData;
+        }
+
+        if (!validateSkor(modifiedData)) {
+            setUploadInProgressToastId(null);
+            toast.dismiss(progressToastId);
+            toast.error('Nilai skor harus berada dalam rentang 0 dan 5');
+            return;
         }
 
         const chunkSize = 700; // Define the size of each chunk
@@ -213,19 +235,19 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
             })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        return response.json().then(errorData => {
+                            throw new Error(errorData.error);
+                        });
                     }
                     return response.json();
                 })
                 .then(data => {
-                    uploadChunk(chunkIndex + 1); // Upload the next chunk
+                    uploadChunk(chunkIndex + 1);
                 })
                 .catch(error => {
-                    console.error('Error uploading chunk:', error);
-                    setUploadInProgressToastId(null)
+                    setUploadInProgressToastId(null);
                     toast.dismiss(progressToastId);
-                    toast.error('Error uploading chunk of data:', error)
-                    // Optionally, you can handle the error by showing a message to the user or retrying
+                    toast.error(`${error.message}`);
                 });
         };
 

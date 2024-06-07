@@ -204,6 +204,36 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
     document.body.removeChild(link);
   };
 
+  // ambil data kuota talent pool
+  const [eventaktif, seteventaktif] = useState([]);
+
+  const fetcheventdetail = () => {
+    return fetch(url + `getoneevent?id=${eventid}`) 
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data; 
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        throw error; 
+      });
+  };
+
+  useEffect(() => {
+    fetcheventdetail()
+      .then((data) => {
+        seteventaktif(data.event);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
   return (
     <>
       {/* <MainLayout /> */}
@@ -215,7 +245,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
               Tabel Karyawan
             </Typography>
 
-            <LabelInfo length={poolLength} />
+            <LabelInfo length={poolLength} kuota={eventaktif.kuota}/>
 
             <div style={{ flex: '1' }}> </div>
 
@@ -264,8 +294,6 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
             setrefresh={setrefresh}
           />
         </Box>
-
-        <AddEventModal open={open} handleClose={handleClose} />
       </MainCard>
     </>
   );

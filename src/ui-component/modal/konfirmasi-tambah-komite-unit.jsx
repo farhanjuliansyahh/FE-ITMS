@@ -45,7 +45,6 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
-        console.log("option",selectedOption);
     };
 
     // Conditionally enable/disable the "Tambah" button

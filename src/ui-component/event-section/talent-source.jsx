@@ -12,6 +12,7 @@ import ButtonPrimary from '../button/ButtonPrimary';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
 import TalentSourceTable from '../tables/talentsource';
 import CustomSearch from '../searchsection/custom-search';
+import { toast } from 'react-toastify';
 import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL TALENT SOURCE PAGE ||============================== //
@@ -145,6 +146,11 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   });
 
   const handleTambahTalent = () => {
+    if (selectedRows.length === 0) {
+      toast.info('Silakan pilih talent sebelum menambahkan !');
+      return;
+    }
+
     // Find the rows corresponding to the selected IDs
     const selectedNippos = selectedRows.map((id) => {
       const selectedRow = rowsfalse.find((row) => row.id === id);
@@ -180,9 +186,11 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
       .then(([datafalse, datatrue]) => {
         setRowsfalse(datafalse.map((row, index) => ({ ...row, id: index + 1 })));
         setRowstrue(datatrue.map((row, index) => ({ ...row, id: index + 1 })));
+        toast.success('Talent berhasil ditambahkan !');
       })
       .catch((error) => {
         console.error('Error adding talent:', error);
+        toast.error('Gagal menambahkan talent !');
       });
   };
 
@@ -240,8 +248,6 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
 
   // const resetRowsFalse = resetRowIndexFalse(filteredRowsFalse);
   const resetRowsFalse = filteredRowsFalse
-
-  console.log('terpilih: ', selectedRows);
 
   // TERDAFTAR
   const listNamaTrue = [...new Set(rowstrue.map((row) => row.Nama))];
@@ -324,7 +330,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
                 icon={AddCircleOutline}
                 LabelName={'Tambah Talent'}
                 onClick={handleTambahTalent}
-                disabled={eventstatus_id !== 2}
+                disabled={eventstatus_id !== 2 || rowsfalse.length === 0}
               />
               <ButtonPrimary Color="#ffffff" icon={IconFileDownload} LabelName={'Unduh Data'} onClick={handleDownloadCSV} />
             </FlexContainer>

@@ -283,7 +283,7 @@ export default function ProfileKaryawan() {
       <CustomTabPanel value={value} index={0}>
         <Box sx={boxStyle}>
           <CheckDataAlert />
-          <AccordionKaryawan summary={'Data Diri'} icon={Person} content={<DataDiriKaryawan photosize={128} spaces={[2, 10]} />} />
+          <AccordionKaryawan summary={'Data Diri'} icon={Person} content={<DataDiriKaryawan photosize={128} spaces={[2, 9]} />} />
           <AccordionKaryawan summary={'Riwayat Pendidikan'} icon={School} content={<RiwayatPendidikanKaryawan />} disabled={isDisabled}/>
           <AccordionKaryawan summary={'Kompetensi'} icon={EmojiEvents} content={<KompetensiKaryawan />} disabled={isDisabled}/>
         </Box>
