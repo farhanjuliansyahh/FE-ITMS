@@ -11,7 +11,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs'; // Import dayjs for date manipulation
-import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
+import AlertBerhasil from '../../ui-component/modal/alert-berhasil.jsx';
 import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 import { toast } from 'react-toastify';
 import.meta.env.VITE_API_BASE_URL

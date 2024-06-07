@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography } from '@mui/material';
 import { CancelOutlined, CreateOutlined } from '@mui/icons-material';
-import KonfirmasiUbahMatrix from './konfirmasi-ubah-matrix';
-import UbahMatrix from '../../ui-component/tables/ubahmatrix';
+import KonfirmasiUbahMatrix from './konfirmasi-ubah-matrix.jsx';
+import UbahMatrix from '../../ui-component/tables/ubahmatrix.jsx';
 
 function UbahKategoriMatrix({ open, onClose, onOpenSecondModal, onSelectCategory,currentMatrix }) {
     const [openKonfirmasiModal, setOpenKonfirmasiModal] = useState(false);

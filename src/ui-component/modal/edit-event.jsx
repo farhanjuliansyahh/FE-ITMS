@@ -12,9 +12,9 @@ import CancelOutlined from '@mui/icons-material/CancelOutlined';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import dayjs from 'dayjs';
 
-import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
-import ButtonError from '../../ui-component/button/ButtonError';
-import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary.jsx';
+import ButtonError from '../../ui-component/button/ButtonError.jsx';
+import AlertBerhasil from '../../ui-component/modal/alert-berhasil.jsx';
 import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 import.meta.env.VITE_API_BASE_URL;
 

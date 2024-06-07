@@ -6,10 +6,10 @@ import { useTheme } from '@mui/material/styles';
 import { Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
 
 // project imports
-import BajajAreaChartCard from './BajajAreaChartCard';
-import MainCard from '../../../ui-component/cards/MainCard';
-import SkeletonPopularCard from '../../../ui-component/cards/Skeleton/PopularCard';
-import { gridSpacing } from '../../../store/constant';
+import BajajAreaChartCard from './BajajAreaChartCard.jsx';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import SkeletonPopularCard from '../../../ui-component/cards/Skeleton/PopularCard.jsx';
+import { gridSpacing } from '../../../store/constant.jsx';
 
 // assets
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';

@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Box, Dialog, Grid, IconButton, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { CloseOutlined, RestartAltOutlined } from '@mui/icons-material';
-import TabelDaftarAnggotaKomiteUnit from '../../ui-component/tables/daftar-komite-unit';
-import KonfirmasiTambahKomiteUnit from './konfirmasi-tambah-komite-unit';
-import CustomSearch from '../searchsection/custom-search';
-import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import TabelDaftarAnggotaKomiteUnit from '../../ui-component/tables/daftar-komite-unit.jsx';
+import KonfirmasiTambahKomiteUnit from './konfirmasi-tambah-komite-unit.jsx';
+import CustomSearch from '../searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 

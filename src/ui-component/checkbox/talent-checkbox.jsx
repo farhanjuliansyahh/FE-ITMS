@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { toast } from 'react-toastify';
 import.meta.env.VITE_API_BASE_URL
 
 export default function TalentCheckbox({ onStatusUpdate, Title, Body , subBody, Footer, data, eventid, datatoupdate, statusprofile}) {
@@ -60,6 +61,13 @@ const url = import.meta.env.VITE_API_BASE_URL
         // Your logic for handling "Selesai" button click
         onStatusUpdate(); // Call the callback function to update the status in ProfileAccordion
         updatepakta(eventid, data.nippos,datatoupdate )
+        .then(response => {
+            toast.success('Submit berhasil !');
+        })
+        .catch(error => {
+            console.error('Error submitting:', error);
+            toast.error('Submit gagal, coba lagi !');
+        });
         setProcessCompleted(true); // Mark the process as completed
         setOpenModal(false); // Close the modal after handling
     };

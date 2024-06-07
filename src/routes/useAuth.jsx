@@ -28,7 +28,7 @@ export const useAuth = () => {
     sessionStorage.setItem('token', response.token);
 
     if (response.token) {
-      toast.success(response.message);
+      toast.success('Login Berhasil !');
       setTimeout(function () {
         navigate('/dashboard');
       }, 1000); // 1000 milliseconds = 1 second
@@ -76,7 +76,7 @@ export const useAuth = () => {
         console.error('Failed to fetch user profile:', error);
       }
     } else {
-      toast.error('Salah NIPPOS atau Kata Sandi!');
+      toast.error('NIPPOS atau Kata Sandi salah !');
     }
   };
 

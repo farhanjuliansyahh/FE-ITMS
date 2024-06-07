@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Box, Dialog, Grid, IconButton, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { CloseOutlined, RestartAltOutlined } from '@mui/icons-material';
-import TabelDaftarAnggotaBPJ from '../../ui-component/tables/daftar-anggota-bpj';
-import KonfirmasiTambahKomiteTalent from './konfirmasi-tambah-komite-talent';
-import CustomSearch from '../searchsection/custom-search';
-import ButtonErrorOutlined from '../button/ButtonErrorOutlined';
+import TabelDaftarAnggotaBPJ from '../../ui-component/tables/daftar-anggota-bpj.jsx';
+import KonfirmasiTambahKomiteTalent from './konfirmasi-tambah-komite-talent.jsx';
+import CustomSearch from '../searchsection/custom-search.jsx';
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 export default function TambahKomiteTalent({ open, onClose, onConfirm, komiteTalentId }) {

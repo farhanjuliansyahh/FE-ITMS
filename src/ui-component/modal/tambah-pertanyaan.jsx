@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Modal, Box, Typography, TextField, Button } from '@mui/material';
-import ButtonPrimary from '../button/ButtonPrimary';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
 import SaveOutlined from '@mui/icons-material/SaveOutlined';
 import.meta.env.VITE_API_BASE_URL
 

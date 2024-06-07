@@ -8,7 +8,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 import { styled, useTheme } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
-import AlertBerhasil from '../../ui-component/modal/alert-berhasil';
+import AlertBerhasil from '../../ui-component/modal/alert-berhasil.jsx';
 import IlustrasiBerhasil from '../../../public/assets/images/ilustration/berhasil.png';
 import.meta.env.VITE_API_BASE_URL
 

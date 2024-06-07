@@ -5,8 +5,8 @@ import { CancelOutlined, FileUploadOutlined, UploadFileOutlined, AttachFileOutli
 import { Box } from '@mui/system';
 import { toast } from 'react-toastify';
 import Papa from 'papaparse';
-import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
-import ButtonError from '../../ui-component/button/ButtonError';
+import ButtonPrimary from '../../ui-component/button/ButtonPrimary.jsx';
+import ButtonError from '../../ui-component/button/ButtonError.jsx';
 import.meta.env.VITE_API_BASE_URL
 
 function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {

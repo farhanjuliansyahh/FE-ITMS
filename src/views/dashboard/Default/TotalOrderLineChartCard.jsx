@@ -9,11 +9,11 @@ import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
 import Chart from 'react-apexcharts';
 
 // project imports
-import MainCard from '../../../ui-component/cards/MainCard';
-import SkeletonTotalOrderCard from '../../../ui-component/cards/Skeleton/EarningCard';
+import MainCard from '../../../ui-component/cards/MainCard.jsx';
+import SkeletonTotalOrderCard from '../../../ui-component/cards/Skeleton/EarningCard.jsx';
 
-import ChartDataMonth from './chart-data/total-order-month-line-chart';
-import ChartDataYear from './chart-data/total-order-year-line-chart';
+import ChartDataMonth from './chart-data/total-order-month-line-chart.jsx';
+import ChartDataYear from './chart-data/total-order-year-line-chart.jsx';
 
 // assets
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';

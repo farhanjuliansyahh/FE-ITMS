@@ -7,8 +7,8 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { CancelOutlined, CheckCircleOutlineOutlined } from '@mui/icons-material';
-import ButtonPrimary from '../button/ButtonPrimary';
-import ButtonError from '../button/ButtonError';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import ButtonError from '../button/ButtonError.jsx';
 
 function KonfirmasiTambahAnggotaBPJ({ open, onClose, onConfirm }) {    
     const [selectedOption, setSelectedOption] = useState(null);
