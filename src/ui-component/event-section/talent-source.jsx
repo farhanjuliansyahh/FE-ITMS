@@ -198,11 +198,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   const listNamaFalse = [...new Set(rowsfalse.map((row) => row.Nama))];
   const listNipposFalse = [...new Set(rowsfalse.map((row) => row.Nippos))];
   const listJobLevelFalse = [...new Set(rowsfalse.map((row) => row['Job Level']))];
+  const listKantorFalse = [...new Set(rowsfalse.map((row) => row['Nama Kantor']))];
   const listKomiteUnitFalse = [...new Set(rowsfalse.map((row) => row['Komite Unit']))];
 
   const [selectedNamaFalse, setSelectedNamaFalse] = useState(null);
   const [selectedNipposFalse, setSelectedNipposFalse] = useState(null);
   const [selectedJobLevelFalse, setSelectedJobLevelFalse] = useState(null);
+  const [selectedKantorFalse, setSelectedKantorFalse] = useState(null);
   const [selectedKomiteUnitFalse, setSelectedKomiteUnitFalse] = useState(null);
 
   const resetNamaInputFalse = () => {
@@ -217,6 +219,10 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     setSelectedJobLevelFalse('');
   };
 
+  const resetKantorInputFalse = () => {
+    setSelectedKantorFalse('');
+  };
+
   const resetKomiteUnitInputFalse = () => {
     setSelectedKomiteUnitFalse('');
   };
@@ -225,18 +231,18 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     resetNamaInputFalse();
     resetNipposInputFalse();
     resetJobLevelInputFalse();
+    resetKantorInputFalse(); 
     resetKomiteUnitInputFalse();
   };
 
   const filteredRowsFalse = rowsfalse.filter((row) => {
     const namaMatchFalse = !selectedNamaFalse || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaFalse.toLowerCase())); // Add null check for row.nama
     const nipposMatchFalse = !selectedNipposFalse || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposFalse.toLowerCase())); // Add null check for row.nippos
-    const jobLevelMatchFalse =
-      !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase())); // Add null check for row.nippos
-    const komiteUnitMatchFalse =
-      !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchFalse = !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase())); // Add null check for row.nippos
+    const kantorMatchFalse = !selectedKantorFalse || (row['Nama Kantor'] && row['Nama Kantor'].toLowerCase().includes(selectedKantorFalse.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchFalse = !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase())); // Add null check for row.nippos
 
-    return namaMatchFalse && nipposMatchFalse && jobLevelMatchFalse && komiteUnitMatchFalse;
+    return namaMatchFalse && nipposMatchFalse && jobLevelMatchFalse && kantorMatchFalse && komiteUnitMatchFalse;
   });
 
   const resetRowIndexFalse = (filteredRowsFalse) => {
@@ -253,11 +259,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   const listNamaTrue = [...new Set(rowstrue.map((row) => row.Nama))];
   const listNipposTrue = [...new Set(rowstrue.map((row) => row.Nippos))];
   const listJobLevelTrue = [...new Set(rowstrue.map((row) => row['Job Level']))];
+  const listKantorTrue = [...new Set(rowstrue.map((row) => row['Nama Kantor']))];
   const listKomiteUnitTrue = [...new Set(rowstrue.map((row) => row['Komite Unit']))];
 
   const [selectedNamaTrue, setSelectedNamaTrue] = useState(null);
   const [selectedNipposTrue, setSelectedNipposTrue] = useState(null);
   const [selectedJobLevelTrue, setSelectedJobLevelTrue] = useState(null);
+  const [selectedKantorTrue, setSelectedKantorTrue] = useState(null);
   const [selectedKomiteUnitTrue, setSelectedKomiteUnitTrue] = useState(null);
 
   const resetNamaInputTrue = () => {
@@ -272,6 +280,10 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     setSelectedJobLevelTrue('');
   };
 
+  const resetKantorInputTrue = () => {
+    setSelectedKantorTrue('');
+  };
+
   const resetKomiteUnitInputTrue = () => {
     setSelectedKomiteUnitTrue('');
   };
@@ -280,18 +292,18 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     resetNamaInputTrue();
     resetNipposInputTrue();
     resetJobLevelInputTrue();
+    resetKantorInputTrue();
     resetKomiteUnitInputTrue();
   };
 
   const filteredRowsTrue = rowstrue.filter((row) => {
     const namaMatchTrue = !selectedNamaTrue || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); // Add null check for row.nama
     const nipposMatchTrue = !selectedNipposTrue || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); // Add null check for row.nippos
-    const jobLevelMatchTrue =
-      !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
-    const komiteUnitMatchTrue =
-      !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
+    const kantorMatchTrue = !selectedKantorTrue || (row['Nama Kantor'] && row['Nama Kantor'].toLowerCase().includes(selectedKantorTrue.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchTrue = !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
 
-    return namaMatchTrue && nipposMatchTrue && jobLevelMatchTrue && komiteUnitMatchTrue;
+    return namaMatchTrue && nipposMatchTrue && jobLevelMatchTrue && kantorMatchTrue && komiteUnitMatchTrue;
   });
 
   const resetRowIndexTrue = (filteredRowsTrue) => {
@@ -302,16 +314,6 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   };
 
   const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
-
-  const rowsKosong = [
-    {
-      'Nama': ' ',
-      'Nippos': ' ',
-      'Job Family': ' ',
-      'Nama Kantor': ' ',
-      'Komite Unit': ' '
-    }
-  ];
 
   return (
     <>
@@ -367,6 +369,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
                   onSearch={setSelectedJobLevelFalse}
                   value={selectedJobLevelFalse}
                   resetInput={resetJobLevelInputFalse}
+                />
+                <CustomSearch
+                  field={listKantorFalse}
+                  label={'Kantor'}
+                  onSearch={setSelectedKantorFalse}
+                  value={selectedKantorFalse}
+                  resetInput={resetKantorInputFalse}
                 />
                 <CustomSearch
                   field={listKomiteUnitFalse}
@@ -428,6 +437,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
                   onSearch={setSelectedJobLevelTrue}
                   value={selectedJobLevelTrue}
                   resetInput={resetJobLevelInputTrue}
+                />
+                <CustomSearch
+                  field={listKantorTrue}
+                  label={'Kantor'}
+                  onSearch={setSelectedKantorTrue}
+                  value={selectedKantorTrue}
+                  resetInput={resetKantorInputTrue}
                 />
                 <CustomSearch
                   field={listKomiteUnitTrue}
