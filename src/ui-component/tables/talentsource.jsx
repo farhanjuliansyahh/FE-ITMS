@@ -420,7 +420,7 @@ const ButtonContainer = styled('div')({
   whiteSpace: 'nowrap',
 });
 
-const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton }) => {
+const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton, caption }) => {
   const [openFirstModal, setOpenFirstModal] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('');
@@ -653,6 +653,9 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                 </TableHead>
               </Table>
             </TableContainer>
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+              {caption}
+            </Typography>
           </div>
         )
       }

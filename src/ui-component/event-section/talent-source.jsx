@@ -305,11 +305,11 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
 
   const rowsKosong = [
     {
-      'Nama' : ' ',
-      'Nippos' : ' ',
-      'Job Family' : ' ',
-      'Nama Kantor' : ' ',
-      'Komite Unit' : ' '
+      'Nama': ' ',
+      'Nippos': ' ',
+      'Job Family': ' ',
+      'Nama Kantor': ' ',
+      'Komite Unit': ' '
     }
   ];
 
@@ -388,6 +388,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
               getkandidatfalse={getkandidatfalse}
               getkandidattrue={getkandidattrue}
               showButton={true}
+              caption={"Belum ada karyawan untuk dipilih"}
             />
           </Box>
         </CustomTabPanel>
@@ -439,7 +440,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
               <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
             </div>
 
-            <TalentSourceTable checkboxSelection={false} rows={resetRowsTrue} eventid={eventidactive} showButton={false} />
+            <TalentSourceTable
+              checkboxSelection={false}
+              rows={resetRowsTrue}
+              eventid={eventidactive}
+              showButton={false}
+              caption={"Belum ada karyawan yang terdaftar"}
+            />
           </Box>
         </CustomTabPanel>
       </MainCard>
