@@ -13,8 +13,6 @@ import GenerasiTalent from '../../../ui-component/charts/GenerasiTalent.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import.meta.env.VITE_API_BASE_URL
 
-// ==============================|| DEFAULT DASHBOARD ||============================== //
-
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const [datarumpun, setDatarumpun] = useState([]);
@@ -24,7 +22,7 @@ const Dashboard = () => {
   const [ListTahun, setlisttahun] = useState([]);
   const [selectedYear, setSelectedYear] = useState('0');
   const [totalTalent, setTotalTalent] = useState('');
-  const url = import.meta.env.VITE_API_BASE_URL
+  const url = import.meta.env.VITE_API_BASE_URL;
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
@@ -37,8 +35,17 @@ const Dashboard = () => {
   useEffect(() => {
     fetch(url + 'getdetailtalent')
       .then((response) => response.json())
-      // 4. Setting *dogImage* to the image url that we received from the response above
-      .then((data) => setrows(data));
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setrows(data);
+        } else {
+          setrows([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setrows([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -57,7 +64,6 @@ const Dashboard = () => {
     fetch(url + `getdatagender?year=${year}`)
       .then((response) => response.json())
       .then((data) => {
-        // Update state with API data
         setdatagender(data);
       })
       .catch((error) => {
@@ -69,7 +75,6 @@ const Dashboard = () => {
     fetch(url + `getgendistribution?year=${year}`)
       .then((response) => response.json())
       .then((data) => {
-        // Update state with API data
         setdatagen(data);
       })
       .catch((error) => {
@@ -77,16 +82,15 @@ const Dashboard = () => {
       });
   };
 
-  const mappedGender = datagender.map((item) => ({
+  const mappedGender = datagender.length > 0 ? datagender.map((item) => ({
     name: item.name === 'F' ? 'Perempuan' : 'Laki-laki',
     value: item.value
-  }));
+  })) : [];
 
   const getrumpundata = (year) => {
     fetch(url + `getdatatalentrumpun?year=${year}`)
       .then((response) => response.json())
       .then((data) => {
-        // Update state with API data
         setDatarumpun(data);
       })
       .catch((error) => {
@@ -98,7 +102,6 @@ const Dashboard = () => {
     fetch(url + `getdatatalentjoblevel?year=${year}`)
       .then((response) => response.json())
       .then((data) => {
-        // Update state with API data
         setJoblevel(data);
       })
       .catch((error) => {
@@ -118,27 +121,11 @@ const Dashboard = () => {
       title: 'Total Talent',
       content: totalTalent,
       icon: GroupsIcon
-      // navigateTo: '/dashboard/total-pegawai',
     }
-    // { title: "Total IDP Aktif",
-    //   content: 1019,
-    //   icon: NotificationsActiveOutlinedIcon,
-    //   // navigateTo: '/dashboard/total-pegawai',
-    // },
   ];
 
   return (
     <>
-      {/* <MainLayout/> */}
-      {/* <Grid container spacing={gridSpacing}> */}
-      {/* <Grid item xs={12}>
-          <Grid container spacing={gridSpacing}>
-            <Grid item xs={12}>
-              <Header title={'Dashboard'} />
-            </Grid>
-          </Grid>
-        </Grid> */}
-
       <Grid container spacing={gridSpacing}>
         <Grid item xs={12} >
           <MainCard style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems:'center' }}>
@@ -158,13 +145,12 @@ const Dashboard = () => {
         </Grid>
         <Grid container spacing={2} item xs={12}>
           {cards.map((card, index) => (
-            // <Grid item xs={12}sm={6} md={6} key={index}>
             <Grid item xs={12} key={index}>
               <DashboardCard
                 isLoading={isLoading}
                 title={card.title}
                 content={<Tooltip title="Total talent dari total karyawan dengan job level (E1-A2)">{card.content}</Tooltip>}
-                icon={<card.icon/>}
+                icon={<card.icon />}
                 PathLink={'/dashboard/detail-talent'}
               />
             </Grid>
@@ -174,12 +160,10 @@ const Dashboard = () => {
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
-              {/* <JenisKelaminChart isLoading={isLoading} /> */}
               <JenisKelaminTerbaru isLoading={isLoading} data={mappedGender} />
             </Grid>
             <Grid item xs={12} md={6}>
               <GenerasiTalent isLoading={isLoading} data={datagen} />
-              {/* <GenerasiChart isLoading={isLoading} /> */}
             </Grid>
           </Grid>
         </Grid>
@@ -187,7 +171,6 @@ const Dashboard = () => {
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={6}>
-              {/* <RumpunJabatanChart isLoading={isLoading} /> */}
               <RumpunJabatanTerbaru isLoading={isLoading} data={datarumpun} />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -205,19 +188,19 @@ const Dashboard = () => {
             <Grid item xs={12}>
               <Grid container spacing={4}>
                 <Grid container item spacing={3} xs={18}>
-              <Grid item xs={3}>
-                <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis" />
-              </Grid>
-                <Grid item xs={3}>
-                <ButtonChart buttonText="SD" detail="Sumber Daya Manusia" />
+                  <Grid item xs={3}>
+                    <ButtonChart buttonText="PP" detail="Perencanaan dan Pengelolaan Strategis" />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <ButtonChart buttonText="SD" detail="Sumber Daya Manusia" />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <ButtonChart buttonText="PR" detail="Pengelolaan Regulasi" />
+                  </Grid>
+                  <Grid item xs={1}>
+                    <ButtonChart buttonText="OP" detail="Operasi" />
+                  </Grid>
                 </Grid>
-                <Grid item xs={3}>
-                  <ButtonChart buttonText="PR" detail="Pengelolaan Regulasi" />
-                </Grid>
-                <Grid item xs={1}>
-                <ButtonChart buttonText="OP" detail="Operasi" />
-                </Grid>
-              </Grid>
                 <Grid container item spacing={2} xs={12}>
                   <Grid item xs={3}>
                     <ButtonChart buttonText="MR" detail="Manajemen Risiko dan Kepatuhan" />
