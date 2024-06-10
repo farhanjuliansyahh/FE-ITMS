@@ -346,6 +346,7 @@ const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
               minimumAkhlakQualified={akhlakminimal}
               minimumLearningAgilityQualified={laminimal}
               rows={resetRowsTrue}
+              caption={"Tidak ada karyawan yang terkualifikasi"}
             />
           </Box>
         </CustomTabPanel>
@@ -376,6 +377,7 @@ const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
               minimumAkhlakQualified={akhlakminimal}
               minimumLearningAgilityQualified={laminimal}
               rows={resetRowsFalse}
+              caption={"Tidak ada karyawan yang tidak terkualifikasi"}
             />
           </Box>
         </CustomTabPanel>
