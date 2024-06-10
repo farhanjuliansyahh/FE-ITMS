@@ -383,7 +383,7 @@
 
 import * as React from 'react';
 import { useState } from 'react';
-import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
+import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography } from '@mui/material';
 import { AddCircleOutline } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
@@ -410,11 +410,17 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:last-child td, &:last-child th': {
+    border: 0
+  }
+}));
+
 const ButtonContainer = styled('div')({
   whiteSpace: 'nowrap',
 });
 
-const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton }) => {
+const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton, caption }) => {
   const [openFirstModal, setOpenFirstModal] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('');
@@ -625,7 +631,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 700 }}>
                 <TableHead>
-                  <TableRow>
+                  <StyledTableRow>
                     {checkboxSelection && (
                       <StyledTableCell sx={{ width: 60 }}>
                         <input
@@ -643,46 +649,13 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                     <StyledTableCell >Job Level</StyledTableCell>
                     <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
                     <StyledTableCell >Komite Unit</StyledTableCell>
-                  </TableRow>
+                  </StyledTableRow>
                 </TableHead>
-                <TableBody>
-                  {rows.slice(startIndex, endIndex).map((row, index) => (
-                    <TableRow key={row.id}>
-                      {checkboxSelection && (
-                        <StyledTableCell>
-                          <input
-                            type="checkbox"
-                            checked={selectedRows.includes(row.id)}
-                            onChange={(event) => handleCheckboxChange(event, row.id)}
-                          />
-                        </StyledTableCell>
-                      )}
-                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{startIndex + index + 1}</StyledTableCell>
-                      <StyledTableCell>{row.Nama}</StyledTableCell>
-                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
-                      <StyledTableCell>{row.Posisi}</StyledTableCell>
-                      <StyledTableCell>{row['Job Family']}</StyledTableCell>
-                      <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
-                      <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
-                      <StyledTableCell>
-                        <ButtonContainer >
-                          {row['Komite Unit'] === null && showButton ? (
-                            <ButtonPrimary
-                              icon={AddCircleOutline}
-                              LabelName={'Tambah Komite Unit'}
-                              padding={'6px 16px'}
-                              onClick={() => handleOpenFirstModal(row.Nippos)}
-                            />
-                          ) : (
-                            row['Komite Unit']
-                          )}
-                        </ButtonContainer>
-                      </StyledTableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
               </Table>
             </TableContainer>
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+              {caption}
+            </Typography>
           </div>
         )
       }
