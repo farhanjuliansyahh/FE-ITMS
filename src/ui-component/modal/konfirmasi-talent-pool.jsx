@@ -129,7 +129,7 @@ function KonfirmasiTalentPool({ open, handleClose, handleConfirmation, eventid }
 
     useEffect(() => {
         gettalentpool();
-    })
+    },[])
 
     const poolLength = poolrow.length;
 
