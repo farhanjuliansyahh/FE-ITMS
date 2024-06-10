@@ -361,6 +361,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
               paktaIntegritasValue={'Belum Submit'}
               filter={{ nama: filterNama, nippos: filterNippos, job: filterJob, komite: filterKomite }}
               rows={resetRowsFalse}
+              caption={"Seluruh karyawan sudah mengisi commitment letter dan pakta integritas"}
             />
           </Box>
         </CustomTabPanel>
@@ -414,6 +415,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
               paktaIntegritasValue={'Sudah Submit'}
               filter={{ nama: filterNama, nippos: filterNippos, job: filterJob, komite: filterKomite }}
               rows={resetRowsTrue}
+              caption={"Belum ada karyawan yang berstatus lengkap"}
             />
           </Box>
         </CustomTabPanel>

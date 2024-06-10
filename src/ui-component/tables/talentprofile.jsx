@@ -182,7 +182,7 @@
 import { useState } from 'react';
 import * as React from 'react';
 import { GridLogicOperator } from '@mui/x-data-grid';
-import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
+import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import FilterButton from '../../ui-component/button/FilterButton';
@@ -245,11 +245,12 @@ const calculateColumnWidth = (data, accessor, headerText) => {
   return maxLength * 11;
 };
 
-export default function TalentProfileTable({ 
-  filter, 
-  commitmentLetterValue, 
-  paktaIntegritasValue, 
-  rows
+export default function TalentProfileTable({
+  filter,
+  commitmentLetterValue,
+  paktaIntegritasValue,
+  rows,
+  caption
 }) {
 
   const [filterModel, setFilterModel] = React.useState({
@@ -261,19 +262,19 @@ export default function TalentProfileTable({
   const [filterJob, setFilterJob] = useState('');
   const [filterKomite, setFilterKomite] = useState('');
   const [page, setPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5); 
-  
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
   const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
+    setPage(newPage);
+  };
+
   const handleItemsPerPageChange = (newItemsPerPage) => {
-      setItemsPerPage(newItemsPerPage);
-      setPage(1);
-    };
+    setItemsPerPage(newItemsPerPage);
+    setPage(1);
+  };
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  
+
   React.useEffect(() => {
     if (filter) {
       setFilterNama(filter.nama);
@@ -298,63 +299,94 @@ export default function TalentProfileTable({
 
   return (
     <div>
-    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }}>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell >No</StyledTableCell>
-              <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
-              <StyledTableCell >NIPPOS</StyledTableCell>
-              <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
-              <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
-              <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
-              <StyledTableCell >Commitment Letter</StyledTableCell>
-              <StyledTableCell >Pakta Integritas</StyledTableCell>
-              <StyledTableCell >Status Submit</StyledTableCell>
-              <StyledTableCell >Komite Unit</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-          {rows.slice(startIndex, endIndex).map((row) => (
-            <TableRow key={row.id} >
-              <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.Nama}</StyledTableCell>
-              <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
-              <StyledTableCell>{row.Posisi}</StyledTableCell>
-              <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
-              <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
-              <StyledTableCell>
-                <div style={{ display: 'inline-block', ...getStatusStyle(row['Commitment Letter']), padding: '4px 8px', borderRadius: '24px' }}>
-                  {row['Commitment Letter']}
-                </div>
-              </StyledTableCell>
-              <StyledTableCell style={{ padding: '12px' }}>
-                <div style={{ display: 'inline-block', ...getStatusStyle(row['Pakta Integritas']), padding: '4px 8px', borderRadius: '24px' }}>
-                  {row['Pakta Integritas']}
-                </div>
-              </StyledTableCell>
-              <StyledTableCell style={{ padding: '12px' }}>
-                <div style={{ display: 'inline-block', ...getSubmittedByStyle(row['Status Submit']), padding: '4px 8px', borderRadius: '24px' }}>
-                  {row['Status Submit']}
-                </div>
-              </StyledTableCell>
-              <StyledTableCell>{row['Komite Unit']}</StyledTableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-        </Table>
-      </TableContainer>
+      {
+        rows.length > 0 ? (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell >No</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+                    <StyledTableCell >NIPPOS</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
+                    <StyledTableCell >Commitment Letter</StyledTableCell>
+                    <StyledTableCell >Pakta Integritas</StyledTableCell>
+                    <StyledTableCell >Status Submit</StyledTableCell>
+                    <StyledTableCell >Komite Unit</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.slice(startIndex, endIndex).map((row) => (
+                    <TableRow key={row.id} >
+                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
+                      <StyledTableCell>{row.Nama}</StyledTableCell>
+                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.Nippos}</StyledTableCell>
+                      <StyledTableCell>{row.Posisi}</StyledTableCell>
+                      <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
+                      <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
+                      <StyledTableCell>
+                        <div style={{ display: 'inline-block', ...getStatusStyle(commitmentLetterValue), padding: '4px 8px', borderRadius: '24px' }}>
+                        {row['Commitment Letter']}
+                        </div>
+                      </StyledTableCell>
+                      <StyledTableCell style={{ padding: '12px' }}>
+                        <div style={{ display: 'inline-block', ...getStatusStyle(paktaIntegritasValue), padding: '4px 8px', borderRadius: '24px' }}>
+                        {row['Pakta Integritas']}
+                        </div>
+                      </StyledTableCell>
+                      <StyledTableCell style={{ padding: '12px' }}>
+                        <div style={{ display: 'inline-block', ...getSubmittedByStyle(row['Status Submit']), padding: '4px 8px', borderRadius: '24px' }}>
+                          {row['Status Submit']}
+                        </div>
+                      </StyledTableCell>
+                      <StyledTableCell>{row['Komite Unit']}</StyledTableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        ) : (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px', height: '400px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell >No</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+                    <StyledTableCell >NIPPOS</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
+                    <StyledTableCell >Commitment Letter</StyledTableCell>
+                    <StyledTableCell >Pakta Integritas</StyledTableCell>
+                    <StyledTableCell >Status Submit</StyledTableCell>
+                    <StyledTableCell >Komite Unit</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+              </Table>
+            </TableContainer>
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+              {caption}
+            </Typography>
+          </div>
+        )
+      }
+
+      {rows.length > 0 && (
+        <Stack spacing={2} direction="row" marginTop={2}>
+          <Pagination
+            count={Math.ceil(rows.length / itemsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            color="primary" />
+          <div style={{ flex: '1' }}> </div>
+          <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
+        </Stack>
+      )}
     </div>
-      <Stack spacing={2} direction="row" marginTop={2}>
-        <Pagination
-          count={Math.ceil(rows.length / itemsPerPage)}
-          page={page}
-          onChange={handleChangePage}
-          color="primary" />
-        <div style={{ flex: '1' }}> </div>
-        <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
-    </Stack>
-    </div>
-    );
+  );
 }
