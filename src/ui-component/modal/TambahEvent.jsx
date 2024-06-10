@@ -399,7 +399,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
                     helperText={isJobLevelTouched && !selectedJobLevel.length > 0 ? 'Job Level harus diisi' : ''}
                     {...params}
                     label="Job Level"
-                    placeholder="Job Level"
+                    // placeholder="Job Level"
                   />
                 )}
               />

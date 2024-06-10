@@ -303,6 +303,16 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
 
   const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
 
+  const rowsKosong = [
+    {
+      'Nama' : ' ',
+      'Nippos' : ' ',
+      'Job Family' : ' ',
+      'Nama Kantor' : ' ',
+      'Komite Unit' : ' '
+    }
+  ];
+
   return (
     <>
       {/* <MainLayout /> */}
