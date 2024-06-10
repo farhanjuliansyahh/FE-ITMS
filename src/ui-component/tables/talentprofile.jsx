@@ -328,12 +328,12 @@ export default function TalentProfileTable({
                       <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
                       <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
                       <StyledTableCell>
-                        <div style={{ display: 'inline-block', ...getStatusStyle(commitmentLetterValue), padding: '4px 8px', borderRadius: '24px' }}>
+                        <div style={{ display: 'inline-block', ...getStatusStyle(row['Commitment Letter']), padding: '4px 8px', borderRadius: '24px' }}>
                         {row['Commitment Letter']}
                         </div>
                       </StyledTableCell>
                       <StyledTableCell style={{ padding: '12px' }}>
-                        <div style={{ display: 'inline-block', ...getStatusStyle(paktaIntegritasValue), padding: '4px 8px', borderRadius: '24px' }}>
+                        <div style={{ display: 'inline-block', ...getStatusStyle(row['Pakta Integritas']), padding: '4px 8px', borderRadius: '24px' }}>
                         {row['Pakta Integritas']}
                         </div>
                       </StyledTableCell>
