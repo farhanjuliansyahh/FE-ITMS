@@ -83,7 +83,7 @@ const Dashboard = () => {
   };
 
   const mappedGender = datagender.length > 0 ? datagender.map((item) => ({
-    name: item.name === 'F' ? 'Perempuan' : 'Laki-laki',
+    name: item.name === 'P' ? 'Perempuan' : (item.name === 'L' ? 'Laki-laki' : 'tidak diketahui'),
     value: item.value
   })) : [];
 

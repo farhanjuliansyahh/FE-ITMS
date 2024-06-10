@@ -538,8 +538,11 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
     setOpenSecondModal(false);
   };
 
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+};
+
   const handleConfirm = () => {
-    setSelectedOption(selectedOption)
     updatekomiteunit(activeEvent, selectedNippos, selectedKU, selectedOption)
       .then(() => {
         // After updating komite unit, call updatekomiterole
@@ -684,6 +687,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
         open={openSecondModal}
         onClose={handleCloseSecondModal}
         onConfirm={handleConfirm}
+        setSelectedOption={setSelectedOption}
       />
     </div>
   );

@@ -10,8 +10,8 @@ import { CancelOutlined, CheckCircleOutlineOutlined } from '@mui/icons-material'
 import ButtonPrimary from '../button/ButtonPrimary.jsx';
 import ButtonError from '../button/ButtonError.jsx';
 
-function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {    
-    const [selectedOption, setSelectedOption] = useState(null);
+function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm, setSelectedOption }) {  
+    const [option, setoption] = useState()  
 
     const ButtonsContainer = styled('div')({
         display: 'flex',
@@ -45,10 +45,12 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
+        setoption(event.target.value)
     };
 
     // Conditionally enable/disable the "Tambah" button
-    const isButtonDisabled = selectedOption === null;
+    console.log(option);
+    const isButtonDisabled = option == null;
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -72,11 +74,11 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {
                     <RadioGroup
                         name="radio-buttons-group"
                         style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: '24px' }}
-                        value={selectedOption}
+                        value={option}
                         onChange={handleOptionChange} // Update selectedOption when a radio button is selected
                     >
-                        <FormControlLabel value={false} control={<Radio />} label="Event Ini Saja" />
-                        <FormControlLabel value={true} control={<Radio />} label="Permanent Semua Event" />
+                        <FormControlLabel value={1} control={<Radio />} label="Event Ini Saja" />
+                        <FormControlLabel value={2} control={<Radio />} label="Permanent Semua Event" />
                     </RadioGroup>
                 </FormControl>
                 </OptionnBox>
@@ -94,7 +96,7 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm }) {
             <DialogActions sx={{padding:'0 24px 24px 24px '}}>
                 <ButtonsContainer>
                     <ButtonError LabelName={'Batalkan'} icon={CancelOutlined} onClick={onClose}/>
-                    <ButtonPrimary LabelName={'Tambah'} icon={CheckCircleOutlineOutlined} onClick={() => onConfirm(selectedOption)} disabled={isButtonDisabled}/>
+                    <ButtonPrimary LabelName={'Tambah'} icon={CheckCircleOutlineOutlined} onClick={() => onConfirm()} disabled={isButtonDisabled}/>
 
                 </ButtonsContainer>
             </DialogActions>
