@@ -15,6 +15,6 @@ const columnKeys = {
   year: 'Tahun'
 };
 
-export default function DetailTalentTable({ filteredRows }) {
-  return <MainTable columnKeys={columnKeys} filteredRows={filteredRows} />;
+export default function DetailTalentTable({ filteredRows, initialDataLength, caption }) {
+  return <MainTable columnKeys={columnKeys} filteredRows={filteredRows} initialDataLength={initialDataLength} caption={caption} />;
 }

@@ -272,21 +272,28 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     dataToDownload = resetRowsTrue;
     filename = `Talent_Days_Karyawan_${eventid}.csv`;
 
-    // Create a CSV header with column names
-    const headers = Object.keys(dataToDownload[0]);
-    const idIndex = headers.indexOf('id');
-    if (idIndex !== -1) {
-      headers.splice(idIndex, 1); // Remove 'id' from headers
-      headers.unshift('id'); // Insert 'id' at the beginning
-    }
-    const headerRow = headers.join(',');
+    // Specify the columns to include in the CSV, adding 'No' as the first column
+    const includedData = ['No', 'Nama', 'Nippos', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Nama Kantor', 'Komite Unit', 'Status'];
+
+    // Create a CSV header with the included column names
+    const headerNames = ['No', 'Nama', 'NIPPOS', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Kantor', 'Komite Unit', 'Status'];
+    const headerRow = headerNames.join(';');
+
+    // Filter the data to include only the specified columns and add 'No' column
+    const filteredData = dataToDownload.map((row, index) => {
+      const filteredRow = { No: index + 1 }; // Add 'No' column starting from 1
+      includedData.slice(1).forEach(column => {
+        filteredRow[column] = row[column];
+      });
+      return filteredRow;
+    });
 
     // Convert data to CSV format
     const csvContent =
       'data:text/csv;charset=utf-8,' +
       headerRow +
       '\n' +
-      dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+      filteredData.map(row => includedData.map(column => row[column]).join(';')).join('\n');
 
     // Create a temporary anchor element
     const encodedUri = encodeURI(csvContent);
