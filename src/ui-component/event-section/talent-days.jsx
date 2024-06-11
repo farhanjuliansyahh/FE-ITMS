@@ -1,41 +1,28 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Box, Button, Grid, Tab, Tabs, Typography, Stack, TextField, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import PropTypes from 'prop-types';
-import MainCard from '../../ui-component/cards/MainCard.jsx';
-import EventDetailSearchSection from '../../ui-component/button/EventDetailSearchSection.jsx';
-import SearchResetButton from '../../ui-component/button/SearchResetButton.jsx';
-import SearchIcon from '@mui/icons-material/Search';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import {
-  CorporateFareOutlined,
-  PersonOutlined,
-  AddCircleOutlineOutlined,
-  NotificationsNoneOutlined,
-  RestartAltOutlined
-} from '@mui/icons-material';
-
+import { CorporateFareOutlined, DoneAllOutlined, PersonOutlined, AddCircleOutlineOutlined, NotificationsNoneOutlined, RestartAltOutlined } from '@mui/icons-material';
 import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import ButtonPrimary from '../button/ButtonPrimary.jsx';
 import { IconFileDownload } from '@tabler/icons-react';
-
+// ui-component
+import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
+import ButtonOptional from '../button/ButtonOptional.jsx';
+import ButtonPrimary from '../button/ButtonPrimary.jsx';
+import MainCard from '../cards/MainCard.jsx';
+import KonfirmasiDetailBPJ from '../modal/konfirmasi-detail-bpj.jsx';
+import KonfirmasiIsiSemuaNilaiTalent from '../modal/konfirmasi-isi-semua-nilai-talent.jsx';
+import TambahBPJ from '../modal/tambah-anggota-bpj.jsx';
+import CustomSearch from '../searchsection/custom-search.jsx';
 import TalentDaysBPJTable from '../tables/talentdaysbpj.jsx';
 import TalentDaysKaryawanTable from '../tables/talentdayskaryawan.jsx';
-import TambahBPJ from '../../ui-component/modal/tambah-anggota-bpj.jsx';
-import KonfirmasiDetailBPJ from '../../ui-component/modal/konfirmasi-detail-bpj.jsx';
-import KonfirmasiTambahBPJ from '../../ui-component/modal/konfirmasi-tambah-bpj.jsx';
-import ButtonOptional from '../../ui-component/button/ButtonOptional.jsx';
-import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
-import KonfirmasiIsiSemuaNilaiTalent from '../../ui-component/modal/konfirmasi-isi-semua-nilai-talent.jsx';
-import CustomSearch from '../searchsection/custom-search.jsx';
-import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
-import dayjs from 'dayjs';
-import.meta.env.VITE_API_BASE_URL
 
+import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DAFTAR EVENT PAGE ||============================== //
 
@@ -71,9 +58,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
 
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
-  const [filterLokasi, setFilterLokasi] = useState('');
-  const [filterNama, setFilterNama] = useState('');
-  const [filterNippos, setFilterNippos] = useState('');
   const [daysRow, setdaysRow] = useState([]);
   const [daysBpj, setdaysBpj] = useState([]);
   const [selectedBPJ, setSelectedBPJ] = useState('');
@@ -92,8 +76,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     setValue(newValue);
   };
 
-  const [open, setOpen] = useState(false);
-
   const handleOpen = () => {
     settambahBPJOpen(true);
   };
@@ -109,19 +91,11 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     setDetailBPJOpen(true);
   };
 
-  const handleCloseDetailBPJ = () => {
-    setDetailBPJOpen(false);
-  };
-
   const [openIsiSemuaNilai, setIsiSemuaNilaiOpen] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const handleOpenIsiSemuaNilai = () => {
     setIsiSemuaNilaiOpen(true);
-  };
-
-  const handleCloseIsiSemuaNilai = () => {
-    setIsiSemuaNilaiOpen(false);
   };
 
   const FlexContainer = styled('div')({
@@ -130,11 +104,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     gap: '16px',
     paddingBottom: '24px'
   });
-  const LokasiOptions = [
-    { id: '1', lokasi: 'Pos Graha Jalan Banda Lantai 8 Ruang La Tulip' },
-    { id: '2', lokasi: 'Ruang Investasi Kantor Pos Pusat Jalan Cilaki Bandung' }
-    // Add more options as needed
-  ];
 
   const fetchkaryawandays = () => {
     // Fetch data from API
@@ -205,7 +174,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     fetchkaryawandays();
     fetchquestionevent();
     fetchinfobpj();
-    
+
     if (eventstatus_id !== 5) {
       seteventnotactive(true);
     } else {
@@ -333,11 +302,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     document.body.removeChild(link);
   };
 
-  const handleOpenSecondModal = (nippos) => {
-    setDetailBPJOpen(true);
-    setSelectedBPJ(nippos);
-  };
-
   const handleOpenSecondModalKonfirmasi = (nippos) => {
     setKonfirmasiBPJOpen(true);
     setSelectedBPJ(nippos);
@@ -425,9 +389,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                     disabled={disableInputs || eventnotactive}
                   />
                 </Grid>
-                {/* <Grid item xs={4}>
-                            <EventDetailSearchSection filter={filterLokasi} setFilter={setFilterLokasi} PlaceHolder={'Lokasi'} />
-                        </Grid> */}
               </Grid>
             </Grid>
 
@@ -487,7 +448,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
               searchNippos={selectedNipposFalse}
               confirm={fetchbpjdays}
               eventstatus_id={eventstatus_id}
-              disabled = {eventnotactive}
+              disabled={eventnotactive}
             />
           </Box>
         </CustomTabPanel>
@@ -515,7 +476,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
 
               <div style={{ flex: '1' }}> </div>
               <ButtonOptional
-                icon={DoneAllOutlinedIcon}
+                icon={DoneAllOutlined}
                 LabelName={'Isi Semua Nilai'}
                 onClick={handleOpenIsiSemuaNilai}
                 disabled={isDisabled}
@@ -563,7 +524,8 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
               eventid={eventidactive}
               refetchkaryawan={fetchkaryawandays}
               eventstatus_id={eventstatus_id}
-                          />
+              initialDataLength={daysRow.length}
+            />
           </Box>
         </CustomTabPanel>
 
@@ -577,7 +539,6 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
 
         <KonfirmasiDetailBPJ
           open={openDetailBPJ}
-          // handleClose={() => setDetailBPJOpen(false)}
           handleCloseBatalkan={handleCloseBatalKirimNotifikasi}
           handleClose={handleCloseKirimNotifikasi}
           eventid={eventidactive}

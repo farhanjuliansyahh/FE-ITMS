@@ -46,11 +46,9 @@ export default function ClusterKetuaKomiteTalent() {
     fetcheventdetail()
       .then((data) => {
         seteventaktif(data.event);
-        setLoading(false); // Move this line to the end of the .then block
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        setLoading(false);
       });
   }, []);
 
@@ -139,7 +137,7 @@ export default function ClusterKetuaKomiteTalent() {
   const handlerefresh = () => {
     setrefreshstate(true);
   };
-  
+
   useEffect(() => {
     // Fetch data from API
     fetch(url + `getclustertable?eventtalentid=${id}`)
@@ -316,10 +314,10 @@ export default function ClusterKetuaKomiteTalent() {
           <div style={{ flex: '1' }}> </div>
 
           {evenstatus_id !== 8 && <CountdownLabel>{DaysLeft !== null && DaysLeft > 0
-                ? `${DaysLeft} hari lagi`
-                : DaysLeft === 0
-                  ? 'Hari Ini'
-                  : `Terlewat ${Math.abs(DaysLeft)} hari`}</CountdownLabel>}
+            ? `${DaysLeft} hari lagi`
+            : DaysLeft === 0
+              ? 'Hari Ini'
+              : `Terlewat ${Math.abs(DaysLeft)} hari`}</CountdownLabel>}
         </FlexContainer>
       </Box>
 
@@ -378,8 +376,9 @@ export default function ClusterKetuaKomiteTalent() {
           counts={categoryCounts}
           onTableDataRefresh={handlerefresh}
           disabled={isDiskresiDone}
-          terpilih = {selected}
-          kuota     = {halfLength}
+          terpilih={selected}
+          kuota={halfLength}
+          initialDataLength={clusterRow.length}
         />
       </Box>
     </MainCard>

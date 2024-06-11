@@ -200,7 +200,8 @@ export default function TalentQualificationTable({
   minimumPmsQualified,
   minimumAkhlakQualified,
   minimumLearningAgilityQualified,
-  caption
+  caption,
+  initialDataLength
 }) {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -215,6 +216,8 @@ export default function TalentQualificationTable({
   };
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
+  const noResultsCaption = "Maaf, tidak ada hasil yang sesuai dengan pencarian Anda.\nCoba periksa ejaan kata kunci";
 
   return (
     <div>
@@ -326,8 +329,8 @@ export default function TalentQualificationTable({
                 </TableHead>
               </Table>
             </TableContainer>
-            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
-              {caption}
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', whiteSpace: 'pre-line', textAlign: 'center' }}>
+              {rows.length === 0 && initialDataLength !== rows.length ? noResultsCaption : caption}
             </Typography>
           </div>
         )

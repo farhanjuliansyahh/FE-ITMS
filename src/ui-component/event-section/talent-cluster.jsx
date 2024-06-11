@@ -2,15 +2,13 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
 import PropTypes from 'prop-types';
-import MainCard from '../../ui-component/cards/MainCard.jsx';
+import MainCard from '../cards/MainCard.jsx';
 import { IconFileDownload } from '@tabler/icons-react';
 import { RestartAltOutlined } from '@mui/icons-material';
-
 import ButtonPrimary from '../button/ButtonPrimary.jsx';
-import MatrixNineBox from '../../ui-component/submenu/matrixninebox.jsx';
-import TalentClusterTable from '../../ui-component/tables/talentcluster.jsx';
+import MatrixNineBox from '../submenu/matrixninebox.jsx';
+import TalentClusterTable from '../tables/talentcluster.jsx';
 import CustomSearch from '../searchsection/custom-search.jsx';
 import ButtonErrorOutlined from '../button/ButtonErrorOutlined.jsx';
 import.meta.env.VITE_API_BASE_URL
@@ -53,19 +51,10 @@ function a11yProps(index) {
 const TalentCluster = ({eventid}) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
-  const [filterNama, setFilterNama] = useState('');
-  const [filterNippos, setFilterNippos] = useState('');
-  const [filterJob, setFilterJob] = useState('');
-  const [filterKategoriMatrix, setFilterKategoriMatrix] = useState('');
   const [clusterRow, setclusterRow] = useState([])
   const [categoryCounts, setCategoryCounts] = useState({});
   const url = import.meta.env.VITE_API_BASE_URL
-
-
   const eventidactive = eventid
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   useEffect(() => {
     setLoading(false);
@@ -94,17 +83,6 @@ const TalentCluster = ({eventid}) => {
   }, []);
 
   const totalRows = Object.values(categoryCounts).reduce((total, count) => total + count, 0);
-
-  const hitung = categoryCounts
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const FlexContainer = styled('div')({
     display: 'flex',
@@ -232,9 +210,9 @@ const TalentCluster = ({eventid}) => {
             </div>
          
           <TalentClusterTable 
-            filter={{nama:filterNama, nippos:filterNippos, job:filterJob, KategoriMatrix:filterKategoriMatrix}} 
             rows={resetRowsTrue} 
             counts={categoryCounts}
+            initialDataLength={clusterRow.length}
           />
           </Box>
 

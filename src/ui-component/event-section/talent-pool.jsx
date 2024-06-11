@@ -19,7 +19,7 @@ import.meta.env.VITE_API_BASE_URL
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-  
+
   return (
     <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
@@ -54,7 +54,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
   const [poolrow, setpool] = useState([]);
   const [refreshstate, setrefreshstate] = useState([false]);
   const url = import.meta.env.VITE_API_BASE_URL
-  
+
   const eventidactive = eventid;
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -208,7 +208,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
   const [eventaktif, seteventaktif] = useState([]);
 
   const fetcheventdetail = () => {
-    return fetch(url + `getoneevent?id=${eventid}`) 
+    return fetch(url + `getoneevent?id=${eventid}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -216,11 +216,11 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
         return response.json();
       })
       .then((data) => {
-        return data; 
+        return data;
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        throw error; 
+        throw error;
       });
   };
 
@@ -245,7 +245,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
               Tabel Karyawan
             </Typography>
 
-            <LabelInfo length={poolLength} kuota={eventaktif.kuota}/>
+            <LabelInfo length={poolLength} kuota={eventaktif.kuota} />
 
             <div style={{ flex: '1' }}> </div>
 
@@ -292,6 +292,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
             updaterows={handlerefresh}
             eventstatus_id={eventstatus_id}
             setrefresh={setrefresh}
+            initialDataLength={poolLength}
           />
         </Box>
       </MainCard>
