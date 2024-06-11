@@ -14,7 +14,7 @@ import.meta.env.VITE_API_BASE_URL
 
 // ==============================|| DETAIL KARYAWAN DARI KOMITE UNIT ||============================== //
 
-export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionForButton, id, rows, nippos, source_kuota, checkboxSelection,sudahdipilih}) {
+export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionForButton, id, rows, nippos, source_kuota, checkboxSelection, sudahdipilih, caption}) {
     const [filterNama, setFilterNama] = useState('');
     const [filterNippos, setFilterNippos] = useState('');
     const [filterJob, setFilterJob] = useState('');
@@ -197,6 +197,8 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
                     rows={filteredRows} 
                     selectedRows={selectedRows} 
                     onSelectedRowsChange={handleSelectedRowsChange}
+                    initialDataLength={tablerows.length}
+                    caption={caption}
                 />
 
                 {ActionForButton && <KonfirmasiTalentSource 

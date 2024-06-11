@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Menu, MenuItem } from '@mui/material';
+import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { AddCircleOutlineOutlined, ExpandMore } from '@mui/icons-material';
 import ButtonPrimary from '../../ui-component/button/ButtonPrimary';
@@ -21,22 +21,25 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-export default function TabelDaftarAnggotaKomiteUnit({ 
+export default function TabelDaftarAnggotaKomiteUnit({
   onOpenSecondModalTable,
-  searchNama, 
+  searchNama,
   searchJabatan,
   searchKantor,
   rows
-  }) {
+}) {
+
+  const initialDataLength = rows.length;
+  const noResultsCaption = "Maaf, tidak ada hasil yang sesuai dengan pencarian Anda.\nCoba periksa ejaan kata kunci";
 
   const filteredRows = rows.filter((row) => {
     const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
     const jabatanMatch = !searchJabatan || (row.jabatan && row.jabatan.toLowerCase().includes(searchJabatan.toLowerCase())); // Add null check for row.nippos
     const kantorMatch = !searchKantor || (row.kantor && row.kantor.toLowerCase().includes(searchKantor.toLowerCase())); // Add null check for row.nippos
 
-    return (!searchNama || namaMatch) 
-    && (!searchJabatan || jabatanMatch) 
-    && (!searchKantor || kantorMatch);
+    return (!searchNama || namaMatch)
+      && (!searchJabatan || jabatanMatch)
+      && (!searchKantor || kantorMatch);
   });
 
   const resetRowIndex = (filteredRows) => {
@@ -65,50 +68,78 @@ export default function TabelDaftarAnggotaKomiteUnit({
 
   return (
     <div>
-      <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px'}}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }}>
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>No</StyledTableCell>
-                <StyledTableCell>Nama</StyledTableCell>
-                <StyledTableCell>NIPPOS</StyledTableCell>
-                <StyledTableCell>Jabatan</StyledTableCell>
-                <StyledTableCell>Kantor</StyledTableCell>
-                <StyledTableCell>Aksi</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {resetRows.slice(startIndex, endIndex).map((row) => (
-                <TableRow key={row.id}>
-                  <StyledTableCell>{row.id}</StyledTableCell>
-                  <StyledTableCell>{row.nama}</StyledTableCell>
-                  <StyledTableCell>{row.nippos}</StyledTableCell>
-                  <StyledTableCell>{row.jabatan}</StyledTableCell>
-                  <StyledTableCell>{row.kantor}</StyledTableCell>
-                  <StyledTableCell>
-                    <ButtonPrimary
-                      icon={AddCircleOutlineOutlined}
-                      LabelName={'Tambah'}
-                      padding={'6px 16px'}
-                      onClick={() => onOpenSecondModalTable(row.nippos)}
-                    />
-                  </StyledTableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-      <Stack spacing={2} direction="row">
-        <Pagination 
-          count={Math.ceil(filteredRows.length / itemsPerPage)} 
-          page={page} 
-          onChange={handleChangePage} 
-          color="primary" />
-        <div style={{ flex: '1' }}> </div>
-        <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
-      </Stack>
+      {
+        resetRows.length === 0 && initialDataLength !== resetRows.length ? (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>No</StyledTableCell>
+                    <StyledTableCell>Nama</StyledTableCell>
+                    <StyledTableCell>NIPPOS</StyledTableCell>
+                    <StyledTableCell>Jabatan</StyledTableCell>
+                    <StyledTableCell>Kantor</StyledTableCell>
+                    <StyledTableCell>Aksi</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+              </Table>
+            </TableContainer>
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', whiteSpace: 'pre-line', textAlign: 'center' }}>
+              {noResultsCaption}
+            </Typography>
+          </div>
+        ) : (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>No</StyledTableCell>
+                    <StyledTableCell>Nama</StyledTableCell>
+                    <StyledTableCell>NIPPOS</StyledTableCell>
+                    <StyledTableCell>Jabatan</StyledTableCell>
+                    <StyledTableCell>Kantor</StyledTableCell>
+                    <StyledTableCell>Aksi</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {resetRows.slice(startIndex, endIndex).map((row) => (
+                    <TableRow key={row.id}>
+                      <StyledTableCell>{row.id}</StyledTableCell>
+                      <StyledTableCell>{row.nama}</StyledTableCell>
+                      <StyledTableCell>{row.nippos}</StyledTableCell>
+                      <StyledTableCell>{row.jabatan}</StyledTableCell>
+                      <StyledTableCell>{row.kantor}</StyledTableCell>
+                      <StyledTableCell>
+                        <ButtonPrimary
+                          icon={AddCircleOutlineOutlined}
+                          LabelName={'Tambah'}
+                          padding={'6px 16px'}
+                          onClick={() => onOpenSecondModalTable(row.nippos)}
+                        />
+                      </StyledTableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        )
+      }
+
+      {filteredRows.length > 0 && (
+        <Stack spacing={2} direction="row">
+          <Pagination
+            count={Math.ceil(filteredRows.length / itemsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            color="primary" />
+          <div style={{ flex: '1' }}> </div>
+          <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
+        </Stack>
+      )}
+
     </div>
   );
 }

@@ -398,6 +398,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
               getkandidattrue={getkandidattrue}
               showButton={true}
               caption={"Belum ada karyawan untuk dipilih"}
+              initialDataLength={rowsfalse.length}
             />
           </Box>
         </CustomTabPanel>
@@ -462,6 +463,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
               eventid={eventidactive}
               showButton={false}
               caption={"Belum ada karyawan yang terdaftar"}
+              initialDataLength={rowstrue.length}
             />
           </Box>
         </CustomTabPanel>

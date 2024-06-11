@@ -247,10 +247,9 @@ const calculateColumnWidth = (data, accessor, headerText) => {
 
 export default function TalentProfileTable({
   filter,
-  commitmentLetterValue,
-  paktaIntegritasValue,
   rows,
-  caption
+  caption,
+  initialDataLength
 }) {
 
   const [filterModel, setFilterModel] = React.useState({
@@ -297,6 +296,8 @@ export default function TalentProfileTable({
 
   }, [filterNama, filterNippos, filterJob, filterKomite])
 
+  const noResultsCaption = "Maaf, tidak ada hasil yang sesuai dengan pencarian Anda.\nCoba periksa ejaan kata kunci";
+
   return (
     <div>
       {
@@ -329,12 +330,12 @@ export default function TalentProfileTable({
                       <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
                       <StyledTableCell>
                         <div style={{ display: 'inline-block', ...getStatusStyle(row['Commitment Letter']), padding: '4px 8px', borderRadius: '24px' }}>
-                        {row['Commitment Letter']}
+                          {row['Commitment Letter']}
                         </div>
                       </StyledTableCell>
                       <StyledTableCell style={{ padding: '12px' }}>
                         <div style={{ display: 'inline-block', ...getStatusStyle(row['Pakta Integritas']), padding: '4px 8px', borderRadius: '24px' }}>
-                        {row['Pakta Integritas']}
+                          {row['Pakta Integritas']}
                         </div>
                       </StyledTableCell>
                       <StyledTableCell style={{ padding: '12px' }}>
@@ -369,8 +370,8 @@ export default function TalentProfileTable({
                 </TableHead>
               </Table>
             </TableContainer>
-            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
-              {caption}
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', whiteSpace: 'pre-line', textAlign: 'center' }}>
+              {rows.length === 0 && initialDataLength !== rows.length ? noResultsCaption : caption}
             </Typography>
           </div>
         )

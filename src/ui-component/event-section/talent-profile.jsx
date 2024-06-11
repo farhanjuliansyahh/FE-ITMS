@@ -357,11 +357,10 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
             </div>
 
             <TalentProfileTable
-              commitmentLetterValue={'Belum Submit'}
-              paktaIntegritasValue={'Belum Submit'}
               filter={{ nama: filterNama, nippos: filterNippos, job: filterJob, komite: filterKomite }}
               rows={resetRowsFalse}
               caption={"Seluruh karyawan sudah mengisi commitment letter dan pakta integritas"}
+              initialDataLength={rowsbelum.length}
             />
           </Box>
         </CustomTabPanel>
@@ -416,6 +415,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
               filter={{ nama: filterNama, nippos: filterNippos, job: filterJob, komite: filterKomite }}
               rows={resetRowsTrue}
               caption={"Belum ada karyawan yang berstatus lengkap"}
+              initialDataLength={rowslengkap.length}
             />
           </Box>
         </CustomTabPanel>

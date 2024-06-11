@@ -49,7 +49,6 @@ function KonfirmasiTambahKomiteUnit({ open, onClose, onConfirm, setSelectedOptio
     };
 
     // Conditionally enable/disable the "Tambah" button
-    console.log(option);
     const isButtonDisabled = option == null;
 
     return (

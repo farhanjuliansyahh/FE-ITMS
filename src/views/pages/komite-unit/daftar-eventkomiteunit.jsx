@@ -256,6 +256,7 @@ export default function DetailEventKomiteUnit() {
             source_kuota={halfLength}
             checkboxSelection={true}
             sudahdipilih={rowstrue.length}
+            caption={'Belum ada karyawan untuk dipilih'}
           />
         </Box>
       </CustomTabPanel>
@@ -274,6 +275,7 @@ export default function DetailEventKomiteUnit() {
             source_kuota={halfLength}
             checkboxSelection={false}
             sudahdipilih={rowstrue.length}
+            caption={'Anda belum memiliki karyawan terkualifikasi'}
           />
         </Box>
       </CustomTabPanel>
