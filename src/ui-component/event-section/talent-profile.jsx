@@ -58,7 +58,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
   const [rowsbelum, setrowsbelum] = useState([]);
   const [filterKomite, setFilterKomite] = useState('');
   const [openSubmit, setOpenSubmit] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const url = import.meta.env.VITE_API_BASE_URL
 
   const activeEvent = eventid;
@@ -76,7 +76,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
       .then((databelum) => {
         // Update state with API data
         setrowsbelum(databelum.map((row, index) => ({ ...row, id: index + 1 })));
-        if (databelum.length === 0) {
+        if (databelum.length === 0 || eventstatus_id !== 3) {
           // Value is null, disable button
           setIsDisabled(true);
         } else {
