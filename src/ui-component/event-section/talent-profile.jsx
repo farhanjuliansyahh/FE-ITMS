@@ -107,7 +107,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
       .then((response) => response.json())
       .then((databelum) => {
         setrowsbelum(databelum.map((row, index) => ({ ...row, id: index + 1 })));
-        setIsDisabled(databelum.length === 0);
+        setIsDisabled(databelum.length === 0 );
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
