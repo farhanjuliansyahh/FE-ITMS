@@ -58,7 +58,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
   const [rowsbelum, setrowsbelum] = useState([]);
   const [filterKomite, setFilterKomite] = useState('');
   const [openSubmit, setOpenSubmit] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
   const url = import.meta.env.VITE_API_BASE_URL
 
   const activeEvent = eventid;
@@ -87,7 +87,7 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [isDisabled]);
 
   useEffect(() => {
     // Fetch data from API
