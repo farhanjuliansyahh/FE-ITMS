@@ -85,7 +85,7 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
         let dataToDownload = [];
         let filename = '';
         
-        dataToDownload = resetRows;
+        dataToDownload = resetRowIndex(filteredRows);
         filename = `Talent_Source_Terdaftar_${id}.csv`;
   
         // Create a CSV header with column names
@@ -160,9 +160,7 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
           ...row,
           id: index + 1, // Adding 1 to start the index from 1 instead of 0
         }));
-      };
-    
-    const resetRows = resetRowIndex(filteredRows);    
+      }; 
 
     return (
         <MainCard>
@@ -196,7 +194,7 @@ export default function DetailKaryawandiKomiteUnit({Title, Icon, Label, ActionFo
 
                 <KaryawanKomiteUnit 
                     checkboxSelection={checkboxSelection} 
-                    rows={resetRows} 
+                    rows={filteredRows} 
                     selectedRows={selectedRows} 
                     onSelectedRowsChange={handleSelectedRowsChange}
                 />

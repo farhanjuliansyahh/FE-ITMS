@@ -577,6 +577,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                           type="checkbox"
                           checked={selectAll}
                           onChange={handleSelectAll}
+                          style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
                         />
                       </StyledTableCell>
                     )}
@@ -599,6 +600,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                             type="checkbox"
                             checked={selectedRows.includes(row.id)}
                             onChange={(event) => handleCheckboxChange(event, row.id)}
+                            style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
                           />
                         </StyledTableCell>
                       )}

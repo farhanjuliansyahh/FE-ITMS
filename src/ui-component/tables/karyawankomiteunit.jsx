@@ -63,26 +63,26 @@ import FilterButton from '../../ui-component/button/FilterButton';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#F5F5F5',
-      color: '#1F1F1F',
-      fontSize: 14,
-      fontWeight: 600,
-      whiteSpace: 'nowrap',
-      height: '60px',
+        backgroundColor: '#F5F5F5',
+        color: '#1F1F1F',
+        fontSize: 14,
+        fontWeight: 600,
+        whiteSpace: 'nowrap',
+        height: '60px',
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 12,
-      minHeight: 20,
-      verticalAlign: 'center',
-      height: '60px',
+        fontSize: 12,
+        minHeight: 20,
+        verticalAlign: 'center',
+        height: '60px',
     },
-  }));
+}));
 const KaryawanKomiteUnit = ({
     rows,
     checkboxSelection,
     selectedRows,
     onSelectedRowsChange
-    }) => {
+}) => {
 
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -125,7 +125,7 @@ const KaryawanKomiteUnit = ({
 
 
     const columns = [
-        { field: 'id', headerName: 'No', width: 70 },
+        // { field: 'id', headerName: 'No', width: 70 },
         { field: 'Nama', headerName: 'Nama', width: 170 },
         { field: 'Nippos', headerName: 'NIPPOS', width: 130 },
         { field: 'Posisi', headerName: 'Posisi', width: 250 },
@@ -139,7 +139,7 @@ const KaryawanKomiteUnit = ({
         { field: 'Learning Agility', headerName: 'Learning Agility', width: 180 },
         { field: 'Status Hukdis', headerName: 'Status Hukdis', width: 200 },
     ];
-    
+
     return (
         <div>
             <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
@@ -148,14 +148,16 @@ const KaryawanKomiteUnit = ({
                         <TableHead>
                             <TableRow>
                                 {checkboxSelection && (
-                                        <StyledTableCell style={{ textAlign: 'center' }}>
-                                            <input
-                                                type="checkbox"
-                                                checked={selectAll}
-                                                onChange={handleSelectAllChange}
-                                            />
-                                        </StyledTableCell>
-                                    )}
+                                    <StyledTableCell style={{ textAlign: 'center' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={selectAll}
+                                            onChange={handleSelectAllChange}
+                                            style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
+                                        />
+                                    </StyledTableCell>
+                                )}
+                                <StyledTableCell>No</StyledTableCell>
                                 {columns.map((column) => (
                                     <StyledTableCell key={column.field} style={{ width: column.width }}>
                                         {column.headerName}
@@ -164,7 +166,7 @@ const KaryawanKomiteUnit = ({
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.slice(startIndex, endIndex).map((row) => (
+                            {rows.slice(startIndex, endIndex).map((row, index) => (
                                 <TableRow key={row.id}>
                                     {checkboxSelection && (
                                         <StyledTableCell style={{ textAlign: 'center' }}>
@@ -172,9 +174,13 @@ const KaryawanKomiteUnit = ({
                                                 type="checkbox"
                                                 checked={selectedRows.includes(row.id)}
                                                 onChange={() => handleSelectionChange(row.id)}
+                                                style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
                                             />
                                         </StyledTableCell>
                                     )}
+                                    <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>
+                                        {startIndex + index + 1}
+                                    </StyledTableCell>
                                     {columns.map((column) => (
                                         <StyledTableCell key={column.field} sx={{ minWidth: column.width }} >
                                             {row[column.field]}
@@ -191,12 +197,12 @@ const KaryawanKomiteUnit = ({
                     count={Math.ceil(rows.length / itemsPerPage)}
                     page={page}
                     onChange={handleChangePage}
-                    color="primary"/>
+                    color="primary" />
                 <div style={{ flex: '1' }}></div>
                 <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
             </Stack>
         </div>
-        
+
     );
 };
 

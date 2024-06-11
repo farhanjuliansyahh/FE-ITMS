@@ -97,7 +97,7 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
 
     // Determine which dataset to use based on the active tab
     if (value === 0) {
-      dataToDownload = resetRowsFalse;
+      dataToDownload = resetRowIndexFalse(filteredRowsFalse);
       filename = `Talent_Source_TidakTerdaftar_${eventid}.csv`;
     } else if (value === 1) {
       dataToDownload = resetRowsTrue;
