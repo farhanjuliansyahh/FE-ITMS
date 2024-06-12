@@ -157,7 +157,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
   };
 
   const mapkomiteunit = () => {
-    return fetch(url + 'cariotomatis', {
+    return fetch(url + `cariotomatis?eventtalentid=${eventid}`, {
       method: 'POST' // Specify the HTTP method (POST, GET, etc.)
     })
       .then((response) => {

@@ -66,11 +66,9 @@ const DaftarEventKomiteUnit = () => {
     fetcheventkomiteunit()
       .then((data) => {
         setkomiteunitevent(data.event);
-        setLoading(false); // Move this line to the end of the .then block
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        setLoading(false);
       });
   }, []);
 

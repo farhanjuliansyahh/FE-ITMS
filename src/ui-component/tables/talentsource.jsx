@@ -420,7 +420,7 @@ const ButtonContainer = styled('div')({
   whiteSpace: 'nowrap',
 });
 
-const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton }) => {
+const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onSelectedRowsChange, getkandidatfalse, getkandidattrue, showButton, caption, initialDataLength }) => {
   const [openFirstModal, setOpenFirstModal] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState('');
@@ -538,8 +538,11 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
     setOpenSecondModal(false);
   };
 
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
   const handleConfirm = () => {
-    setSelectedOption(selectedOption)
     updatekomiteunit(activeEvent, selectedNippos, selectedKU, selectedOption)
       .then(() => {
         // After updating komite unit, call updatekomiterole
@@ -559,6 +562,8 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
       });
   };
 
+  const noResultsCaption = "Maaf, tidak ada hasil yang sesuai dengan pencarian Anda.\nCoba periksa ejaan kata kunci";
+
   return (
     <div>
       {
@@ -574,6 +579,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                           type="checkbox"
                           checked={selectAll}
                           onChange={handleSelectAll}
+                          style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
                         />
                       </StyledTableCell>
                     )}
@@ -596,6 +602,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                             type="checkbox"
                             checked={selectedRows.includes(row.id)}
                             onChange={(event) => handleCheckboxChange(event, row.id)}
+                            style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
                           />
                         </StyledTableCell>
                       )}
@@ -653,6 +660,9 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
                 </TableHead>
               </Table>
             </TableContainer>
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', whiteSpace: 'pre-line', textAlign: 'center' }}>
+              {rows.length === 0 && initialDataLength !== rows.length ? noResultsCaption : caption}
+            </Typography>
           </div>
         )
       }
@@ -681,6 +691,7 @@ const TalentSourceTable = ({ eventid, rows, checkboxSelection, selectedRows, onS
         open={openSecondModal}
         onClose={handleCloseSecondModal}
         onConfirm={handleConfirm}
+        setSelectedOption={setSelectedOption}
       />
     </div>
   );

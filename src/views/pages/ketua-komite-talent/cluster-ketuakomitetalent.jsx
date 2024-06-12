@@ -46,11 +46,9 @@ export default function ClusterKetuaKomiteTalent() {
     fetcheventdetail()
       .then((data) => {
         seteventaktif(data.event);
-        setLoading(false); // Move this line to the end of the .then block
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        setLoading(false);
       });
   }, []);
 
@@ -139,7 +137,7 @@ export default function ClusterKetuaKomiteTalent() {
   const handlerefresh = () => {
     setrefreshstate(true);
   };
-  
+
   useEffect(() => {
     // Fetch data from API
     fetch(url + `getclustertable?eventtalentid=${id}`)
@@ -254,21 +252,38 @@ export default function ClusterKetuaKomiteTalent() {
     dataToDownload = resetRows;
     filename = `Kandidat_Talent_${id}.csv`;
 
-    // Create a CSV header with column names
-    const headers = Object.keys(dataToDownload[0]);
-    const idIndex = headers.indexOf('id');
-    if (idIndex !== -1) {
-      headers.splice(idIndex, 1); // Remove 'id' from headers
-      headers.unshift('id'); // Insert 'id' at the beginning
-    }
-    const headerRow = headers.join(',');
+    // Specify the columns to include in the CSV, adding 'No' as the first column
+    const includedData = [
+      'No', 'nama', 'nippos', 'Posisi', 'Job Level',
+      'Rumpun Jabatan', 'Nama Kantor', 'Komite Unit',
+      'Matriks Kategori Awal', 'Matriks Kategori Akhir',
+      'status', 'reason'
+    ];
+
+    // Create a CSV header with the included column names
+    const headerNames = [
+      'No', 'Nama', 'NIPPOS', 'Posisi', 'Job Level',
+      'Rumpun Jabatan', 'Kantor', 'Komite Unit',
+      'Kategori Matrix Awal', 'Kategori Matrix Akhir',
+      'Status', 'Alasan Perubahan'
+    ];
+    const headerRow = headerNames.join(';');
+
+    // Filter the data to include only the specified columns and add 'No' column
+    const filteredData = dataToDownload.map((row, index) => {
+      const filteredRow = { No: index + 1 }; // Add 'No' column starting from 1
+      includedData.slice(1).forEach(column => {
+        filteredRow[column] = row[column];
+      });
+      return filteredRow;
+    });
 
     // Convert data to CSV format
     const csvContent =
       'data:text/csv;charset=utf-8,' +
       headerRow +
       '\n' +
-      dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+      filteredData.map(row => includedData.map(column => row[column]).join(';')).join('\n');
 
     // Create a temporary anchor element
     const encodedUri = encodeURI(csvContent);
@@ -316,10 +331,10 @@ export default function ClusterKetuaKomiteTalent() {
           <div style={{ flex: '1' }}> </div>
 
           {evenstatus_id !== 8 && <CountdownLabel>{DaysLeft !== null && DaysLeft > 0
-                ? `${DaysLeft} hari lagi`
-                : DaysLeft === 0
-                  ? 'Hari Ini'
-                  : `Terlewat ${Math.abs(DaysLeft)} hari`}</CountdownLabel>}
+            ? `${DaysLeft} hari lagi`
+            : DaysLeft === 0
+              ? 'Hari Ini'
+              : `Terlewat ${Math.abs(DaysLeft)} hari`}</CountdownLabel>}
         </FlexContainer>
       </Box>
 
@@ -378,8 +393,9 @@ export default function ClusterKetuaKomiteTalent() {
           counts={categoryCounts}
           onTableDataRefresh={handlerefresh}
           disabled={isDiskresiDone}
-          terpilih = {selected}
-          kuota     = {halfLength}
+          terpilih={selected}
+          kuota={halfLength}
+          initialDataLength={clusterRow.length}
         />
       </Box>
     </MainCard>

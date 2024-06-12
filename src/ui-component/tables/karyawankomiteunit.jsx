@@ -56,33 +56,42 @@
 // export default KaryawanKomiteUnit;
 
 import React, { useState, useEffect } from 'react';
-import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
+import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import FilterButton from '../../ui-component/button/FilterButton.jsx';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#F5F5F5',
-      color: '#1F1F1F',
-      fontSize: 14,
-      fontWeight: 600,
-      whiteSpace: 'nowrap',
-      height: '60px',
+        backgroundColor: '#F5F5F5',
+        color: '#1F1F1F',
+        fontSize: 14,
+        fontWeight: 600,
+        whiteSpace: 'nowrap',
+        height: '60px',
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 12,
-      minHeight: 20,
-      verticalAlign: 'center',
-      height: '60px',
+        fontSize: 12,
+        minHeight: 20,
+        verticalAlign: 'center',
+        height: '60px',
     },
-  }));
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:last-child td, &:last-child th': {
+        border: 0
+    }
+}));
+
 const KaryawanKomiteUnit = ({
     rows,
     checkboxSelection,
     selectedRows,
-    onSelectedRowsChange
-    }) => {
+    onSelectedRowsChange,
+    initialDataLength,
+    caption
+}) => {
 
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -125,7 +134,7 @@ const KaryawanKomiteUnit = ({
 
 
     const columns = [
-        { field: 'id', headerName: 'No', width: 70 },
+        // { field: 'id', headerName: 'No', width: 70 },
         { field: 'Nama', headerName: 'Nama', width: 170 },
         { field: 'Nippos', headerName: 'NIPPOS', width: 130 },
         { field: 'Posisi', headerName: 'Posisi', width: 250 },
@@ -139,64 +148,109 @@ const KaryawanKomiteUnit = ({
         { field: 'Learning Agility', headerName: 'Learning Agility', width: 180 },
         { field: 'Status Hukdis', headerName: 'Status Hukdis', width: 200 },
     ];
-    
+
+    const noResultsCaption = "Maaf, tidak ada hasil yang sesuai dengan pencarian Anda.\nCoba periksa ejaan kata kunci";
+
     return (
         <div>
-            <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }}>
-                        <TableHead>
-                            <TableRow>
-                                {checkboxSelection && (
-                                        <StyledTableCell style={{ textAlign: 'center' }}>
-                                            <input
-                                                type="checkbox"
-                                                checked={selectAll}
-                                                onChange={handleSelectAllChange}
-                                            />
-                                        </StyledTableCell>
-                                    )}
-                                {columns.map((column) => (
-                                    <StyledTableCell key={column.field} style={{ width: column.width }}>
-                                        {column.headerName}
-                                    </StyledTableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.slice(startIndex, endIndex).map((row) => (
-                                <TableRow key={row.id}>
-                                    {checkboxSelection && (
-                                        <StyledTableCell style={{ textAlign: 'center' }}>
-                                            <input
-                                                type="checkbox"
-                                                checked={selectedRows.includes(row.id)}
-                                                onChange={() => handleSelectionChange(row.id)}
-                                            />
-                                        </StyledTableCell>
-                                    )}
-                                    {columns.map((column) => (
-                                        <StyledTableCell key={column.field} sx={{ minWidth: column.width }} >
-                                            {row[column.field]}
-                                        </StyledTableCell>
+            {
+                rows.length > 0 ? (
+                    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 700 }}>
+                                <TableHead>
+                                    <StyledTableRow>
+                                        {checkboxSelection && (
+                                            <StyledTableCell style={{ textAlign: 'center' }}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectAll}
+                                                    onChange={handleSelectAllChange}
+                                                    style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
+                                                />
+                                            </StyledTableCell>
+                                        )}
+                                        <StyledTableCell>No</StyledTableCell>
+                                        {columns.map((column) => (
+                                            <StyledTableCell key={column.field} style={{ width: column.width }}>
+                                                {column.headerName}
+                                            </StyledTableCell>
+                                        ))}
+                                    </StyledTableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {rows.slice(startIndex, endIndex).map((row, index) => (
+                                        <StyledTableRow key={row.id}>
+                                            {checkboxSelection && (
+                                                <StyledTableCell style={{ textAlign: 'center' }}>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedRows.includes(row.id)}
+                                                        onChange={() => handleSelectionChange(row.id)}
+                                                        style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
+                                                    />
+                                                </StyledTableCell>
+                                            )}
+                                            <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>
+                                                {startIndex + index + 1}
+                                            </StyledTableCell>
+                                            {columns.map((column) => (
+                                                <StyledTableCell key={column.field} sx={{ minWidth: column.width }} >
+                                                    {row[column.field]}
+                                                </StyledTableCell>
+                                            ))}
+                                        </StyledTableRow>
                                     ))}
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
-            <Stack spacing={2} direction="row" marginTop={2}>
-                <Pagination
-                    count={Math.ceil(rows.length / itemsPerPage)}
-                    page={page}
-                    onChange={handleChangePage}
-                    color="primary"/>
-                <div style={{ flex: '1' }}></div>
-                <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
-            </Stack>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                ) : (
+                    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 700 }}>
+                                <TableHead>
+                                    <StyledTableRow>
+                                        {checkboxSelection && (
+                                            <StyledTableCell style={{ textAlign: 'center' }}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectAll}
+                                                    onChange={handleSelectAllChange}
+                                                    style={{ width: '12px', height: '12px', transform: 'scale(1.5)' }}
+                                                />
+                                            </StyledTableCell>
+                                        )}
+                                        <StyledTableCell>No</StyledTableCell>
+                                        {columns.map((column) => (
+                                            <StyledTableCell key={column.field} style={{ width: column.width }}>
+                                                {column.headerName}
+                                            </StyledTableCell>
+                                        ))}
+                                    </StyledTableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                        <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', whiteSpace: 'pre-line', textAlign: 'center' }}>
+                            {rows.length === 0 && initialDataLength !== rows.length ? noResultsCaption : caption}
+                        </Typography>
+                    </div>
+                )
+            }
+
+            {rows.length > 0 && (
+                <Stack spacing={2} direction="row" marginTop={2}>
+                    <Pagination
+                        count={Math.ceil(rows.length / itemsPerPage)}
+                        page={page}
+                        onChange={handleChangePage}
+                        color="primary" />
+                    <div style={{ flex: '1' }}></div>
+                    <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
+                </Stack>
+            )}
         </div>
-        
+
     );
 };
 

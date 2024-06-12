@@ -18,7 +18,7 @@ export const useAuth = () => {
       password: password
     });
 
-    const responseApi = await fetch(url + 'loginadmin', {
+    const responseApi = await fetch(url + 'login-sso', {
       method: 'POST',
       headers: headers,
       body: content

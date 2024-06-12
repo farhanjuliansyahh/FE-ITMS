@@ -74,24 +74,50 @@ export default function TalentDetail() {
     resetKantorInput();
     resetTahunInput();
   };
-  //Unduh Button Action
+
   const handleDownloadCSV = () => {
-    // Create a CSV header with column names
-    const headers = Object.keys(resetRows[0]);
-    const headerRow = headers.join(',');
+    let dataToDownload = [];
+    let filename = '';
+
+    // Determine which dataset to use based on the active tab
+    dataToDownload = resetRows;
+    filename = `Daftar_Talent.csv`;
+
+    // Specify the columns to include in the CSV, adding 'No' as the first column
+    const includedData = ['No', 'nama', 'nippos', 'posisi', 'joblevel', 'jobfam', 'nama_kantor', 'nama_event', 'kategori_talent', 'year'];
+
+    // Create a CSV header with the included column names
+    const headerNames = ['No', 'Nama', 'NIPPOS', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Kantor', 'Nama Event', 'Kategori Talent', 'Tahun'];
+    const headerRow = headerNames.join(';');
+
+    // Filter the data to include only the specified columns and add 'No' column
+    const filteredData = dataToDownload.map((row, index) => {
+      const filteredRow = { No: index + 1 }; // Add 'No' column starting from 1
+      includedData.slice(1).forEach(column => {
+        filteredRow[column] = row[column];
+      });
+      return filteredRow;
+    });
 
     // Convert data to CSV format
     const csvContent =
       'data:text/csv;charset=utf-8,' +
-      encodeURIComponent(headerRow + '\n' + resetRows.map((row) => headers.map((header) => row[header]).join(',')).join('\n'));
+      headerRow +
+      '\n' +
+      filteredData.map(row => includedData.map(column => row[column]).join(';')).join('\n');
 
     // Create a temporary anchor element
+    const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
-    link.setAttribute('href', csvContent);
-    link.setAttribute('download', 'daftar_talent.csv');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
 
     // Trigger the download
     link.click();
+
+    // Clean up
+    document.body.removeChild(link);
   };
 
   const filteredRows = rows.filter((row) => {
@@ -106,7 +132,7 @@ export default function TalentDetail() {
       (!selectedJobLevel || jobLevelMatch) &&
       (!selectedRumpunJabatan || rumpunJabatanMatch) &&
       (!selectedKantor || kantorMatch) &&
-      (!selectedTahun || tahunMatch) 
+      (!selectedTahun || tahunMatch)
     );
   });
 
@@ -174,7 +200,7 @@ export default function TalentDetail() {
             </div>
 
             <Grid style={{ marginBottom: '0.5%' }}>
-              <DetailTalentTable filteredRows={resetRows} />
+              <DetailTalentTable filteredRows={resetRows} initialDataLength={rows.length} caption={'Belum ada karyawan yang menjadi talent'}/>
             </Grid>
           </MainCard>
         </Grid>

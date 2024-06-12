@@ -112,7 +112,7 @@ import { useEffect, useState } from 'react';
 import ButtonErrorOutlined from '../../ui-component/button/ButtonErrorOutlined.jsx';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HapusDataBPJ from '../../ui-component/modal/hapus-data-bpj.jsx';
-import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import FilterButton from '../../ui-component/button/FilterButton.jsx';
@@ -151,6 +151,10 @@ export default function TalentDaysBPJTable({
   confirm,
   disabled
 }) {
+
+  const initialDataLength = rows.length;
+  const noResultsCaption = "Maaf, tidak ada hasil yang sesuai dengan pencarian Anda.\nCoba periksa ejaan kata kunci";
+
   const filteredRows = rows.filter((row) => {
     const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase())); // Add null check for row.nama
     const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
@@ -170,7 +174,7 @@ export default function TalentDaysBPJTable({
   const [HapusBPJOpen, setHapusBPJOpen] = useState(false);
   const [selectedNippos, setSelectedNippos] = useState(null); // State to store selected nippos
 
-  useEffect(() => {}, [selectedNippos]); // Run this effect whenever selectedNippos changes
+  useEffect(() => { }, [selectedNippos]); // Run this effect whenever selectedNippos changes
 
   const handleHapusBPJOpen = (nippos) => {
     setSelectedNippos(nippos);
@@ -193,47 +197,78 @@ export default function TalentDaysBPJTable({
 
   return (
     <div>
-      <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }}>
-            <TableHead>
-              <TableRow>
-                <StyledTableCell sx={{ minWidth: 'auto' }}>No</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: 'auto' }}>Nama</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: 'auto' }}>Nippos</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: 'auto' }}>Posisi</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: 'auto' }}>Aksi</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {resetRows.slice(startIndex, endIndex).map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
-                  <StyledTableCell >{row.nama}</StyledTableCell>
-                  <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.nippos}</StyledTableCell>
-                  <StyledTableCell >{row.Posisi}</StyledTableCell>
-                  <StyledTableCell >
-                    <ButtonContainer >
-                      <ButtonErrorOutlined
-                        icon={DeleteOutlineOutlinedIcon}
-                        LabelName={'Hapus'}
-                        padding={'6px 16px'}
-                        onClick={() => handleHapusBPJOpen(row.nippos)}
-                        disabled={disabled}
-                      />
-                    </ButtonContainer>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-      <Stack spacing={2} direction="row" marginTop={2}>
-        <Pagination count={Math.ceil(rows.length / itemsPerPage)} page={page} onChange={handleChangePage} color="primary" />
-        <div style={{ flex: '1' }}> </div>
-        <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
-      </Stack>
+      {
+        resetRows.length === 0 && initialDataLength !== resetRows.length ? (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>No</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>Nama</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>Nippos</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>Posisi</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>Aksi</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+              </Table>
+            </TableContainer>
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', whiteSpace: 'pre-line', textAlign: 'center' }}>
+              {noResultsCaption}
+            </Typography>
+          </div>
+        ) : (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>No</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>Nama</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>Nippos</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>Posisi</StyledTableCell>
+                    <StyledTableCell sx={{ minWidth: 'auto' }}>Aksi</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {resetRows.slice(startIndex, endIndex).map((row) => (
+                    <StyledTableRow key={row.id}>
+                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
+                      <StyledTableCell >{row.nama}</StyledTableCell>
+                      <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.nippos}</StyledTableCell>
+                      <StyledTableCell >{row.Posisi}</StyledTableCell>
+                      <StyledTableCell >
+                        <ButtonContainer >
+                          <ButtonErrorOutlined
+                            icon={DeleteOutlineOutlinedIcon}
+                            LabelName={'Hapus'}
+                            padding={'6px 16px'}
+                            onClick={() => handleHapusBPJOpen(row.nippos)}
+                            disabled={disabled}
+                          />
+                        </ButtonContainer>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        )
+      }
+
+      {resetRows.length > 0 && (
+        <Stack spacing={2} direction="row">
+          <Pagination
+            count={Math.ceil(filteredRows.length / itemsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            color="primary" />
+          <div style={{ flex: '1' }}> </div>
+          <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
+        </Stack>
+      )}
+
       <HapusDataBPJ
         open={HapusBPJOpen}
         handleClose={() => {

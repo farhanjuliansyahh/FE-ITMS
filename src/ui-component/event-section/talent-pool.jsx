@@ -19,7 +19,7 @@ import.meta.env.VITE_API_BASE_URL
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-  
+
   return (
     <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
@@ -54,7 +54,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
   const [poolrow, setpool] = useState([]);
   const [refreshstate, setrefreshstate] = useState([false]);
   const url = import.meta.env.VITE_API_BASE_URL
-  
+
   const eventidactive = eventid;
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -174,21 +174,34 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
     dataToDownload = resetRowsTrue;
     filename = `Talent_Pool_${eventid}.csv`;
 
-    // Create a CSV header with column names
-    const headers = Object.keys(dataToDownload[0]);
-    const idIndex = headers.indexOf('id');
-    if (idIndex !== -1) {
-      headers.splice(idIndex, 1); // Remove 'id' from headers
-      headers.unshift('id'); // Insert 'id' at the beginning
-    }
-    const headerRow = headers.join(',');
+    // Specify the columns to include in the CSV, adding 'No' as the first column
+    const includedData = [
+      'No', 'Nama', 'Nippos', 'Posisi', 'Job Level',
+      'Rumpun Jabatan', 'Nama Kantor', 'Kategori Matrix Akhir', 'Status'
+    ];
+
+    // Create a CSV header with the included column names
+    const headerNames = [
+      'No', 'Nama', 'NIPPOS', 'Posisi', 'Job Level',
+      'Rumpun Jabatan', 'Kantor', 'Kategori Matrix Akhir', 'Status'
+    ];
+    const headerRow = headerNames.join(';');
+
+    // Filter the data to include only the specified columns and add 'No' column
+    const filteredData = dataToDownload.map((row, index) => {
+      const filteredRow = { No: index + 1 }; // Add 'No' column starting from 1
+      includedData.slice(1).forEach(column => {
+        filteredRow[column] = row[column];
+      });
+      return filteredRow;
+    });
 
     // Convert data to CSV format
     const csvContent =
       'data:text/csv;charset=utf-8,' +
       headerRow +
       '\n' +
-      dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
+      filteredData.map(row => includedData.map(column => row[column]).join(';')).join('\n');
 
     // Create a temporary anchor element
     const encodedUri = encodeURI(csvContent);
@@ -208,7 +221,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
   const [eventaktif, seteventaktif] = useState([]);
 
   const fetcheventdetail = () => {
-    return fetch(url + `getoneevent?id=${eventid}`) 
+    return fetch(url + `getoneevent?id=${eventid}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -216,11 +229,11 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
         return response.json();
       })
       .then((data) => {
-        return data; 
+        return data;
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        throw error; 
+        throw error;
       });
   };
 
@@ -245,7 +258,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
               Tabel Karyawan
             </Typography>
 
-            <LabelInfo length={poolLength} kuota={eventaktif.kuota}/>
+            <LabelInfo length={poolLength} kuota={eventaktif.kuota} />
 
             <div style={{ flex: '1' }}> </div>
 
@@ -292,6 +305,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
             updaterows={handlerefresh}
             eventstatus_id={eventstatus_id}
             setrefresh={setrefresh}
+            initialDataLength={poolLength}
           />
         </Box>
       </MainCard>

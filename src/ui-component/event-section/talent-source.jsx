@@ -94,45 +94,52 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   const handleDownloadCSV = () => {
     let dataToDownload = [];
     let filename = '';
-
+  
     // Determine which dataset to use based on the active tab
     if (value === 0) {
-      dataToDownload = resetRowsFalse;
+      dataToDownload = resetRowIndexFalse(filteredRowsFalse);
       filename = `Talent_Source_TidakTerdaftar_${eventid}.csv`;
     } else if (value === 1) {
       dataToDownload = resetRowsTrue;
       filename = `Talent_Source_Terdaftar_${eventid}.csv`;
     }
-
-    // Create a CSV header with column names
-    const headers = Object.keys(dataToDownload[0]);
-    const idIndex = headers.indexOf('id');
-    if (idIndex !== -1) {
-      headers.splice(idIndex, 1); // Remove 'id' from headers
-      headers.unshift('id'); // Insert 'id' at the beginning
-    }
-    const headerRow = headers.join(',');
-
+  
+    // Specify the columns to include in the CSV, adding 'No' as the first column
+    const includedData = ['No', 'Nama', 'Nippos', 'Posisi', 'Job Family', 'Job Level', 'Nama Kantor', 'Komite Unit'];
+  
+    // Create a CSV header with the included column names
+    const headerNames = ['No', 'Nama', 'NIPPOS', 'Posisi', 'Job Family', 'Job Level', 'Kantor', 'Komite Unit'];
+    const headerRow = headerNames.join(';');
+  
+    // Filter the data to include only the specified columns and add 'No' column
+    const filteredData = dataToDownload.map((row, index) => {
+      const filteredRow = { No: index + 1 }; // Add 'No' column starting from 1
+      includedData.slice(1).forEach(column => {
+        filteredRow[column] = row[column];
+      });
+      return filteredRow;
+    });
+  
     // Convert data to CSV format
     const csvContent =
       'data:text/csv;charset=utf-8,' +
       headerRow +
       '\n' +
-      dataToDownload.map((row) => headers.map((header) => row[header]).join(',')).join('\n');
-
+      filteredData.map(row => includedData.map(column => row[column]).join(';')).join('\n');
+  
     // Create a temporary anchor element
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
     link.setAttribute('download', filename);
     document.body.appendChild(link);
-
+  
     // Trigger the download
     link.click();
-
+  
     // Clean up
     document.body.removeChild(link);
-  };
+  };  
 
   useEffect(() => {
     setLoading(false);
@@ -198,11 +205,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   const listNamaFalse = [...new Set(rowsfalse.map((row) => row.Nama))];
   const listNipposFalse = [...new Set(rowsfalse.map((row) => row.Nippos))];
   const listJobLevelFalse = [...new Set(rowsfalse.map((row) => row['Job Level']))];
+  const listKantorFalse = [...new Set(rowsfalse.map((row) => row['Nama Kantor']))];
   const listKomiteUnitFalse = [...new Set(rowsfalse.map((row) => row['Komite Unit']))];
 
   const [selectedNamaFalse, setSelectedNamaFalse] = useState(null);
   const [selectedNipposFalse, setSelectedNipposFalse] = useState(null);
   const [selectedJobLevelFalse, setSelectedJobLevelFalse] = useState(null);
+  const [selectedKantorFalse, setSelectedKantorFalse] = useState(null);
   const [selectedKomiteUnitFalse, setSelectedKomiteUnitFalse] = useState(null);
 
   const resetNamaInputFalse = () => {
@@ -217,6 +226,10 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     setSelectedJobLevelFalse('');
   };
 
+  const resetKantorInputFalse = () => {
+    setSelectedKantorFalse('');
+  };
+
   const resetKomiteUnitInputFalse = () => {
     setSelectedKomiteUnitFalse('');
   };
@@ -225,18 +238,18 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     resetNamaInputFalse();
     resetNipposInputFalse();
     resetJobLevelInputFalse();
+    resetKantorInputFalse(); 
     resetKomiteUnitInputFalse();
   };
 
   const filteredRowsFalse = rowsfalse.filter((row) => {
     const namaMatchFalse = !selectedNamaFalse || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaFalse.toLowerCase())); // Add null check for row.nama
     const nipposMatchFalse = !selectedNipposFalse || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposFalse.toLowerCase())); // Add null check for row.nippos
-    const jobLevelMatchFalse =
-      !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase())); // Add null check for row.nippos
-    const komiteUnitMatchFalse =
-      !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchFalse = !selectedJobLevelFalse || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelFalse.toLowerCase())); // Add null check for row.nippos
+    const kantorMatchFalse = !selectedKantorFalse || (row['Nama Kantor'] && row['Nama Kantor'].toLowerCase().includes(selectedKantorFalse.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchFalse = !selectedKomiteUnitFalse || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitFalse.toLowerCase())); // Add null check for row.nippos
 
-    return namaMatchFalse && nipposMatchFalse && jobLevelMatchFalse && komiteUnitMatchFalse;
+    return namaMatchFalse && nipposMatchFalse && jobLevelMatchFalse && kantorMatchFalse && komiteUnitMatchFalse;
   });
 
   const resetRowIndexFalse = (filteredRowsFalse) => {
@@ -253,11 +266,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   const listNamaTrue = [...new Set(rowstrue.map((row) => row.Nama))];
   const listNipposTrue = [...new Set(rowstrue.map((row) => row.Nippos))];
   const listJobLevelTrue = [...new Set(rowstrue.map((row) => row['Job Level']))];
+  const listKantorTrue = [...new Set(rowstrue.map((row) => row['Nama Kantor']))];
   const listKomiteUnitTrue = [...new Set(rowstrue.map((row) => row['Komite Unit']))];
 
   const [selectedNamaTrue, setSelectedNamaTrue] = useState(null);
   const [selectedNipposTrue, setSelectedNipposTrue] = useState(null);
   const [selectedJobLevelTrue, setSelectedJobLevelTrue] = useState(null);
+  const [selectedKantorTrue, setSelectedKantorTrue] = useState(null);
   const [selectedKomiteUnitTrue, setSelectedKomiteUnitTrue] = useState(null);
 
   const resetNamaInputTrue = () => {
@@ -272,6 +287,10 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     setSelectedJobLevelTrue('');
   };
 
+  const resetKantorInputTrue = () => {
+    setSelectedKantorTrue('');
+  };
+
   const resetKomiteUnitInputTrue = () => {
     setSelectedKomiteUnitTrue('');
   };
@@ -280,18 +299,18 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
     resetNamaInputTrue();
     resetNipposInputTrue();
     resetJobLevelInputTrue();
+    resetKantorInputTrue();
     resetKomiteUnitInputTrue();
   };
 
   const filteredRowsTrue = rowstrue.filter((row) => {
     const namaMatchTrue = !selectedNamaTrue || (row.Nama && row.Nama.toLowerCase().includes(selectedNamaTrue.toLowerCase())); // Add null check for row.nama
     const nipposMatchTrue = !selectedNipposTrue || (row.Nippos && row.Nippos.toLowerCase().includes(selectedNipposTrue.toLowerCase())); // Add null check for row.nippos
-    const jobLevelMatchTrue =
-      !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
-    const komiteUnitMatchTrue =
-      !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
+    const jobLevelMatchTrue = !selectedJobLevelTrue || (row['Job Level'] && row['Job Level'].toLowerCase().includes(selectedJobLevelTrue.toLowerCase())); // Add null check for row.nippos
+    const kantorMatchTrue = !selectedKantorTrue || (row['Nama Kantor'] && row['Nama Kantor'].toLowerCase().includes(selectedKantorTrue.toLowerCase())); // Add null check for row.nippos
+    const komiteUnitMatchTrue = !selectedKomiteUnitTrue || (row['Komite Unit'] && row['Komite Unit'].toLowerCase().includes(selectedKomiteUnitTrue.toLowerCase())); // Add null check for row.nippos
 
-    return namaMatchTrue && nipposMatchTrue && jobLevelMatchTrue && komiteUnitMatchTrue;
+    return namaMatchTrue && nipposMatchTrue && jobLevelMatchTrue && kantorMatchTrue && komiteUnitMatchTrue;
   });
 
   const resetRowIndexTrue = (filteredRowsTrue) => {
@@ -302,16 +321,6 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
   };
 
   const resetRowsTrue = resetRowIndexTrue(filteredRowsTrue);
-
-  const rowsKosong = [
-    {
-      'Nama' : ' ',
-      'Nippos' : ' ',
-      'Job Family' : ' ',
-      'Nama Kantor' : ' ',
-      'Komite Unit' : ' '
-    }
-  ];
 
   return (
     <>
@@ -369,6 +378,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
                   resetInput={resetJobLevelInputFalse}
                 />
                 <CustomSearch
+                  field={listKantorFalse}
+                  label={'Kantor'}
+                  onSearch={setSelectedKantorFalse}
+                  value={selectedKantorFalse}
+                  resetInput={resetKantorInputFalse}
+                />
+                <CustomSearch
                   field={listKomiteUnitFalse}
                   label={'Komite Unit'}
                   onSearch={setSelectedKomiteUnitFalse}
@@ -388,6 +404,8 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
               getkandidatfalse={getkandidatfalse}
               getkandidattrue={getkandidattrue}
               showButton={true}
+              caption={"Belum ada karyawan untuk dipilih"}
+              initialDataLength={rowsfalse.length}
             />
           </Box>
         </CustomTabPanel>
@@ -429,6 +447,13 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
                   resetInput={resetJobLevelInputTrue}
                 />
                 <CustomSearch
+                  field={listKantorTrue}
+                  label={'Kantor'}
+                  onSearch={setSelectedKantorTrue}
+                  value={selectedKantorTrue}
+                  resetInput={resetKantorInputTrue}
+                />
+                <CustomSearch
                   field={listKomiteUnitTrue}
                   label={'Komite Unit'}
                   onSearch={setSelectedKomiteUnitTrue}
@@ -439,7 +464,14 @@ const TalentSource = ({ eventid, eventstatus_id }) => {
               <ButtonErrorOutlined onClick={handleResetSearchTrue} Color="#D32F2F" icon={RestartAltOutlined} LabelName={'Reset'} />
             </div>
 
-            <TalentSourceTable checkboxSelection={false} rows={resetRowsTrue} eventid={eventidactive} showButton={false} />
+            <TalentSourceTable
+              checkboxSelection={false}
+              rows={resetRowsTrue}
+              eventid={eventidactive}
+              showButton={false}
+              caption={"Belum ada karyawan yang terdaftar"}
+              initialDataLength={rowstrue.length}
+            />
           </Box>
         </CustomTabPanel>
       </MainCard>

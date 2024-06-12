@@ -209,7 +209,7 @@
 //         const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase())); // Add null check for row.nippos
 //         const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase())); // Add null check for row.nippos
 //         const KategoriMatrixMatch = !searchKategoriMatrix || (row['Matriks Kategori Akhir'] && row['Matriks Kategori Akhir'].toLowerCase().includes(searchKategoriMatrix.toLowerCase())); // Add null check for row.nippos
-    
+
 //         return (!searchNama || namaMatch) 
 //         && (!searchNippos || nipposMatch) 
 //         && (!searchJobLevel || jobLevelMatch) 
@@ -228,7 +228,7 @@
 //                 }}
 //                 pageSizeOptions={[5, 10]}
 //             />
-            
+
 //             <UbahKategoriMatrix 
 //                 open={openFirstModal} 
 //                 onClose={handleCloseFirstModal} 
@@ -254,27 +254,27 @@ import { CreateOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import UbahKategoriMatrix from '../../ui-component/modal/ubah-kategori-matrix.jsx';
 import KonfirmasiUbahMatrix from '../../ui-component/modal/konfirmasi-ubah-matrix.jsx';
-import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
+import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import FilterButton from '../../ui-component/button/FilterButton.jsx';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#F5F5F5',
-      color: '#1F1F1F',
-      fontSize: 14,
-      fontWeight: 600,
-      whiteSpace: 'nowrap',
-      height: '60px',
+        backgroundColor: '#F5F5F5',
+        color: '#1F1F1F',
+        fontSize: 14,
+        fontWeight: 600,
+        whiteSpace: 'nowrap',
+        height: '60px',
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 12,
-      minHeight: 20,
-      verticalAlign: 'center',
-      height: '60px',
+        fontSize: 12,
+        minHeight: 20,
+        verticalAlign: 'center',
+        height: '60px',
     },
-  }));
+}));
 
 const getStatusStyle = (status) => {
     let color, backgroundColor;
@@ -300,26 +300,27 @@ const getStatusStyle = (status) => {
 
 const getKategoriMatrixStyle = (value) => (
     <div>
-        <span style={{ 
-            color: '#2196F3', 
-            backgroundColor: value ? '#EAF8FF' : 'transparent', 
-            padding: '4px 8px', 
-            borderRadius: '24px' 
+        <span style={{
+            color: '#2196F3',
+            backgroundColor: value ? '#EAF8FF' : 'transparent',
+            padding: '4px 8px',
+            borderRadius: '24px'
         }}>{value}</span>
     </div>
 );
 
 const TalentClusterKetuaKomiteTalentTable = ({
-    eventid, 
+    eventid,
     rows,
-    onTableDataRefresh, 
+    onTableDataRefresh,
     disabled,
-    searchNama, 
+    searchNama,
     searchNippos,
     searchJobLevel,
     searchKategoriMatrix,
     terpilih,
-    kuota
+    kuota,
+    initialDataLength
 }) => {
     const [openFirstModal, setOpenFirstModal] = useState(false);
     const [openSecondModal, setOpenSecondModal] = useState(false);
@@ -376,7 +377,7 @@ const TalentClusterKetuaKomiteTalentTable = ({
                 console.error('Error fetching data:', error);
                 throw error;
             });
-            setRefreshTable(true);
+        setRefreshTable(true);
     };
 
     const handleOpenFirstModal = (nippos, kategoriMatrixAwal) => {
@@ -395,122 +396,148 @@ const TalentClusterKetuaKomiteTalentTable = ({
 
     const handleCloseSecondModal = (reason) => {
         ubahmatriks(eventid, selectedNippos, selectedCategory, reason)
-        .then(() => {
-            onTableDataRefresh();
-            setOpenSecondModal(false);
-        })
-        .catch(error => {
-            console.error('Error updating data:', error);
-        });
+            .then(() => {
+                onTableDataRefresh();
+                setOpenSecondModal(false);
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
     };
 
     const handlebatalkansecondmodal = () => {
         setOpenSecondModal(false);
     };
 
-    const filteredRows = rows.filter((row) => {
-        const namaMatch = !searchNama || (row.nama && row.nama.toLowerCase().includes(searchNama.toLowerCase()));
-        const nipposMatch = !searchNippos || (row.nippos && row.nippos.toLowerCase().includes(searchNippos.toLowerCase()));
-        const jobLevelMatch = !searchJobLevel || (row['Job Level'] && row['Job Level'].toLowerCase().includes(searchJobLevel.toLowerCase()));
-        const KategoriMatrixMatch = !searchKategoriMatrix || (row['Matriks Kategori Akhir'] && row['Matriks Kategori Akhir'].toLowerCase().includes(searchKategoriMatrix.toLowerCase()));
-    
-        return (!searchNama || namaMatch) 
-        && (!searchNippos || nipposMatch) 
-        && (!searchJobLevel || jobLevelMatch) 
-        && (!searchKategoriMatrix || KategoriMatrixMatch);
-    });
+    const noResultsCaption = "Maaf, tidak ada hasil yang sesuai dengan pencarian Anda.\nCoba periksa ejaan kata kunci";
+
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, rows.length);
     const calculateColumnWidth = (data, accessor, headerText) => {
         const maxLength = Math.max(...data.map((item) => (item[accessor] ? item[accessor].toString().length : 0)), headerText.length);
         return maxLength * 11;
-      };
+    };
 
     return (
         <div>
-            <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }}>
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>No</StyledTableCell>
-                                <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
-                                <StyledTableCell>NIPPOS</StyledTableCell>
-                                <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
-                                <StyledTableCell>Job Level</StyledTableCell>
-                                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
-                                <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor')}}>Kantor</StyledTableCell>
-                                <StyledTableCell>Komite Unit</StyledTableCell>
-                                <StyledTableCell>Kategori Matrix Awal</StyledTableCell>
-                                <StyledTableCell>Kategori Matrix Akhir</StyledTableCell>
-                                <StyledTableCell>Status</StyledTableCell>
-                                <StyledTableCell sx={{ textAlign: 'center'}}>Aksi</StyledTableCell>
-                                <StyledTableCell>Alasan Perubahan</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {filteredRows.slice(startIndex, endIndex).map((row) => (
-                                <TableRow key={row.id}>
-                                    <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
-                                    <StyledTableCell>{row.nama}</StyledTableCell>
-                                    <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.nippos}</StyledTableCell>
-                                    <StyledTableCell>{row.Posisi}</StyledTableCell>
-                                    <StyledTableCell sx={{ textAlign: 'center'}}>{row['Job Level']}</StyledTableCell>
-                                    <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
-                                    <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
-                                    <StyledTableCell>{row['Komite Unit']}</StyledTableCell>
-                                    <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{getKategoriMatrixStyle(row['Matriks Kategori Awal'])}</StyledTableCell>
-                                    <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{getKategoriMatrixStyle(row['Matriks Kategori Akhir'])}</StyledTableCell>
-                                    <StyledTableCell>
-                                        <div style={getStatusStyle(row.status)}>
-                                            <span>{row.status}</span>
-                                        </div>
-                                    </StyledTableCell>
-                                    <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>
-                                        <Button 
-                                            variant="contained" 
-                                            sx={{
-                                                backgroundColor:'#1C2D5A', 
-                                                color: '#FFFFFF',
-                                                borderRadius:'12px', 
-                                                padding: '6px 16px'
-                                            }} 
-                                            endIcon={<CreateOutlined />}
-                                            onClick={() => handleOpenFirstModal(row.nippos, row['Matriks Kategori Awal'])}
-                                            disabled={disabled}
-                                        >
-                                            Ubah Kategori
-                                        </Button>
-                                    </StyledTableCell>
-                                    <StyledTableCell>{row.reason}</StyledTableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            {
+                rows.length === 0 && initialDataLength !== rows.length ? (
+                    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 700 }}>
+                                <TableHead>
+                                    <TableRow>
+                                        <StyledTableCell>No</StyledTableCell>
+                                        <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+                                        <StyledTableCell>NIPPOS</StyledTableCell>
+                                        <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
+                                        <StyledTableCell>Job Level</StyledTableCell>
+                                        <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
+                                        <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
+                                        <StyledTableCell>Komite Unit</StyledTableCell>
+                                        <StyledTableCell>Kategori Matrix Awal</StyledTableCell>
+                                        <StyledTableCell>Kategori Matrix Akhir</StyledTableCell>
+                                        <StyledTableCell>Status</StyledTableCell>
+                                        <StyledTableCell sx={{ textAlign: 'center' }}>Aksi</StyledTableCell>
+                                        <StyledTableCell>Alasan Perubahan</StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                        <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', whiteSpace: 'pre-line', textAlign: 'center' }}>
+                            {noResultsCaption}
+                        </Typography>
+                    </div>
+                ) : (
+                    <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 700 }}>
+                                <TableHead>
+                                    <TableRow>
+                                        <StyledTableCell>No</StyledTableCell>
+                                        <StyledTableCell sx={{ minWidth: 150 }}>Nama</StyledTableCell>
+                                        <StyledTableCell>NIPPOS</StyledTableCell>
+                                        <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
+                                        <StyledTableCell>Job Level</StyledTableCell>
+                                        <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
+                                        <StyledTableCell sx={{ minWidth: calculateColumnWidth(rows, 'Kantor', 'Nama Kantor') }}>Kantor</StyledTableCell>
+                                        <StyledTableCell>Komite Unit</StyledTableCell>
+                                        <StyledTableCell>Kategori Matrix Awal</StyledTableCell>
+                                        <StyledTableCell>Kategori Matrix Akhir</StyledTableCell>
+                                        <StyledTableCell>Status</StyledTableCell>
+                                        <StyledTableCell sx={{ textAlign: 'center' }}>Aksi</StyledTableCell>
+                                        <StyledTableCell>Alasan Perubahan</StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {rows.slice(startIndex, endIndex).map((row) => (
+                                        <TableRow key={row.id}>
+                                            <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.id}</StyledTableCell>
+                                            <StyledTableCell>{row.nama}</StyledTableCell>
+                                            <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{row.nippos}</StyledTableCell>
+                                            <StyledTableCell>{row.Posisi}</StyledTableCell>
+                                            <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
+                                            <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
+                                            <StyledTableCell>{row['Nama Kantor']}</StyledTableCell>
+                                            <StyledTableCell>{row['Komite Unit']}</StyledTableCell>
+                                            <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{getKategoriMatrixStyle(row['Matriks Kategori Awal'])}</StyledTableCell>
+                                            <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>{getKategoriMatrixStyle(row['Matriks Kategori Akhir'])}</StyledTableCell>
+                                            <StyledTableCell>
+                                                <div style={getStatusStyle(row.status)}>
+                                                    <span>{row.status}</span>
+                                                </div>
+                                            </StyledTableCell>
+                                            <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        backgroundColor: '#1C2D5A',
+                                                        color: '#FFFFFF',
+                                                        borderRadius: '12px',
+                                                        padding: '6px 16px'
+                                                    }}
+                                                    endIcon={<CreateOutlined />}
+                                                    onClick={() => handleOpenFirstModal(row.nippos, row['Matriks Kategori Awal'])}
+                                                    disabled={disabled}
+                                                >
+                                                    Ubah Kategori
+                                                </Button>
+                                            </StyledTableCell>
+                                            <StyledTableCell>{row.reason}</StyledTableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                )
+            }
+
+            {rows.length > 0 && (
                 <Stack spacing={2} direction="row" marginTop={2}>
                     <Pagination
                         count={Math.ceil(rows.length / itemsPerPage)}
                         page={page}
                         onChange={handleChangePage}
-                        color="primary"/>
+                        color="primary" />
                     <div style={{ flex: '1' }}></div>
                     <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
                 </Stack>
-                <UbahKategoriMatrix 
-                    open={openFirstModal} 
-                    onClose={handleCloseFirstModal} 
-                    onOpenSecondModal={handleOpenSecondModal} 
-                    onSelectCategory={handleCategorySelect}
-                    currentMatrix={currentMatrix}/>
+            )}
 
-                <KonfirmasiUbahMatrix 
-                    open={openSecondModal} 
-                    onClose={handlebatalkansecondmodal} 
-                    onConfirm={handleCloseSecondModal}
-                    terpilih={terpilih}
-                    kuota={kuota} />
-            </div>
+            <UbahKategoriMatrix
+                open={openFirstModal}
+                onClose={handleCloseFirstModal}
+                onOpenSecondModal={handleOpenSecondModal}
+                onSelectCategory={handleCategorySelect}
+                currentMatrix={currentMatrix} />
+
+            <KonfirmasiUbahMatrix
+                open={openSecondModal}
+                onClose={handlebatalkansecondmodal}
+                onConfirm={handleCloseSecondModal}
+                terpilih={terpilih}
+                kuota={kuota} />
         </div>
     );
 };

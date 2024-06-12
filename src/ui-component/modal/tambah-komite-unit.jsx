@@ -112,7 +112,7 @@ export default function TambahKomiteUnit({ open, onClose, onConfirm, onOpenSecon
                 <TabelDaftarAnggotaKomiteUnit 
                     onOpenSecondModalTable={handleTambahKomiteUnitButtonClick}
                     rows = {rows}
-                    searchNama={selectedNama} // Pass selectedNama as searchTerm to the NilaiAssessmentTable component
+                    searchNama={selectedNama} 
                     searchJabatan={selectedJabatan}
                     searchKantor={selectedKantor}
                 />

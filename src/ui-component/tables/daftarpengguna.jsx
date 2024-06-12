@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { Pagination, Button, Dialog, Stack, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, DialogContent, DialogActions, Checkbox, FormControlLabel } from '@mui/material';
+import { Pagination, Button, Dialog, Stack, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, DialogContent, DialogActions, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
@@ -88,7 +88,7 @@ const ActionButton = ({ row, refetchData }) => {
 
   return (
     <>
-      <Button variant="contained" color="primary" size="small" onClick={handleButtonClick} sx={{whiteSpace: 'nowrap'}}>
+      <Button variant="contained" color="primary" size="small" onClick={handleButtonClick} sx={{ whiteSpace: 'nowrap' }}>
         Ubah Akses
       </Button>
       <Dialog open={open} onClose={handleModalClose}>
@@ -143,7 +143,8 @@ const ActionButton = ({ row, refetchData }) => {
 
 export default function DaftarPenggunaTabel({
   rows,
-  refetchData
+  refetchData,
+  initialDataLength
 }) {
 
   const calculateColumnWidth = (data, accessor, headerText) => {
@@ -152,7 +153,7 @@ export default function DaftarPenggunaTabel({
   };
 
   const [page, setPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5); 
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -166,51 +167,82 @@ export default function DaftarPenggunaTabel({
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
+  const noResultsCaption = "Maaf, tidak ada hasil yang sesuai dengan pencarian Anda.\nCoba periksa ejaan kata kunci";
+
   return (
     <div>
-      <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }}>
-            <TableHead>
-              <TableRow>
-                <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No </StyledTableCell>
-                <StyledTableCell sx={{ width: 300 }}>Nama</StyledTableCell>
-                <StyledTableCell sx={{ width: 150 }}>NIPPOS</StyledTableCell>
-                <StyledTableCell sx={{ width: 500 }}>Posisi</StyledTableCell>
-                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
-                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
-                <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'Peran', 'Peran') }}>Peran</StyledTableCell>
-                <StyledTableCell >Aksi</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.slice(startIndex, endIndex).map((row) => (
-                <TableRow key={row.id}>
-                  <StyledTableCell>{row.id}</StyledTableCell>
-                  <StyledTableCell>{row.nama}</StyledTableCell>
-                  <StyledTableCell>{row.nippos}</StyledTableCell>
-                  <StyledTableCell>{row.posisi}</StyledTableCell>
-                  <StyledTableCell>{row.jobfam}</StyledTableCell>
-                  <StyledTableCell>{row.joblevel}</StyledTableCell>
-                  <StyledTableCell>{row.Peran}</StyledTableCell>
-                  <StyledTableCell>
-                    <ActionButton row={row} refetchData={refetchData}/>
-                  </StyledTableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-      <Stack spacing={2} direction="row">
-        <Pagination
-          count={Math.ceil(rows.length / itemsPerPage)}
-          page={page}
-          onChange={handleChangePage}
-          color="primary" />
-        <div style={{ flex: '1' }}> </div>
-        <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
-      </Stack>
+      {
+        rows.length === 0 && initialDataLength !== rows.length ? (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No </StyledTableCell>
+                    <StyledTableCell sx={{ width: 300 }}>Nama</StyledTableCell>
+                    <StyledTableCell sx={{ width: 150 }}>NIPPOS</StyledTableCell>
+                    <StyledTableCell sx={{ width: 500 }}>Posisi</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'Peran', 'Peran') }}>Peran</StyledTableCell>
+                    <StyledTableCell >Aksi</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+              </Table>
+            </TableContainer>
+            <Typography style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', whiteSpace: 'pre-line', textAlign: 'center' }}>
+              {noResultsCaption}
+            </Typography>
+          </div>
+        ) : (
+          <div style={{ display: 'block', borderRadius: '12px', border: '1px solid #E0E0E0', marginBottom: '24px' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell sx={{ whiteSpace: 'nowrap' }}>No </StyledTableCell>
+                    <StyledTableCell sx={{ width: 300 }}>Nama</StyledTableCell>
+                    <StyledTableCell sx={{ width: 150 }}>NIPPOS</StyledTableCell>
+                    <StyledTableCell sx={{ width: 500 }}>Posisi</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Job Family</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
+                    <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'Peran', 'Peran') }}>Peran</StyledTableCell>
+                    <StyledTableCell >Aksi</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.slice(startIndex, endIndex).map((row) => (
+                    <TableRow key={row.id}>
+                      <StyledTableCell>{row.id}</StyledTableCell>
+                      <StyledTableCell>{row.nama}</StyledTableCell>
+                      <StyledTableCell>{row.nippos}</StyledTableCell>
+                      <StyledTableCell>{row.posisi}</StyledTableCell>
+                      <StyledTableCell>{row.jobfam}</StyledTableCell>
+                      <StyledTableCell>{row.joblevel}</StyledTableCell>
+                      <StyledTableCell>{row.Peran}</StyledTableCell>
+                      <StyledTableCell>
+                        <ActionButton row={row} refetchData={refetchData} />
+                      </StyledTableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        )
+      }
+
+      {rows.length > 0 && (
+        <Stack spacing={2} direction="row">
+          <Pagination
+            count={Math.ceil(rows.length / itemsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            color="primary" />
+          <div style={{ flex: '1' }}> </div>
+          <FilterButton itemsPerPage={itemsPerPage} setItemsPerPage={handleItemsPerPageChange} />
+        </Stack>
+      )}
     </div>
   );
 }
