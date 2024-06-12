@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Grid, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { gridSpacing } from '../../../store/constant.jsx';
-import GroupsIcon from '@mui/icons-material/Groups.jsx';
+import GroupsIcon from '@mui/icons-material/Groups';
 import Header from '../../../ui-component/header/header.jsx';
 import DashboardCard from '../../../ui-component/cards/DashboardCard.jsx';
 import LevelJabatanChart from '../../../ui-component/charts/LevelJabatanChart.jsx';
