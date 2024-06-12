@@ -270,7 +270,7 @@ const TalentDays = ({ eventid, eventstatus_id, nama_event }) => {
     let filename = '';
 
     dataToDownload = resetRowsTrue;
-    filename = `${eventid}_${nama_event}_Talent Days_Daftar Karyawan.csv`;
+    filename = `${nama_event}_Talent Days_Daftar Karyawan.csv`;
 
     // Specify the columns to include in the CSV, adding 'No' as the first column
     const includedData = ['No', 'Nama', 'Nippos', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Nama Kantor', 'Komite Unit', 'Status'];

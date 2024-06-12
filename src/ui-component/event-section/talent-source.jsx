@@ -98,10 +98,10 @@ const TalentSource = ({ eventid, eventstatus_id, nama_event }) => {
     // Determine which dataset to use based on the active tab
     if (value === 0) {
       dataToDownload = resetRowIndexFalse(filteredRowsFalse);
-      filename = `${eventid}_${nama_event}_Talent Source_Belum Terdaftar.csv`;
+      filename = `${nama_event}_Talent Source_Belum Terdaftar.csv`;
     } else if (value === 1) {
       dataToDownload = resetRowsTrue;
-      filename = `${eventid}_${nama_event}_Talent Source_Terdaftar.csv`;
+      filename = `${nama_event}_Talent Source_Terdaftar.csv`;
     }
   
     // Specify the columns to include in the CSV, adding 'No' as the first column

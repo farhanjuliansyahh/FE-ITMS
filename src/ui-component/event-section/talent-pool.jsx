@@ -172,7 +172,7 @@ const TalentPool = ({ eventid, eventstatus_id, nama_event }) => {
     let filename = '';
 
     dataToDownload = resetRowsTrue;
-    filename = `${eventid}_${nama_event}_Talent Pool.csv`;
+    filename = `${nama_event}_Talent Pool.csv`;
 
     // Specify the columns to include in the CSV, adding 'No' as the first column
     const includedData = [

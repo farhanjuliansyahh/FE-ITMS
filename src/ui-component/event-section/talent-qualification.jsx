@@ -161,10 +161,10 @@ const TalentQualification = ({ eventid, kodekomite, prevLocation, nama_event }) 
     // Determine which dataset to use based on the active tab
     if (value === 0) {
       dataToDownload = resetRowsTrue;
-      filename = `${eventid}_${nama_event}_Talent Qualification_Terkualifikasi.csv`;
+      filename = `${nama_event}_Talent Qualification_Terkualifikasi.csv`;
     } else if (value === 1) {
       dataToDownload = resetRowsFalse;
-      filename = `${eventid}_${nama_event}_Talent Qualification_Tidak Terkualifikasi.csv`;
+      filename = `${nama_event}_Talent Qualification_Tidak Terkualifikasi.csv`;
     }
   
     // Specify the columns to include in the CSV, adding 'No' as the first column
