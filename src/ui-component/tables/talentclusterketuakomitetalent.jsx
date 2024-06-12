@@ -352,7 +352,7 @@ const TalentClusterKetuaKomiteTalentTable = ({
     const url = import.meta.env.VITE_API_BASE_URL
 
     const ubahmatriks = (eventid, nippos, matriks, reason) => {
-        return fetch('http://localhost:4000/updatematriks', {
+        return fetch(url + 'updatematriks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
