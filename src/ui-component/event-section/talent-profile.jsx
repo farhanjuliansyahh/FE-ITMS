@@ -48,7 +48,7 @@ function a11yProps(index) {
   };
 }
 
-const TalentProfile = ({ eventid, eventstatus_id }) => {
+const TalentProfile = ({ eventid, eventstatus_id, nama_event }) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
@@ -155,10 +155,10 @@ const TalentProfile = ({ eventid, eventstatus_id }) => {
     // Determine which dataset to use based on the active tab
     if (value === 0) {
       dataToDownload = resetRowsFalse;
-      filename = `Talent_Profile_TidakLengkap_${eventid}.csv`;
+      filename = `${eventid}_${nama_event}_Talent Profile_Belum Lengkap.csv`;
     } else if (value === 1) {
       dataToDownload = resetRowsTrue;
-      filename = `Talent_Profile_Lengkap_${eventid}.csv`;
+      filename = `${eventid}_${nama_event}_Talent Profile_Lengkap.csv`;
     }
   
     // Specify the columns to include in the CSV, adding 'No' as the first column

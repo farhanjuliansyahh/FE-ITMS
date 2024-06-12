@@ -205,7 +205,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentSource eventid={eventid} eventstatus_id={eventstatus_id} />
+              <TalentSource eventid={eventid} eventstatus_id={eventstatus_id} nama_event={nama_event}/>
             </Box>
           </MainCard>
         );
@@ -213,7 +213,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentProfile eventid={eventid} eventstatus_id={eventstatus_id} />
+              <TalentProfile eventid={eventid} eventstatus_id={eventstatus_id} nama_event={nama_event}/>
             </Box>
           </MainCard>
         );
@@ -221,7 +221,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id} prevLocation={prevLocation} />
+              <TalentQualification eventid={eventid} kodekomite={kodekomite} eventstatus_id={eventstatus_id} prevLocation={prevLocation} nama_event={nama_event}/>
             </Box>
           </MainCard>
         );
@@ -229,7 +229,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentDays eventid={eventid} eventstatus_id={eventstatus_id} />
+              <TalentDays eventid={eventid} eventstatus_id={eventstatus_id} nama_event={nama_event}/>
             </Box>
           </MainCard>
         );
@@ -237,7 +237,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentCluster eventid={eventid} eventstatus_id={eventstatus_id} />
+              <TalentCluster eventid={eventid} eventstatus_id={eventstatus_id} nama_event={nama_event}/>
             </Box>
           </MainCard>
         );
@@ -245,7 +245,7 @@ export default function TimelineDetailEvent({
         return (
           <MainCard sx={{ marginTop: '24px' }}>
             <Box>
-              <TalentPool eventid={eventid} eventstatus_id={eventstatus_id} />
+              <TalentPool eventid={eventid} eventstatus_id={eventstatus_id} nama_event={nama_event}/>
             </Box>
           </MainCard>
         );
