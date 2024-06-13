@@ -13,18 +13,18 @@ export const useAuth = () => {
       const response = await fetch(`/backend/api9/${nippos}`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
           // add other headers if necessary
-        },
+        }
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      
+
       // Assuming data.message is an array and you want the first element
       const performanceData = data;
-      
+
       console.log('Data fetched successfully:', performanceData);
       return performanceData;
     } catch (error) {
@@ -35,13 +35,13 @@ export const useAuth = () => {
 
   const updatePerformanceToDB = (message) => {
     return fetch(url + 'updatenki', {
-      method: 'POST', 
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json' 
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         message: message
-      }), 
+      })
     })
       .then((response) => {
         if (!response.ok) {
@@ -50,11 +50,11 @@ export const useAuth = () => {
         return response.json();
       })
       .then((data) => {
-        return data; 
+        return data;
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        throw error; 
+        throw error;
       });
   };
 
@@ -126,8 +126,8 @@ export const useAuth = () => {
           try {
             const performanceData = await UpdatePerformance(user.nippos);
             setPerformance(performanceData);
-            console.log("ini pushan", performanceData);
-            updatePerformanceToDB(performanceData)
+            console.log('ini pushan', performanceData);
+            updatePerformanceToDB(performanceData);
           } catch (error) {
             console.error('Failed to update performance:', error);
           }
