@@ -162,10 +162,10 @@ const TalentProfile = ({ eventid, eventstatus_id, nama_event }) => {
     }
   
     // Specify the columns to include in the CSV, adding 'No' as the first column
-    const includedData = ['No', 'Nama', 'Nippos', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Commitment Letter', 'Pakta Integritas', 'Status Submit', 'Komite Unit'];
+    const includedData = ['No', 'Nama', 'Nippos', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Pakta Integritas', 'Commitment Letter', 'Status Submit', 'Komite Unit'];
   
     // Create a CSV header with the included column names
-    const headerNames = ['No', 'Nama', 'NIPPOS', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Commitment Letter', 'Pakta Integritas', 'Status Submit', 'Komite Unit'];
+    const headerNames = ['No', 'Nama', 'NIPPOS', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Pakta Integritas', 'Commitment Letter', 'Status Submit', 'Komite Unit'];
     const headerRow = headerNames.join(';');
   
     // Filter the data to include only the specified columns and add 'No' column

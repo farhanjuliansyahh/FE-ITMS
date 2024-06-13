@@ -524,7 +524,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
                     InputLabelProps={{ shrink: true }}
                     label="Tanggal Mulai Event *"
                     onChange={handleStartDateChange}
-                    format="YYYY-MM-DD"
+                    format="DD-MM-YYYY"
                     required
                     renderInput={(params) => (
                       <TextField
@@ -546,7 +546,7 @@ function AddEventModal({ open, handleClose, setrefresh }) {
                     InputLabelProps={{ shrink: true }}
                     label="Tanggal Berakhir Event *"
                     onChange={handleEndDateChange}
-                    format="YYYY-MM-DD"
+                    format="DD-MM-YYYY"
                     required
                     renderInput={(params) => (
                       <TextField

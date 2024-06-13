@@ -375,7 +375,7 @@ const TalentDays = ({ eventid, eventstatus_id, nama_event }) => {
                     <DemoItem>
                       <DatePicker
                         disablePast
-                        format="YYYY-MM-DD"
+                        format="DD-MM-YYYY"
                         views={['year', 'month', 'day']}
                         InputLabelProps={{ shrink: true }}
                         label="Tanggal"

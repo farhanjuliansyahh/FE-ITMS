@@ -476,7 +476,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
                   InputLabelProps={{ shrink: true }}
                   label={`Tanggal Berakhir ${steps[currentstep + 1]} *`}
                   required
-                  format="YYYY-MM-DD"
+                  format="DD-MM-YYYY"
                   onChange={handleDateChange}
                 />
               </DemoItem>

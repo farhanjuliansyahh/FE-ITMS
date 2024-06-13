@@ -313,8 +313,8 @@ export default function TalentProfileTable({
                     <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
                     <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
                     <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
-                    <StyledTableCell >Commitment Letter</StyledTableCell>
                     <StyledTableCell >Pakta Integritas</StyledTableCell>
+                    <StyledTableCell >Commitment Letter</StyledTableCell>
                     <StyledTableCell >Status Submit</StyledTableCell>
                     <StyledTableCell >Komite Unit</StyledTableCell>
                   </TableRow>
@@ -328,14 +328,14 @@ export default function TalentProfileTable({
                       <StyledTableCell>{row.Posisi}</StyledTableCell>
                       <StyledTableCell sx={{ textAlign: 'center' }}>{row['Job Level']}</StyledTableCell>
                       <StyledTableCell>{row['Rumpun Jabatan']}</StyledTableCell>
-                      <StyledTableCell>
-                        <div style={{ display: 'inline-block', ...getStatusStyle(row['Commitment Letter']), padding: '4px 8px', borderRadius: '24px' }}>
-                          {row['Commitment Letter']}
-                        </div>
-                      </StyledTableCell>
                       <StyledTableCell style={{ padding: '12px' }}>
                         <div style={{ display: 'inline-block', ...getStatusStyle(row['Pakta Integritas']), padding: '4px 8px', borderRadius: '24px' }}>
                           {row['Pakta Integritas']}
+                        </div>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <div style={{ display: 'inline-block', ...getStatusStyle(row['Commitment Letter']), padding: '4px 8px', borderRadius: '24px' }}>
+                          {row['Commitment Letter']}
                         </div>
                       </StyledTableCell>
                       <StyledTableCell style={{ padding: '12px' }}>
@@ -362,8 +362,8 @@ export default function TalentProfileTable({
                     <StyledTableCell sx={{ minWidth: 250 }}>Posisi</StyledTableCell>
                     <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'joblevel', 'Job Level') }}>Job Level</StyledTableCell>
                     <StyledTableCell sx={{ width: calculateColumnWidth(rows, 'jobfam', 'Job Family') }}>Rumpun Jabatan</StyledTableCell>
-                    <StyledTableCell >Commitment Letter</StyledTableCell>
                     <StyledTableCell >Pakta Integritas</StyledTableCell>
+                    <StyledTableCell >Commitment Letter</StyledTableCell>
                     <StyledTableCell >Status Submit</StyledTableCell>
                     <StyledTableCell >Komite Unit</StyledTableCell>
                   </TableRow>

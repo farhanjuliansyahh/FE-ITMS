@@ -351,7 +351,7 @@ function KonfirmasiNextEvent({ open, handleClose, eventid, rumpun_jabatan, ketua
                   InputLabelProps={{ shrink: true }}
                   label="Tanggal Berakhir Talent Source *"
                   onChange={handleDateChange} // Add onChange handler
-                  format="YYYY-MM-DD"
+                  format="DD-MM-YYYY"
                   required
                   disablePast
                   minDate={dayjs(mulai)} // Set minDate to the start date of the event
