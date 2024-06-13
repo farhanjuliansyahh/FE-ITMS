@@ -127,12 +127,17 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
         setUploadInProgressToastId(progressToastId);
 
         let modifiedData;
+        let mismatchedData = [];
 
         const validateSkor = (data) => {
             return data.every(item => {
                 const skor = parseFloat(item.skor);
                 return !isNaN(skor) && skor >= 0 && skor <= 5;
             });
+        };
+
+        const collectMismatchedData = (data, validTypes) => {
+            return data.filter(item => !validTypes.includes(parseInt(item['ASSESSMENT TYPE'])));
         };
 
         if (selectedValue === "6" || selectedValue === "5") {
@@ -151,16 +156,35 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 nippos: item['NIPPOS'],
                 skor: item['VALUE']
             }));
-        } else if (selectedValue === "1" || selectedValue === "4") {
-            const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'ASSESSMENT VALUE']);
+        } else if (selectedValue === "1") {
+            const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'ASSESSMENT VALUE', 'ASSESSMENT TYPE']);
             if (!exists) {
                 setUploadInProgressToastId(null)
-                toast.dismiss(progressToastId); 
+                toast.dismiss(progressToastId);
                 toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
+            mismatchedData = collectMismatchedData(parsedData, [11, 12]);
+            const filteredData = parsedData.filter(item => parseInt(item['ASSESSMENT TYPE']) === 11 || parseInt(item['ASSESSMENT TYPE']) === 12);
 
-            modifiedData = parsedData.map(item => ({
+            modifiedData = filteredData.map(item => ({
+                Berlaku_Mulai: item['START DATE'],
+                Berlaku_Hingga: item['END DATE'],
+                nippos: item['NIPPOS'],
+                skor: item['ASSESSMENT VALUE']
+            }));
+        } else if (selectedValue === "4") {
+            const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'ASSESSMENT VALUE', 'ASSESSMENT TYPE']);
+            if (!exists) {
+                setUploadInProgressToastId(null)
+                toast.dismiss(progressToastId);
+                toast.error(renderMissingHeadersList(missingHeaders));
+                return;
+            }
+            mismatchedData = collectMismatchedData(parsedData, [13]);
+            const filteredData = parsedData.filter(item => parseInt(item['ASSESSMENT TYPE']) === 13);
+
+            modifiedData = filteredData.map(item => ({
                 Berlaku_Mulai: item['START DATE'],
                 Berlaku_Hingga: item['END DATE'],
                 nippos: item['NIPPOS'],
@@ -168,7 +192,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
             }));
         } else if (selectedValue === "2") {
             // Check if the required headers exist
-            const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'ASSESSMENT VALUE', 'ASSESSMENT CODE']);
+            const { exists, missingHeaders } = checkHeadersExist(['START DATE', 'END DATE', 'NIPPOS', 'ASSESSMENT VALUE', 'ASSESSMENT CODE', 'ASSESSMENT TYPE']);
             if (!exists) {
                 // Handle the scenario where headers don't match
                 setUploadInProgressToastId(null)
@@ -176,8 +200,10 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 toast.error(renderMissingHeadersList(missingHeaders));
                 return;
             }
+            mismatchedData = collectMismatchedData(parsedData, [14]);
+            const filteredData = parsedData.filter(item => parseInt(item['ASSESSMENT TYPE']) === 14);
 
-            modifiedData = parsedData.map(item => ({
+            modifiedData = filteredData.map(item => ({
                 Berlaku_Mulai: item['START DATE'],
                 Berlaku_Hingga: item['END DATE'],
                 nippos: item['NIPPOS'],
@@ -195,6 +221,8 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
             }
             modifiedData = parsedData;
         }
+
+        console.log(modifiedData);
 
         if (!validateSkor(modifiedData)) {
             setUploadInProgressToastId(null);
@@ -216,6 +244,17 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
                 toast.success('Dokumen berhasil diupload !'); // Show toast notification
                 handleResetAndClose(); // Close the dialog after successful upload
+                if (mismatchedData.length > 0) {
+                    toast.warn(
+                        <div>
+                            Ada {mismatchedData.length} data dengan Assessment Type yang tidak sesuai dengan Kategori yang Anda pilih.
+                            <br />
+                            <br />
+                            Silakan cek data Anda kembali.
+                        </div>,
+                        { autoClose: 10000 }
+                    );
+                }
                 if (onConfirm) {
                     onConfirm();
                 }
