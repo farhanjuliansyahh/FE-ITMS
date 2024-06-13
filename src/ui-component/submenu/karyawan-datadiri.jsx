@@ -5,7 +5,7 @@ import { LockOpenRounded } from '@mui/icons-material';
 import ButtonOptional from '../../ui-component/button/ButtonOptional.jsx';
 import EmpatKolomDataKaryawan from "../../ui-component/tables/empatkolomdatakaryawan.jsx";
 // import DuaKolomDataKaryawan from "../../ui-component/tables/duakolomdatakaryawan.jsx";
-import User1 from '../../../public/assets/images/users/user-round.svg';
+import User1 from '../../../public/assets/images/users/Profile-Default.svg';
 import { Link } from 'react-router-dom';
 import.meta.env.VITE_API_BASE_URL
 

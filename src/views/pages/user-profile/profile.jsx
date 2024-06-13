@@ -10,7 +10,7 @@ export default function UserProfile() {
             </div>
             <Divider orientation="horizontal" flexItem sx={{ borderColor: '#E0E0E0' }}/>
             <div style={{ display: 'block', backgroundColor: '#FFFFFF', borderRadius: '12px', padding: '48px 96px', gap: '16px' }}>
-                <DataDiriKaryawan photosize={200} spaces={[3, 8]} statusButton={false}/>
+                <DataDiriKaryawan photosize={200} spaces={[3, 8]} statusButton={true}/>
             </div>
         </div>
     )
