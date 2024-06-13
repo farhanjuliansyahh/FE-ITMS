@@ -154,7 +154,7 @@ export default function TalentDetail() {
         <Grid item xs={12}>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
-              <Header title={'Monitoring Talent'} />
+              <Header title={'Monitoring Talent'} padding={'16px 24px'} />
             </Grid>
           </Grid>
         </Grid>

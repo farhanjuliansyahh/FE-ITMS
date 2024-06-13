@@ -1,38 +1,32 @@
 import React from 'react';
-import { Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-
-const Header = ({ title }) => {
+const Header = ({ title, padding }) => {
     const headerStyle = {
         width: '100%',
         height: 'fit-content', // Hug (64px) is equivalent to fit-content in this context
-        // padding: '16px 24px',
         justifyContent: 'space-between',
         display: 'flex',
         backgroundColor: '#fff',
-        borderRadius: "12px"
-
+        borderRadius: "12px",
+        padding: padding ? padding : '0px' // Conditionally set padding
     };
 
     const titleStyle = {
-        margin:0, // Adjust the margin as needed
+        margin: 0, // Adjust the margin as needed
         fontSize: '24px',
-        color:'#4F4F4F',
+        color: '#4F4F4F',
         alignItems: 'center',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     };
 
-  return (
-    <>
-            <div className="card" style={headerStyle} >
-                <div style={{display:'flex'}}>
-                    <Typography style={ titleStyle }>{title}</Typography>
-
-                    
-                </div>
+    return (
+        <div className="card" style={headerStyle}>
+            <div style={{ display: 'flex' }}>
+                <Typography style={titleStyle}>{title}</Typography>
             </div>
-    </>
-  );
+        </div>
+    );
 };
 
 export default Header;
