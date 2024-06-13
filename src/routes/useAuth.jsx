@@ -23,7 +23,7 @@ export const useAuth = () => {
       const data = await response.json();
       
       // Assuming data.message is an array and you want the first element
-      const performanceData = data.message[0];
+      const performanceData = data;
       
       console.log('Data fetched successfully:', performanceData);
       return performanceData;
@@ -33,16 +33,14 @@ export const useAuth = () => {
     }
   };
 
-  const updatePerformanceToDB = (nippos, nki_score, year) => {
+  const updatePerformanceToDB = (message) => {
     return fetch(url + 'updatenki', {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json' 
       },
       body: JSON.stringify({
-        nippos: nippos,
-        nki_score: nki_score,
-        year: year
+        message: message
       }), 
     })
       .then((response) => {
@@ -128,8 +126,8 @@ export const useAuth = () => {
           try {
             const performanceData = await UpdatePerformance(user.nippos);
             setPerformance(performanceData);
-            console.log("ini pushan", performanceData.nippos, performanceData.nki_score, performanceData.year);
-            updatePerformanceToDB(performanceData.nippos, performanceData.nki_score, performanceData.year)
+            console.log("ini pushan", performanceData);
+            updatePerformanceToDB(performanceData)
           } catch (error) {
             console.error('Failed to update performance:', error);
           }
