@@ -222,8 +222,6 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
             modifiedData = parsedData;
         }
 
-        console.log(modifiedData);
-
         if (!validateSkor(modifiedData)) {
             setUploadInProgressToastId(null);
             toast.dismiss(progressToastId);
