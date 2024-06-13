@@ -17,6 +17,8 @@ const steps = ['Talent Source', 'Talent Profile', 'Talent Qualification', 'Talen
 
 function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentstep, eventid, status, refresh, eventStartDate }) {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
+
   const url = import.meta.env.VITE_API_BASE_URL
 
   const currenteventstatus = status;
@@ -32,6 +34,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   }, [open]);
 
   const handleLanjutkan = () => {
+    setIsFetching(true);
     switch (currenteventstatus) {
       case 2:
         posttalentprofile()
@@ -42,9 +45,11 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => {
             refresh();
             toast.success('Talent Profile telah dimulai!');
+            setIsFetching(false);
           })
           .catch(() => {
             toast.error('Gagal memulai Talent Profile.');
+            setIsFetching(false);
           });
         break;
       case 3:
@@ -54,9 +59,11 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => {
             refresh();
             toast.success('Talent Qualification telah dimulai!');
+            setIsFetching(false);
           })
           .catch(() => {
             toast.error('Gagal memulai Talent Qualification.');
+            setIsFetching(false);
           });
         break;
       case 4:
@@ -66,9 +73,11 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => {
             refresh();
             toast.success('Talent Days telah dimulai!');
+            setIsFetching(false);
           })
           .catch(() => {
             toast.error('Gagal memulai Talent Days.');
+            setIsFetching(false);
           });
         break;
       case 5:
@@ -80,9 +89,11 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => {
             refresh();
             toast.success('Talent Cluster telah dimulai!');
+            setIsFetching(false);
           })
           .catch(() => {
             toast.error('Gagal memulai Talent Cluster.');
+            setIsFetching(false);
           });
         break;
       case 6:
@@ -92,13 +103,16 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
           .then(() => {
             refresh();
             toast.success('Talent Pool telah dimulai!');
+            setIsFetching(false);
           })
           .catch(() => {
             toast.error('Gagal memulai Talent Pool.');
+            setIsFetching(false);
           });
         break;
       default:
         // Handle default case
+        setIsFetching(false);
         break;
     }
   };
@@ -388,11 +402,12 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const lanjutkanButtonStyle = {
-    backgroundColor: selectedDate ? '#1C2D5A' : '#CCCCCC', // Change color based on selectedDate
+    backgroundColor: selectedDate && !isFetching ? '#1C2D5A' : '#CCCCCC', // Change color based on selectedDate and isFetching
     color: '#fff',
     borderRadius: '12px',
     padding: '14px 24px',
-    transition: 'background-color 0.3s'
+    transition: 'background-color 0.3s',
+    cursor: isFetching ? 'not-allowed' : 'pointer' // Change cursor style when fetching
   };
 
   const batalkanButtonStyle = {
@@ -405,7 +420,7 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   };
 
   const hoverLanjutkanStyle = {
-    backgroundColor: selectedDate ? '#122350' : '#CCCCCC' // Change hover color based on selectedDate
+    backgroundColor: selectedDate && !isFetching ? '#122350' : '#CCCCCC' // Change hover color based on selectedDate and isFetching
   };
 
   const hoverBatalkanStyle = {
@@ -424,18 +439,18 @@ function KonfirmasiNextEvent({ open, handleClose, handleConfirmation, currentste
   const [isHoveredLanjutkan, setIsHoveredLanjutkan] = useState(false);
   const [isHoveredBatalkan, setIsHoveredBatalkan] = useState(false);
 
-  const lanjutkanButton = (
-    <Button
-      endIcon={<ArrowForwardRoundedIcon />}
-      style={isHoveredLanjutkan ? { ...lanjutkanButtonStyle, ...hoverLanjutkanStyle } : lanjutkanButtonStyle}
-      onMouseEnter={() => setIsHoveredLanjutkan(true)}
-      onMouseLeave={() => setIsHoveredLanjutkan(false)}
-      onClick={handleLanjutkan}
-      disabled={!selectedDate} // Disable button when no date is selected
-    >
-      Lanjutkan
-    </Button>
-  );
+const lanjutkanButton = (
+  <Button
+    endIcon={<ArrowForwardRoundedIcon />}
+    style={isHoveredLanjutkan ? { ...lanjutkanButtonStyle, ...hoverLanjutkanStyle } : lanjutkanButtonStyle}
+    onMouseEnter={() => setIsHoveredLanjutkan(true)}
+    onMouseLeave={() => setIsHoveredLanjutkan(false)}
+    onClick={handleLanjutkan}
+    disabled={!selectedDate || isFetching} // Disable button when no date is selected or fetching is in progress
+  >
+    Lanjutkan
+  </Button>
+);
 
   const batalkanButton = (
     <Button
