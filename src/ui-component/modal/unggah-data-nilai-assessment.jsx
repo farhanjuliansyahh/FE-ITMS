@@ -214,7 +214,7 @@ function UnggahDataNilaiAssessment({ open, handleClose, onConfirm }) {
             if (chunkIndex >= chunks.length) {
                 setUploadInProgressToastId(null)
                 toast.dismiss(progressToastId); // Dismiss the upload in progress toast
-                toast.success('All chunks uploaded successfully'); // Show toast notification
+                toast.success('Dokumen berhasil diupload !'); // Show toast notification
                 handleResetAndClose(); // Close the dialog after successful upload
                 if (onConfirm) {
                     onConfirm();
