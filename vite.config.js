@@ -4,9 +4,15 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(() => {
   return {
     server: {
-      port: 3000 // Port
+      port: 3000, // Port
+      proxy: {
+        '/backend': {
+          target: 'https://ihsan.posindonesia.co.id',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/backend/, '/backend'),
+        },
+      },
     },
-    // https://github.com/vitejs/vite/issues/1973#issuecomment-787571499
     define: {
       'process.env': {},
     },
