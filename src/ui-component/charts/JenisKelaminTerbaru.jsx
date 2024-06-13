@@ -63,12 +63,15 @@ const chartOptions = {
     },
   },
   labels: [], // This will be set dynamically
-  colors: ['#4978b1', '#1C2D5A'],
+  colors: ['#4978b1', '#1C2D5A', '#8a9db0'], // Add an additional color for the third category
   legend: {
     fontSize: '14px',
     position: 'right',
     offsetY: 100,
     offsetX: 0,
+    formatter: function (seriesName) {
+      return `${seriesName}`;
+    },
   },
 };
 
@@ -77,11 +80,19 @@ const JenisKelaminTerbaru = ({ data }) => {
 
   useEffect(() => {
     if (chartRef.current) {
+      // Map the data to correct labels
+      const modifiedData = data.map(item => {
+        let newName = item.name;
+        if (newName === 'tidak diketahui') newName = 'Tidak diketahui';
+        return { ...item, name: newName };
+      });
+
       const options = {
         ...chartOptions,
-        labels: data.map(item => item.name),
-        series: data.map(item => parseInt(item.value, 10)),
+        labels: modifiedData.map(item => item.name),
+        series: modifiedData.map(item => parseInt(item.value, 10)),
       };
+
       const chart = new ApexCharts(chartRef.current, options);
       chart.render();
       return () => {
