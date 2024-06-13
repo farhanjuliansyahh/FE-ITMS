@@ -44,7 +44,7 @@ function a11yProps(index) {
   };
 }
 
-const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
+const TalentQualification = ({ eventid, kodekomite, prevLocation, nama_event }) => {
   const location = useLocation();
   const [prevLocationname, setPrevLocation] = useState(prevLocation);
 
@@ -161,10 +161,10 @@ const TalentQualification = ({ eventid, kodekomite, prevLocation }) => {
     // Determine which dataset to use based on the active tab
     if (value === 0) {
       dataToDownload = resetRowsTrue;
-      filename = `Talent_Qualification_Lulus_${eventid}.csv`;
+      filename = `${nama_event}_Talent Qualification_Terkualifikasi.csv`;
     } else if (value === 1) {
       dataToDownload = resetRowsFalse;
-      filename = `Talent_Qualification_TidakLulus_${eventid}.csv`;
+      filename = `${nama_event}_Talent Qualification_Tidak Terkualifikasi.csv`;
     }
   
     // Specify the columns to include in the CSV, adding 'No' as the first column

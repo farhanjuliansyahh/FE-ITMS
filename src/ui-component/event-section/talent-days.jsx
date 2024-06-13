@@ -53,7 +53,7 @@ function a11yProps(index) {
   };
 }
 
-const TalentDays = ({ eventid, eventstatus_id }) => {
+const TalentDays = ({ eventid, eventstatus_id, nama_event }) => {
   const [tambahBPJOpen, settambahBPJOpen] = useState(false);
 
   const [isLoading, setLoading] = useState(true);
@@ -270,7 +270,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
     let filename = '';
 
     dataToDownload = resetRowsTrue;
-    filename = `Talent_Days_Karyawan_${eventid}.csv`;
+    filename = `${nama_event}_Talent Days_Daftar Karyawan.csv`;
 
     // Specify the columns to include in the CSV, adding 'No' as the first column
     const includedData = ['No', 'Nama', 'Nippos', 'Posisi', 'Job Level', 'Rumpun Jabatan', 'Nama Kantor', 'Komite Unit', 'Status'];
@@ -375,7 +375,7 @@ const TalentDays = ({ eventid, eventstatus_id }) => {
                     <DemoItem>
                       <DatePicker
                         disablePast
-                        format="DD-MM-YYYY"
+                        format="YYYY-MM-DD"
                         views={['year', 'month', 'day']}
                         InputLabelProps={{ shrink: true }}
                         label="Tanggal"

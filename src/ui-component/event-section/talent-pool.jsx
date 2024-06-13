@@ -44,7 +44,7 @@ function a11yProps(index) {
   };
 }
 
-const TalentPool = ({ eventid, eventstatus_id }) => {
+const TalentPool = ({ eventid, eventstatus_id, nama_event }) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [filterNama, setFilterNama] = useState('');
@@ -172,7 +172,7 @@ const TalentPool = ({ eventid, eventstatus_id }) => {
     let filename = '';
 
     dataToDownload = resetRowsTrue;
-    filename = `Talent_Pool_${eventid}.csv`;
+    filename = `${nama_event}_Talent Pool.csv`;
 
     // Specify the columns to include in the CSV, adding 'No' as the first column
     const includedData = [

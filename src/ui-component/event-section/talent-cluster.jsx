@@ -48,7 +48,7 @@ function a11yProps(index) {
   };
 }
 
-const TalentCluster = ({ eventid }) => {
+const TalentCluster = ({ eventid, nama_event }) => {
   const [isLoading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [clusterRow, setclusterRow] = useState([])
@@ -152,7 +152,7 @@ const TalentCluster = ({ eventid }) => {
     let filename = '';
 
     dataToDownload = resetRowsTrue;
-    filename = `Talent_Cluster_Karyawan_${eventid}.csv`;
+    filename = `${nama_event}_Talent Cluster.csv`;
 
     // Specify the columns to include in the CSV, adding 'No' as the first column
     const includedData = [
